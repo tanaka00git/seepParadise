@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\Scene">
+      <UniqueIdentifier>{c46f44ec-0665-48d3-b074-218986903ab7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject">
+      <UniqueIdentifier>{556ab052-9655-44f2-ba3b-1f218134cda5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\Item">
+      <UniqueIdentifier>{205e9cb6-a7c5-4931-b927-a2b1de5987da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\App">
+      <UniqueIdentifier>{e59385cc-15ef-4943-921c-ed52164084e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\Break">
+      <UniqueIdentifier>{7cd4209d-dc70-431d-a3e0-c21692b40fa7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\UI">
+      <UniqueIdentifier>{3f4c5b32-18e4-471e-918e-6799d083aa8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\Normal">
+      <UniqueIdentifier>{aff5a57a-f376-42dd-8ac6-a65073362349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GameObject\Effect">
+      <UniqueIdentifier>{216b3fc7-c404-48c4-b132-dc848ff54557}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\App\audio.cpp">
+      <Filter>ソース ファイル\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\App\main.cpp">
+      <Filter>ソース ファイル\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\App\input.cpp">
+      <Filter>ソース ファイル\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\App\manager.cpp">
+      <Filter>ソース ファイル\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\game.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\result.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\title.cpp">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\App\model.cpp">
+      <Filter>ソース ファイル\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\App\renderer.cpp">
+      <Filter>ソース ファイル\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\App\sprite.cpp">
+      <Filter>ソース ファイル\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\App\compModel.cpp">
+      <Filter>ソース ファイル\App</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\apple.cpp">
+      <Filter>ソース ファイル\GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\coin.cpp">
+      <Filter>ソース ファイル\GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\itemEye.cpp">
+      <Filter>ソース ファイル\GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\itemLife.cpp">
+      <Filter>ソース ファイル\GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\itemObject.cpp">
+      <Filter>ソース ファイル\GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\itemSpeed.cpp">
+      <Filter>ソース ファイル\GameObject\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\breakObject.cpp">
+      <Filter>ソース ファイル\GameObject\Break</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\chest.cpp">
+      <Filter>ソース ファイル\GameObject\Break</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\rock.cpp">
+      <Filter>ソース ファイル\GameObject\Break</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\damageFade.cpp">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\dayBar.cpp">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\fade.cpp">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\hpBar.cpp">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\hpBarS.cpp">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\infoLog.cpp">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\infoLogTutorial.cpp">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\score.cpp">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\timeFade.cpp">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\titleScore.cpp">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\titleLogo.cpp">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\resultScore.cpp">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\resultLogo.cpp">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\explosion.cpp">
+      <Filter>ソース ファイル\GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\smoke.cpp">
+      <Filter>ソース ファイル\GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\ConcentrationLine.cpp">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\box.cpp">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\camera.cpp">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\cylinder.cpp">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\field.cpp">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\follow.cpp">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\player.cpp">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\resultCoin.cpp">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\resultSeep.cpp">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\seed.cpp">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\shadow.cpp">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\titleBox.cpp">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\titleSky.cpp">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\tree.cpp">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\wolf.cpp">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\titleSeep.cpp">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\titleCoin.cpp">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\App\audio.h">
+      <Filter>ソース ファイル\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\App\main.h">
+      <Filter>ソース ファイル\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\App\input.h">
+      <Filter>ソース ファイル\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\App\manager.h">
+      <Filter>ソース ファイル\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\game.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\result.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\scene.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\title.h">
+      <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\App\compModel.h">
+      <Filter>ソース ファイル\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\App\component.h">
+      <Filter>ソース ファイル\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\App\model.h">
+      <Filter>ソース ファイル\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\App\renderer.h">
+      <Filter>ソース ファイル\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\App\sprite.h">
+      <Filter>ソース ファイル\App</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\apple.h">
+      <Filter>ソース ファイル\GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\coin.h">
+      <Filter>ソース ファイル\GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\itemEye.h">
+      <Filter>ソース ファイル\GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\itemLife.h">
+      <Filter>ソース ファイル\GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\itemObject.h">
+      <Filter>ソース ファイル\GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\itemSpeed.h">
+      <Filter>ソース ファイル\GameObject\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\breakObject.h">
+      <Filter>ソース ファイル\GameObject\Break</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\chest.h">
+      <Filter>ソース ファイル\GameObject\Break</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\rock.h">
+      <Filter>ソース ファイル\GameObject\Break</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\damageFade.h">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\dayBar.h">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\fade.h">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\hpBar.h">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\hpBarS.h">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\InfoLog.h">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\infoLogTutorial.h">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\score.h">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\timeFade.h">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\titleLogo.h">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\titleScore.h">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\resultScore.h">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\resultLogo.h">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\explosion.h">
+      <Filter>ソース ファイル\GameObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\smoke.h">
+      <Filter>ソース ファイル\GameObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\ConcentrationLine.h">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\box.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\camera.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\cylinder.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\field.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\follow.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\gameObject.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\player.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\resultCoin.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\resultSeep.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\seed.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\shadow.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\titleBox.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\titleSky.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\tree.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\wolf.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\titleSeep.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\titleCoin.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="Shader\common.hlsl">
+      <Filter>リソース ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\unlitTexturePS.hlsl">
+      <Filter>リソース ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\unlitTextureVS.hlsl">
+      <Filter>リソース ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\vertexLightingPS.hlsl">
+      <Filter>リソース ファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Shader\vertexLightingVS.hlsl">
+      <Filter>リソース ファイル</Filter>
+    </FxCompile>
+  </ItemGroup>
+</Project>
