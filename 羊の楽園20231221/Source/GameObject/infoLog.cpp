@@ -40,12 +40,12 @@ void InfoLog::Update()
 			m_Alpha += 0.05f;
 			if (m_Alpha >= 1.0f) {
 				m_Alpha = 1.0f;
-				m_DeleteTime += 1;
+				m_DeleteTime ++;
 				if (m_DeleteTime > 120) { m_LogEnd = true; }//•\¦‚³‚ê‚Ä‚éó‘Ô‚ÌˆÛ
 			}
 		}
 		else if (m_LogEnd) {//I—¹ğŒ‚É‚È‚Á‚½‚ç
-			m_Position.y -= 1;
+			m_Position.y --;
 			m_Alpha -= 0.02f;
 			if (m_Alpha <= 0.0f) {
 				m_Alpha = 0.0f;

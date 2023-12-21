@@ -89,7 +89,7 @@ void Wolf::Update()
 	m_HpBarS->SetLifeDateFC(m_FullLife, m_Life);
 
 	//自動削除まで
-	m_DaathTime -= 1;
+	m_DaathTime --;
 	if (m_DaathTime <= 0){UpdateDelete();}
 	else 
 	{
@@ -366,7 +366,7 @@ void Wolf::UpdateDamage()
 	m_Rotation.y += 0.2f;
 
 	//攻撃受けたときの処理
-	m_DamageStop -= 1;
+	m_DamageStop --;
 	if (m_DamageStop <= 0) 
 	{
 		m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -409,7 +409,7 @@ void Wolf::Collision(float & groundHeight)
 					player->AddLife(-1);
 					player->SetDamageMove();
 					m_SE_Eat->Play(1.0f);
-					m_Life -= 1;
+					m_Life --;
 					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
 				}
 			}
@@ -439,7 +439,7 @@ void Wolf::Collision(float & groundHeight)
 				{
 					m_WolfState = WOLF_STATE::EATING;
 					m_SE_Eat->Play(1.0f);
-					m_Life -= 1;
+					m_Life --;
 					follow->AddLife(-1);
 					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
 				}
@@ -531,7 +531,7 @@ void Wolf::KnockBack()
 {
 	//後退
 	if (m_Back >= 1) {
-		m_Back -= 1;
+		m_Back --;
 		m_Velocity.x += (m_PLForward.x * 0.05f);
 		m_Velocity.z += (m_PLForward.z * 0.05f);
 		if (m_Back >= 14) {
@@ -549,7 +549,7 @@ void Wolf::DisasterMove()
 
 	//一定時間経つとオートで敵を生み出す
 	Scene* scene = Manager::GetScene();
-	m_DisasterCount += 1;
+	m_DisasterCount ++;
 	if (m_DisasterCount == 150) 
 	{
 		Wolf* wolf = scene->AddGameObject<Wolf>(1);
@@ -596,7 +596,7 @@ void Wolf::SetDamageMove()
 
 	m_Velocity.y = 0.1f;
 	m_Back = 10;
-	m_Life -= 1;
+	m_Life --;
 	m_SE_Kick->Play(1.0f);
 	m_ColorChange = 5;
 

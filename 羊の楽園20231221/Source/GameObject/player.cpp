@@ -109,7 +109,7 @@ void Player::Update()
 	if (m_Charge > m_FullCharge) { m_Charge = m_FullCharge; }
 
 	//コンボデータを渡す
-	m_ComboWait -= 1;
+	m_ComboWait --;
 	if (m_ComboWait <= 0) { m_ComboWait = 0; }
 	if (m_PlayerState == PLAYER_STATE::DASH)
 	{

@@ -361,7 +361,7 @@ void Follow::DamageFlash()
 
 void Follow::OrtOrientationChange()
 {
-	m_OrientationTime += 1;
+	m_OrientationTime ++;
 	//Œü‚«•ÏX
 	if (m_OrientationTime > m_NextOrientationTime){ m_Rotation.y += 0.02f * m_NextRot;}
 	if (m_OrientationTime > m_NextOrientationTime + 50)
@@ -442,7 +442,7 @@ void Follow::PlayerTracking()
 
 void Follow::AttackStop()
 {
-	m_AttackStop -= 1;
+	m_AttackStop --;
 	if (m_AttackStop > 0)
 	{
 		m_Velocity.x = (GetForward().x * 0.03f) * -1;

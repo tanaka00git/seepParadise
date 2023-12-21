@@ -50,9 +50,9 @@ void InfoLogTutorial::Update()
 		m_Alpha2 = 0.0f;
 		m_Alpha3 = 0.0f;
 		m_Sprite_Tutorial4->SetPosition(D3DXVECTOR3(100, 450, 0));
-		m_ControlTime += 1;
+		m_ControlTime ++;
 		if (m_ControlTime >= 270) { m_Alpha4 += 0.3f; }
-		if (m_ControlTime >= 360) { m_Log += 1; m_ControlTime = 0; }
+		if (m_ControlTime >= 360) { m_Log ++; m_ControlTime = 0; }
 	}
 	else if (m_Log == 2)
 	{
@@ -67,8 +67,8 @@ void InfoLogTutorial::Update()
 		else
 		{
 			m_Alpha4 += 0.3f;
-			m_ControlTime += 1;
-			if (m_ControlTime >= 270) { m_Log += 1; m_ControlTime = 0; }
+			m_ControlTime ++;
+			if (m_ControlTime >= 270) { m_Log ++; m_ControlTime = 0; }
 		}
 
 	}
@@ -86,8 +86,8 @@ void InfoLogTutorial::Update()
 		else
 		{
 			m_Alpha4 += 0.3f;
-			m_ControlTime += 1;
-			if (m_ControlTime >= 270) { m_Log += 1; m_ControlTime = 0; }
+			m_ControlTime ++;
+			if (m_ControlTime >= 270) { m_Log ++; m_ControlTime = 0; }
 		}
 	}
 	else if (m_Log == 4) {

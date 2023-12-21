@@ -182,7 +182,7 @@ void Game::Update()
 	Score* score = scene->GetGameObject<Score>();
 
 	//秒数更新
-	m_GameTime += 1;
+	m_GameTime ++;
 	if (m_GameTime > 60) 
 	{
 		TimeSecondsUpdate();
@@ -234,7 +234,7 @@ void Game::TimeSecondsUpdate()
 	daybar->SetTimeFC(40, m_GameTimeSeconds);
 
 	//時限イベント終了
-	m_NawEvent -= 1;
+	m_NawEvent --;
 	if (m_NawEvent <= 0) 
 	{
 		m_NawEvent = 0;
@@ -368,7 +368,7 @@ void Game::TimeEvent_Time40()
 	AddGameObject<InfoLog>(2)->SetNum(6, 2, D3DXVECTOR3(340, 640, 10));
 	m_SE_SeepCry->Play(1.0f, false);
 	m_SE_Bell->Play(1.0f, false);
-	m_Day += 1;
+	m_Day ++;
 
 	if (m_Day > 99) { m_Day = 99; }
 	Scene* scene = Manager::GetScene();

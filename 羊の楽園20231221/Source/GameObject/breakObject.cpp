@@ -174,7 +174,7 @@ void BreakObject::UpdateDeath()
 
 void BreakObject::SetDamageMove()
 {
-	m_Life -= 1;
+	m_Life --;
 	m_SE_Kick->Play(1.0f);
 	m_Velocity.y = 0.1f;
 }
