@@ -8,7 +8,7 @@
 ID3D11ShaderResourceView*Explosion::m_Texture{};
 
 #define COUNT_FREAM_DELAY 2
-#define POSITION_Y 0.5f
+#define POSITION_Y 0.3f
 
 void Explosion::Load()
 {

@@ -12,7 +12,6 @@ private:
 	
 	//メンバ変数
 	D3DXVECTOR3 m_Velocity{};	//速度
-	bool m_DropFirst = true;	//ジャンプ初回
 	
 public:
 	static void Load();
@@ -21,5 +20,4 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
-	void SetDrop(){ m_DropFirst = true;};
 };

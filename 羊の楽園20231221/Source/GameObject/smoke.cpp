@@ -7,6 +7,7 @@
 
 ID3D11ShaderResourceView*Smoke::m_Texture{};
 #define COUNT_FREAM_DELAY 2
+#define POSITION_Y 0.3f
 
 void Smoke::Load()
 {
@@ -29,25 +30,25 @@ void Smoke::Init()
 {
 	VERTEX_3D vertex[4];
 	//3Dだと左奥から
-	vertex[0].Position = D3DXVECTOR3(-1.0f, 1.0f, 0.0f);
+	vertex[0].Position = D3DXVECTOR3(-1.0f, 1.0f + POSITION_Y, 0.0f);
 	vertex[0].Normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	vertex[0].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[0].TexCoord = D3DXVECTOR2(0.0f, 0.0f);
 
 	//右奥
-	vertex[1].Position = D3DXVECTOR3(1.0f, 1.0f, 0.0f);
+	vertex[1].Position = D3DXVECTOR3(1.0f, 1.0f + POSITION_Y, 0.0f);
 	vertex[1].Normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	vertex[1].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[1].TexCoord = D3DXVECTOR2(1.0f, 0.0f);
 
 	//左前
-	vertex[2].Position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);
+	vertex[2].Position = D3DXVECTOR3(-1.0f, -1.0f + POSITION_Y, 0.0f);
 	vertex[2].Normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	vertex[2].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[2].TexCoord = D3DXVECTOR2(0.0f, 1.0f);
 
 	//右前
-	vertex[3].Position = D3DXVECTOR3(1.0f, -1.0f, 0.0f);
+	vertex[3].Position = D3DXVECTOR3(1.0f, -1.0f + POSITION_Y, 0.0f);
 	vertex[3].Normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	vertex[3].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[3].TexCoord = D3DXVECTOR2(1.0f, 1.0f);
@@ -109,25 +110,25 @@ void Smoke::Draw()
 	VERTEX_3D* vertex = (VERTEX_3D*)msr.pData;
 
 	//3Dだと左奥から
-	vertex[0].Position = D3DXVECTOR3(-1.0f, 1.0f, 0.0f);
+	vertex[0].Position = D3DXVECTOR3(-1.0f, 1.0f + POSITION_Y, 0.0f);
 	vertex[0].Normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	vertex[0].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[0].TexCoord = D3DXVECTOR2(x, y);
 
 	//右奥
-	vertex[1].Position = D3DXVECTOR3(1.0f, 1.0f, 0.0f);
+	vertex[1].Position = D3DXVECTOR3(1.0f, 1.0f + POSITION_Y, 0.0f);
 	vertex[1].Normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	vertex[1].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[1].TexCoord = D3DXVECTOR2(x + 0.25f, y);
 
 	//左前
-	vertex[2].Position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);
+	vertex[2].Position = D3DXVECTOR3(-1.0f, -1.0f + POSITION_Y, 0.0f);
 	vertex[2].Normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	vertex[2].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[2].TexCoord = D3DXVECTOR2(x, y + 0.25f);
 
 	//右前
-	vertex[3].Position = D3DXVECTOR3(1.0f, -1.0f, 0.0f);
+	vertex[3].Position = D3DXVECTOR3(1.0f, -1.0f + POSITION_Y, 0.0f);
 	vertex[3].Normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	vertex[3].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[3].TexCoord = D3DXVECTOR2(x + 0.25f, y + 0.25f);

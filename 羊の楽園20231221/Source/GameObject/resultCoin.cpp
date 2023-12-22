@@ -39,16 +39,6 @@ void ResultCoin::Uninit()
 void ResultCoin::Update()
 {
 	GameObject::Update();
-
-	//ドロップ時に飛ぶ
-	if (m_DropFirst)
-	{
-		m_Velocity.y = 0.2f;
-		m_Rotation.y = frand() * 30;
-		m_Velocity.x = GetForward().x * (frand()* 0.03f);
-		m_Velocity.z = GetForward().z * (frand()* 0.03f);
-		m_DropFirst = false;
-	}
 	
 	//重力
 	float groundHeight = 0.0f;	//地面の高さ

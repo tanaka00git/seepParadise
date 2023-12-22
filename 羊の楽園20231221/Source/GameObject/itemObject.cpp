@@ -63,7 +63,7 @@ void ItemObject::Update()
 
 	//‰e‚ÌˆÚ“®
 	D3DXVECTOR3 shadowPosition = m_Position;
-	shadowPosition.y += 0.01f;
+	shadowPosition.y += 0.02f;
 	m_Shadow->SetPosition(shadowPosition);
 }
 
