@@ -19,16 +19,16 @@ private:
 	D3DXMATRIX	m_ViewMatrix{};
 
 	//読み込み
-	class Audio*	m_ShotSE{};
-	class Audio*	m_WalkSE{};
-	class Audio*	m_DamageSE{};
-	class Audio*	m_DashSE{};
 	class Shadow*	m_Shadow{};
 	class HpBarS*	m_HpBarS{};
 	static int		m_PlColor;		//羊の色
 	static int		m_PlClown;		//王冠
 	static class Model* m_Model;
 	static class Model* m_ModelClown;
+	static class Audio* m_ShotSE;
+	static class Audio* m_WalkSE;
+	static class Audio* m_DamageSE;
+	static class Audio* m_DashSE;
 
 	//メンバ変数
 	static int	m_DebugMode;									//デバッグモード判定

@@ -23,6 +23,10 @@
 
 Model*Player::m_Model{};
 Model*Player::m_ModelClown{};
+Audio* Player::m_ShotSE{};
+Audio* Player::m_WalkSE{};
+Audio* Player::m_DamageSE{};
+Audio* Player::m_DashSE{};
 int Player::m_DebugMode{};
 int Player::m_PlColor{};
 int Player::m_PlClown{};
@@ -51,6 +55,15 @@ void Player::Load()
 	else if (m_PlClown == 4) { m_ModelClown->Load("asset\\model\\clown5.obj"); }
 	else if (m_PlClown == 5) { m_ModelClown->Load("asset\\model\\clown6.obj"); }
 	else { m_ModelClown->Load("asset\\model\\clown4.obj"); }
+
+	m_ShotSE = new Audio();
+	m_ShotSE->Load("asset\\audio\\キャンセル3.wav");
+	m_WalkSE = new Audio();
+	m_WalkSE->Load("asset\\audio\\スリッパで歩く.wav");
+	m_DamageSE = new Audio();
+	m_DamageSE->Load("asset\\audio\\打撃8.wav");
+	m_DashSE = new Audio();
+	m_DashSE->Load("asset\\audio\\高速移動.wav");
 }
 
 void Player::Unload()
@@ -66,21 +79,10 @@ void Player::Init()
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
 
-	m_ShotSE = AddComponent<Audio>();
-	m_ShotSE->Load("asset\\audio\\キャンセル3.wav");
-	m_WalkSE = AddComponent<Audio>();
-	m_WalkSE->Load("asset\\audio\\スリッパで歩く.wav");
-	m_DamageSE = AddComponent<Audio>();
-	m_DamageSE->Load("asset\\audio\\打撃8.wav");
-	m_DashSE = AddComponent<Audio>();
-	m_DashSE->Load("asset\\audio\\高速移動.wav");
-
 	m_Shadow = AddComponent<Shadow>();
-
 	m_HpBarS = AddComponent<HpBarS>();
 	m_HpBarS->SetLifeDateFC(m_FullLife, m_Life);
 	m_HpBarS->SetScale(m_BarScale);
-
 }
 
 void Player::Uninit()
