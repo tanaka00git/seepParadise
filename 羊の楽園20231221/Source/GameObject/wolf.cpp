@@ -55,6 +55,10 @@ void Wolf::Unload()
 	delete m_Model;
 	delete m_Model2;
 	delete m_Model3;
+	m_Model = nullptr;
+	m_Model2 = nullptr;
+	m_Model3 = nullptr;
+
 }
 
 void Wolf::Init()

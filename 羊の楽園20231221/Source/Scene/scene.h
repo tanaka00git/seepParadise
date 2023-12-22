@@ -19,6 +19,8 @@ public:
 			{
 				gameObject->Uninit();
 				delete	gameObject;
+				gameObject = nullptr;
+
 			}
 
 			m_GameObject[i].clear();//ƒŠƒXƒg\‘¢‚Ìíœ

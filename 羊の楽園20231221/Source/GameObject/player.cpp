@@ -72,6 +72,8 @@ void Player::Unload()
 	m_ModelClown->Unload();
 	delete m_Model;
 	delete m_ModelClown;
+	m_Model = nullptr;
+	m_ModelClown = nullptr;
 }
 
 void Player::Init()
