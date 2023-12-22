@@ -43,8 +43,7 @@ private:
 	int   m_ComboWait = 0;		//コンボを表示する時間
 
 	float m_Death = 0.14f;		//死亡するまでの時間
-	int   m_AnimeTime = 0;
-	int   m_AttackStop = 0;
+	int   m_AttackStopTime = 0;
 
 	int   m_Charge = 0;
 	int   m_OldCharge = 0;
@@ -53,6 +52,7 @@ private:
 	bool m_TutorialEnd = false;		//チュートリアル終わった？
 	bool m_DeleteInit = false;		//死亡時初回
 	bool m_AnimePause = true;		//アニメの向き切り替え
+	int  m_AnimeTime = 0;			//アニメの向き変更の時間
 	int  m_WalkEffectTime = 0;		//エフェクトを発生させる間隔時間
 	int	 m_DamageFlashTime = 0;		//フラッシュを発生させる時間
 
@@ -94,7 +94,7 @@ public:
 	void AddSpeed(float Speed) { m_Speed += Speed; };
 	void AddFullLife(int Life) { m_FullLife += Life; };
 	void AddEye(int Eye) { m_Eye += Eye; };
-	void SetAttackStop(int attackStop) { m_AttackStop = attackStop; };
+	void SetAttackStop(int attackStop) { m_AttackStopTime = attackStop; };
 	void AddCombo(int combo) { m_Combo += combo; }
 
 	//取得関数
@@ -104,7 +104,7 @@ public:
 	bool GetDash() { return m_Dash; }
 	int GetFullLife() { return m_FullLife; }
 	int GetLife() { return m_Life; }
-	int GetAttackStop() { return m_AttackStop; }
+	int GetAttackStop() { return m_AttackStopTime; }
 	int GetEye() { return m_Eye; }
 	bool GetDebug() { return m_DebugMode; }
 	PLAYER_STATE GetState() { return m_PlayerState; }

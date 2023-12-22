@@ -34,16 +34,16 @@ private:
 	bool	  m_TextureEnable = true;
 	int		  m_ColorChange = 0;
 
-	int   m_DaathTime = 1400;	 //©“®Á–Å
+	int     m_DaathTime = 1400;	 //©“®Á–Å
 	
 	bool	m_AnimePause = true;
 	int		m_AnimeTime = 0;
-	float	m_time2 = 0.0f;
-	int		m_NextRot = 1;
-	float	m_NextRotTime = 0.0f;
+	float   m_OrientationTime = 0.0f;	 //Œü‚«•ÏXŠÔ
+	float   m_NextRotTime = 0.0f;		 //Ÿ‚ÉŒü‚«•ÏX‚·‚é‚Ü‚Å
+	int     m_NextRot = 1;			     //Ÿ‚ÌŒü‚«
 	int	    m_EatStop = 0;
 	float	m_Death = 0.14f;
-	int		m_Back = 0;
+	int		m_KnockBackTime = 0;
 	int		m_DamageStop = 0;
 	bool	m_DeleteInit = false;
 

@@ -53,19 +53,19 @@ void ResultSeep::Update()
 	//ƒf[ƒ^Žæ“¾
 	auto resultSeeps = scene->GetGameObjects<ResultSeep>();
 
-	m_time2 += 0.1f;
-	if (m_time2 > m_NextRotTime) 
+	m_OrientationTime += 0.1f;
+	if (m_OrientationTime > m_NextRotTime) 
 	{
 		m_Rotation.y += (0.02f * m_NextRot);
 	}
 		
-	if (m_time2 > m_NextRotTime + 5.0f) {
+	if (m_OrientationTime > m_NextRotTime + 5.0f) {
 		int a = irand(0,2);
 		if (a == 1) {
 			m_NextRot *= -1;
 		}
 		m_NextRotTime = frand()* 30.0f + 10.0f;
-		m_time2 = 0.0f;
+		m_OrientationTime = 0.0f;
 	}
 	m_Velocity.x = GetForward().x * 0.003f;
 	m_Velocity.z = GetForward().z * 0.003f;

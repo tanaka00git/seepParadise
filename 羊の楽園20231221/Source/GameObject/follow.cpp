@@ -252,7 +252,7 @@ void Follow::Collision(float & groundHeight)
 	}
 
 	//ロック
-	auto rocks = scene->GetGameObjects<Rock>();//リストを取得
+	auto rocks = scene->GetGameObjects<Rock>();
 	for (Rock* rock : rocks) 
 	{
 		if (rock->GetState() != BREAKOBJECT_STATE::DEATH)
@@ -270,7 +270,7 @@ void Follow::Collision(float & groundHeight)
 		}
 	}
 	//チェスト
-	auto chests = scene->GetGameObjects<Chest>();//リストを取得
+	auto chests = scene->GetGameObjects<Chest>();
 	for (Chest* chest : chests)
 	{
 		if (chest->GetState() != BREAKOBJECT_STATE::DEATH)
@@ -288,7 +288,7 @@ void Follow::Collision(float & groundHeight)
 		}
 	}
 	//円系
-	auto cylinders = scene->GetGameObjects<Cylinder>();//リストを取得
+	auto cylinders = scene->GetGameObjects<Cylinder>();
 	for (Cylinder * cylinder : cylinders)
 	{
 		D3DXVECTOR3 position = cylinder->GetPosition();
@@ -307,7 +307,7 @@ void Follow::Collision(float & groundHeight)
 	}
 
 	//直方体
-	auto boxs = scene->GetGameObjects<Box>();//リストを取得
+	auto boxs = scene->GetGameObjects<Box>();
 	for (Box* box : boxs)
 	{
 		D3DXVECTOR3 position = box->GetPosition();
@@ -441,12 +441,12 @@ void Follow::PlayerTracking()
 
 void Follow::AttackStop()
 {
-	m_AttackStop --;
-	if (m_AttackStop > 0)
+	m_AttackStopTime --;
+	if (m_AttackStopTime > 0)
 	{
 		m_Velocity.x = (GetForward().x * 0.03f) * -1;
 		m_Velocity.z = (GetForward().z * 0.03f) * -1;
 	}
-	if (m_AttackStop <= 0) { m_AttackStop = 0; }
+	if (m_AttackStopTime <= 0) { m_AttackStopTime = 0; }
 }
 

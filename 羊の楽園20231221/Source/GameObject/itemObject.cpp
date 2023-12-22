@@ -102,7 +102,7 @@ void ItemObject::UpdateMove()
 	
 	//データ取得
 	Player* player = scene->GetGameObject<Player>();
-	auto follows = scene->GetGameObjects<Follow>();//リストを取得
+	auto follows = scene->GetGameObjects<Follow>();
 
 	//プレイヤーの距離を取得
 	D3DXVECTOR3 direction = m_Position - player->GetPosition();

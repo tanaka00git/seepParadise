@@ -8,11 +8,11 @@ private:
 	ID3D11PixelShader* m_PixelShader{};
 	ID3D11InputLayout* m_VertexLayout{};
 
-	D3DXVECTOR3 m_Velocity{};//速度
-
 	static class Model* m_Model;
-
-	bool m_DropFirst = true;
+	
+	//メンバ変数
+	D3DXVECTOR3 m_Velocity{};	//速度
+	bool m_DropFirst = true;	//ジャンプ初回
 	
 public:
 	static void Load();
@@ -21,8 +21,5 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
-	void SetDrop()
-	{
-		m_DropFirst = true;
-	};
+	void SetDrop(){ m_DropFirst = true;};
 };

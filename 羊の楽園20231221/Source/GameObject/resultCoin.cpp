@@ -41,7 +41,8 @@ void ResultCoin::Update()
 	GameObject::Update();
 
 	//ƒhƒƒbƒv‚É”ò‚Ô
-	if (m_DropFirst) {
+	if (m_DropFirst)
+	{
 		m_Velocity.y = 0.2f;
 		m_Rotation.y = frand() * 30;
 		m_Velocity.x = GetForward().x * (frand()* 0.03f);

@@ -101,10 +101,10 @@ void Player::Update()
 	Score* score = scene->GetGameObject<Score>();
 
 	//ãŒÀ’l§ŒÀ
-	if (m_FullLife > FULL_LIFE) { m_FullLife = FULL_LIFE; }
-	if (m_Life > m_FullLife)	{ m_Life = m_FullLife; }
-	if (m_Speed > FULL_SPEED)	{ m_Speed = FULL_SPEED; }
-	if (m_Eye > FULL_EYE)		{ m_Eye = FULL_EYE; }
+	if (m_FullLife > FULL_LIFE)  { m_FullLife = FULL_LIFE; }
+	if (m_Life > m_FullLife)	 { m_Life = m_FullLife; }
+	if (m_Speed > FULL_SPEED)	 { m_Speed = FULL_SPEED; }
+	if (m_Eye > FULL_EYE)		 { m_Eye = FULL_EYE; }
 	if (m_Charge > m_FullCharge) { m_Charge = m_FullCharge; }
 
 	//ƒRƒ“ƒ{ƒf[ƒ^‚ğ“n‚·
@@ -475,13 +475,13 @@ void Player::InvincibleColor()
 
 void Player::AttackStop()
 {
-	m_AttackStop--;
-	if (m_AttackStop > 0)	//UŒ‚’â~(‚Ü‚½UŒ‚‚Å‚«‚é‚Ü‚Å)
+	m_AttackStopTime--;
+	if (m_AttackStopTime > 0)	//UŒ‚’â~(‚Ü‚½UŒ‚‚Å‚«‚é‚Ü‚Å)
 	{
 		m_Velocity.x = (GetForward().x * 0.03f) * -1;
 		m_Velocity.z = (GetForward().z * 0.03f) * -1;
 	}
-	if (m_AttackStop <= 0) { m_AttackStop = 0; }
+	if (m_AttackStopTime <= 0) { m_AttackStopTime = 0; }
 }
 
 void Player::Anime()

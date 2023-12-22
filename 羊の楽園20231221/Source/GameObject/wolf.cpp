@@ -194,16 +194,16 @@ void Wolf::Draw()
 void Wolf::UpdateFree()
 {
 	//向き変更
-	m_time2 += 0.1f;
-	if (m_time2 > m_NextRotTime){m_Rotation.y += (0.02f * m_NextRot);}
-	if (m_time2 > m_NextRotTime + 5.0f) 
+	m_OrientationTime += 0.1f;
+	if (m_OrientationTime > m_NextRotTime){m_Rotation.y += (0.02f * m_NextRot);}
+	if (m_OrientationTime > m_NextRotTime + 5.0f) 
 	{
 		int a = irand(0,2);
 		if (a == 1) {
 			m_NextRot *= -1;
 		}
 		m_NextRotTime = frand() * 30.0f + 10.0f;
-		m_time2 = 0.0f;
+		m_OrientationTime = 0.0f;
 	}
 
 	//移動
@@ -229,11 +229,8 @@ void Wolf::UpdateTargeting()
 	D3DXVECTOR3 direction = m_Position - player->GetPosition();
 	float plength = D3DXVec3Length(&direction);
 
-	//プレイヤーの方を向く
-	
-
 	//仲間羊がいれば優先的に
-	auto follows = scene->GetGameObjects<Follow>();//リストを取得
+	auto follows = scene->GetGameObjects<Follow>();
 	Follow* nearestFollow = nullptr;
 	float nearestDistance = FLT_MAX;
 	for (Follow* follow : follows)
@@ -412,7 +409,6 @@ void Wolf::Collision(float & groundHeight)
 					player->AddLife(-1);
 					player->SetDamageMove();
 					m_SE_Eat->Play(1.0f);
-					m_Life --;
 					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
 				}
 			}
@@ -420,7 +416,7 @@ void Wolf::Collision(float & groundHeight)
 		
 	}
 
-	auto follows = scene->GetGameObjects<Follow>();//リストを取得
+	auto follows = scene->GetGameObjects<Follow>();
 	for (Follow* follow : follows) {
 		D3DXVECTOR3 position = follow->GetPosition();
 		D3DXVECTOR3 scale = follow->GetScale();
@@ -442,7 +438,6 @@ void Wolf::Collision(float & groundHeight)
 				{
 					m_WolfState = WOLF_STATE::EATING;
 					m_SE_Eat->Play(1.0f);
-					m_Life --;
 					follow->AddLife(-1);
 					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
 				}
@@ -451,7 +446,7 @@ void Wolf::Collision(float & groundHeight)
 	}
 
 	//他の仲間に重ならないようにする処理
-	auto wolfs = scene->GetGameObjects<Wolf>();//リストを取得
+	auto wolfs = scene->GetGameObjects<Wolf>();
 	for (Wolf* wolf : wolfs)
 	{
 		D3DXVECTOR3 position = wolf->GetPosition();
@@ -466,7 +461,7 @@ void Wolf::Collision(float & groundHeight)
 	}
 
 	//ロック
-	auto rocks = scene->GetGameObjects<Rock>();//リストを取得
+	auto rocks = scene->GetGameObjects<Rock>();
 	for (Rock* rock : rocks) {
 		if (rock->GetState() == BREAKOBJECT_STATE::NORMAL) {
 			D3DXVECTOR3 position = rock->GetPosition();
@@ -482,7 +477,7 @@ void Wolf::Collision(float & groundHeight)
 		}
 	}
 	//チェスト
-	auto chests = scene->GetGameObjects<Chest>();//リストを取得
+	auto chests = scene->GetGameObjects<Chest>();
 	for (Chest* chest : chests) {
 		if (chest->GetState() == BREAKOBJECT_STATE::NORMAL) {
 			D3DXVECTOR3 position = chest->GetPosition();
@@ -498,7 +493,7 @@ void Wolf::Collision(float & groundHeight)
 		}
 	}
 	//円系
-	auto cylinders = scene->GetGameObjects<Cylinder>();//リストを取得
+	auto cylinders = scene->GetGameObjects<Cylinder>();
 	for (Cylinder* cylinder : cylinders) {
 		D3DXVECTOR3 position = cylinder->GetPosition();
 		D3DXVECTOR3 scale = cylinder->GetScale();
@@ -514,7 +509,7 @@ void Wolf::Collision(float & groundHeight)
 		}
 	}
 	//直方体
-	auto boxs = scene->GetGameObjects<Box>();//リストを取得
+	auto boxs = scene->GetGameObjects<Box>();
 	for (Box* box : boxs) {
 		D3DXVECTOR3 position = box->GetPosition();
 		D3DXVECTOR3 scale = box->GetScale();
@@ -533,15 +528,12 @@ void Wolf::Collision(float & groundHeight)
 void Wolf::KnockBack()
 {
 	//後退
-	if (m_Back >= 1) {
-		m_Back --;
-		m_Velocity.x += (m_PLForward.x * 0.05f);
-		m_Velocity.z += (m_PLForward.z * 0.05f);
-		if (m_Back >= 14) {
-			m_Velocity.x += (m_PLForward.x * 0.3f);
-			m_Velocity.z += (m_PLForward.z * 0.3f);
-			if (m_Back <= 0) { m_Back = 0; }
-		}
+	if (m_KnockBackTime >= 1) 
+	{
+		m_KnockBackTime --;
+		m_Velocity.x += (m_PLForward.x * (m_KnockBackTime * 0.02f));
+		m_Velocity.z += (m_PLForward.z * (m_KnockBackTime * 0.02f));
+		if (m_KnockBackTime <= 0) { m_KnockBackTime = 0; }
 	}
 }
 
@@ -553,7 +545,7 @@ void Wolf::DisasterMove()
 	//一定時間経つとオートで敵を生み出す
 	Scene* scene = Manager::GetScene();
 	m_DisasterCount ++;
-	if (m_DisasterCount == 150) 
+	if (m_DisasterCount >= 150) 
 	{
 		Wolf* wolf = scene->AddGameObject<Wolf>(1);
 		wolf->SetEnemyData(1);
@@ -598,7 +590,7 @@ void Wolf::SetDamageMove()
 	m_WolfState = WOLF_STATE::DAMAGE;
 
 	m_Velocity.y = 0.1f;
-	m_Back = 10;
+	m_KnockBackTime = 10;
 	m_Life --;
 	m_SE_Kick->Play(1.0f);
 	m_ColorChange = 5;

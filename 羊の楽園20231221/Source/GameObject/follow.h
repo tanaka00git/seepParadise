@@ -28,7 +28,7 @@ private:
 	D3DXCOLOR m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	bool m_TextureEnable = true;
 
-	int m_AttackStop = 0;
+	int m_AttackStopTime = 0;
 	int m_DaathTime = 200;			//©“®Á–Å
 	int m_OrientationTime = 0;		//Œü‚«•ÏXŠÔ
 	int m_NextOrientationTime = 0;	//Ÿ‚ÉŒü‚«•ÏX‚·‚é‚Ü‚Å
@@ -68,9 +68,9 @@ public:
 	void DamageFlash();
 
 	FOLLOW_STATE GetState() { return m_FollowState; }
-	int GetAttackStop() { return m_AttackStop; }
+	int GetAttackStop() { return m_AttackStopTime; }
 
-	void SetAttackStop(int attackStop) { m_AttackStop = attackStop; };
+	void SetAttackStop(int attackStop) { m_AttackStopTime = attackStop; };
 	void AddLife(int Life){m_Life += Life;}
 	void SetState(FOLLOW_STATE followState) { m_FollowState = followState; }
 };
