@@ -4,13 +4,13 @@
 #include "..\Scene\scene.h"
 #include "..\GameObject\rock.h"
 #include "..\GameObject\breakObject.h"
-#include "..\App\compModel.h"
 #include "..\App\audio.h"
 #include "..\GameObject\coin.h"
 #include "..\GameObject\itemSpeed.h"
 #include "..\GameObject\itemLife.h"
 #include "..\GameObject\itemEye.h"
 #include "..\GameObject\hpBarS.h"
+#include "..\App\model.h"
 
 Model*Rock::m_Model{};
 

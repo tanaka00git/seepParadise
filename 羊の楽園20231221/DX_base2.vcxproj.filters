@@ -69,9 +69,6 @@
     <ClCompile Include="Source\App\sprite.cpp">
       <Filter>ソース ファイル\App</Filter>
     </ClCompile>
-    <ClCompile Include="Source\App\compModel.cpp">
-      <Filter>ソース ファイル\App</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GameObject\apple.cpp">
       <Filter>ソース ファイル\GameObject\Item</Filter>
     </ClCompile>
@@ -220,9 +217,6 @@
     </ClInclude>
     <ClInclude Include="Source\Scene\title.h">
       <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\App\compModel.h">
-      <Filter>ソース ファイル\App</Filter>
     </ClInclude>
     <ClInclude Include="Source\App\component.h">
       <Filter>ソース ファイル\App</Filter>

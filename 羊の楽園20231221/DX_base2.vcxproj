@@ -132,7 +132,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Source\App\audio.cpp" />
-    <ClCompile Include="Source\App\compModel.cpp" />
     <ClCompile Include="Source\App\input.cpp" />
     <ClCompile Include="Source\App\main.cpp" />
     <ClCompile Include="Source\App\manager.cpp" />
@@ -186,7 +185,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App\audio.h" />
-    <ClInclude Include="Source\App\compModel.h" />
     <ClInclude Include="Source\App\component.h" />
     <ClInclude Include="Source\App\input.h" />
     <ClInclude Include="Source\App\main.h" />

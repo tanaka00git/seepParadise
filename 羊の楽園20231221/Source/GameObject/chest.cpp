@@ -6,13 +6,13 @@
 #include "..\GameObject\player.h"
 #include "..\GameObject\chest.h"
 #include "..\GameObject\breakObject.h"
-#include "..\App\compModel.h"
 #include "..\GameObject\coin.h"
 #include "..\GameObject\itemSpeed.h"
 #include "..\GameObject\itemLife.h"
 #include "..\GameObject\itemEye.h"
 #include "..\GameObject\hpBarS.h"
 #include "..\App\audio.h"
+#include "..\App\model.h"
 
 Model*Chest::m_Model{};
 Audio*Chest::m_SE_Chest{};
