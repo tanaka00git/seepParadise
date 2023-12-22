@@ -14,6 +14,8 @@ private:
 
 	//ƒƒ“ƒo•Ï”
 	int m_Count = 0;
+	int m_CountFrameDelay = 0;
+
 
 public:
 	static void Load();

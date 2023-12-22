@@ -7,6 +7,7 @@
 
 ID3D11ShaderResourceView*Smoke::m_Texture{};
 #define COUNT_FREAM_DELAY 2
+
 void Smoke::Load()
 {
 	// テクスチャ読み込み

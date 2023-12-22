@@ -7,11 +7,14 @@
 
 ID3D11ShaderResourceView*Explosion::m_Texture{};
 
+#define COUNT_FREAM_DELAY 2
+#define POSITION_Y 0.5f
+
 void Explosion::Load()
 {
 	// テクスチャ読み込み
 	D3DX11CreateShaderResourceViewFromFile(Renderer::GetDevice(),
-		"asset\\texture\\e_explosion1.dds",
+		"asset\\texture\\explosion.png",
 		NULL,
 		NULL,
 		&m_Texture,
@@ -26,27 +29,28 @@ void Explosion::Unload()
 
 void Explosion::Init()
 {
+
 	VERTEX_3D vertex[4];
 	//3Dだと左奥から
-	vertex[0].Position = D3DXVECTOR3(-1.0f, 1.0f, 0.0f);
+	vertex[0].Position = D3DXVECTOR3(-1.0f, 1.0f + POSITION_Y, 0.0f);
 	vertex[0].Normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	vertex[0].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[0].TexCoord = D3DXVECTOR2(0.0f, 0.0f);
 
 	//右奥
-	vertex[1].Position = D3DXVECTOR3(1.0f, 1.0f, 0.0f);
+	vertex[1].Position = D3DXVECTOR3(1.0f, 1.0f + POSITION_Y, 0.0f);
 	vertex[1].Normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	vertex[1].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[1].TexCoord = D3DXVECTOR2(1.0f, 0.0f);
 
 	//左前
-	vertex[2].Position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);
+	vertex[2].Position = D3DXVECTOR3(-1.0f, -1.0f + POSITION_Y, 0.0f);
 	vertex[2].Normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	vertex[2].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[2].TexCoord = D3DXVECTOR2(0.0f, 1.0f);
 
 	//右前
-	vertex[3].Position = D3DXVECTOR3(1.0f, -1.0f, 0.0f);
+	vertex[3].Position = D3DXVECTOR3(1.0f, -1.0f + POSITION_Y, 0.0f);
 	vertex[3].Normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	vertex[3].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[3].TexCoord = D3DXVECTOR2(1.0f, 1.0f);
@@ -69,6 +73,7 @@ void Explosion::Init()
 	//変更、unlitTextureVSは2D用、3DはvertexLightingVS
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\unlitTextureVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\unlitTexturePS.cso");
+
 }
 
 void Explosion::Uninit()
@@ -83,10 +88,18 @@ void Explosion::Uninit()
 
 void Explosion::Update()
 {
-	m_Count++;
-	//m_Count = m_Count % 16;　//無限ループさせたいときに便利
+	m_CountFrameDelay++;
 
-	if (m_Count >= 16){ SetDestroy(); }
+
+	//何フレームに一回更新する
+	if (m_CountFrameDelay >= COUNT_FREAM_DELAY)
+	{
+		m_Count++;
+		//m_Count = m_Count % 16;　//無限ループさせたいときに便利
+
+		m_CountFrameDelay = 0;
+		if (m_Count >= 16) { SetDestroy(); }
+	}
 }
 
 void Explosion::Draw()
@@ -103,25 +116,25 @@ void Explosion::Draw()
 	VERTEX_3D* vertex = (VERTEX_3D*)msr.pData;
 
 	//3Dだと左奥から
-	vertex[0].Position = D3DXVECTOR3(-1.0f, 1.0f, 0.0f);
+	vertex[0].Position = D3DXVECTOR3(-1.0f, 1.0f + POSITION_Y, 0.0f);
 	vertex[0].Normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	vertex[0].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[0].TexCoord = D3DXVECTOR2(x, y);
 
 	//右奥
-	vertex[1].Position = D3DXVECTOR3(1.0f, 1.0f, 0.0f);
+	vertex[1].Position = D3DXVECTOR3(1.0f, 1.0f + POSITION_Y, 0.0f);
 	vertex[1].Normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	vertex[1].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[1].TexCoord = D3DXVECTOR2(x + 0.25f, y);
 
 	//左前
-	vertex[2].Position = D3DXVECTOR3(-1.0f, -1.0f, 0.0f);
+	vertex[2].Position = D3DXVECTOR3(-1.0f, -1.0f + POSITION_Y, 0.0f);
 	vertex[2].Normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	vertex[2].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[2].TexCoord = D3DXVECTOR2(x, y + 0.25f);
 
 	//右前
-	vertex[3].Position = D3DXVECTOR3(1.0f, -1.0f, 0.0f);
+	vertex[3].Position = D3DXVECTOR3(1.0f, -1.0f + POSITION_Y, 0.0f);
 	vertex[3].Normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
 	vertex[3].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[3].TexCoord = D3DXVECTOR2(x+0.25f, y + 0.25f);

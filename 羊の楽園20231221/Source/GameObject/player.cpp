@@ -387,7 +387,7 @@ void Player::WalkEffect()
 	D3DXVECTOR3 effectPosition = m_Position;
 	effectPosition.x -= GetForward().x * 0.8f;
 	effectPosition.z -= GetForward().z * 0.8f;
-	effectPosition.y += 0.3f;
+	
 
 	//数フレーム歩いたらエフェクト発生
 	if (m_WalkEffectTime >= WALK_EFFECT_TIME)
