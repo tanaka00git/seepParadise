@@ -24,8 +24,14 @@ void ResultCoin::Unload()
 
 void ResultCoin::Init()
 {
-
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
+	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
+
+
+	m_Velocity.y = 0.2f;
+	m_Rotation.y = frand() * 30;
+	m_Velocity.x = GetForward().x * (frand() * 0.03f);
+	m_Velocity.z = GetForward().z * (frand() * 0.03f);
 }
 
 void ResultCoin::Uninit()
