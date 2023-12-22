@@ -102,13 +102,13 @@ void ResultSeep::Update()
 	}
 
 	//‹^Ž—ƒAƒjƒ
-	if (m_time > 1.5f) 
+	if (m_AnimeTime > 1.5f) 
 	{
-		m_Rotation.x = (0.03f*m_Pause);
-		m_Pause = !m_Pause;
-		m_time = 0.0f;
+		m_Rotation.x = (0.03f*m_AnimePause);
+		m_AnimePause = !m_AnimePause;
+		m_AnimeTime = 0.0f;
 	}
-	m_time += 0.1f;
+	m_AnimeTime += 0.1f;
 }
 
 

@@ -57,7 +57,6 @@ void ResultCoin::Update()
 	if (m_Position.y < groundHeight && m_Velocity.y < 0.0f) {
 		m_Position.y = groundHeight;
 		m_Velocity *= 0.0f;
-		m_DropJump = false;
 	}
 
 	//Ž©“®‰ñ“]

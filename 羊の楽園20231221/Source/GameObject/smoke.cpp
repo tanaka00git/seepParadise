@@ -90,12 +90,7 @@ void Smoke::Update()
 	{
 		m_Count++;
 		m_CountFrameDelay = 0;
-		if (m_Count >= 16)
-		{
-			SetDestroy();
-			return;
-		}
-
+		if (m_Count >= 16){ SetDestroy(); }
 	}
 }
 

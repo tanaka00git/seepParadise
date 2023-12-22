@@ -28,26 +28,23 @@ private:
 	D3DXCOLOR m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	bool m_TextureEnable = true;
 
-	bool m_Dash;
-	
 	int m_AttackStop = 0;
-	int m_DaathTime = 200;	//自動消滅
+	int m_DaathTime = 200;			//自動消滅
 	int m_OrientationTime = 0;		//向き変更時間
 	int m_NextOrientationTime = 0;	//次に向き変更するまで
 	int m_NextRot = 1;				//次の向き
 
-	int m_AgainFollow = 0;	//再度仲間になれるようになる時間
+	int m_AgainFollow = 0;	//再度仲間になれるまでの時間
 
-	int m_AnimationTime = 0;
-	bool m_Pause = true;
+	int   m_AnimeTime = 0;
+	bool  m_AnimePause = true;
 	float m_Death = 0.14f;
-	int m_WalkEffectTime = 0;
-	int		m_DamageFlashTime = 0;
+	int   m_WalkEffectTime = 0;
+	int	  m_DamageFlashTime = 0;
 
 	//ステータス
-	int  m_Life = 1;
+	int   m_Life = 1;
 	float m_Speed = 6.5f;
-	float m_ShadowSC = 1.0f;
 
 public:
 	static void Load();

@@ -26,8 +26,6 @@ private:
 	static class Audio* m_SE_Eat;
 	static class Audio* m_SE_Kick;
 
-	bool  m_Junp = false;
-	bool  m_Pause = true;
 
 	class Shadow* m_Shadow{};
 	class HpBarS* m_HpBarS{};
@@ -37,12 +35,13 @@ private:
 	int		  m_ColorChange = 0;
 
 	int   m_DaathTime = 1400;	 //é©ìÆè¡ñ≈
-
-	int		m_time = 0;
+	
+	bool	m_AnimePause = true;
+	int		m_AnimeTime = 0;
 	float	m_time2 = 0.0f;
 	int		m_NextRot = 1;
 	float	m_NextRotTime = 0.0f;
-	int	   m_EatStop = 0;
+	int	    m_EatStop = 0;
 	float	m_Death = 0.14f;
 	int		m_Back = 0;
 	int		m_DamageStop = 0;

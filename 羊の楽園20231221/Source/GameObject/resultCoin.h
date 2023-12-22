@@ -12,9 +12,7 @@ private:
 
 	static class Model* m_Model;
 
-	int m_DaathTime = 1000;
 	bool m_DropFirst = true;
-	bool m_DropJump = false;
 	
 public:
 	static void Load();
@@ -23,8 +21,8 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
-	void SetDrop() {
+	void SetDrop()
+	{
 		m_DropFirst = true;
-		m_DropJump = true;
 	};
 };

@@ -2,25 +2,27 @@
 #include "..\App\renderer.h"
 #include "..\GameObject\field.h"
 
+#define WIDTH 120.0f
+#define DEQTH 120.0f
+
 void Field::Init()
 {
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
 
-	float x = -60.0f;
-	float z = -60.0f;
-	float Width = 120.0f;
-	float Deqth = 120.0f;
+	float x = -WIDTH / 2;
+	float z = -DEQTH / 2;
+
 	const char* TextureName = "asset\\texture\\grass.png";
 
 	VERTEX_3D vertex[4];
 
-	vertex[0].Position = D3DXVECTOR3(x, 0.0f, z + Deqth);
+	vertex[0].Position = D3DXVECTOR3(x, 0.0f, z + DEQTH);
 	vertex[0].Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	vertex[0].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[0].TexCoord = D3DXVECTOR2(0.0f, 0.0f);
 
-	vertex[1].Position = D3DXVECTOR3(x + Width, 0.0f, z + Deqth);
+	vertex[1].Position = D3DXVECTOR3(x + WIDTH, 0.0f, z + DEQTH);
 	vertex[1].Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	vertex[1].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[1].TexCoord = D3DXVECTOR2(10.0f, 0.0f);
@@ -30,7 +32,7 @@ void Field::Init()
 	vertex[2].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[2].TexCoord = D3DXVECTOR2(0.0f, 10.0f);
 
-	vertex[3].Position = D3DXVECTOR3(x + Width, 0.0f, z);
+	vertex[3].Position = D3DXVECTOR3(x + WIDTH, 0.0f, z);
 	vertex[3].Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	vertex[3].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[3].TexCoord = D3DXVECTOR2(10.00f, 10.0f);

@@ -15,13 +15,14 @@ protected:
 	ID3D11VertexShader* m_VertexShader{};
 	ID3D11PixelShader* m_PixelShader{};
 	ID3D11InputLayout* m_VertexLayout{};
-	D3DXVECTOR3 m_Velocity{};
 
 	class Shadow* m_Shadow{};
 
-	int  m_DaathTime = 500;
-	bool m_DeleteInit = false;
-	bool m_DropJump = false;
+	//ƒƒ“ƒo•Ï”
+	D3DXVECTOR3 m_Velocity{};
+	int  m_DaathTime  = 500;
+	bool m_DeleteInit = false;	//Á‹‰Šú‰»
+	bool m_DropJump   = false;	//ƒWƒƒƒ“ƒv‚·‚é
 
 public:
 	virtual void Init();

@@ -109,6 +109,7 @@ void Follow::Update()
 	D3DXVECTOR3 shadowPosition = m_Position;
 	shadowPosition.y = groundHeight + 0.01f;
 	m_Shadow->SetPosition(shadowPosition);
+	m_Shadow->SetScale(D3DXVECTOR3(m_Scale.x, m_Scale.y, m_Scale.z));
 
 	//疑似アニメ
 	Anime();
@@ -216,11 +217,6 @@ void Follow::UpdateDeath()
 		m_Scale *= 0.0f;
 		SetDestroy();
 	}
-
-	//影縮小
-	m_ShadowSC -= 0.01f;
-	if (m_ShadowSC < 0.0f) { m_ShadowSC = 0.0f; }
-	m_Shadow->SetScale(D3DXVECTOR3(m_ShadowSC, m_ShadowSC, m_ShadowSC));
 }
 
 void Follow::Collision(float & groundHeight)
@@ -241,8 +237,9 @@ void Follow::Collision(float & groundHeight)
 		float flength = D3DXVec3Length(&direction);
 
 		if (flength < scale.x) 
-{
-			m_Velocity.x += (m_Position.x - follow->m_Position.x) * CONTACT_EXTRUSION;	//他の羊との接触でズレる
+		{
+			//他の羊との接触でズレる
+			m_Velocity.x += (m_Position.x - follow->m_Position.x) * CONTACT_EXTRUSION;	
 			m_Velocity.z += (m_Position.z - follow->m_Position.z) * CONTACT_EXTRUSION;
 
 			//仲間羊に触れたら仲間に
@@ -256,7 +253,8 @@ void Follow::Collision(float & groundHeight)
 
 	//ロック
 	auto rocks = scene->GetGameObjects<Rock>();//リストを取得
-	for (Rock* rock : rocks) {//範囲forループ
+	for (Rock* rock : rocks) 
+	{
 		if (rock->GetState() != BREAKOBJECT_STATE::DEATH)
 		{
 			D3DXVECTOR3 position = rock->GetPosition();
@@ -273,7 +271,8 @@ void Follow::Collision(float & groundHeight)
 	}
 	//チェスト
 	auto chests = scene->GetGameObjects<Chest>();//リストを取得
-	for (Chest* chest : chests) {//範囲forループ
+	for (Chest* chest : chests)
+	{
 		if (chest->GetState() != BREAKOBJECT_STATE::DEATH)
 		{
 			D3DXVECTOR3 position = chest->GetPosition();
@@ -290,7 +289,8 @@ void Follow::Collision(float & groundHeight)
 	}
 	//円系
 	auto cylinders = scene->GetGameObjects<Cylinder>();//リストを取得
-	for (Cylinder * cylinder : cylinders) {//範囲forループ
+	for (Cylinder * cylinder : cylinders)
+	{
 		D3DXVECTOR3 position = cylinder->GetPosition();
 		D3DXVECTOR3 scale = cylinder->GetScale();
 		D3DXVECTOR3 direction = m_Position - position;
@@ -308,41 +308,40 @@ void Follow::Collision(float & groundHeight)
 
 	//直方体
 	auto boxs = scene->GetGameObjects<Box>();//リストを取得
-	for (Box* box : boxs) {//範囲forループ
-		if (box->GetUse()) {
-			D3DXVECTOR3 position = box->GetPosition();
-			D3DXVECTOR3 scale = box->GetScale();
+	for (Box* box : boxs)
+	{
+		D3DXVECTOR3 position = box->GetPosition();
+		D3DXVECTOR3 scale = box->GetScale();
 
-			if (position.x - scale.x < m_Position.x && m_Position.x < position.x + scale.x &&
-				position.z - scale.z < m_Position.z && m_Position.z < position.z + scale.z) {
-				if (m_Position.y < position.y + scale.y * 1.8f - 0.5f) {//2.0fはモデルで調整
-					m_Velocity.x = (m_Position.x - position.x) * CONTACT_EXTRUSION;
-					m_Velocity.z = (m_Position.z - position.z) * CONTACT_EXTRUSION;
+		if (position.x - scale.x < m_Position.x && m_Position.x < position.x + scale.x &&
+			position.z - scale.z < m_Position.z && m_Position.z < position.z + scale.z) {
+			if (m_Position.y < position.y + scale.y * 1.8f - 0.5f) {//2.0fはモデルで調整
+				m_Velocity.x = (m_Position.x - position.x) * CONTACT_EXTRUSION;
+				m_Velocity.z = (m_Position.z - position.z) * CONTACT_EXTRUSION;
 
-				}
-				else { groundHeight = position.y + scale.y * 1.8f; }
 			}
+			else { groundHeight = position.y + scale.y * 1.8f; }
 		}
 	}
 }
 
 void Follow::Anime()
 {
-	m_AnimationTime++;
+	m_AnimeTime++;
 	
 	//時間調整
 	int time = 14;
 	if (m_FollowState == FOLLOW_STATE::DASH) { time = 4; }
 
-	if (m_AnimationTime > time)
+	if (m_AnimeTime > time)
 	{
 		//傾ける
-		if (m_FollowState == FOLLOW_STATE::DASH) { m_Rotation.x = (0.08f * m_Pause); }
-		else { m_Rotation.x = (0.03f * m_Pause); }
+		if (m_FollowState == FOLLOW_STATE::DASH) { m_Rotation.x = (0.08f * m_AnimePause); }
+		else { m_Rotation.x = (0.03f * m_AnimePause); }
 
 		//リセット
-		m_Pause = !m_Pause;
-		m_AnimationTime = 0;
+		m_AnimePause = !m_AnimePause;
+		m_AnimeTime = 0;
 	}
 }
 

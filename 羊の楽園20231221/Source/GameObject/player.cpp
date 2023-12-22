@@ -72,8 +72,6 @@ void Player::Init()
 	m_WalkSE->Load("asset\\audio\\スリッパで歩く.wav");
 	m_DamageSE = AddComponent<Audio>();
 	m_DamageSE->Load("asset\\audio\\打撃8.wav");
-	m_ChargeSE = AddComponent<Audio>();
-	m_ChargeSE->Load("asset\\audio\\決定ボタンを押す41.wav");
 	m_DashSE = AddComponent<Audio>();
 	m_DashSE->Load("asset\\audio\\高速移動.wav");
 
@@ -83,7 +81,6 @@ void Player::Init()
 	m_HpBarS->SetLifeDateFC(m_FullLife, m_Life);
 	m_HpBarS->SetScale(m_BarScale);
 
-	m_Use = true;
 }
 
 void Player::Uninit()
@@ -124,10 +121,6 @@ void Player::Update()
 	m_HpBarS->SetCharge(m_Charge, m_FullCharge, m_Dash);  //チャージをHPバーにセットするよ
 	score->SetLifeF(m_Life,m_FullLife);
 
-	//マウス移動
-	MouseTargetMove();
-
-
 	//生死時の処理
 	if (m_Life <= 0) { m_PlayerState = PLAYER_STATE::DEATH; }
 
@@ -141,6 +134,9 @@ void Player::Update()
 		break;
 	case PLAYER_STATE::DEATH:
 		UpdateDeath();
+		break;
+	case  PLAYER_STATE::UNUSED:
+		UpdateUnused();
 		break;
 	}
 
@@ -174,6 +170,7 @@ void Player::Update()
 	D3DXVECTOR3 shadowPosition = m_Position;
 	shadowPosition.y = groundHeight + 0.01f;
 	m_Shadow->SetPosition(shadowPosition);
+	m_Shadow->SetScale(D3DXVECTOR3(m_Scale.x, m_Scale.y, m_Scale.z));
 
 	//HPバーの移動
 	D3DXVECTOR3 HpBarPosition = m_Position;
@@ -219,29 +216,26 @@ void Player::UpdateDeath()
 	m_Rotation.y -= m_Death;
 	m_Scale.x -= 0.01f; m_Scale.y -= 0.01f; m_Scale.z -= 0.01f;
 	m_Death -= 0.001f;
-	m_ShadowSC -= 0.01f;
 
 	if (m_Rotation.z > 3.1415f / 4) { m_Rotation.z = 3.1415f / 4; }
 	if (m_Death < 0.0f) { m_Death = 0.0f; }
 	if (m_Scale.y < 0.0f)
 	{
+	
 		m_Scale *= 0.0f;
-		m_Use = false;
+		m_PlayerState = PLAYER_STATE::UNUSED;
 	}
-
-	if (m_ShadowSC < 0.0f) { m_ShadowSC = 0.0f; }
-	m_Shadow->SetScale(D3DXVECTOR3(m_ShadowSC, m_ShadowSC, m_ShadowSC));
 }
 
 void Player::UpdateNormal()
 {
 	m_Scale.y = 1.0f;
+
+	//マウス移動
+	MouseTargetMove();
+
 	m_Velocity.x = GetForward().x * (m_Speed * 0.01f);
 	m_Velocity.z = GetForward().z * (m_Speed * 0.01f);
-
-	//チャージ消費
-	//m_Charge -= 10;
-	//if (m_Charge <= 0) { m_Charge = 0; }
 
 	if (Input::GetKeyPress(VK_LBUTTON) && m_Charge >= 10) { m_PlayerState = PLAYER_STATE::DASH; }
 }
@@ -249,6 +243,9 @@ void Player::UpdateNormal()
 void Player::UpdateDash()
 {
 	m_Scale.y = 1.0f;
+
+	//マウス移動
+	MouseTargetMove();
 
 	if (!m_DashInit)
 	{
@@ -272,7 +269,6 @@ void Player::UpdateDash()
 	{
 		m_Charge = 0;
 		m_DashInit = false;
-		m_ChargeFlagSE = false;
 		m_PlayerState = PLAYER_STATE::NORMAL;
 	}
 
@@ -283,13 +279,18 @@ void Player::UpdateDash()
 	}
 }
 
+void Player::UpdateUnused()
+{
+	m_Scale *= 0.0f;
+}
+
 void Player::Collision(float & groundHeight)
 {
 	Scene* scene = Manager::GetScene();
 
 	//ロック
-	auto rocks = scene->GetGameObjects<Rock>();//リストを取得
-	for (Rock* rock : rocks) {//範囲forループ
+	auto rocks = scene->GetGameObjects<Rock>();
+	for (Rock* rock : rocks) {
 		if (rock->GetState() != BREAKOBJECT_STATE::DEATH)
 		{
 			D3DXVECTOR3 position = rock->GetPosition();
@@ -306,8 +307,8 @@ void Player::Collision(float & groundHeight)
 	}
 
 	//チェスト
-	auto chests = scene->GetGameObjects<Chest>();//リストを取得
-	for (Chest* chest : chests) {//範囲forループ
+	auto chests = scene->GetGameObjects<Chest>();
+	for (Chest* chest : chests) {
 		if (chest->GetState() != BREAKOBJECT_STATE::DEATH)
 		{
 			D3DXVECTOR3 position = chest->GetPosition();
@@ -324,8 +325,8 @@ void Player::Collision(float & groundHeight)
 	}
 
 	//円系
-	auto cylinders = scene->GetGameObjects<Cylinder>();//リストを取得
-	for (Cylinder * cylinder : cylinders)			   //範囲forループ
+	auto cylinders = scene->GetGameObjects<Cylinder>();
+	for (Cylinder * cylinder : cylinders)			  
 	{
 		D3DXVECTOR3 position = cylinder->GetPosition();
 		D3DXVECTOR3 scale = cylinder->GetScale();
@@ -344,30 +345,25 @@ void Player::Collision(float & groundHeight)
 	}
 
 	//直方体
-	auto boxs = scene->GetGameObjects<Box>();//リストを取得
-	for (Box* box : boxs) //範囲forループ
+	auto boxs = scene->GetGameObjects<Box>();
+	for (Box* box : boxs)
 	{
-		if (box->GetUse())
-		{
-			D3DXVECTOR3 position = box->GetPosition();
-			D3DXVECTOR3 scale = box->GetScale();
-			if (position.x - scale.x < m_Position.x && m_Position.x < position.x + scale.x &&
-				position.z - scale.z < m_Position.z && m_Position.z < position.z + scale.z) {
-				if (m_Position.y < position.y + scale.y * 1.8f - 0.5f) //2.0fはモデルで調整
-				{
-					m_Velocity.x = (m_Position.x - position.x) * 0.02f;
-					m_Velocity.z = (m_Position.z - position.z) * 0.02f;
-				}
-				else { groundHeight = position.y + scale.y * 1.8f; }	//こちらも2.0
+		D3DXVECTOR3 position = box->GetPosition();
+		D3DXVECTOR3 scale = box->GetScale();
+		if (position.x - scale.x < m_Position.x && m_Position.x < position.x + scale.x &&
+			position.z - scale.z < m_Position.z && m_Position.z < position.z + scale.z) {
+			if (m_Position.y < position.y + scale.y * 1.8f - 0.5f) //2.0fはモデルで調整
+			{
+				m_Velocity.x = (m_Position.x - position.x) * 0.02f;
+				m_Velocity.z = (m_Position.z - position.z) * 0.02f;
 			}
+			else { groundHeight = position.y + scale.y * 1.8f; }	//こちらも2.0
 		}
 	}
 }
 
 void Player::SetDamageMove()
 {
-	if (m_Life <= 0) { return; }
-
 	Scene* scene = Manager::GetScene();
 	InfoLog* infoLog = scene->AddGameObject<InfoLog>(2);
 	infoLog->SetNum(4, 2, D3DXVECTOR3(100, -10, 0));
@@ -431,8 +427,6 @@ void Player::MouseTargetMove()
 	float normalizedX = (2.0f * static_cast<float>(mousePos.x)) / SCREEN_WIDTH_FLOAT - 1.0f;
 	float normalizedY = 1.0f - (2.0f * static_cast<float>(mousePos.y)) / SCREEN_HEIGHT_FLOAT - 1.0f;
 
-
-
 	// ビュー行列の逆行列を取得
 	D3DXMATRIX inverseViewMatrix;
 	D3DXMatrixInverse(&inverseViewMatrix, NULL, &viewMatrix);
@@ -491,21 +485,21 @@ void Player::AttackStop()
 void Player::Anime()
 {
 
-	m_time++;
+	m_AnimeTime++;
 	int time = 14;
 	if (m_PlayerState == PLAYER_STATE::DASH) { time = 4; }
 
-	if (m_time > time)
+	if (m_AnimeTime > time)
 	{
-		if (m_Pause) { m_WalkSE->Play(1.0f); }
+		if (m_AnimePause) { m_WalkSE->Play(1.0f); }
 
 		//傾ける
-		if (m_PlayerState == PLAYER_STATE::DASH) { m_Rotation.x = (0.08f * m_Pause); }
-		else { m_Rotation.x = (0.03f * m_Pause); }
+		if (m_PlayerState == PLAYER_STATE::DASH) { m_Rotation.x = (0.08f * m_AnimePause); }
+		else { m_Rotation.x = (0.03f * m_AnimePause); }
 
 		//リセット
-		m_Pause = !m_Pause;
-		m_time = 0;
+		m_AnimePause = !m_AnimePause;
+		m_AnimeTime = 0;
 	}
 
 }

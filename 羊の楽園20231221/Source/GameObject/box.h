@@ -10,8 +10,6 @@ private:
 	ID3D11InputLayout* m_VertexLayout{};
 
 	static class Model* m_Model;
-	bool m_Use = true;
-
 public:
 	static void Load();
 	static void Unload();
@@ -19,5 +17,4 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
-	bool GetUse() { return m_Use; }
 };

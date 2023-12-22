@@ -6,6 +6,7 @@ enum class PLAYER_STATE
 	NORMAL,
 	DASH,
 	DEATH,
+	UNUSED,
 };
 
 class Player : public GameObject
@@ -18,46 +19,42 @@ private:
 	D3DXMATRIX	m_ViewMatrix{};
 
 	//読み込み
-	class Audio* m_ShotSE{};
-	class Audio* m_WalkSE{};
-	class Audio* m_DamageSE{};
-	class Audio* m_ChargeSE{};
-	class Audio* m_DashSE{};
-	class Shadow* m_Shadow{};
-	class HpBarS* m_HpBarS{};
-	static int m_PlColor;		//羊の色
-	static int m_PlClown;		//王冠
+	class Audio*	m_ShotSE{};
+	class Audio*	m_WalkSE{};
+	class Audio*	m_DamageSE{};
+	class Audio*	m_DashSE{};
+	class Shadow*	m_Shadow{};
+	class HpBarS*	m_HpBarS{};
+	static int		m_PlColor;		//羊の色
+	static int		m_PlClown;		//王冠
 	static class Model* m_Model;
 	static class Model* m_ModelClown;
 
 	//メンバ変数
-	static int m_DebugMode;		//デバッグモード判定
-	D3DXVECTOR3 m_Velocity{};	//速度
-	bool m_Use;
-	int m_InvincibleTime = -1;	//無敵時間
-	D3DXCOLOR m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	bool m_TextureEnable = true;
+	static int	m_DebugMode;									//デバッグモード判定
+	D3DXCOLOR	m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);	//配色
+	bool		m_TextureEnable = true;							//テクスチャを描画するか
+	D3DXVECTOR3 m_Velocity{};									//速度
+	int			m_InvincibleTime = 0;							//無敵時間
 
-	bool m_DashInit = false;	//ダッシュ初回時
-	bool m_Dash;				//ダッシュ用
-	int  m_ComboWait = 0;		//コンボを表示する時間
+	bool  m_DashInit = false;	//ダッシュ初回時
+	bool  m_Dash;				//ダッシュ用
+	int   m_Combo = 0;			//コンボ数
+	int   m_ComboWait = 0;		//コンボを表示する時間
 
 	float m_Death = 0.14f;		//死亡するまでの時間
-	int m_time = 0;
-	int m_AttackStop = 0;
+	int   m_AnimeTime = 0;
+	int   m_AttackStop = 0;
 
-	int m_Combo = 0;
-	int m_Charge = 0;
-	int  m_OldCharge = 0;
-	int m_FullCharge = 2000;
+	int   m_Charge = 0;
+	int   m_OldCharge = 0;
+	int   m_FullCharge = 2000;
 
-	bool m_ChargeFlagSE = false;	//チャージフラグ時のSE初回
 	bool m_TutorialEnd = false;		//チュートリアル終わった？
 	bool m_DeleteInit = false;		//死亡時初回
-	bool m_Pause = true;
-	bool m_DamageMove = false;
-	int m_WalkEffectTime = 0;
-	int	 m_DamageFlashTime = 0;
+	bool m_AnimePause = true;		//アニメの向き切り替え
+	int  m_WalkEffectTime = 0;		//エフェクトを発生させる間隔時間
+	int	 m_DamageFlashTime = 0;		//フラッシュを発生させる時間
 
 	//ステータス系
 	float m_Speed = 6.5;
@@ -65,7 +62,6 @@ private:
 	int   m_Life = 3;
 	int   m_FullLife = 3;
 	D3DXVECTOR3 m_BarScale = D3DXVECTOR3(1.2f, 1.0f, 1.2f);		//HPバーのサイズ
-	float m_ShadowSC = 1.0f;
 
 public:
 	static void Load();
@@ -79,6 +75,8 @@ public:
 	void UpdateDeath();
 	void UpdateNormal();
 	void UpdateDash();
+	void UpdateUnused();
+
 	void Collision(float &groundHeight);
 	void WalkEffect();
 	void TutorialText();
@@ -87,6 +85,7 @@ public:
 	void DamageFlash();
 	void AttackStop();
 	void Anime();
+
 	//セット関数
 	void SetDamageMove();
 	void AddCharge(int charge) { m_Charge += charge; };
@@ -103,7 +102,6 @@ public:
 	int GetCharge() { return m_Charge; }
 	int GetFullCharge() { return m_FullCharge; }
 	bool GetDash() { return m_Dash; }
-	bool GetUse() { return m_Use; }
 	int GetFullLife() { return m_FullLife; }
 	int GetLife() { return m_Life; }
 	int GetAttackStop() { return m_AttackStop; }

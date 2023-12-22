@@ -12,7 +12,8 @@ private:
 	ID3D11PixelShader* m_PixelShader{};
 	ID3D11InputLayout* m_VertexLayout{};
 
-	int m_Count{};
+	//ƒƒ“ƒo•Ï”
+	int m_Count = 0;
 
 public:
 	static void Load();

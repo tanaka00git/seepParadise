@@ -54,7 +54,7 @@ void Chest::UpdateDeath()
 		m_SE_Chest->Play(1.0f);
 
 		//アイテムドロップ
-		int a = irand(0, DROP_RAIT);
+		int a = irand(0, DROP_RAIT-1);
 		if (a == 0)
 		{
 			//どれかが選出される

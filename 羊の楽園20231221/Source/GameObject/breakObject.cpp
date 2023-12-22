@@ -1,12 +1,12 @@
 #include "..\App\main.h"
 #include "..\App\manager.h"
 #include "..\App\renderer.h"
+#include "..\App\audio.h"
 #include "..\Scene\scene.h"
 #include "..\GameObject\breakObject.h"
 #include "..\GameObject\follow.h"
 #include "..\GameObject\player.h"
 #include "..\GameObject\hpBarS.h"
-#include "..\App\audio.h"
 
 Audio*BreakObject::m_SE_Kick{};
 

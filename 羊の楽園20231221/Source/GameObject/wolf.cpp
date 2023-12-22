@@ -67,7 +67,6 @@ void Wolf::Init()
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
 	
 	m_Shadow = AddComponent<Shadow>();
-	m_Shadow->SetScale(D3DXVECTOR3(0.65f, 0.65f, 0.65f));
 
 	m_HpBarS = AddComponent<HpBarS>();
 	m_HpBarS->SetLifeDateFC(m_FullLife, m_Life);
@@ -144,6 +143,9 @@ void Wolf::Update()
 	D3DXVECTOR3 shadowPosition = m_Position;
 	shadowPosition.y = groundHeight + 0.01f;
 	m_Shadow->SetPosition(shadowPosition);
+	m_Shadow->SetScale(D3DXVECTOR3(m_Scale.x, m_Scale.y, m_Scale.z));
+
+	//HPバー表示
 	D3DXVECTOR3 HpBarPosition = m_Position;
 	HpBarPosition.y += m_HpBarPosY;
 	m_HpBarS->SetPosition(HpBarPosition);
@@ -153,12 +155,12 @@ void Wolf::Update()
 	{
 		m_Position.y = groundHeight;
 		m_Velocity.y = 0.0f;
-		m_Junp = false;
 	}
 
 	//疑似アニメ
 	Anime();
-
+	
+	//ダメージフラッシュ
 	DamageFlash();
 }
 
@@ -349,14 +351,15 @@ void Wolf::UpdateDeath()
 	m_Rotation.z += m_Death / 2.0f;
 	m_Rotation.y -= m_Death;
 	m_Position.y += 0.5f;
-	m_Scale.x -= 0.05f; m_Scale.y -= 0.05f; m_Scale.z -= 0.05f;
+	m_Scale.x -= 0.1f; m_Scale.y -= 0.1f; m_Scale.z -= 0.1f;
 	m_Death -= 0.01f;
 
-	if (m_Death < 0.0f) {
+	if (m_Scale.y <= 0.0f) 
+	{
 		scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
-		SetDestroy();
-	}//消滅
-	if (m_Scale.y < 0.0f) { m_Scale *= 0.0f; }//サイズ調整
+		SetDestroy(); 
+	}
+
 }
 
 void Wolf::UpdateDamage()
@@ -464,7 +467,7 @@ void Wolf::Collision(float & groundHeight)
 
 	//ロック
 	auto rocks = scene->GetGameObjects<Rock>();//リストを取得
-	for (Rock* rock : rocks) {//範囲forループ
+	for (Rock* rock : rocks) {
 		if (rock->GetState() == BREAKOBJECT_STATE::NORMAL) {
 			D3DXVECTOR3 position = rock->GetPosition();
 			D3DXVECTOR3 scale = rock->GetScale();
@@ -480,7 +483,7 @@ void Wolf::Collision(float & groundHeight)
 	}
 	//チェスト
 	auto chests = scene->GetGameObjects<Chest>();//リストを取得
-	for (Chest* chest : chests) {//範囲forループ
+	for (Chest* chest : chests) {
 		if (chest->GetState() == BREAKOBJECT_STATE::NORMAL) {
 			D3DXVECTOR3 position = chest->GetPosition();
 			D3DXVECTOR3 scale = chest->GetScale();
@@ -496,7 +499,7 @@ void Wolf::Collision(float & groundHeight)
 	}
 	//円系
 	auto cylinders = scene->GetGameObjects<Cylinder>();//リストを取得
-	for (Cylinder* cylinder : cylinders) {//範囲forループ
+	for (Cylinder* cylinder : cylinders) {
 		D3DXVECTOR3 position = cylinder->GetPosition();
 		D3DXVECTOR3 scale = cylinder->GetScale();
 		D3DXVECTOR3 direction = m_Position - position;
@@ -512,7 +515,7 @@ void Wolf::Collision(float & groundHeight)
 	}
 	//直方体
 	auto boxs = scene->GetGameObjects<Box>();//リストを取得
-	for (Box* box : boxs) {//範囲forループ
+	for (Box* box : boxs) {
 		D3DXVECTOR3 position = box->GetPosition();
 		D3DXVECTOR3 scale = box->GetScale();
 
@@ -576,16 +579,16 @@ void Wolf::DamageFlash()
 
 void Wolf::Anime()
 {
-	m_time++;
-	if (m_time > 7)
+	m_AnimeTime++;
+	if (m_AnimeTime > 7)
 	{
 		//傾ける
-		if (m_WolfState == WOLF_STATE::TARGETING) { m_Rotation.x = (0.16f * m_Pause); }
-		else { m_Rotation.x = (0.04f * m_Pause); }
+		if (m_WolfState == WOLF_STATE::TARGETING) { m_Rotation.x = (0.16f * m_AnimePause); }
+		else { m_Rotation.x = (0.04f * m_AnimePause); }
 
 		//リセット
-		m_Pause = !m_Pause;
-		m_time = 0;
+		m_AnimePause = !m_AnimePause;
+		m_AnimeTime = 0;
 	}
 }
 

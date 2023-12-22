@@ -86,10 +86,7 @@ void Explosion::Update()
 	m_Count++;
 	//m_Count = m_Count % 16;@//–³ŒÀƒ‹[ƒv‚³‚¹‚½‚¢‚Æ‚«‚É•Ö—˜
 
-	if (m_Count >= 16){
-		SetDestroy();
-		return;
-	}
+	if (m_Count >= 16){ SetDestroy(); }
 }
 
 void Explosion::Draw()

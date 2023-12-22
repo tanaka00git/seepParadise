@@ -19,12 +19,14 @@ protected:
 	class HpBarS* m_HpBarS{};
 	static class Audio* m_SE_Kick;
 
-	D3DXVECTOR3 m_Velocity{};//速度
-	int m_Life	    = 7;
-	int m_FullLife  = 7;
-	
-	int m_DaathTime = 3000;	//自動消滅
-	bool m_DeleteInit = false;
+	//メンバ変数
+	D3DXVECTOR3 m_Velocity{};			//速度
+	bool		m_DeleteInit = false;	//削除時初回
+	int			m_DaathTime = 3000;		//自動消滅時間
+
+	//ステータス
+	int			m_FullLife = 7;			//最大体力
+	int			m_Life = 7;				//体力
 
 public:
 	static void Load();
@@ -40,8 +42,6 @@ public:
 	virtual void UpdateDeath();
 
 	void SetDamageMove();
-
 	void LifeBarMove();
-
 	BREAKOBJECT_STATE GetState() { return m_BreakObjectState; }
 };

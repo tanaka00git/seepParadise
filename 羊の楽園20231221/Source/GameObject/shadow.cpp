@@ -2,8 +2,9 @@
 #include "..\App\renderer.h"
 #include "..\GameObject\shadow.h"
 
-
 ID3D11ShaderResourceView*Shadow::m_Texture{};
+
+#define SCALE 0.7f
 
 void Shadow::Load()
 {
@@ -24,28 +25,30 @@ void Shadow::Unload()
 
 void Shadow::Init()
 {
-	float x = 0.7f;
+	//適当な初期値でInit時の描画を隠す
+	m_Position.y = 999.0f;
+
 	VERTEX_3D vertex[4];
 	//3Dだと左奥から
-	vertex[0].Position = D3DXVECTOR3(-x, 0.0f, x);
+	vertex[0].Position = D3DXVECTOR3(-SCALE, 0.0f, SCALE);
 	vertex[0].Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	vertex[0].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[0].TexCoord = D3DXVECTOR2(0.0f, 0.0f);
 
 	//右奥
-	vertex[1].Position = D3DXVECTOR3(x, 0.0f, x);
+	vertex[1].Position = D3DXVECTOR3(SCALE, 0.0f, SCALE);
 	vertex[1].Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	vertex[1].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[1].TexCoord = D3DXVECTOR2(1.0f, 0.0f);
 
 	//左前
-	vertex[2].Position = D3DXVECTOR3(-x, 0.0f, -x);
+	vertex[2].Position = D3DXVECTOR3(-SCALE, 0.0f, -SCALE);
 	vertex[2].Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	vertex[2].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[2].TexCoord = D3DXVECTOR2(0.0f, 1.0f);
 
 	//右前
-	vertex[3].Position = D3DXVECTOR3(x, 0.0f, -x);
+	vertex[3].Position = D3DXVECTOR3(SCALE, 0.0f, -SCALE);
 	vertex[3].Normal = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 	vertex[3].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f);
 	vertex[3].TexCoord = D3DXVECTOR2(1.0f, 1.0f);
@@ -68,17 +71,14 @@ void Shadow::Init()
 
 	//変更、unlitTextureVSは2D用、3DはvertexLightingVS
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\unlitTextureVS.cso");
-
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\unlitTexturePS.cso");
 
-	m_Position.y = 999.0f;
 }
 
 void Shadow::Uninit()
 {
 
 	m_VertexBuffer->Release();
-	//m_Texture->Release();
 
 	//ここにシェーダーオブジェクトの解放を追加
 	m_VertexLayout->Release();
