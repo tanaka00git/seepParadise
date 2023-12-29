@@ -6,6 +6,8 @@
 #include "..\App\sprite.h"
 #include "..\GameObject\player.h"
 
+#define GREEN_LIFE_SPEED 0.2f
+#define RED_LIFE_SPEED   0.1f
 
 void HpBar::Init()
 {
@@ -38,9 +40,7 @@ void HpBar::Uninit()
 	m_PixelShader->Release();
 
 	GameObject::Uninit();
-
 }
-
 
 void HpBar::Update()
 {
@@ -49,45 +49,15 @@ void HpBar::Update()
 	Scene* scene = Manager::GetScene();
 	Player* player = scene->GetGameObject<Player>();
 
+	//体力更新
 	m_FullLife = static_cast<float>(player->GetFullLife());
 	m_CurrentLife = static_cast<float>(player->GetLife());
-	
-	float Conversion = (m_CurrentLife / m_FullLife) * 180;
-	float Conversion2 = Conversion;
+	LifeBarMove();
 
-	//緑バー
-	float distance = Conversion - m_OldConversion;
-	float speed = 0.2f; // 移動速度を調整する値
-	float velocity = distance * speed;
-	float newConversion = m_OldConversion + velocity;
-	Conversion = newConversion;
-	m_Sprite_GreenLife->SetScale(D3DXVECTOR3(Conversion, 10, 0));
-	m_OldConversion = Conversion;
-
-	//赤バー
-	distance = Conversion2 - m_OldConversion2;
-	speed = 0.1f; // 移動速度を調整する値
-	velocity = distance * speed;
-	newConversion = m_OldConversion2 + velocity;
-	Conversion2 = newConversion;
-	m_Sprite_RedLife->SetScale(D3DXVECTOR3(Conversion2, 10, 0));
-	m_OldConversion2 = Conversion2;
-
-	//チャージ
+	//チャージ更新
 	m_CurrentCharge = static_cast<float>(player->GetCharge());
 	m_FullCharge = static_cast<float>(player->GetFullCharge());
-	
-	//チャージ上限時の色変更
-	if (m_CurrentCharge >= m_FullCharge)
-	{
-		m_CurrentCharge = m_FullCharge;
-		m_Sprite_WhiteCharge->SetColor(D3DXCOLOR(1.0f, 0.5f, 0.5f, 1.0f));
-	}
-	else { m_Sprite_WhiteCharge->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)); }//白バー
-
-	float Conversion3 = (m_CurrentCharge / m_FullCharge) * 180;
-	m_Sprite_WhiteCharge->SetScale(D3DXVECTOR3(Conversion3, 5, 0));
-
+	ChargeBarMove();
 }
 
 
@@ -106,3 +76,42 @@ void HpBar::Draw()
 	//基底クラスメソッドの呼び出し
 	GameObject::Draw();
 }
+
+void HpBar::LifeBarMove()
+{
+	float Conversion = (m_CurrentLife / m_FullLife) * 180;
+	float Conversion2 = Conversion;
+
+	//緑バー
+	float distance = Conversion - m_OldConversion;
+	float speed = GREEN_LIFE_SPEED; // 移動速度を調整する値
+	float velocity = distance * speed;
+	float newConversion = m_OldConversion + velocity;
+	Conversion = newConversion;
+	m_Sprite_GreenLife->SetScale(D3DXVECTOR3(Conversion, 10, 0));
+	m_OldConversion = Conversion;
+
+	//赤バー
+	distance = Conversion2 - m_OldConversion2;
+	speed = RED_LIFE_SPEED; // 移動速度を調整する値
+	velocity = distance * speed;
+	newConversion = m_OldConversion2 + velocity;
+	Conversion2 = newConversion;
+	m_Sprite_RedLife->SetScale(D3DXVECTOR3(Conversion2, 10, 0));
+	m_OldConversion2 = Conversion2;
+}
+
+void HpBar::ChargeBarMove()
+{
+	//チャージ上限時の色変更
+	if (m_CurrentCharge >= m_FullCharge)
+	{
+		m_CurrentCharge = m_FullCharge;
+		m_Sprite_WhiteCharge->SetColor(D3DXCOLOR(1.0f, 0.5f, 0.5f, 1.0f));
+	}
+	else { m_Sprite_WhiteCharge->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)); }//白バー
+
+	float Conversion3 = (m_CurrentCharge / m_FullCharge) * 180;
+	m_Sprite_WhiteCharge->SetScale(D3DXVECTOR3(Conversion3, 5, 0));
+}
+

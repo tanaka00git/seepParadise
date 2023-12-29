@@ -31,4 +31,7 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
+
+	void LifeBarMove();
+	void ChargeBarMove();
 };
