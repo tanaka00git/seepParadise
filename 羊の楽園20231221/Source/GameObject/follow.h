@@ -24,27 +24,27 @@ private:
 	class Shadow* m_Shadow{};
 
 	//メンバ変数
-	D3DXVECTOR3 m_Velocity{};//速度
-	D3DXCOLOR m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	bool m_TextureEnable = true;
+	D3DXVECTOR3 m_Velocity		= D3DXVECTOR3(0.0f,0.0f,0.0f);		 //速度
+	D3DXCOLOR   m_Color			= D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f); //カラー
+	bool	    m_TextureEnable = true;								 //テクスチャ適用するか
 
-	int m_AttackStopTime = 0;
-	int m_DaathTime = 200;			//自動消滅
-	int m_OrientationTime = 0;		//向き変更時間
-	int m_NextOrientationTime = 0;	//次に向き変更するまで
-	int m_NextRot = 1;				//次の向き
+	int	  m_AttackStopTime	    = 0;	 //攻撃を停止する時間
+	int	  m_DaathTime		    = 200;	 //自動消滅
+	int	  m_OrientationTime	    = 0;	 //向き変更時間
+	int	  m_NextOrientationTime = 0;	 //次に向き変更するまで
+	int	  m_NextRot			    = 1;	 //次の向き
 
-	int m_AgainFollow = 0;	//再度仲間になれるまでの時間
+	int	  m_AgainFollow			= 0;	 //再度仲間になれるまでの時間
 
-	int   m_AnimeTime = 0;
-	bool  m_AnimePause = true;
-	float m_Death = 0.14f;
-	int   m_WalkEffectTime = 0;
-	int	  m_DamageFlashTime = 0;
+	int   m_AnimeTime			= 0;	 //アニメの向きの時間
+	bool  m_AnimePause			= true;  //アニメの向きの判定
+	float m_Death				= 0.14f; //死亡するまでの時間
+	int   m_WalkEffectTime		= 0;	 //煙エフェクトが出るまでの時間
+	int	  m_DamageFlashTime		= 0;	 //ダメージでフラッシュする時間
 
 	//ステータス
-	int   m_Life = 1;
-	float m_Speed = 6.5f;
+	int   m_Life				= 1;
+	float m_Speed				= 6.5f;
 
 public:
 	static void Load();

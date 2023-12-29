@@ -21,17 +21,16 @@ private:
 	class Sprite* m_SpriteDebug{};
 
 
-	float m_Alpha = 1.0f;
-	float m_Alpha2 = 0.0f;
-	float m_Alpha7 = 1.0f;
-	float m_Alpha8 = 0.0f;
+	float m_Alpha     = 1.0f;
+	float m_Alpha2    = 0.0f;
+	float m_Alpha7    = 1.0f;
+	float m_Alpha8    = 0.0f;
 	bool  m_debugMode = false;
 
-
-	int m_Scene = 0;		//現在のシーンは何番目
-	int m_Select =	1;		//選択肢の番号
-	bool m_UpDown = false;	//演出用
-	float m_Time = 0.0f;	//ボタン
+	int   m_Scene     = 0;		//現在のシーンは何番目
+	int   m_Select    = 1;		//選択肢の番号
+	bool  m_UpDown    = false;	//演出用
+	float m_Time      = 0.0f;	//ボタン
 public:
 	void Init();
 	void Uninit();

@@ -10,8 +10,8 @@ private:
 	ID3D11InputLayout* m_VertexLayout{};
 
 	class Sprite* m_Sprite{};
-	float m_Alpha = 1.0f;
-	bool m_FadeOut = false;
+	float m_Alpha	  = 1.0f;
+	bool m_FadeOut	  = false;
 	bool m_FadeFinish = false;
 public:
 	void Init();

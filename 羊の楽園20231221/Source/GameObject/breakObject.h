@@ -20,13 +20,13 @@ protected:
 	static class Audio* m_SE_Kick;
 
 	//メンバ変数
-	D3DXVECTOR3 m_Velocity{};			//速度
-	bool		m_DeleteInit = false;	//削除時初回
-	int			m_DaathTime = 3000;		//自動消滅時間
+	D3DXVECTOR3 m_Velocity   = D3DXVECTOR3(0.0f,0.0f,0.0f); //速度
+	bool		m_DeleteInit = false;						//削除時初回
+	int			m_DaathTime  = 3000;						//自動消滅時間
 
 	//ステータス
-	int			m_FullLife = 7;			//最大体力
-	int			m_Life = 7;				//体力
+	int			m_FullLife	 = 7;							//最大体力
+	int			m_Life		 = 7;							//体力
 
 public:
 	static void Load();

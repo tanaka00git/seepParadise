@@ -18,7 +18,7 @@ private:
 	ID3D11PixelShader* m_PixelShader{};
 	ID3D11InputLayout* m_VertexLayout{};
 
-	D3DXVECTOR3 m_Velocity{};//速度
+	D3DXVECTOR3 m_Velocity = D3DXVECTOR3(0.0f,0.0f,0.0f);//速度
 	D3DXVECTOR3 m_PLForward{};//プレイヤーの速度
 	static class Model* m_Model;
 	static class Model* m_Model2;

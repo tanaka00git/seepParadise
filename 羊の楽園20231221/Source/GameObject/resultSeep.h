@@ -12,7 +12,7 @@ private:
 	static class Model* m_Model;
 
 	//ƒƒ“ƒo•Ï”
-	D3DXVECTOR3 m_Velocity{};//‘¬“x
+	D3DXVECTOR3 m_Velocity = D3DXVECTOR3(0.0f,0.0f,0.0f);//‘¬“x
 
 	int   m_Speed = 7;
 	bool  m_Stop = false;

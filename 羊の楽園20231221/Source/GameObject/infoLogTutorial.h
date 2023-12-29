@@ -14,8 +14,8 @@ private:
 	class Sprite* m_Sprite_Tutorial3{};
 	class Sprite* m_Sprite_Tutorial4{};
 
-	int   m_Log = 1;
-	float m_Alpha = 1.0f;
+	int   m_Log    = 1;
+	float m_Alpha  = 1.0f;
 	float m_Alpha2 = 0.0f;
 	float m_Alpha3 = 0.0f;
 	float m_Alpha4 = 0.0f;
@@ -23,9 +23,9 @@ private:
 	D3DXVECTOR3 m_Position = D3DXVECTOR3(0, 0, 0);
 
 	int	 m_ControlTime = 0;
-	bool m_Log1 = false;
-	bool m_LogCharge = false;
-	bool m_LogAttack = false;
+	bool m_Log1        = false;
+	bool m_LogCharge   = false;
+	bool m_LogAttack   = false;
 
 public:
 	void Init();

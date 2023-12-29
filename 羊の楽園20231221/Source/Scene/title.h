@@ -27,9 +27,9 @@ private:
 
 	static bool m_Begin;		//初回起動用
 	static bool m_DebugMode;	//デバッグモード判定
-	static int m_Coin;			//コインの引継ぎ
-	static int m_PlColor;		//羊カラー
-	static int m_PlClown;		//羊装備
+	static int  m_Coin;			//コインの引継ぎ
+	static int  m_PlColor;		//羊カラー
+	static int  m_PlClown;		//羊装備
 
 	int m_SeepDropTime = 0;
 

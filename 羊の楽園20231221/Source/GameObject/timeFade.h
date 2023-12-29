@@ -11,12 +11,12 @@ private:
 
 	static class Sprite* m_Sprite;
 	static class Sprite* m_Sprite2;
-	float m_Alpha = 0.0f;
+	float m_Alpha  = 0.0f;
 	float m_Alpha2 = 0.0f;
 
-	bool m_FadeOut = false;
-	bool m_FadeOut2 = false;
-	bool m_FadeFinish = false;
+	bool  m_FadeOut = false;
+	bool  m_FadeOut2 = false;
+	bool  m_FadeFinish = false;
 public:
 	static void Load();
 	static void Unload();

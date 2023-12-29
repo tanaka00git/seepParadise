@@ -19,7 +19,7 @@ protected:
 	class Shadow* m_Shadow{};
 
 	//ƒƒ“ƒo•Ï”
-	D3DXVECTOR3 m_Velocity{};
+	D3DXVECTOR3 m_Velocity = D3DXVECTOR3(0.0f,0.0f,0.0f);
 	int  m_DaathTime  = 500;
 	bool m_DeleteInit = false;	//Á‹‰Šú‰»
 	bool m_DropJump   = false;	//ƒWƒƒƒ“ƒv‚·‚é

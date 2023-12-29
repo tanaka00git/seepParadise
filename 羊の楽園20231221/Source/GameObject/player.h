@@ -31,11 +31,11 @@ private:
 	static class Audio* m_DashSE;
 
 	//メンバ変数
-	static int	m_DebugMode;									//デバッグモード判定
-	D3DXCOLOR	m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);	//配色
-	bool		m_TextureEnable = true;							//テクスチャを描画するか
-	D3DXVECTOR3 m_Velocity{};									//速度
-	int			m_InvincibleTime = 0;							//無敵時間
+	static int	m_DebugMode;										  //デバッグモード判定
+	D3DXCOLOR	m_Color			 = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f); //配色
+	bool		m_TextureEnable  = true;							  //テクスチャを描画するか
+	D3DXVECTOR3 m_Velocity		 = D3DXVECTOR3(0.0f,0.0f,0.0f);		  //速度
+	int			m_InvincibleTime = 0;								  //無敵時間
 
 	bool  m_DashInit = false;	//ダッシュ初回時
 	bool  m_Dash;				//ダッシュ用

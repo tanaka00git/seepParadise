@@ -152,7 +152,6 @@ void Camera::UpdateGame()
 
 	//視野範囲の調整
 	cameraMove += CAMERA_MOVE_VALUE * player->GetEye();		//入手したアイテム分、視野広がる
-	cameraMove -= CAMERA_MOVE_VALUE * player->GetDash();	//ダッシュでカメラ寄る
 	if (cameraMove >= CAMERA_MOVE_LIMIT) { cameraMove = CAMERA_MOVE_LIMIT; }
 
 	//トップビュー(マリオ3Dワールド)

@@ -10,8 +10,8 @@ private:
 	ID3D11InputLayout* m_VertexLayout{};
 
 	class Sprite* m_Sprite{};
-	D3DXVECTOR3 m_Velocity{};	//‘¬“x
-	float m_Alpha = 1.0f;
+	D3DXVECTOR3 m_Velocity = D3DXVECTOR3(0.0f,0.0f,0.0f);	//‘¬“x
+	float		m_Alpha	   = 1.0f;
 
 public:
 	void Init();

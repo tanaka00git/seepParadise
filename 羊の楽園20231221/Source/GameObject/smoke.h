@@ -13,7 +13,7 @@ private:
 	ID3D11InputLayout* m_VertexLayout{};
 	
 	//ƒƒ“ƒo•Ï”
-	int m_Count = 0;
+	int m_Count			  = 0;
 	int m_CountFrameDelay = 0;
 
 public:

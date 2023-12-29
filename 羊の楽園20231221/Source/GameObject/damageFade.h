@@ -11,8 +11,8 @@ private:
 	static class Sprite* m_Sprite;//‘O•ûéŒ¾
 
 	D3DXCOLOR m_Color = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
-	float m_Alpha = 0.0f;
-	bool m_Fade = true;
+	float m_Alpha	  = 0.0f;
+	bool m_Fade		  = true;
 public:
 	static void Load();
 	static void Unload();

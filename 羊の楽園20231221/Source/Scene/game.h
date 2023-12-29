@@ -13,13 +13,13 @@ private:
 	class TimeFade* m_TimeFade{};
 	class DamageFade* m_DamageFade{};
 
-	int m_GameTime = 0;
+	int m_GameTime		  = 0;
 	int m_GameTimeSeconds = 0;
-	int m_Day = 0;
+	int m_Day			  = 0;
 
-	int m_NawEvent = 0;
-	bool m_Event1 = false;
-	bool m_Event2 = false;
+	int m_NawEvent		  = 0;
+	bool m_Event1		  = false;
+	bool m_Event2		  = false;
 
 public:
 	void Init() override;

@@ -13,8 +13,8 @@ private:
 	static class Sprite* m_Sprite2;
 	float m_Alpha = 0.0f;
 
-	float m_FullTime = 40.0f;
-	float m_CurrentTime =0.0f;
+	float m_FullTime	  = 40.0f;
+	float m_CurrentTime	  = 0.0f;
 	float m_OldConversion = 0.0f;
 
 public:

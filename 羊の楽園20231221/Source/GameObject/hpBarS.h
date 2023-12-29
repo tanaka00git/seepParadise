@@ -16,16 +16,16 @@ private:
 	ID3D11PixelShader* m_PixelShader{};
 	ID3D11InputLayout* m_VertexLayout{};
 
-	float m_FullLife = 1.0f;
-	float m_CurrentLife = 1.0f;
-	float m_OldConversion = 0.0f;
+	float m_FullLife	   = 1.0f;
+	float m_CurrentLife    = 1.0f;
+	float m_OldConversion  = 0.0f;
 	float m_OldConversion2 = 0.0f;
 
 	//プレイヤーのチャージ用
-	bool m_ChargeOn	   = false;
-	bool m_DashOn	   = false;
-	float m_FullCharge = 0.0f;
-	float m_CurrentCharge = 0.0f;
+	bool  m_ChargeOn		   = false;
+	bool  m_DashOn		   = false;
+	float m_FullCharge	   = 0.0f;
+	float m_CurrentCharge  = 0.0f;
 
 public:
 	void SetPosition(D3DXVECTOR3 Position) { m_Position = Position; }
