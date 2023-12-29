@@ -8,6 +8,7 @@
 #include "..\GameObject\score.h"
 #include "..\GameObject\player.h"
 #include "..\GameObject\infoLog.h"
+#include "..\GameObject\shine.h"
 #include "..\App\model.h"
 
 Model*Coin::m_Model{};
@@ -47,4 +48,6 @@ void Coin::MoveGet()
 	player->AddCharge(+300);
 
 	m_SE_Get->Play(1.0f);
+
+	scene->AddGameObject<Shine>(1)->SetPosition(m_Position);//コインエフェクト
 }

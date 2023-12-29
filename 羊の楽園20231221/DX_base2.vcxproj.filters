@@ -192,6 +192,9 @@
     <ClCompile Include="Source\GameObject\titleCoin.cpp">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameObject\shine.cpp">
+      <Filter>ソース ファイル\GameObject\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App\audio.h">
@@ -355,6 +358,9 @@
     </ClInclude>
     <ClInclude Include="Source\GameObject\titleCoin.h">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\shine.h">
+      <Filter>ソース ファイル\GameObject\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

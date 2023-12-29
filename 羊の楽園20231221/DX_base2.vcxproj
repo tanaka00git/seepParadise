@@ -169,6 +169,7 @@
     <ClCompile Include="Source\GameObject\score.cpp" />
     <ClCompile Include="Source\GameObject\seed.cpp" />
     <ClCompile Include="Source\GameObject\shadow.cpp" />
+    <ClCompile Include="Source\GameObject\shine.cpp" />
     <ClCompile Include="Source\GameObject\smoke.cpp" />
     <ClCompile Include="Source\GameObject\timeFade.cpp" />
     <ClCompile Include="Source\GameObject\titleBox.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="Source\GameObject\score.h" />
     <ClInclude Include="Source\GameObject\seed.h" />
     <ClInclude Include="Source\GameObject\shadow.h" />
+    <ClInclude Include="Source\GameObject\shine.h" />
     <ClInclude Include="Source\GameObject\smoke.h" />
     <ClInclude Include="Source\GameObject\timeFade.h" />
     <ClInclude Include="Source\GameObject\titleBox.h" />

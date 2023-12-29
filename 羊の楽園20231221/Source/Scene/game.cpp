@@ -13,6 +13,7 @@
 #include "..\GameObject\coin.h"
 #include "..\GameObject\explosion.h"
 #include "..\GameObject\smoke.h"
+#include "..\GameObject\shine.h"
 #include "..\GameObject\cylinder.h"
 #include "..\GameObject\box.h"
 #include "..\GameObject\wolf.h"
@@ -59,6 +60,7 @@ void Game::Init()
 	Wolf::Load();
 	Explosion::Load();
 	Smoke::Load();
+	Shine::Load();
 	HpBarS::Load();
 	Coin::Load();
 	BreakObject::Load();
@@ -158,6 +160,7 @@ void Game::Uninit()
 	Wolf::Unload();
 	Explosion::Unload();
 	Smoke::Unload();
+	Shine::Unload();
 	HpBarS::Unload();
 	Coin::Unload();
 	BreakObject::Unload();
