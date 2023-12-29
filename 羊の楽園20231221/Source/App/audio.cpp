@@ -1,5 +1,6 @@
 #include "..\App\main.h"
 #include "..\App\audio.h"
+#include <algorithm>
 
 IXAudio2*				Audio::m_Xaudio = NULL;
 IXAudio2MasteringVoice*	Audio::m_MasteringVoice = NULL;
@@ -94,6 +95,8 @@ void Audio::Uninit()
 
 void Audio::Play(float Volume, bool Loop)
 {
+	m_CurrentVolume = Volume;
+
 	m_SourceVoice->Stop();
 	m_SourceVoice->FlushSourceBuffers();
 
@@ -117,10 +120,44 @@ void Audio::Play(float Volume, bool Loop)
 
 	m_SourceVoice->SubmitSourceBuffer(&bufinfo, NULL);
 
-	m_SourceVoice->SetVolume(Volume);
+	m_SourceVoice->SetVolume(m_CurrentVolume);
+
+	// フェードアップデートの処理を行う
+	FadeUpdate();
 
 	// 再生
 	m_SourceVoice->Start();
 
 }
 
+void Audio::Volume(float Volume)
+{
+	m_CurrentVolume = Volume;
+
+	m_SourceVoice->SetVolume(m_CurrentVolume);
+}
+
+void Audio::FadeUpdate()
+{
+	if (m_SourceVoice)
+	{
+		// 現在の音量がフェード先の音量に近づくように調整
+		if (m_CurrentVolume < m_TargetVolume)
+		{
+			m_CurrentVolume = std::min<float>(m_CurrentVolume + m_FadeSpeed, m_TargetVolume);
+		}
+		else if (m_CurrentVolume > m_TargetVolume)
+		{
+			m_CurrentVolume = std::max<float>(m_CurrentVolume - m_FadeSpeed, m_TargetVolume);
+		}
+
+		// フェード後の音量を設定
+		m_SourceVoice->SetVolume(m_CurrentVolume);
+	}
+}
+
+void Audio::FadeToVolume(float targetVolume, float fadeSpeed)
+{
+	m_TargetVolume = targetVolume;
+	m_FadeSpeed = fadeSpeed;
+}

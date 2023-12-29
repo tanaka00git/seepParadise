@@ -136,6 +136,9 @@ void Game::Init()
 	m_BGM = AddGameObject<GameObject>(0)->AddComponent<Audio>();
 	m_BGM->Load("asset\\audio\\chiisanaashiato.wav");
 	m_BGM->Play(1.0f,true);
+	m_BGM_Night = AddGameObject<GameObject>(0)->AddComponent<Audio>();
+	m_BGM_Night->Load("asset\\audio\\latenightsnow.wav");
+	m_BGM_Night->Play(0.0f, true);
 	m_SE_SeepCry = AddGameObject<GameObject>(0)->AddComponent<Audio>();
 	m_SE_SeepCry->Load("asset\\audio\\ヒツジの鳴き声.wav");
 	m_SE_Bell = AddGameObject<GameObject>(0)->AddComponent<Audio>();
@@ -183,6 +186,10 @@ void Game::Update()
 	Player* player = scene->GetGameObject<Player>();
 	D3DXVECTOR3 PLPos = player->GetPosition();
 	Score* score = scene->GetGameObject<Score>();
+
+	//BGMのフェード更新
+	m_BGM->FadeUpdate();
+	m_BGM_Night->FadeUpdate();
 
 	//秒数更新
 	m_GameTime ++;
@@ -327,6 +334,9 @@ void Game::TimeEvent_Time20()
 	m_SE_WolfCry->Play(1.0f,false);
 	AddGameObject<InfoLog>(2)->SetNum(2, 1, D3DXVECTOR3(340, 0, 0));
 	
+	m_BGM->FadeToVolume(0.0f, 0.002f);
+	m_BGM_Night->FadeToVolume(0.7f, 0.002f);
+
 	Scene* scene = Manager::GetScene();
 	Score* score = scene->GetGameObject<Score>();
 	score->SetTimeZone(true);
@@ -372,6 +382,9 @@ void Game::TimeEvent_Time40()
 	m_SE_SeepCry->Play(1.0f, false);
 	m_SE_Bell->Play(1.0f, false);
 	m_Day ++;
+
+	m_BGM->FadeToVolume(1.0f, 0.002f);
+	m_BGM_Night->FadeToVolume(0.0f, 0.004f);
 
 	if (m_Day > 99) { m_Day = 99; }
 	Scene* scene = Manager::GetScene();

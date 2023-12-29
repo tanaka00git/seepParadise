@@ -5,6 +5,7 @@ class Game : public Scene
 {
 private:
 	class Audio* m_BGM{};
+	class Audio* m_BGM_Night{};
 	class Audio* m_SE_SeepCry{};
 	class Audio* m_SE_Bell{};
 	class Audio* m_SE_Gong{};
