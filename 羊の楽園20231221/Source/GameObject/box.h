@@ -10,6 +10,7 @@ private:
 	ID3D11InputLayout* m_VertexLayout{};
 
 	static class Model* m_Model;
+
 public:
 	static void Load();
 	static void Unload();

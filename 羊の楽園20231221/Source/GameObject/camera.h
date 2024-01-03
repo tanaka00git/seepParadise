@@ -16,18 +16,20 @@ private:
 	D3DXMATRIX	m_ViewMatrix{};
 	D3DXMATRIX  m_ProjectionMateix{};
 
+	//メンバ変数
 	float m_ShakeAmplitude = 0.0f;
 	float m_ShakeTime	   = 0.0f;
 	float m_ShakeOffset    = 0.0f;
+
+	//関数
+	void UpdateTitle();
+	void UpdateGame();
+	void UpdateResult();
 
 public:
 	void Init() override;
 	void Update() override;
 	void Draw() override;
-	
-	void UpdateTitle();
-	void UpdateGame();
-	void UpdateResult();
 
 	//セット関数
 	void SetShake(float Amplitude) { m_ShakeAmplitude = Amplitude; }

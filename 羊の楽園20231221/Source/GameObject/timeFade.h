@@ -29,7 +29,6 @@ public:
 	void FadeOut_true() { m_FadeOut = true; }
 	void FadeOut_false() { m_FadeOut = false; }
 	bool GetFadeFinish() { return m_FadeFinish; }
-
 	bool GetTimeZone() { return m_FadeOut2; }
 
 };

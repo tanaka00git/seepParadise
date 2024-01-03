@@ -63,6 +63,20 @@ private:
 	int   m_FullLife = 3;
 	D3DXVECTOR3 m_BarScale = D3DXVECTOR3(1.2f, 1.0f, 1.2f);		//HPバーのサイズ
 
+	//関数
+	void UpdateDeath();
+	void UpdateNormal();
+	void UpdateDash();
+	void UpdateUnused();
+	void Collision(float& groundHeight);
+	void WalkEffect();
+	void TutorialText();
+	void MouseTargetMove();
+	void InvincibleColor();
+	void DamageFlash();
+	void AttackStop();
+	void Anime();
+
 public:
 	static void Load();
 	static void Unload();
@@ -71,20 +85,6 @@ public:
 	void Uninit()override;
 	void Update()override;
 	void Draw()override;
-	
-	void UpdateDeath();
-	void UpdateNormal();
-	void UpdateDash();
-	void UpdateUnused();
-
-	void Collision(float &groundHeight);
-	void WalkEffect();
-	void TutorialText();
-	void MouseTargetMove();
-	void InvincibleColor();
-	void DamageFlash();
-	void AttackStop();
-	void Anime();
 
 	//セット関数
 	void SetDamageMove();
@@ -99,16 +99,16 @@ public:
 
 	//取得関数
 	float GetSpeed() { return m_Speed; }
-	int GetCharge() { return m_Charge; }
-	int GetFullCharge() { return m_FullCharge; }
-	bool GetDash() { return m_Dash; }
-	int GetFullLife() { return m_FullLife; }
-	int GetLife() { return m_Life; }
-	int GetAttackStop() { return m_AttackStopTime; }
-	int GetEye() { return m_Eye; }
-	bool GetDebug() { return m_DebugMode; }
+	int   GetCharge() { return m_Charge; }
+	int   GetFullCharge() { return m_FullCharge; }
+	bool  GetDash() { return m_Dash; }
+	int   GetFullLife() { return m_FullLife; }
+	int   GetLife() { return m_Life; }
+	int   GetAttackStop() { return m_AttackStopTime; }
+	int   GetEye() { return m_Eye; }
+	bool  GetDebug() { return m_DebugMode; }
+	int   GetInvincibleTime() { return m_InvincibleTime; }
 	PLAYER_STATE GetState() { return m_PlayerState; }
-	int GetInvincibleTime() { return m_InvincibleTime; }
 
 	void SetColorClown(int color, int clown) { m_PlColor = color; m_PlClown = clown; };
 	void SetDebugMode(bool debug) { m_DebugMode = debug; };

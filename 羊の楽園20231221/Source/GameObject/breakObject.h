@@ -28,6 +28,11 @@ protected:
 	int			m_FullLife	 = 7;							//Å‘å‘Ì—Í
 	int			m_Life		 = 7;							//‘Ì—Í
 
+	//ŠÖ”
+	virtual void UpdateMove();
+	virtual void UpdateDelete();
+	virtual void UpdateDeath();
+
 public:
 	static void Load();
 	static void Unload();
@@ -36,10 +41,6 @@ public:
 	virtual void Uninit();
 	virtual void Update();
 	virtual void Draw();
-
-	virtual void UpdateMove();
-	virtual void UpdateDelete();
-	virtual void UpdateDeath();
 
 	void SetDamageMove();
 	void LifeBarMove();

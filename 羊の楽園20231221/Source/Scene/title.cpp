@@ -238,7 +238,7 @@ void Title::TargetMove()
 	if (m_TitleState != oldTitleState)
 	{
 		m_PointMoveSE->Play(1.0f);
-		if (m_TitleLogo->GetSelect1() == 2) { m_TitleScore->SetAlpha(true); }
+		if (m_TitleLogo->GetSelect() == 2) { m_TitleScore->SetAlpha(true); }
 		else { m_TitleScore->SetAlpha(false); }
 	}
 }

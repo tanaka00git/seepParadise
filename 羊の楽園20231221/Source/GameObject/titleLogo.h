@@ -31,17 +31,17 @@ private:
 	int   m_Select    = 1;		//選択肢の番号
 	bool  m_UpDown    = false;	//演出用
 	float m_Time      = 0.0f;	//ボタン
+
 public:
 	void Init();
 	void Uninit();
 	void Update();
 	void Draw();
 
-
 	void SetScene(int i) {m_Scene = i;}
 	void SetSelect(int i) { m_Select = i; }
 	int  GetScene() { return m_Scene; }
-	int  GetSelect1() { return m_Select; }
+	int  GetSelect() { return m_Select; }
 	void SetDebug(bool debug) { m_debugMode = debug; }
 
 };

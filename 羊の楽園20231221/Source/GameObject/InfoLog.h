@@ -11,13 +11,14 @@ private:
 
 	class Sprite* m_Sprite{};
 
+	D3DXVECTOR3 m_Position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
 	float		m_Alpha		 = 0.0f;
 	int			m_DeleteTime = 0;
 	bool		m_LogEnd     = false;
 
 	int			m_LogNum     = 0;
 	int			m_MoveNum    = 0;
-	D3DXVECTOR3 m_Position   = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 public:
 	static void Load();

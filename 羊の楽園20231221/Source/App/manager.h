@@ -16,8 +16,5 @@ public:
 	static Scene* GetScene() { return m_Scene; }
 
 	template <typename T>
-	static void SetScene()
-	{
-		m_NextScene = new T();
-	}
+	static void SetScene() { m_NextScene = new T(); }
 };

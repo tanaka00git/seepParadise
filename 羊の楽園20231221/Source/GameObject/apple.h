@@ -10,6 +10,6 @@ private:
 public:
 	static void Load();
 	static void Unload();
-	void Draw()override;
-	void MoveGet()override;
+	void Draw() override;
+	void MoveGet() override;
 };

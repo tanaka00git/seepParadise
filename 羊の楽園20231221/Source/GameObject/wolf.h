@@ -18,17 +18,18 @@ private:
 	ID3D11PixelShader* m_PixelShader{};
 	ID3D11InputLayout* m_VertexLayout{};
 
-	D3DXVECTOR3 m_Velocity = D3DXVECTOR3(0.0f,0.0f,0.0f);//速度
-	D3DXVECTOR3 m_PLForward{};//プレイヤーの速度
+
 	static class Model* m_Model;
 	static class Model* m_Model2;
 	static class Model* m_Model3;
 	static class Audio* m_SE_Eat;
 	static class Audio* m_SE_Kick;
-
-
 	class Shadow* m_Shadow{};
 	class HpBarS* m_HpBarS{};
+
+	//メンバ変数
+	D3DXVECTOR3 m_Velocity = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //速度
+	D3DXVECTOR3 m_PLForward{};								//プレイヤーの向き
 
 	D3DXCOLOR m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	bool	  m_TextureEnable = true;
@@ -61,6 +62,19 @@ private:
 	bool  m_Disaster = false;									//やばい奴
 	int   m_DisasterCount = 0;									//やばい奴
 
+	//関数
+	void UpdateFree();
+	void UpdateTargeting();
+	void UpdateDelete();
+	void UpdateEating();
+	void UpdateDeath();
+	void UpdateDamage();
+	void Collision(float& groundHeight);
+	void KnockBack();
+	void DisasterMove();
+	void DamageFlash();
+	void Anime();
+
 public:
 	static void Load();
 	static void Unload();
@@ -70,21 +84,8 @@ public:
 	void Update();
 	void Draw();
 
-	void UpdateFree();
-	void UpdateTargeting();
-	void UpdateDelete();
-	void UpdateEating();
-	void UpdateDeath();
-	void UpdateDamage();
-	void Collision(float & groundHeight);
-	void KnockBack();
-	void DisasterMove();
-	void DamageFlash();
-	void Anime();
-
 	void AddLife(int life) { m_Life += life; }
 	void SetDamageMove();
-
 	void SetPosEnemyData(D3DXVECTOR3 Position, int Num);
 	void SetEnemyData(int data);
 };

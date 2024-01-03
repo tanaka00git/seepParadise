@@ -33,21 +33,19 @@ private:
 
 	int m_SeepDropTime = 0;
 
+	//ä÷êî
+	void UpdatePressStart();
+	void UpdateTargetGame();
+	void UpdateTargetShop();
+	void UpdateTargetRule();
+	void UpdateFade();
+	void TargetMove();
 
 public:
 	void Init() override;
 	void Uninit() override;
 	void Update() override;
 
-	void UpdatePressStart();
-	void UpdateTargetGame();
-	void UpdateTargetShop();
-	void UpdateTargetRule();
-	void UpdateFade();
-	
-	void TargetMove();
-
 	void AddCoin(int coin) { m_Coin += coin; };
-
 
 };

@@ -24,15 +24,16 @@ protected:
 	bool m_DeleteInit = false;	//Á‹‰Šú‰»
 	bool m_DropJump   = false;	//ƒWƒƒƒ“ƒv‚·‚é
 
+	//ŠÖ”
+	virtual void UpdateMove();
+	virtual void UpdateDelete();
+	virtual void MoveGet() {};
+
 public:
 	virtual void Init();
 	virtual void Uninit();
 	virtual void Update();
 	virtual void Draw();
-
-	virtual void UpdateMove();
-	virtual void UpdateDelete();
-	virtual void MoveGet() {};
 
 	virtual void SetDrop();
 };

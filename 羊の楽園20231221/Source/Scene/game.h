@@ -22,16 +22,17 @@ private:
 	bool m_Event1		  = false;
 	bool m_Event2		  = false;
 
-public:
-	void Init() override;
-	void Uninit() override;
-	void Update() override;
-
+	//ä÷êî
 	void TimeSecondsUpdate();
 	void TimeEvent_Time2Loop();
 	void TimeEvent_Time20();
 	void TimeEvent_Time10or30();
 	void TimeEvent_Time40();
 	void TimeEvent_Day4Loop();
+
+public:
+	void Init() override;
+	void Uninit() override;
+	void Update() override;
 
 };

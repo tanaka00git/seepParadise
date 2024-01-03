@@ -30,19 +30,19 @@ public:
 	void DrawData(float vx, float vy, float width, float height ,int num);
 
 	void AddCount(int Count) { m_Count += Count; }
-	void Count(int Count) { m_Count = Count; }
+	void SetCount(int Count) { m_Count = Count; }
 
 	void AddCountCoin(int CountCoin) { m_CountCoin += CountCoin; }
 	void SetCountCoin(int CountCoin) { m_CountCoin = CountCoin; }
 	void AddCountDay(int CountDay) { m_CountDay += CountDay; }
 	void SetCountDay(int CountDay) { m_CountDay = CountDay; }
 	void SetLifeF(int Life,int FullLife) { m_Life = Life; m_FullLife = FullLife;}
-	void SetCountCombo(int Count) { m_CountCombo = Count; }
+	void SetCountCombo(int Count)  { m_CountCombo = Count; }
 	void SetTimeZone(int TimeZone) { m_TimeZone = TimeZone; }
 
-	int GetCount() { return m_Count; }
-	int GetFullCount() { return m_FullCount; }
-	int GetCountCoin() { return m_CountCoin; }
-	int GetCountDay() { return m_CountDay; }
+	int  GetCount() { return m_Count; }
+	int  GetFullCount() { return m_FullCount; }
+	int  GetCountCoin() { return m_CountCoin; }
+	int  GetCountDay() { return m_CountDay; }
 
 };

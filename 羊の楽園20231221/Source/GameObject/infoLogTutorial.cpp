@@ -5,7 +5,6 @@
 
 void InfoLogTutorial::Init()
 {
-
 	//ここにシェーダーファイルのロードを追加
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\unlitTextureVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\unlitTexturePS.cso");

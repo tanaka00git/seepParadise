@@ -20,7 +20,6 @@ private:
 public:
 	static void Load();
 	static void Unload();
-
 	void Init();
 	void Uninit();
 	void Update();

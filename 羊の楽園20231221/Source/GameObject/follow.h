@@ -46,6 +46,19 @@ private:
 	int   m_Life				= 1;
 	float m_Speed				= 6.5f;
 
+	//ä÷êî
+	void UpdateFree();
+	void UpdateNormal();
+	void UpdateDash();
+	void UpdateDeath();
+	void Collision(float& groundHeight);
+	void OrtOrientationChange();
+	void WalkEffect();
+	void PlayerTracking();
+	void AttackStop();
+	void Anime();
+	void DamageFlash();
+
 public:
 	static void Load();
 	static void Unload();
@@ -53,19 +66,6 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
-
-	void UpdateFree();
-	void UpdateNormal();
-	void UpdateDash();
-	void UpdateDeath();
-
-	void Collision(float & groundHeight);
-	void OrtOrientationChange();
-	void WalkEffect();
-	void PlayerTracking();
-	void AttackStop();
-	void Anime();
-	void DamageFlash();
 
 	FOLLOW_STATE GetState() { return m_FollowState; }
 	int GetAttackStop() { return m_AttackStopTime; }

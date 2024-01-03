@@ -148,7 +148,7 @@ void Camera::UpdateGame()
 		}
 	}
 	if (followmove > 99) { followmove = 99; }
-	score->Count(followmove);		//現在の仲間の数のデータを送る
+	score->SetCount(followmove);		//現在の仲間の数のデータを送る
 
 	//視野範囲の調整
 	cameraMove += CAMERA_MOVE_VALUE * player->GetEye();		//入手したアイテム分、視野広がる

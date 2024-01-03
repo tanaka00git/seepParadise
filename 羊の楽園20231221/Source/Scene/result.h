@@ -19,13 +19,14 @@ public:
 	static int m_Coin;
 	static int m_Count;
 
+	//ä÷êî
+	void UpdateNormal();
+	void UpdateFade();
+
 public:
 	void Init() override;
 	void Uninit() override;
-
 	void Update() override;
-	void UpdateNormal();
-	void UpdateFade();
 
 	void SetDay(int day) { m_Day = day; };
 	void SetCoin(int coin) { m_Coin = coin; };

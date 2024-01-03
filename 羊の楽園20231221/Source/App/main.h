@@ -24,6 +24,6 @@
 #define SCREEN_WIDTH	(1280*0.75)
 #define SCREEN_HEIGHT	(720*0.75)
 
-HWND GetWindow();
-int irand(int min, int max);
+HWND  GetWindow();
+int   irand(int min, int max);
 float frand();

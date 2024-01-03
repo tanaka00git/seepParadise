@@ -18,6 +18,7 @@ private:
 	bool m_AlphaMove = false;
 	int m_PlColor;
 	int m_PlClown;
+
 public:
 	void Init();
 	void Uninit();
