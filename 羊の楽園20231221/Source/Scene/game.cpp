@@ -24,6 +24,7 @@
 #include "..\GameObject\timeFade.h"
 #include "..\GameObject\chest.h"
 #include "..\GameObject\rock.h"
+#include "..\GameObject\mouseIcon.h"
 #include "..\GameObject\itemSpeed.h"
 #include "..\GameObject\itemLife.h"
 #include "..\GameObject\itemEye.h"
@@ -126,6 +127,7 @@ void Game::Init()
 	//ÉvÉåÉCÉÑÅ[
 	AddGameObject<Player>(1)->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
+	AddGameObject<MouseIcon>(3);
 	m_TimeFade = AddGameObject<TimeFade>(2);
 	AddGameObject<InfoLogTutorial>(2);
 	AddGameObject<HpBar>(2);

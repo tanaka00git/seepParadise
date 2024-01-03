@@ -4,6 +4,7 @@
 #include "..\App\input.h"
 #include "..\Scene\result.h"
 #include "..\GameObject\camera.h"
+#include "..\GameObject\mouseIcon.h"
 #include "..\GameObject\resultSeep.h"
 #include "..\GameObject\resultCoin.h"
 #include "..\GameObject\resultLogo.h"
@@ -24,6 +25,7 @@ void Result::Init()
 	Camera*camera = AddGameObject<Camera>(0);
 	camera->SetCameraState(CAMERA_STATE::RESULT);
 
+	AddGameObject<MouseIcon>(3);
 	AddGameObject<ResultLogo>(2);
 	ResultScore*resultScore = AddGameObject<ResultScore>(2);
 	resultScore->SetCount(m_Count);

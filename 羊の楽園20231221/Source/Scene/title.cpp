@@ -11,6 +11,7 @@
 #include "..\GameObject\timeFade.h"
 #include "..\App\audio.h"
 #include "..\GameObject\camera.h"
+#include "..\GameObject\mouseIcon.h"
 #include "..\GameObject\titleSeep.h"
 #include "..\GameObject\titleCoin.h"
 #include "..\GameObject\titleBox.h"
@@ -52,7 +53,8 @@ void Title::Init()
 
 	AddGameObject<TitleSky>(0);
 	AddGameObject<TitleBox>(1);
-
+	AddGameObject<MouseIcon>(3);
+	
 	m_TimeFade = AddGameObject<TimeFade>(2);
 	m_TitleLogo = AddGameObject<TitleLogo>(2);
 	m_TitleScore = AddGameObject<TitleScore>(2);

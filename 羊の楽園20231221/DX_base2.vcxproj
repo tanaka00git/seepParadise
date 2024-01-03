@@ -160,6 +160,7 @@
     <ClCompile Include="Source\GameObject\itemLife.cpp" />
     <ClCompile Include="Source\GameObject\itemObject.cpp" />
     <ClCompile Include="Source\GameObject\itemSpeed.cpp" />
+    <ClCompile Include="Source\GameObject\mouseIcon.cpp" />
     <ClCompile Include="Source\GameObject\player.cpp" />
     <ClCompile Include="Source\GameObject\resultCoin.cpp" />
     <ClCompile Include="Source\GameObject\resultLogo.cpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="Source\GameObject\itemLife.h" />
     <ClInclude Include="Source\GameObject\itemObject.h" />
     <ClInclude Include="Source\GameObject\itemSpeed.h" />
+    <ClInclude Include="Source\GameObject\mouseIcon.h" />
     <ClInclude Include="Source\GameObject\player.h" />
     <ClInclude Include="Source\GameObject\resultCoin.h" />
     <ClInclude Include="Source\GameObject\resultLogo.h" />

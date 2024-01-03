@@ -189,11 +189,14 @@
     <ClCompile Include="Source\GameObject\titleSeep.cpp">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameObject\titleCoin.cpp">
-      <Filter>ソース ファイル\GameObject\Normal</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GameObject\shine.cpp">
       <Filter>ソース ファイル\GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\mouseIcon.cpp">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\titleCoin.cpp">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -356,11 +359,14 @@
     <ClInclude Include="Source\GameObject\titleSeep.h">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameObject\titleCoin.h">
-      <Filter>ソース ファイル\GameObject\Normal</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GameObject\shine.h">
       <Filter>ソース ファイル\GameObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\mouseIcon.h">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\titleCoin.h">
+      <Filter>ソース ファイル\GameObject\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
