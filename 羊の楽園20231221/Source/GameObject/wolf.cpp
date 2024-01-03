@@ -625,7 +625,7 @@ void Wolf::SetEnemyData(int data)
 	if (m_Data == 1)
 	{
 		m_FullLife = 5;
-		m_Speed = 0.025f;
+		m_Speed = 0.028f;
 		m_CoinDrop = 1;
 		m_CharaScale = D3DXVECTOR3(0.6f, 0.6f, 0.6f);	//キャラのサイズ
 		m_BarScale = D3DXVECTOR3(0.5f, 0.7f, 0.7f);		//HPバーのサイズ
@@ -634,7 +634,7 @@ void Wolf::SetEnemyData(int data)
 	else if (m_Data == 2)
 	{
 		m_FullLife = 7;
-		m_Speed = 0.025f;
+		m_Speed = 0.028f;
 		m_CoinDrop = 2;
 		m_CharaScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 		m_BarScale = D3DXVECTOR3(0.7f, 0.7f, 0.7f);	
@@ -653,7 +653,7 @@ void Wolf::SetEnemyData(int data)
 	else if (m_Data == 4)
 	{
 		m_FullLife = 15;
-		m_Speed = 0.03f;
+		m_Speed = 0.035f;
 		m_CoinDrop = 4;
 		m_CharaScale = D3DXVECTOR3(1.7f, 1.7f, 1.7f);
 		m_BarScale = D3DXVECTOR3(1.4f, 0.7f, 0.7f);

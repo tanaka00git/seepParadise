@@ -12,7 +12,7 @@ private:
 	class Sprite* m_Sprite_Tutorial1{};
 	class Sprite* m_Sprite_Tutorial2{};
 	class Sprite* m_Sprite_Tutorial3{};
-	class Sprite* m_Sprite_Tutorial4{};
+	class Sprite* m_Sprite_Check{};
 
 	int   m_Log    = 1;
 	float m_Alpha  = 1.0f;

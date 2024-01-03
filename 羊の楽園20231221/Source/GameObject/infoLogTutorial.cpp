@@ -16,8 +16,8 @@ void InfoLogTutorial::Init()
 	m_Sprite_Tutorial2->Init(0.0f, 0.0f, 600, 60, "asset\\texture\\tutorialLog2.png");
 	m_Sprite_Tutorial3 = AddComponent<Sprite>();
 	m_Sprite_Tutorial3->Init(0.0f, 0.0f, 600, 60, "asset\\texture\\tutorialLog3.png");
-	m_Sprite_Tutorial4 = AddComponent<Sprite>();
-	m_Sprite_Tutorial4->Init(0.0f, 0.0f, 600, 60, "asset\\texture\\tutorialLog4.png");
+	m_Sprite_Check = AddComponent<Sprite>();
+	m_Sprite_Check->Init(0.0f, 0.0f, 600, 60, "asset\\texture\\tutorialLog4.png");
 	m_Alpha4 = 0.0f;
 
 	m_Position.x = 180;
@@ -25,7 +25,7 @@ void InfoLogTutorial::Init()
 	m_Sprite_Tutorial1->SetPosition(m_Position);
 	m_Sprite_Tutorial2->SetPosition(m_Position);
 	m_Sprite_Tutorial3->SetPosition(m_Position);
-	m_Sprite_Tutorial4->SetPosition(m_Position);
+	m_Sprite_Check->SetPosition(m_Position);
 }
 
 void InfoLogTutorial::Uninit()
@@ -49,7 +49,7 @@ void InfoLogTutorial::Update()
 		m_Alpha = 1.0f;
 		m_Alpha2 = 0.0f;
 		m_Alpha3 = 0.0f;
-		m_Sprite_Tutorial4->SetPosition(D3DXVECTOR3(100, 450, 0));
+		m_Sprite_Check->SetPosition(D3DXVECTOR3(100, 450, 0));
 		m_ControlTime ++;
 		if (m_ControlTime >= 270) { m_Alpha4 += 0.3f; }
 		if (m_ControlTime >= 360) { m_Log ++; m_ControlTime = 0; }
@@ -62,7 +62,7 @@ void InfoLogTutorial::Update()
 			m_Alpha2 = 1.0f;
 			m_Alpha3 = 0.0f;
 			m_Alpha4 = 0.0f;
-			m_Sprite_Tutorial4->SetPosition(D3DXVECTOR3(140, 450,0));
+			m_Sprite_Check->SetPosition(D3DXVECTOR3(140, 450,0));
 		}
 		else
 		{
@@ -80,7 +80,7 @@ void InfoLogTutorial::Update()
 			m_Alpha2 = 0.0f;
 			m_Alpha3 = 1.0f;
 			m_Alpha4 = 0.0f;
-			m_Sprite_Tutorial4->SetPosition(D3DXVECTOR3(180, 450,0));
+			m_Sprite_Check->SetPosition(D3DXVECTOR3(180, 450,0));
 
 		}
 		else
@@ -100,7 +100,7 @@ void InfoLogTutorial::Update()
 	m_Sprite_Tutorial1->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, m_Alpha));
 	m_Sprite_Tutorial2->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, m_Alpha2));
 	m_Sprite_Tutorial3->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, m_Alpha3));
-	m_Sprite_Tutorial4->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, m_Alpha4));
+	m_Sprite_Check->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, m_Alpha4));
 }
 
 
