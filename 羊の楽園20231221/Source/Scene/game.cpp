@@ -270,7 +270,7 @@ void Game::TimeEvent_Time2Loop()
 		if (1 == a) 
 		{ 
 			float rot = frand() * 2 * D3DX_PI;
-			AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(static_cast<float>(cos(rot))) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(static_cast<float>(sin(rot))) * ENEMY_MAKE_DISTANCE + PLPos.z), 1); }
+			AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>((cos(rot))) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>((sin(rot))) * ENEMY_MAKE_DISTANCE + PLPos.z), 1); }
 
 		a = irand(0, 3);
 		if (1 == a) 
@@ -345,8 +345,10 @@ void Game::TimeEvent_Time20()
 void Game::TimeEvent_Time10or30()
 {
 	//イベント発生用
-	if (m_NawEvent == 0) {
-		if (m_Day >= 3) {//3日目から12分の1の確率で発生する
+	if (m_NawEvent == 0) 
+	{
+		if (m_Day >= 3) //3日目から12分の1の確率で発生する
+		{
 			int a = irand(0, 11);
 			if (0 == a)
 			{

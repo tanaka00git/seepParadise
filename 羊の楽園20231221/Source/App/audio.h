@@ -18,7 +18,6 @@ private:
 	float m_CurrentVolume = 0.0f;   // 現在の音量
 	float m_FadeSpeed	  = 0.0f;   // フェードの速さ
 
-
 public:
 	static void InitMaster();
 	static void UninitMaster();

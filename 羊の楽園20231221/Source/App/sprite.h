@@ -9,6 +9,7 @@ protected:
 	D3DXCOLOR	m_Color	   = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	D3DXVECTOR3 m_Position = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 	D3DXVECTOR3 m_Scale    = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+
 public:
 	void Init(float x, float y, float Width, float Height, const char* TextureName);
 	void Uninit();

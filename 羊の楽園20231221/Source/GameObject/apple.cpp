@@ -45,7 +45,7 @@ void Apple::MoveGet()
 	InfoLog* infoLog = scene->AddGameObject<InfoLog>(2);
 	infoLog->SetNum(5, 2, D3DXVECTOR3(100, -10, 0));
 	DamageFade* damageFade = scene->AddGameObject<DamageFade>(2);
-	damageFade->SetColorData(D3DXCOLOR(0.0f, 1.0f, 1.0f, 0.3f));
+	damageFade->SetColor(D3DXCOLOR(0.0f, 1.0f, 1.0f, 0.3f));
 	player->AddLife(+1);
 
 	m_SE_Get->Play(1.0f);

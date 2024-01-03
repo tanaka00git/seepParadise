@@ -378,7 +378,7 @@ void Player::SetDamageMove()
 	m_InvincibleTime = 180;
 	m_Velocity.y = 0.1f;
 	DamageFade* damageFade = scene->AddGameObject<DamageFade>(2);
-	damageFade->SetColorData(D3DXCOLOR(1.0f, 0.0f, 0.0f, 0.3f));
+	damageFade->SetColor(D3DXCOLOR(1.0f, 0.0f, 0.0f, 0.3f));
 }
 
 void Player::WalkEffect()

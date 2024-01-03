@@ -5,6 +5,11 @@
 
 Model*TitleBox::m_Model{};
 
+#define INIT_ROTATION_Y -2.3f
+#define INIT_POSITION_Y 1.0f
+#define SCALE 0.8f
+#define ROTATION_Y_SPEED -0.004f
+
 void TitleBox::Load()
 {
 	m_Model = new Model();
@@ -20,9 +25,9 @@ void TitleBox::Unload()
 
 void TitleBox::Init()
 {
-	m_Rotation.y -= 2.3f;
-	m_Position.y += 1.0f;
-	m_Scale = D3DXVECTOR3(0.8f, 0.8f, 0.8f);
+	m_Rotation.y = INIT_ROTATION_Y;
+	m_Position.y = INIT_POSITION_Y;
+	m_Scale = D3DXVECTOR3(SCALE, SCALE, SCALE);
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
 }
@@ -37,9 +42,8 @@ void TitleBox::Uninit()
 
 void TitleBox::Update()
 {
-	m_Rotation.y -= 0.004f;
+	m_Rotation.y += ROTATION_Y_SPEED;
 }
-
 
 void TitleBox::Draw()
 {

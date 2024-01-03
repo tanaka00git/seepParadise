@@ -45,7 +45,7 @@ void ItemLife::MoveGet()
 	InfoLog* infoLog = scene->AddGameObject<InfoLog>(2);
 	infoLog->SetNum(11, 3, D3DXVECTOR3(900, 480, 0));			//ƒCƒ“ƒtƒH”­¶
 	DamageFade* damageFade = scene->AddGameObject<DamageFade>(2);
-	damageFade->SetColorData(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	damageFade->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	player->AddFullLife(+1);
 	player->AddLife(+1);
 

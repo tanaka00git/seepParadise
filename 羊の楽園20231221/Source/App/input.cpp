@@ -43,7 +43,8 @@ POINT Input::GetMousePosition()
 bool Input::IsMouseClickInArea(int startX, int startY, int endX, int endY)
 {
 	POINT mousePos = Input::GetMousePosition();
-	// マウスが範囲内にあるかを判定
+	
+	//マウスが範囲内にあるかを判定
 	bool isInsideX = (mousePos.x >= startX) && (mousePos.x <= endX);
 	bool isInsideY = (mousePos.y >= startY) && (mousePos.y <= endY);
 	return isInsideX && isInsideY;

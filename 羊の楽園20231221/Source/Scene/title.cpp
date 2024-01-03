@@ -179,7 +179,7 @@ void Title::UpdateTargetShop()
 			m_LegiSE->Play(1.0f);
 			Scene* scene = Manager::GetScene();
 			DamageFade* damageFade = scene->AddGameObject<DamageFade>(2);
-			damageFade->SetColorData(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f));
+			damageFade->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f));
 			InfoLog* infoLog = scene->AddGameObject<InfoLog>(2);
 			infoLog->SetNum(44, 2, D3DXVECTOR3(460, 370, 0));
 			m_Coin -= 50;

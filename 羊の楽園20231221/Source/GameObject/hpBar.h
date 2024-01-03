@@ -15,9 +15,6 @@ private:
 	class Sprite* m_Sprite_BlackCharge{};
 	class Sprite* m_Sprite_WhiteCharge{};
 
-	float m_Alpha = 0.0f;
-	float m_Alpha2 = 0.0f;
-
 	float m_FullLife = 0.0f;
 	float m_CurrentLife = 0.0f;
 	float m_OldConversion = 0.0f;

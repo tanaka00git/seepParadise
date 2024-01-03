@@ -46,7 +46,7 @@ void ItemSpeed::MoveGet()
 	InfoLog* infoLog = scene->AddGameObject<InfoLog>(2);
 	infoLog->SetNum(10, 3, D3DXVECTOR3(900.0f, 480.0f, 0.0f));			//ƒCƒ“ƒtƒH”­¶
 	DamageFade* damageFade = scene->AddGameObject<DamageFade>(2);
-	damageFade->SetColorData(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	damageFade->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	player->AddSpeed(+0.5);
 
 	m_SE_PowerUp->Play(1.0f);

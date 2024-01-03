@@ -21,6 +21,6 @@ public:
 	void Update();
 	void Draw();
 
-	void SetColorData(D3DXCOLOR color) { m_Color = color; }
+	void SetColor(D3DXCOLOR color) { m_Color = color; }
 
 };
