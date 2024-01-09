@@ -54,32 +54,28 @@ void Chest::UpdateDeath()
 		m_SE_Chest->Play(1.0f);
 
 		//アイテムドロップ
-		int a = irand(0, DROP_RAIT-1);
-		if (a == 0)
+		//どれかが選出される
+		int b = irand(0, 2);
+		// スピードアップ
+		if (b == 0)
 		{
-			//どれかが選出される
-			int b = irand(0, 2);
-			// スピードアップ
-			if (b == 0)
-			{
-				ItemSpeed* itemSpeed = scene->AddGameObject<ItemSpeed>(1);
-				itemSpeed->SetPosition(m_Position);
-				itemSpeed->SetDrop();
-			}
-			// ライフアップ
-			else if (b == 1)
-			{
-				ItemLife* itemLife = scene->AddGameObject<ItemLife>(1);
-				itemLife->SetPosition(m_Position);
-				itemLife->SetDrop();
-			}
-			// 視野アップ
-			else if (b == 2)
-			{
-				ItemEye* itemEye = scene->AddGameObject<ItemEye>(1);
-				itemEye->SetPosition(m_Position);
-				itemEye->SetDrop();
-			}
+			ItemSpeed* itemSpeed = scene->AddGameObject<ItemSpeed>(1);
+			itemSpeed->SetPosition(m_Position);
+			itemSpeed->SetDrop();
+		}
+		// ライフアップ
+		else if (b == 1)
+		{
+			ItemLife* itemLife = scene->AddGameObject<ItemLife>(1);
+			itemLife->SetPosition(m_Position);
+			itemLife->SetDrop();
+		}
+		// 視野アップ
+		else if (b == 2)
+		{
+			ItemEye* itemEye = scene->AddGameObject<ItemEye>(1);
+			itemEye->SetPosition(m_Position);
+			itemEye->SetDrop();
 		}
 
 		//コインドロップ
