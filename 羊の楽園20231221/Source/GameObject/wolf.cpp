@@ -32,6 +32,7 @@ Audio*Wolf::m_SE_Kick{};
 #define EATING_TIME 40
 #define DROP_RATE 20
 #define APPLE_RATE 20
+#define GIVE_ATTACK_STOP 20
 
 void Wolf::Load()
 {
@@ -401,7 +402,7 @@ void Wolf::Collision(float & groundHeight)
 				if (player->GetState() == PLAYER_STATE::DASH)
 				{
 					SetDamageMove();
-					player->SetAttackStop(20);
+					player->SetAttackStop(GIVE_ATTACK_STOP);
 					player->AddCombo(1);
 					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
 				}
@@ -409,7 +410,7 @@ void Wolf::Collision(float & groundHeight)
 				else if (m_DamageStop <= 0 && m_WolfState != WOLF_STATE::EATING)
 				{
 					m_WolfState = WOLF_STATE::EATING;
-					player->SetAttackStop(20);
+					player->SetAttackStop(GIVE_ATTACK_STOP);
 					player->AddLife(-1);
 					player->SetDamageMove();
 					m_SE_Eat->Play(1.0f);
@@ -435,7 +436,7 @@ void Wolf::Collision(float & groundHeight)
 				if (follow->GetState() == FOLLOW_STATE::DASH)
 				{
 					SetDamageMove();
-					follow->SetAttackStop(25);
+					follow->SetAttackStop(GIVE_ATTACK_STOP);
 					player->AddCombo(1);
 				}
 				else if (m_DamageStop <= 0 && m_WolfState != WOLF_STATE::EATING) 

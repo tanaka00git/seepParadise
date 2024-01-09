@@ -84,6 +84,10 @@ void Game::Init()
 
 	AddGameObject<Field>(1);
 
+	//プレイヤー
+	Player* player = AddGameObject<Player>(1);
+	player->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+
 	for (int i = 0; i <= CYLINDER_START_NUM; i++) {
 		Cylinder*cylinder = AddGameObject<Cylinder>(1);
 		cylinder->SetScale(D3DXVECTOR3(3.0f, 1.0f, 3.0f));
@@ -126,8 +130,6 @@ void Game::Init()
 	//岩
 	for (int i = 0; i < ROCK_START_NUM; i++) { AddGameObject<Rock>(1)->SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2));; }
 
-	//プレイヤー
-	AddGameObject<Player>(1)->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	AddGameObject<MouseIcon>(3);
 	m_TimeFade = AddGameObject<TimeFade>(2);

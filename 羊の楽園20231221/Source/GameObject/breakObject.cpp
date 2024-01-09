@@ -11,6 +11,7 @@
 Audio*BreakObject::m_SE_Kick{};
 
 #define GRAVITY 0.015f
+#define GIVE_ATTACK_STOP 20
 
 void BreakObject::Load()
 {
@@ -100,7 +101,7 @@ void BreakObject::UpdateMove()
 			if (m_Position.x - m_Scale.x < position.x && position.x < m_Position.x + m_Scale.x &&
 				m_Position.z - m_Scale.z < position.z && position.z < m_Position.z + m_Scale.z) {
 				SetDamageMove();
-				player->SetAttackStop(13);
+				player->SetAttackStop(GIVE_ATTACK_STOP);
 				player->AddCombo(1);
 			}
 		}
@@ -117,7 +118,7 @@ void BreakObject::UpdateMove()
 				if (m_Position.x - m_Scale.x < position.x && position.x < m_Position.x + m_Scale.x &&
 					m_Position.z - m_Scale.z < position.z && position.z < m_Position.z + m_Scale.z) {
 					SetDamageMove();
-					follow->SetAttackStop(13);
+					follow->SetAttackStop(GIVE_ATTACK_STOP);
 					player->AddCombo(1);
 				}
 			}
