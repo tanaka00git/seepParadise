@@ -28,7 +28,7 @@ private:
 	void TimeEvent_Time20();
 	void TimeEvent_Time10or30();
 	void TimeEvent_Time40();
-	void TimeEvent_Day4Loop();
+	void TimeEvent_Day3Loop();
 
 public:
 	void Init() override;

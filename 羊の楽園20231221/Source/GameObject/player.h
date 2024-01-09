@@ -98,17 +98,17 @@ public:
 	void AddCombo(int combo) { m_Combo += combo; }
 
 	//éÊìæä÷êî
-	float GetSpeed() { return m_Speed; }
-	int   GetCharge() { return m_Charge; }
-	int   GetFullCharge() { return m_FullCharge; }
-	bool  GetDash() { return m_Dash; }
-	int   GetFullLife() { return m_FullLife; }
-	int   GetLife() { return m_Life; }
-	int   GetAttackStop() { return m_AttackStopTime; }
-	int   GetEye() { return m_Eye; }
-	bool  GetDebug() { return m_DebugMode; }
-	int   GetInvincibleTime() { return m_InvincibleTime; }
-	PLAYER_STATE GetState() { return m_PlayerState; }
+	float GetSpeed() const { return m_Speed; }
+	int   GetCharge() const { return m_Charge; }
+	int   GetFullCharge() const { return m_FullCharge; }
+	bool  GetDash() const { return m_Dash; }
+	int   GetFullLife() const { return m_FullLife; }
+	int   GetLife() const { return m_Life; }
+	int   GetAttackStop() const { return m_AttackStopTime; }
+	int   GetEye() const { return m_Eye; }
+	bool  GetDebug() const { return m_DebugMode; }
+	int   GetInvincibleTime() const { return m_InvincibleTime; }
+	PLAYER_STATE GetState() const { return m_PlayerState; }
 
 	void SetColorClown(int color, int clown) { m_PlColor = color; m_PlClown = clown; };
 	void SetDebugMode(bool debug) { m_DebugMode = debug; };

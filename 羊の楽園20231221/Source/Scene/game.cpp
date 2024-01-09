@@ -7,7 +7,7 @@
 #include "..\App\audio.h"
 #include "..\GameObject\camera.h"
 #include "..\GameObject\field.h"
-#include "..\GameObject\..\GameObject\player.h"
+#include "..\GameObject\player.h"
 #include "..\GameObject\tree.h"
 #include "..\GameObject\follow.h"
 #include "..\GameObject\coin.h"
@@ -211,7 +211,7 @@ void Game::Update()
 		//3•b‚²‚Æ
 		if (m_GameTimeSeconds % 2 == 0){TimeEvent_Time2Loop();}
 		//4“ú‚²‚Æ
-		if (m_Day % 4 == 0 && m_GameTimeSeconds == 0) {TimeEvent_Day4Loop();}
+		if (m_Day % 3 == 0 && m_GameTimeSeconds == 0) {TimeEvent_Day3Loop();}
 		//10‚©30•b‚É1‰ñ
 		if (m_GameTimeSeconds == 10 || m_GameTimeSeconds == 30) { TimeEvent_Time10or30(); }
 	}
@@ -397,7 +397,7 @@ void Game::TimeEvent_Time40()
 	score->SetTimeZone(false);
 }
 
-void Game::TimeEvent_Day4Loop()
+void Game::TimeEvent_Day3Loop()
 {
 	//4“ú–ˆ‚ÌƒCƒxƒ“ƒg
 	Scene* scene = Manager::GetScene();
