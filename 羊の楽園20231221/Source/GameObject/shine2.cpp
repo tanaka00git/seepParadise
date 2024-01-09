@@ -3,18 +3,18 @@
 #include "..\App\renderer.h"
 #include "..\Scene\scene.h"
 #include "..\GameObject\camera.h"
-#include "..\GameObject\shine.h"
+#include "..\GameObject\shine2.h"
 
-ID3D11ShaderResourceView* Shine::m_Texture{};
+ID3D11ShaderResourceView* Shine2::m_Texture{};
 #define COUNT_FREAM_DELAY 2
 #define POSITION_Y 0.6f
 #define POSITION_Z -1.2f
 
-void Shine::Load()
+void Shine2::Load()
 {
 	// テクスチャ読み込み
 	D3DX11CreateShaderResourceViewFromFile(Renderer::GetDevice(),
-		"asset\\texture\\shine.png",
+		"asset\\texture\\shine2.png",
 		NULL,
 		NULL,
 		&m_Texture,
@@ -22,12 +22,12 @@ void Shine::Load()
 	assert(m_Texture);
 }
 
-void Shine::Unload()
+void Shine2::Unload()
 {
 	m_Texture->Release();
 }
 
-void Shine::Init()
+void Shine2::Init()
 {
 	VERTEX_3D vertex[4];
 	//3Dだと左奥から
@@ -74,7 +74,7 @@ void Shine::Init()
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\unlitTexturePS.cso");
 }
 
-void Shine::Uninit()
+void Shine2::Uninit()
 {
 	m_VertexBuffer->Release();
 
@@ -84,7 +84,7 @@ void Shine::Uninit()
 	m_PixelShader->Release();
 }
 
-void Shine::Update()
+void Shine2::Update()
 {
 	m_CountFrameDelay++;
 
@@ -97,7 +97,7 @@ void Shine::Update()
 	}
 }
 
-void Shine::Draw()
+void Shine2::Draw()
 {
 	//テクスチャ座標算出
 	float x = m_Count % 4 * (1.0f / 4);

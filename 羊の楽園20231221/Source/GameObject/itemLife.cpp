@@ -8,6 +8,7 @@
 #include "..\GameObject\player.h"
 #include "..\GameObject\damageFade.h"
 #include "..\GameObject\infoLog.h"
+#include "..\GameObject\shine2.h"
 #include "..\App\model.h"
 
 Model*ItemLife::m_Model{};
@@ -51,4 +52,6 @@ void ItemLife::MoveGet()
 
 	m_SE_PowerUp->Play(1.0f);
 	m_SE_Get->Play(1.0f);
+
+	scene->AddGameObject<Shine2>(1)->SetPosition(m_Position);//エフェクト
 }
