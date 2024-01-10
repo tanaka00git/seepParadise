@@ -152,6 +152,8 @@
     <ClCompile Include="Source\GameObject\fade.cpp" />
     <ClCompile Include="Source\GameObject\field.cpp" />
     <ClCompile Include="Source\GameObject\follow.cpp" />
+    <ClCompile Include="Source\GameObject\goal.cpp" />
+    <ClCompile Include="Source\GameObject\goalScope.cpp" />
     <ClCompile Include="Source\GameObject\hpBar.cpp" />
     <ClCompile Include="Source\GameObject\hpBarS.cpp" />
     <ClCompile Include="Source\GameObject\infoLog.cpp" />
@@ -210,6 +212,8 @@
     <ClInclude Include="Source\GameObject\field.h" />
     <ClInclude Include="Source\GameObject\follow.h" />
     <ClInclude Include="Source\GameObject\gameObject.h" />
+    <ClInclude Include="Source\GameObject\goal.h" />
+    <ClInclude Include="Source\GameObject\goalScope.h" />
     <ClInclude Include="Source\GameObject\hpBar.h" />
     <ClInclude Include="Source\GameObject\hpBarS.h" />
     <ClInclude Include="Source\GameObject\InfoLog.h" />

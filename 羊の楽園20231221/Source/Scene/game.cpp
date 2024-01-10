@@ -18,6 +18,8 @@
 #include "..\GameObject\cylinder.h"
 #include "..\GameObject\box.h"
 #include "..\GameObject\wolf.h"
+#include "..\GameObject\goal.h"
+#include "..\GameObject\goalScope.h"
 #include "..\GameObject\apple.h"
 #include "..\GameObject\seed.h"
 #include "..\GameObject\score.h"
@@ -60,6 +62,8 @@ void Game::Init()
 	Follow::Load();
 	Seed::Load();
 	Wolf::Load();
+	Goal::Load();
+	GoalScope::Load();
 	Explosion::Load();
 	Smoke::Load();
 	Shine::Load();
@@ -83,6 +87,8 @@ void Game::Init()
 	camera->SetCameraState(CAMERA_STATE::GAME);
 
 	AddGameObject<Field>(1);
+	
+	AddGameObject<Goal>(1)->SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2));
 
 	//ÉvÉåÉCÉÑÅ[
 	Player* player = AddGameObject<Player>(1);
@@ -167,6 +173,8 @@ void Game::Uninit()
 	Player::Unload();
 	Seed::Unload();
 	Wolf::Unload();
+	Goal::Unload();
+	GoalScope::Unload();
 	Explosion::Unload();
 	Smoke::Unload();
 	Shine::Unload();
