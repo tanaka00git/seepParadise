@@ -240,8 +240,8 @@ void Follow::Collision(float & groundHeight)
 		if (flength < scale.x) 
 		{
 			//‘¼‚Ì—r‚Æ‚ÌÚG‚ÅƒYƒŒ‚é
-			m_Velocity.x += (m_Position.x - follow->m_Position.x) * CONTACT_EXTRUSION;	
-			m_Velocity.z += (m_Position.z - follow->m_Position.z) * CONTACT_EXTRUSION;
+				m_Velocity.x += (m_Position.x - follow->m_Position.x) * CONTACT_EXTRUSION;
+				m_Velocity.z += (m_Position.z - follow->m_Position.z) * CONTACT_EXTRUSION;
 
 			//’‡ŠÔ—r‚ÉG‚ê‚½‚ç’‡ŠÔ‚É
 			if (follow->GetState() == FOLLOW_STATE::FREE && m_FollowState != FOLLOW_STATE::FREE && m_AgainFollow <= 0)

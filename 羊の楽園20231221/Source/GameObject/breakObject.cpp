@@ -11,7 +11,7 @@
 Audio*BreakObject::m_SE_Kick{};
 
 #define GRAVITY 0.015f
-#define GIVE_ATTACK_STOP 20
+#define GIVE_ATTACK_STOP 24
 
 void BreakObject::Load()
 {

@@ -259,7 +259,7 @@ void Game::TimeSecondsUpdate()
 			m_Event1 = false;
 			m_Event2 = false;
 			m_SE_SeepCry->Play(1.0f, false);
-			AddGameObject<InfoLog>(2)->SetNum(9, 1, D3DXVECTOR3(900, 480, 0));
+			AddGameObject<InfoLog>(2)->SetNum(9, 3, D3DXVECTOR3(900, 480, 0));
 		}
 	}
 }
