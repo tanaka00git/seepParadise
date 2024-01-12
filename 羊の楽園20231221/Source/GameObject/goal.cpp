@@ -9,14 +9,16 @@
 #include "..\GameObject\player.h"
 #include "..\GameObject\follow.h"
 #include "..\App\model.h"
+#include <algorithm>
+using std::max;
 
 Model* Goal::m_Model{};
 Audio* Goal::m_SE_Goal{};
 
-#define SCOPE_SIZE 30.0f
+#define SCOPE_SIZE 10.0f
 #define ROTATION_SPEED 0.1f
-#define STAGE_MAKE_XY 110.0f
-#define FOLLOW_MAKE_POSITION_Y 2.5f
+#define STAGE_MAKE_XY 30.0f//110
+#define FOLLOW_MAKE_POSITION_Y 1.1f
 
 void Goal::Load()
 {
@@ -80,9 +82,10 @@ void Goal::Update()
 		//ÉXÉRÉAÇÃêî
 		Score* score = scene->GetGameObject<Score>();
 		int count = score->GetCount();
+		int numFollows = max(count / 2, 1);
 
 		//íáä‘ÇëùÇ‚Ç∑
-		for (int i = 1; i <= count; i++)
+		for (int i = 1; i <= numFollows; i++)
 		{
 			Follow* follow = scene->AddGameObject<Follow>(1);
 			follow->SetPosition(D3DXVECTOR3(PLPos.x, PLPos.y + FOLLOW_MAKE_POSITION_Y, PLPos.z));
