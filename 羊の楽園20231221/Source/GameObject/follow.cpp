@@ -18,6 +18,7 @@
 Model*Follow::m_Model{};
 Audio*Follow::m_SE_Follow{};
 Audio*Follow::m_SE_Release{};
+bool Follow::m_SE_FollowCheck{};
 
 #define WALK_EFFECT_TIME 10		//エフェクトが表示される間隔フレーム
 #define CONTACT_EXTRUSION 0.02f	//他の仲間と接触した際の押し出し係数
@@ -25,6 +26,7 @@ Audio*Follow::m_SE_Release{};
 #define MOVE_SPEED_DASH   0.02f //ダッシュ時移動速度
 #define MOVE_MAGNIFY_FREE 6.5f  //自由状態の移動速度の倍率(それ以外の状態ではプレイヤーと同期)
 #define DELETE_DISTANCE   25.0f //プレイヤーと離れているときに自動消滅する距離
+#define INIT_JUMP 0.25f			//出現のジャンプの高さ
 
 void Follow::Load()
 {
@@ -50,7 +52,7 @@ void Follow::Init()
 
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
-	
+
 	m_Shadow = AddComponent<Shadow>();
 }
 
@@ -114,6 +116,7 @@ void Follow::Update()
 
 	//疑似アニメ
 	Anime();
+	m_SE_FollowCheck = false;
 }
 
 void Follow::Draw()
@@ -166,7 +169,7 @@ void Follow::UpdateFree()
 	float length = D3DXVec3Length(&direction);
 	D3DXVECTOR3 scale = player->GetScale();
 	
-	if (length < scale.x && m_AgainFollow <= 0)
+	if (length < scale.x && length < scale.y && m_AgainFollow <= 0)
 	{ 
 		m_SE_Follow->Play(1.0f); 
 		m_FollowState = FOLLOW_STATE::NORMAL;
@@ -237,7 +240,7 @@ void Follow::Collision(float & groundHeight)
 		direction.y = 0.0f;
 		float flength = D3DXVec3Length(&direction);
 
-		if (flength < scale.x) 
+		if (flength < scale.x && flength < scale.y)
 		{
 			//他の羊との接触でズレる
 				m_Velocity.x += (m_Position.x - follow->m_Position.x) * CONTACT_EXTRUSION;
@@ -246,7 +249,11 @@ void Follow::Collision(float & groundHeight)
 			//仲間羊に触れたら仲間に
 			if (follow->GetState() == FOLLOW_STATE::FREE && m_FollowState != FOLLOW_STATE::FREE && m_AgainFollow <= 0)
 			{
-				m_SE_Follow->Play(1.0f);
+				if (!m_SE_FollowCheck)
+				{
+					m_SE_Follow->Play(1.0f);
+					m_SE_FollowCheck = true;
+				}
 				follow->SetState(FOLLOW_STATE::NORMAL);
 			}
 		}
@@ -450,3 +457,10 @@ void Follow::AttackStop()
 	if (m_AttackStopTime <= 0) { m_AttackStopTime = 0; }
 }
 
+void Follow::SetDrop()
+{
+	m_Velocity.y = INIT_JUMP;
+	m_Rotation.y = frand() * 90;
+	m_Velocity.x = GetForward().x * (frand() * 0.08f);
+	m_Velocity.z = GetForward().z * (frand() * 0.08f);
+}

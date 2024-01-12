@@ -20,6 +20,7 @@ private:
 	//ì«Ç›çûÇ›
 	static class Model* m_Model;
 	static class Audio* m_SE_Follow;
+	static bool m_SE_FollowCheck;
 	static class Audio* m_SE_Release;
 	class Shadow* m_Shadow{};
 
@@ -67,6 +68,7 @@ public:
 	FOLLOW_STATE GetState() { return m_FollowState; }
 	int GetAttackStop() { return m_AttackStopTime; }
 
+	void SetDrop();
 	void SetAttackStop(int attackStop) { m_AttackStopTime = attackStop; };
 	void AddLife(int Life) { m_Life += Life; }
 	void SetState(FOLLOW_STATE followState) { m_FollowState = followState; }

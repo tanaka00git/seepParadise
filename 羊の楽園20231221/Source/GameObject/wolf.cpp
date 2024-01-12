@@ -32,7 +32,9 @@ Audio*Wolf::m_SE_Kick{};
 #define EATING_TIME 40
 #define DROP_RATE 20
 #define APPLE_RATE 20
-#define GIVE_ATTACK_STOP 24
+#define GIVE_ATTACK_STOP 20
+#define KNOCK_BACK_TIME 14
+#define STUN_TIME 100
 
 void Wolf::Load()
 {
@@ -371,8 +373,8 @@ void Wolf::UpdateDamage()
 	m_Rotation.y += 0.2f;
 
 	//攻撃受けたときの処理
-	m_DamageStop --;
-	if (m_DamageStop <= 0) 
+	m_StunTime --;
+	if (m_StunTime <= 0) 
 	{
 		m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 		m_WolfState = WOLF_STATE::FREE;
@@ -407,7 +409,7 @@ void Wolf::Collision(float & groundHeight)
 					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
 				}
 				//普通にぶつかった場合
-				else if (m_DamageStop <= 0 && m_WolfState != WOLF_STATE::EATING)
+				else if (m_StunTime <= 0 && m_WolfState != WOLF_STATE::EATING)
 				{
 					m_WolfState = WOLF_STATE::EATING;
 					player->AddLife(-1);
@@ -440,7 +442,7 @@ void Wolf::Collision(float & groundHeight)
 					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
 
 				}
-				else if (m_DamageStop <= 0 && m_WolfState != WOLF_STATE::EATING) 
+				else if (m_StunTime <= 0 && m_WolfState != WOLF_STATE::EATING) 
 				{
 					m_WolfState = WOLF_STATE::EATING;
 					m_SE_Eat->Play(1.0f);
@@ -592,11 +594,11 @@ void Wolf::Anime()
 
 void Wolf::SetDamageMove()
 {
-	m_DamageStop = 60;
+	m_StunTime = STUN_TIME;
 	m_WolfState = WOLF_STATE::DAMAGE;
 
 	m_Velocity.y = 0.1f;
-	m_KnockBackTime = 10;
+	m_KnockBackTime = KNOCK_BACK_TIME;
 	m_Life --;
 	m_SE_Kick->Play(1.0f);
 	m_ColorChange = 5;

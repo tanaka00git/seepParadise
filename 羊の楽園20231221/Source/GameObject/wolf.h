@@ -45,7 +45,7 @@ private:
 	int	    m_EatStop = 0;
 	float	m_Death = 0.14f;
 	int		m_KnockBackTime = 0;
-	int		m_DamageStop = 0;
+	int		m_StunTime = 0;
 	bool	m_DeleteInit = false;
 
 	//ステータス
