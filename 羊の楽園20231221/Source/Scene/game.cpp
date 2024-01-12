@@ -8,6 +8,8 @@
 #include "..\GameObject\camera.h"
 #include "..\GameObject\field.h"
 #include "..\GameObject\player.h"
+#include "..\GameObject\goal.h"
+#include "..\GameObject\goalScope.h"
 #include "..\GameObject\tree.h"
 #include "..\GameObject\follow.h"
 #include "..\GameObject\coin.h"
@@ -58,6 +60,8 @@ void Game::Init()
 	Tree::Load();
 	Player::Load();
 	Follow::Load();
+	Goal::Load();
+	GoalScope::Load();
 	Seed::Load();
 	Wolf::Load();
 	Explosion::Load();
@@ -83,6 +87,7 @@ void Game::Init()
 	camera->SetCameraState(CAMERA_STATE::GAME);
 
 	AddGameObject<Field>(1);
+	AddGameObject<Goal>(1);
 	
 	//ÉvÉåÉCÉÑÅ[
 	Player* player = AddGameObject<Player>(1);
@@ -164,6 +169,8 @@ void Game::Uninit()
 	Cylinder::Unload();
 	Tree::Unload();
 	Follow::Unload();
+	Goal::Unload();
+	GoalScope::Unload();
 	Player::Unload();
 	Seed::Unload();
 	Wolf::Unload();

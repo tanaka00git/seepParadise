@@ -1,7 +1,9 @@
 #include "..\App\main.h"
 #include "..\App\manager.h"
 #include "..\App\renderer.h"
+#include "..\App\audio.h"
 #include "..\Scene\scene.h"
+#include "..\GameObject\score.h"
 #include "..\GameObject\goal.h"
 #include "..\GameObject\goalScope.h"
 #include "..\GameObject\player.h"
@@ -9,21 +11,26 @@
 #include "..\App\model.h"
 
 Model* Goal::m_Model{};
+Audio* Goal::m_SE_Goal{};
 
-#define SCOPE_SIZE 4.0f
+#define SCOPE_SIZE 30.0f
 #define ROTATION_SPEED 0.1f
 #define STAGE_MAKE_XY 110.0f
+#define FOLLOW_MAKE_POSITION_Y 2.5f
 
 void Goal::Load()
 {
 	m_Model = new Model();
 	m_Model->Load("asset\\model\\target.obj");
+	m_SE_Goal = new Audio();
+	m_SE_Goal->Load("asset\\audio\\鈴を鳴らす.wav");
 }
 
 void Goal::Unload()
 {
 	m_Model->Unload();
 	delete m_Model;
+
 }
 
 void Goal::Init()
@@ -50,12 +57,6 @@ void Goal::Update()
 {
 	GameObject::Update();
 
-
-	if (Collision())
-	{
-		SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2));
-	}
-
 	m_Rotation.y += ROTATION_SPEED;
 
 	//ゴールスコープ移動
@@ -65,6 +66,29 @@ void Goal::Update()
 		scopePosition.y += 0.1f;
 		m_GoalScope->SetPosition(scopePosition);
 		m_GoalScope->SetScale(m_ScopeScale);
+	}
+
+	if (Collision())
+	{
+		Scene* scene = Manager::GetScene();
+		m_SE_Goal->Play(1.0f);
+
+		//プレイヤー座標
+		Player* player = scene->GetGameObject<Player>();
+		D3DXVECTOR3 PLPos = player->GetPosition();
+
+		//スコアの数
+		Score* score = scene->GetGameObject<Score>();
+		int count = score->GetCount();
+
+		//仲間を増やす
+		for (int i = 1; i <= count / 2; i++)
+		{
+			Follow* follow = scene->AddGameObject<Follow>(1);
+			follow->SetPosition(D3DXVECTOR3(PLPos.x, PLPos.y + FOLLOW_MAKE_POSITION_Y, PLPos.z));
+			follow->SetDrop();
+		}
+		SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2));
 	}
 }
 
@@ -104,8 +128,10 @@ bool Goal::Collision()
 		{
 			D3DXVECTOR3 position = player->GetPosition();
 			D3DXVECTOR3 scale = player->GetScale();
-			if (m_Position.x - m_ScopeScale.x < position.x && position.x < m_Position.x + m_ScopeScale.x &&
-				m_Position.z - m_ScopeScale.z < position.z && position.z < m_Position.z + m_ScopeScale.z)
+			if (m_Position.x - m_ScopeScale.x * 0.5f < position.x - scale.x * 0.5f &&
+				position.x + scale.x * 0.5f < m_Position.x + m_ScopeScale.x * 0.5f &&
+				m_Position.z - m_ScopeScale.z * 0.5f < position.z - scale.z * 0.5f &&
+				position.z + scale.z * 0.5f < m_Position.z + m_ScopeScale.z * 0.5f)
 			{
 				return true;
 			}
@@ -119,12 +145,15 @@ bool Goal::Collision()
 		{
 			D3DXVECTOR3 position = follow->GetPosition();
 			D3DXVECTOR3 scale = follow->GetScale();
-			if (m_Position.x - m_ScopeScale.x < position.x && position.x < m_Position.x + m_ScopeScale.x &&
-				m_Position.z - m_ScopeScale.z < position.z && position.z < m_Position.z + m_ScopeScale.z)
+			if (m_Position.x - m_ScopeScale.x * 0.5f < position.x - scale.x * 0.5f &&
+				position.x + scale.x * 0.5f < m_Position.x + m_ScopeScale.x * 0.5f &&
+				m_Position.z - m_ScopeScale.z * 0.5f < position.z - scale.z * 0.5f &&
+				position.z + scale.z * 0.5f < m_Position.z + m_ScopeScale.z * 0.5f)
 			{
 				return true;
 			}
 		}
 	}
+
 	return false;
 }
