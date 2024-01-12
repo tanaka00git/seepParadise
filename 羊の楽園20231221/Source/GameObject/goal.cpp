@@ -82,7 +82,7 @@ void Goal::Update()
 		int count = score->GetCount();
 
 		//’‡ŠÔ‚ğ‘‚â‚·
-		for (int i = 1; i <= count / 2; i++)
+		for (int i = 1; i <= count; i++)
 		{
 			Follow* follow = scene->AddGameObject<Follow>(1);
 			follow->SetPosition(D3DXVECTOR3(PLPos.x, PLPos.y + FOLLOW_MAKE_POSITION_Y, PLPos.z));

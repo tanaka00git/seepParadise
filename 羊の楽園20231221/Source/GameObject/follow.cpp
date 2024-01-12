@@ -20,7 +20,7 @@ Audio*Follow::m_SE_Follow{};
 Audio*Follow::m_SE_Release{};
 bool Follow::m_SE_FollowCheck{};
 
-#define WALK_EFFECT_TIME 10		//エフェクトが表示される間隔フレーム
+#define WALK_EFFECT_TIME 13		//エフェクトが表示される間隔フレーム
 #define CONTACT_EXTRUSION 0.02f	//他の仲間と接触した際の押し出し係数
 #define MOVE_SPEED_NORMAL 0.01f	//移動速度
 #define MOVE_SPEED_DASH   0.02f //ダッシュ時移動速度
@@ -169,7 +169,7 @@ void Follow::UpdateFree()
 	float length = D3DXVec3Length(&direction);
 	D3DXVECTOR3 scale = player->GetScale();
 	
-	if (length < scale.x && length < scale.y && m_AgainFollow <= 0)
+	if (length < scale.x && length < scale.y && length < scale.z && m_AgainFollow <= 0)
 	{ 
 		m_SE_Follow->Play(1.0f); 
 		m_FollowState = FOLLOW_STATE::NORMAL;
@@ -240,7 +240,7 @@ void Follow::Collision(float & groundHeight)
 		direction.y = 0.0f;
 		float flength = D3DXVec3Length(&direction);
 
-		if (flength < scale.x && flength < scale.y)
+		if (flength < scale.x && flength < scale.y && flength < scale.z)
 		{
 			//他の羊との接触でズレる
 				m_Velocity.x += (m_Position.x - follow->m_Position.x) * CONTACT_EXTRUSION;

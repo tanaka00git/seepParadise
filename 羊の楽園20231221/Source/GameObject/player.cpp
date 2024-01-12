@@ -34,7 +34,7 @@ int Player::m_PlClown{};
 #define FULL_LIFE 9
 #define FULL_SPEED 9.5
 #define FULL_EYE 6
-#define WALK_EFFECT_TIME 10
+#define WALK_EFFECT_TIME 13
 
 void Player::Load()
 {

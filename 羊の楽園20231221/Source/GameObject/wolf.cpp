@@ -398,7 +398,7 @@ void Wolf::Collision(float & groundHeight)
 		if (player->GetAttackStop() <= 0)
 		{
 			D3DXVECTOR3 scale = player->GetScale();
-			if (plength < scale.x)
+			if (plength < scale.x && plength < scale.y && plength < scale.z)
 			{
 				//プレイヤーがダッシュ時にぶつかった場合
 				if (player->GetState() == PLAYER_STATE::DASH)
@@ -430,7 +430,7 @@ void Wolf::Collision(float & groundHeight)
 		direction.y = 0.0f;
 		float length = D3DXVec3Length(&direction);
 
-		if (length < scale.x) 
+		if (length < scale.x && length < scale.y && length < scale.z)
 		{
 			if (follow->GetAttackStop() <= 0) 
 			{
@@ -462,7 +462,7 @@ void Wolf::Collision(float & groundHeight)
 		D3DXVECTOR3 direction = m_Position - position;
 		direction.y = 0.0f;
 		float flength = D3DXVec3Length(&direction);
-		if (flength < scale.x) {
+		if (flength < scale.x && flength < scale.y && flength < scale.z) {
 			m_Position.x += (m_Position.x - wolf->GetPosition().x) * 0.02f;
 			m_Position.z += (m_Position.z - wolf->GetPosition().z) * 0.02f;
 		}
