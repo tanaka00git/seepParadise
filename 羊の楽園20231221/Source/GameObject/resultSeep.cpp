@@ -77,7 +77,6 @@ void ResultSeep::Update()
 		D3DXVECTOR3 position = resultSeep->GetPosition();
 		D3DXVECTOR3 scale = resultSeep->GetScale();
 		D3DXVECTOR3 direction = m_Position - position;
-		direction.y = 0.0f;
 		float flength = D3DXVec3Length(&direction);
 
 		if (flength < scale.x) 

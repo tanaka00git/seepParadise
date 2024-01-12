@@ -4,6 +4,7 @@
 #include "..\Scene\scene.h"
 #include "..\App\input.h"
 #include "..\App\audio.h"
+#include "..\GameObject\score.h"
 #include "..\GameObject\follow.h"
 #include "..\GameObject\player.h"
 #include "..\GameObject\box.h"
@@ -49,6 +50,7 @@ void Follow::Init()
 {
 	m_Scale.y = 0.01f;
 	m_Rotation.y = frand() * 2 * D3DX_PI;
+	m_WalkEffectTime = irand(0, WALK_EFFECT_TIME);
 
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
@@ -228,6 +230,9 @@ void Follow::Collision(float & groundHeight)
 	Scene* scene = Manager::GetScene();
 	auto follows = scene->GetGameObjects<Follow>();
 
+
+
+
 	//–ì—Ç—r‚Æ‚ÌŠÖŒW«
 	for (Follow * follow : follows)
 	{
@@ -237,24 +242,23 @@ void Follow::Collision(float & groundHeight)
 		D3DXVECTOR3 position = follow->GetPosition();
 		D3DXVECTOR3 scale = follow->GetScale();
 		D3DXVECTOR3 direction = m_Position - position;
-		direction.y = 0.0f;
-		float flength = D3DXVec3Length(&direction);
+		float length = D3DXVec3Length(&direction);
 
-		if (flength < scale.x && flength < scale.y && flength < scale.z)
+		if (length < scale.x && length < scale.y && length < scale.z)
 		{
 			//‘¼‚Ì—r‚Æ‚ÌÚG‚ÅƒYƒŒ‚é
-				m_Velocity.x += (m_Position.x - follow->m_Position.x) * CONTACT_EXTRUSION;
-				m_Velocity.z += (m_Position.z - follow->m_Position.z) * CONTACT_EXTRUSION;
+			m_Velocity.x += (m_Position.x - follow->m_Position.x) * CONTACT_EXTRUSION;
+			m_Velocity.z += (m_Position.z - follow->m_Position.z) * CONTACT_EXTRUSION;
 
-			//’‡ŠÔ—r‚ÉG‚ê‚½‚ç’‡ŠÔ‚É
-			if (follow->GetState() == FOLLOW_STATE::FREE && m_FollowState != FOLLOW_STATE::FREE && m_AgainFollow <= 0)
+			//Ž©•ª‚ª’‡ŠÔ‚Å‚È‚¢‚Æ‚«‚É’‡ŠÔ—r‚ÉG‚ê‚½‚ç’‡ŠÔ‚É
+			if (follow->GetState() != FOLLOW_STATE::FREE && m_FollowState == FOLLOW_STATE::FREE && m_AgainFollow <= 0)
 			{
 				if (!m_SE_FollowCheck)
 				{
 					m_SE_Follow->Play(1.0f);
 					m_SE_FollowCheck = true;
 				}
-				follow->SetState(FOLLOW_STATE::NORMAL);
+				m_FollowState = FOLLOW_STATE::NORMAL;
 			}
 		}
 	}
@@ -302,7 +306,6 @@ void Follow::Collision(float & groundHeight)
 		D3DXVECTOR3 position = cylinder->GetPosition();
 		D3DXVECTOR3 scale = cylinder->GetScale();
 		D3DXVECTOR3 direction = m_Position - position;
-		direction.y = 0.0f;
 		float length = D3DXVec3Length(&direction);
 		if (length < scale.x*1.2f) {//*1.2‚Í’²®
 			if (m_Position.y < position.y + scale.y - 0.5f) {
@@ -395,8 +398,13 @@ void Follow::WalkEffect()
 	effectPosition.x -= GetForward().x * 0.8f;
 	effectPosition.z -= GetForward().z * 0.8f;
 
+	//’‡ŠÔ‚Ì—Ê‚ÅŒ¸‚ç‚·
+	Scene* scene = Manager::GetScene();
+	Score* score = scene->GetGameObject<Score>();
+	int count = score->GetCount();
+
 	//”ƒtƒŒ[ƒ€•à‚¢‚½‚çƒGƒtƒFƒNƒg”­¶
-	if (m_WalkEffectTime >= WALK_EFFECT_TIME)
+	if (m_WalkEffectTime >= WALK_EFFECT_TIME + count / 5)
 	{
 		Scene* scene = Manager::GetScene();
 		scene->AddGameObject<Smoke>(1)->SetPosition(effectPosition);//”š”­ƒGƒtƒFƒNƒg

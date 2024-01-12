@@ -335,7 +335,6 @@ void Player::Collision(float & groundHeight)
 		D3DXVECTOR3 position = cylinder->GetPosition();
 		D3DXVECTOR3 scale = cylinder->GetScale();
 		D3DXVECTOR3 direction = m_Position - position;
-		direction.y = 0.0f;
 		float length = D3DXVec3Length(&direction);
 		if (length < scale.x*1.2f) //*1.2は調整
 		{
@@ -389,9 +388,14 @@ void Player::WalkEffect()
 	D3DXVECTOR3 effectPosition = m_Position;
 	effectPosition.x -= GetForward().x * 0.8f;
 	effectPosition.z -= GetForward().z * 0.8f;
+	
+	//仲間の量で減らす
+	Scene* scene = Manager::GetScene();
+	Score* score = scene->GetGameObject<Score>();
+	int count = score->GetCount();
 
 	//数フレーム歩いたらエフェクト発生
-	if (m_WalkEffectTime >= WALK_EFFECT_TIME)
+	if (m_WalkEffectTime >= WALK_EFFECT_TIME + count / 5)
 	{
 		Scene* scene = Manager::GetScene();
 		scene->AddGameObject<Smoke>(1)->SetPosition(effectPosition);//爆発エフェクト

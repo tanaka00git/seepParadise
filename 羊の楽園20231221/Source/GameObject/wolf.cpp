@@ -245,7 +245,6 @@ void Wolf::UpdateTargeting()
 		D3DXVECTOR3 position = follow->GetPosition();
 		D3DXVECTOR3 scale = follow->GetScale();
 		D3DXVECTOR3 direction = m_Position - position;
-		direction.y = 0.0f;
 		float length = D3DXVec3Length(&direction);
 
 		if (length < m_Tracking && follow->GetState() != FOLLOW_STATE::FREE && m_WolfState != WOLF_STATE::DAMAGE)
@@ -427,7 +426,6 @@ void Wolf::Collision(float & groundHeight)
 		D3DXVECTOR3 position = follow->GetPosition();
 		D3DXVECTOR3 scale = follow->GetScale();
 		D3DXVECTOR3 direction = m_Position - position;
-		direction.y = 0.0f;
 		float length = D3DXVec3Length(&direction);
 
 		if (length < scale.x && length < scale.y && length < scale.z)
@@ -460,7 +458,6 @@ void Wolf::Collision(float & groundHeight)
 		D3DXVECTOR3 position = wolf->GetPosition();
 		D3DXVECTOR3 scale = wolf->GetScale();
 		D3DXVECTOR3 direction = m_Position - position;
-		direction.y = 0.0f;
 		float flength = D3DXVec3Length(&direction);
 		if (flength < scale.x && flength < scale.y && flength < scale.z) {
 			m_Position.x += (m_Position.x - wolf->GetPosition().x) * 0.02f;
@@ -473,7 +470,7 @@ void Wolf::Collision(float & groundHeight)
 	for (Rock* rock : rocks) {
 		if (rock->GetState() == BREAKOBJECT_STATE::NORMAL) {
 			D3DXVECTOR3 position = rock->GetPosition();
-			D3DXVECTOR3 scale = rock->GetScale();
+			D3DXVECTOR3 scale = rock->GetScale() * 0.8f;
 			if (position.x - scale.x < m_Position.x && m_Position.x < position.x + scale.x &&
 				position.z - scale.z < m_Position.z && m_Position.z < position.z + scale.z) {
 				if (m_Position.y < position.y + scale.y) {//2.0f‚Íƒ‚ƒfƒ‹‚Å’²®
@@ -506,7 +503,6 @@ void Wolf::Collision(float & groundHeight)
 		D3DXVECTOR3 position = cylinder->GetPosition();
 		D3DXVECTOR3 scale = cylinder->GetScale();
 		D3DXVECTOR3 direction = m_Position - position;
-		direction.y = 0.0f;
 		float length = D3DXVec3Length(&direction);
 		if (length < scale.x * 1.2f) {//*1.2‚Í’²®
 			if (m_Position.y < position.y + scale.y - 0.5f) {
