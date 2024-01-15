@@ -144,7 +144,7 @@
     <ClCompile Include="Source\GameObject\camera.cpp" />
     <ClCompile Include="Source\GameObject\chest.cpp" />
     <ClCompile Include="Source\GameObject\coin.cpp" />
-    <ClCompile Include="Source\GameObject\ConcentrationLine.cpp" />
+    <ClCompile Include="Source\GameObject\concentrationLine.cpp" />
     <ClCompile Include="Source\GameObject\cylinder.cpp" />
     <ClCompile Include="Source\GameObject\damageFade.cpp" />
     <ClCompile Include="Source\GameObject\dayBar.cpp" />
@@ -203,7 +203,7 @@
     <ClInclude Include="Source\GameObject\camera.h" />
     <ClInclude Include="Source\GameObject\chest.h" />
     <ClInclude Include="Source\GameObject\coin.h" />
-    <ClInclude Include="Source\GameObject\ConcentrationLine.h" />
+    <ClInclude Include="Source\GameObject\concentrationLine.h" />
     <ClInclude Include="Source\GameObject\cylinder.h" />
     <ClInclude Include="Source\GameObject\damageFade.h" />
     <ClInclude Include="Source\GameObject\dayBar.h" />
