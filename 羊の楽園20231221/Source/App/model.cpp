@@ -1,11 +1,11 @@
+#include "..\App\main.h"
+#include "..\App\renderer.h"
+#include "..\App\model.h"
+
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <shlwapi.h>
 #pragma comment(lib, "shlwapi.lib")
-
-#include "..\App\main.h"
-#include "..\App\renderer.h"
-#include "..\App\model.h"
 
 void Model::Draw()
 {
