@@ -61,40 +61,38 @@ public:
 	}
 
 	//一つのオブジェクト取得用
-	template<typename T>//テンプレート関数
+	template<typename T>
 	T* GetGameObject()
 	{
 		for (int i = 0; i < 4; i++)
 		{
 			for (GameObject* object : m_GameObject[i])
 			{
-				if (typeid(*object) == typeid(T))//型を調べる
+				if (dynamic_cast<T*>(object) != nullptr)
 				{
-					return(T*)object;
+					return dynamic_cast<T*>(object);
 				}
 			}
 		}
 		return nullptr;
 	}
 
-	//複数のオブジェクト取得用
-	template<typename T>//テンプレート関数
+	template<typename T>
 	std::vector<T*> GetGameObjects()
 	{
-		std::vector<T*> objects;//STLの配列
+		std::vector<T*> objects;
 		for (int i = 0; i < 4; i++)
 		{
-
 			for (GameObject* object : m_GameObject[i])
 			{
-				if (typeid(*object) == typeid(T))
+				T* castedObject = dynamic_cast<T*>(object);
+				if (castedObject != nullptr)
 				{
-					objects.push_back((T*)object);
+					objects.push_back(castedObject);
 				}
 			}
 		}
 		return objects;
 	}
-
 
 };

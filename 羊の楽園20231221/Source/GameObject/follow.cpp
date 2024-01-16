@@ -263,42 +263,25 @@ void Follow::Collision(float & groundHeight)
 		}
 	}
 
-	//ロック
-	auto rocks = scene->GetGameObjects<Rock>();
-	for (Rock* rock : rocks) 
-	{
-		if (rock->GetState() != BREAKOBJECT_STATE::DEATH)
+	//破壊可ブロック
+	auto breakObjects = scene->GetGameObjects<BreakObject>();
+	for (BreakObject* breakObject : breakObjects) {
+
+		if (breakObject->GetState() != BREAKOBJECT_STATE::DEATH)
 		{
-			D3DXVECTOR3 position = rock->GetPosition();
-			D3DXVECTOR3 scale = rock->GetScale();
+			D3DXVECTOR3 position = breakObject->GetPosition();
+			D3DXVECTOR3 scale = breakObject->GetScale();
 			if (position.x - scale.x < m_Position.x && m_Position.x < position.x + scale.x &&
 				position.z - scale.z < m_Position.z && m_Position.z < position.z + scale.z) {
 				if (m_Position.y < position.y + scale.y) {//2.0fはモデルで調整
-					m_Velocity.x = (m_Position.x - position.x) * CONTACT_EXTRUSION;
-					m_Velocity.z = (m_Position.z - position.z) * CONTACT_EXTRUSION;
+					m_Velocity.x = (m_Position.x - position.x) * 0.02f;
+					m_Velocity.z = (m_Position.z - position.z) * 0.02f;
 				}
 				else { groundHeight = position.y + scale.y; }	//こちらも2.0
 			}
 		}
 	}
-	//チェスト
-	auto chests = scene->GetGameObjects<Chest>();
-	for (Chest* chest : chests)
-	{
-		if (chest->GetState() != BREAKOBJECT_STATE::DEATH)
-		{
-			D3DXVECTOR3 position = chest->GetPosition();
-			D3DXVECTOR3 scale = chest->GetScale();
-			if (position.x - scale.x < m_Position.x && m_Position.x < position.x + scale.x &&
-				position.z - scale.z < m_Position.z && m_Position.z < position.z + scale.z) {
-				if (m_Position.y < position.y + scale.y) {//2.0fはモデルで調整
-					m_Velocity.x = (m_Position.x - position.x) * CONTACT_EXTRUSION;
-					m_Velocity.z = (m_Position.z - position.z) * CONTACT_EXTRUSION;
-				}
-				else { groundHeight = position.y + scale.y; }	//こちらも2.0
-			}
-		}
-	}
+
 	//円系
 	auto cylinders = scene->GetGameObjects<Cylinder>();
 	for (Cylinder * cylinder : cylinders)

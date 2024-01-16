@@ -9,6 +9,7 @@
 #include "..\GameObject\box.h"
 #include "..\GameObject\chest.h"
 #include "..\GameObject\rock.h"
+#include "..\GameObject\breakObject.h"
 #include "..\GameObject\cylinder.h"
 #include "..\GameObject\shadow.h"
 #include "..\GameObject\hpBarS.h"
@@ -292,31 +293,14 @@ void Player::Collision(float & groundHeight)
 {
 	Scene* scene = Manager::GetScene();
 
-	//ロック
-	auto rocks = scene->GetGameObjects<Rock>();
-	for (Rock* rock : rocks) {
-		if (rock->GetState() != BREAKOBJECT_STATE::DEATH)
-		{
-			D3DXVECTOR3 position = rock->GetPosition();
-			D3DXVECTOR3 scale = rock->GetScale();
-			if (position.x - scale.x < m_Position.x && m_Position.x < position.x + scale.x &&
-				position.z - scale.z < m_Position.z && m_Position.z < position.z + scale.z) {
-				if (m_Position.y < position.y + scale.y) {//2.0fはモデルで調整
-					m_Velocity.x = (m_Position.x - position.x) * 0.02f;
-					m_Velocity.z = (m_Position.z - position.z) * 0.02f;
-				}
-				else { groundHeight = position.y + scale.y; }	//こちらも2.0
-			}
-		}
-	}
+	//破壊可ブロック
+	auto breakObjects = scene->GetGameObjects<BreakObject>();
+	for (BreakObject* breakObject : breakObjects) {
 
-	//チェスト
-	auto chests = scene->GetGameObjects<Chest>();
-	for (Chest* chest : chests) {
-		if (chest->GetState() != BREAKOBJECT_STATE::DEATH)
+		if (breakObject->GetState() != BREAKOBJECT_STATE::DEATH)
 		{
-			D3DXVECTOR3 position = chest->GetPosition();
-			D3DXVECTOR3 scale = chest->GetScale();
+			D3DXVECTOR3 position = breakObject->GetPosition();
+			D3DXVECTOR3 scale = breakObject->GetScale();
 			if (position.x - scale.x < m_Position.x && m_Position.x < position.x + scale.x &&
 				position.z - scale.z < m_Position.z && m_Position.z < position.z + scale.z) {
 				if (m_Position.y < position.y + scale.y) {//2.0fはモデルで調整
