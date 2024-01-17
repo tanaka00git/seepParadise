@@ -27,6 +27,13 @@ public:
 	void Uninit();
 	void Update();
 	void Draw();
+
+	void DrawCount();
+	void DrawCountCoin();
+	void DrawCountDay();
+	void DrawCountCombo();
+	void DrawTimeZone();
+	void DrawLife();
 	void DrawData(float vx, float vy, float width, float height ,int num);
 
 	void AddCount(int Count) { m_Count += Count; }

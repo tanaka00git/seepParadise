@@ -77,9 +77,20 @@ void Score::Draw()
 	//基底クラスメソッドの呼び出し
 	GameObject::Draw();
 
-	//羊数
+	//それぞれの描画
+	DrawCount();
+	DrawCountCoin();
+	DrawCountDay();
+	DrawCountCombo();
+	DrawTimeZone();
+	DrawLife();
+}
+
+void Score::DrawCount()
+{
 	int count = m_Count;
-	for (int i = 0; i < 3; i++) {
+	for (int i = 0; i < 3; i++)
+	{
 		//頂点座標算出
 		float vx = 70 - i * 20.0f;
 		float vy = 30.0f;
@@ -99,6 +110,10 @@ void Score::Draw()
 		DrawData(vx, vy, width, height, number);
 	}
 
+}
+
+void Score::DrawCountCoin()
+{
 	//コイン
 	int countCoin = m_CountCoin;
 	for (int c = 0; c < 4; c++) {
@@ -110,7 +125,8 @@ void Score::Draw()
 
 		int number = 0;
 		//桁内の値をずらす
-		if (c == 3) {
+		if (c == 3) 
+		{
 			number = 10;
 			vx -= 13;
 		}
@@ -120,7 +136,86 @@ void Score::Draw()
 		}
 		DrawData(vx, vy, width, height, number);
 	}
+}
 
+void Score::DrawCountDay()
+{
+	int countDay = m_CountDay;
+	int cc = 2;
+	if (countDay >= 10)//10日以降に桁が増える
+	{
+		cc = 3;
+	}
+	for (int c = 0; c < cc; c++) 
+	{
+		//頂点座標算出
+		float vx = 870 - c * 40.0f;
+		float vy = 10.0f;
+		float height = 62.0f;
+		float width = 62.0f;
+
+		int number = 0;
+		//桁内の値をずらす
+		if (c == 0) {
+			number = 12;
+		}
+		else {
+			number = countDay % 10;
+			countDay /= 10;
+		}
+		DrawData(vx, vy, width, height, number);
+	}
+}
+
+void Score::DrawCountCombo()
+{
+	int countCombo = m_CountCombo;
+	if (m_CountCombo > 0) {//コンボ回数がより多ければ表示
+		for (int c = 0; c < 3; c++) {
+			//頂点座標算出
+			float vx = 750 - c * 27.0f;
+			float vy = 120.0f;
+			float height = 50.0f;
+			float width = 50.0f;
+			int number = 0;
+			//桁内の値をずらす
+			if (c == 2) {
+				number = 15;
+				vx -= 15;
+			}
+			else {
+				number = countCombo % 10;
+				countCombo /= 10;
+			}
+			DrawData(vx, vy, width, height, number);
+		}
+	}
+}
+
+void Score::DrawTimeZone()
+{
+	for (int c = 0; c < 1; c++) {
+		//頂点座標算出
+		float vx = 863 - c * 40.0f;
+		float vy = 75.0f;
+		float height = 45.0f;
+		float width = 45.0f;
+		int number = 0;
+		//桁内の値をずらす
+		if (c == 0) {//時間帯
+			if (m_TimeZone) {
+				number = 17;
+			}
+			else if (!m_TimeZone) {
+				number = 16;
+			}
+		}
+		DrawData(vx, vy, width, height, number);
+	}
+}
+
+void Score::DrawLife()
+{
 	//体力
 	int countLife = m_Life;
 	int countFullLife = m_FullLife;
@@ -144,75 +239,6 @@ void Score::Draw()
 
 			number = countLife % 10;
 			countLife /= 10;
-		}
-		DrawData(vx, vy, width, height, number);
-	}
-
-	//日数
-	int countDay = m_CountDay;
-	int cc = 2;
-	if (countDay >= 10)//10日以降に桁が増える
-	{
-		cc = 3;
-	}
-	for (int c = 0; c < cc; c++) {
-		//頂点座標算出
-		float vx = 870 - c * 40.0f;
-		float vy = 10.0f;
-		float height = 62.0f;
-		float width = 62.0f;
-
-		int number = 0;
-		//桁内の値をずらす
-		if (c == 0) {
-			number = 12;
-		}
-		else {
-			number = countDay % 10;
-			countDay /= 10;
-		}
-		DrawData(vx, vy, width, height, number);
-	}
-
-	//コンボ
-	int countCombo = m_CountCombo;
-	if (m_CountCombo > 0) {//コンボ回数がより多ければ表示
-		for (int c = 0; c < 3; c++) {
-			//頂点座標算出
-			float vx = 750 - c * 27.0f;
-			float vy = 120.0f;
-			float height = 50.0f;
-			float width = 50.0f;
-			int number = 0;
-			//桁内の値をずらす
-			if (c == 2) {
-				number = 15;
-				vx -= 15;
-			}
-			else {
-				number = countCombo % 10;
-				countCombo /= 10;
-			}
-			DrawData(vx, vy, width, height, number);
-		}
-	}
-
-	//細かなアイコン帯
-	for (int c = 0; c < 1; c++) {
-		//頂点座標算出
-		float vx = 863 - c * 40.0f;
-		float vy = 75.0f;
-		float height = 45.0f;
-		float width = 45.0f;
-		int number = 0;
-		//桁内の値をずらす
-		if (c == 0) {//時間帯
-			if (m_TimeZone) {
-				number = 17;
-			}
-			else if (!m_TimeZone) {
-				number = 16;
-			}
 		}
 		DrawData(vx, vy, width, height, number);
 	}
