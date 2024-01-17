@@ -219,7 +219,7 @@ void Player::UpdateDeath()
 	m_Velocity *= 0;
 	m_Rotation.z += m_Death / 2.0f;
 	m_Rotation.y -= m_Death;
-	m_Scale.x -= 0.01f; m_Scale.y -= 0.01f; m_Scale.z -= 0.01f;
+	m_Scale.x -= 0.008f; m_Scale.y -= 0.008f; m_Scale.z -= 0.008f;
 	m_Death -= 0.001f;
 
 	if (m_Rotation.z > 3.1415f / 4) { m_Rotation.z = 3.1415f / 4; }

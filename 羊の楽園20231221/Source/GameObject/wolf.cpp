@@ -29,7 +29,8 @@ Model*Wolf::m_Model3{};
 Audio*Wolf::m_SE_Eat{};
 Audio*Wolf::m_SE_Kick{};
 
-#define EATING_TIME 40
+#define EATING_TIME 45
+#define EATING_COUNT 5
 #define DROP_RATE 20
 #define APPLE_RATE 20
 #define GIVE_ATTACK_STOP 20
@@ -293,7 +294,7 @@ void Wolf::UpdateEating()
 	m_EatStop ++;
 	if (m_EatStop % EATING_TIME == 0)
 	{ 
-		if(m_EatStop >= EATING_TIME * 3)
+		if(m_EatStop >= EATING_TIME * EATING_COUNT)
 		{
 			m_EatStop = 0;
 			m_WolfState = WOLF_STATE::FREE;
