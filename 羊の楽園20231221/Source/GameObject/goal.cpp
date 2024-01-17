@@ -95,7 +95,7 @@ void Goal::Update()
 
 		//‰æ–Ê‚ð—h‚ç‚·
 		Camera* camera = scene->GetGameObject<Camera>();
-		camera->SetShake(0.2f);
+		camera->SetShake(0.0f, 0.4f);
 
 		SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2));
 	}

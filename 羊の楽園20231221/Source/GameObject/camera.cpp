@@ -37,19 +37,21 @@ void Camera::Update()
 	}
 
 	//カメラシェイク
-	m_ShakeOffset = sinf(m_ShakeTime * SHAKE_SPEED) * m_ShakeAmplitude; //1.5fは振動の速さ調整
+	m_ShakeOffsetX = sinf(m_ShakeTime * SHAKE_SPEED) * m_ShakeAmplitudeX;
+	m_ShakeOffsetY = sinf(m_ShakeTime * SHAKE_SPEED) * m_ShakeAmplitudeY;
 	m_ShakeTime++;
-	m_ShakeAmplitude *= 0.9f;
+	m_ShakeAmplitudeX *= 0.9f;
+	m_ShakeAmplitudeY *= 0.9f;
 }
 
 void Camera::Draw()
 {
 	// ビューマトリクス設定
-	D3DXVECTOR3 up(0.0f, 1.0f, 0.0f);
-	D3DXVECTOR3 position = m_Position + D3DXVECTOR3(m_ShakeOffset, 0.0f, 0.0f);
-	D3DXVECTOR3 target = m_Target + D3DXVECTOR3(m_ShakeOffset, 0.0f, 0.0f);
-	D3DXMatrixLookAtLH(&m_ViewMatrix, &position, &target, &up);
-	Renderer::SetViewMatrix(&m_ViewMatrix);
+    D3DXVECTOR3 up(0.0f, 1.0f, 0.0f);
+    D3DXVECTOR3 position = m_Position + D3DXVECTOR3(m_ShakeOffsetX, m_ShakeOffsetY, 0.0f);
+    D3DXVECTOR3 target = m_Target + D3DXVECTOR3(m_ShakeOffsetX, m_ShakeOffsetY, 0.0f);
+    D3DXMatrixLookAtLH(&m_ViewMatrix, &position, &target, &up);
+    Renderer::SetViewMatrix(&m_ViewMatrix);
 
 	//プロジェクションマトリクス設定
 	D3DXMatrixPerspectiveFovLH(&m_ProjectionMateix, 1.0f,

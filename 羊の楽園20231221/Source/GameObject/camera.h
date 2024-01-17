@@ -17,9 +17,11 @@ private:
 	D3DXMATRIX  m_ProjectionMateix{};
 
 	//メンバ変数
-	float m_ShakeAmplitude = 0.0f;
+	float m_ShakeAmplitudeX = 0.0f;
+	float m_ShakeAmplitudeY = 0.0f;
 	float m_ShakeTime	   = 0.0f;
-	float m_ShakeOffset    = 0.0f;
+	float m_ShakeOffsetX = 0.0f;
+	float m_ShakeOffsetY = 0.0f;
 
 	//関数
 	void UpdateTitle();
@@ -32,7 +34,11 @@ public:
 	void Draw() override;
 
 	//セット関数
-	void SetShake(float Amplitude) { m_ShakeAmplitude = Amplitude; }
+	void SetShake(float AmplitudeX, float AmplitudeY)
+	{
+		m_ShakeAmplitudeX = AmplitudeX;
+		m_ShakeAmplitudeY = AmplitudeY;
+	}
 	void SetCameraState(CAMERA_STATE state) { m_CameraState = state; }
 	
 	//ゲット関数

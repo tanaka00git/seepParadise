@@ -357,7 +357,7 @@ void Player::SetDamageMove()
 
 	//ƒJƒƒ‰—h‚ç‚·
 	Camera* camera = scene->GetGameObject<Camera>();
-	camera->SetShake(0.5f);
+	camera->SetShake(0.5f,0.0f);
 
 	//SE
 	m_DamageSE->Play(1.0f);
