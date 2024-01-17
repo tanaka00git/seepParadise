@@ -210,6 +210,9 @@
     <ClCompile Include="Source\App\pch.cpp">
       <Filter>ソース ファイル\App</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameObject\fence.cpp">
+      <Filter>ソース ファイル\GameObject\Break</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App\audio.h">
@@ -388,6 +391,9 @@
     </ClInclude>
     <ClInclude Include="Source\GameObject\goalScope.h">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\fence.h">
+      <Filter>ソース ファイル\GameObject\Break</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -162,6 +162,7 @@
     <ClCompile Include="Source\GameObject\dayBar.cpp" />
     <ClCompile Include="Source\GameObject\explosion.cpp" />
     <ClCompile Include="Source\GameObject\fade.cpp" />
+    <ClCompile Include="Source\GameObject\fence.cpp" />
     <ClCompile Include="Source\GameObject\field.cpp" />
     <ClCompile Include="Source\GameObject\follow.cpp" />
     <ClCompile Include="Source\GameObject\goal.cpp" />
@@ -221,6 +222,7 @@
     <ClInclude Include="Source\GameObject\dayBar.h" />
     <ClInclude Include="Source\GameObject\explosion.h" />
     <ClInclude Include="Source\GameObject\fade.h" />
+    <ClInclude Include="Source\GameObject\fence.h" />
     <ClInclude Include="Source\GameObject\field.h" />
     <ClInclude Include="Source\GameObject\follow.h" />
     <ClInclude Include="Source\GameObject\gameObject.h" />

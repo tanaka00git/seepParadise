@@ -27,6 +27,7 @@
 #include "..\GameObject\timeFade.h"
 #include "..\GameObject\chest.h"
 #include "..\GameObject\rock.h"
+#include "..\GameObject\fence.h"
 #include "..\GameObject\mouseIcon.h"
 #include "..\GameObject\itemSpeed.h"
 #include "..\GameObject\itemLife.h"
@@ -70,12 +71,13 @@ void Game::Init()
 	Shine2::Load();
 	HpBarS::Load();
 	Coin::Load();
-	BreakObject::Load();
 	ItemSpeed::Load();
 	ItemEye::Load();
 	ItemLife::Load();
+	BreakObject::Load();
 	Chest::Load();
 	Rock::Load();
+	Fence::Load();
 	DamageFade::Load();
 	Shadow::Load();
 	TimeFade::Load();
@@ -133,8 +135,10 @@ void Game::Init()
 	//ëê
 	for (int i = 0; i < SEED_START_NUM; i++) {AddGameObject<Seed>(1)->SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2));}
 	//ä‚
-	for (int i = 0; i < ROCK_START_NUM; i++) { AddGameObject<Rock>(1)->SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2));; }
+	for (int i = 0; i < ROCK_START_NUM; i++) { AddGameObject<Rock>(1)->SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2)); }
 
+	//ÉtÉFÉìÉX
+	for (int i = 0; i < 40; i++) { AddGameObject<Fence>(1)->SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2)); }
 
 	AddGameObject<MouseIcon>(3);
 	m_TimeFade = AddGameObject<TimeFade>(2);
@@ -143,6 +147,7 @@ void Game::Init()
 	AddGameObject<Score>(2);
 	AddGameObject<DayBar>(2);
 	m_Fade = AddGameObject<Fade>(3);
+
 
 	m_BGM = AddGameObject<GameObject>(0)->AddComponent<Audio>();
 	m_BGM->Load("asset\\audio\\chiisanaashiato.wav");
@@ -181,6 +186,9 @@ void Game::Uninit()
 	HpBarS::Unload();
 	Coin::Unload();
 	BreakObject::Unload();
+	Chest::Unload();
+	Rock::Unload();
+	Fence::Unload();
 	ItemSpeed::Unload();
 	ItemEye::Unload();
 	ItemLife::Unload();

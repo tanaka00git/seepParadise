@@ -173,23 +173,33 @@ void Title::UpdateTargetShop()
 	{
 		if (m_Coin >= 50) //コインが50あれば購入
 		{
+			Scene* scene = Manager::GetScene();
+
+			//パーティクル
 			AddGameObject<TitleCoin>(3);
 			AddGameObject<TitleCoin>(3);
 			AddGameObject<TitleCoin>(3);
 
+			//効果音
 			m_PointSE->Play(1.0f);
 			m_LegiSE->Play(1.0f);
-			Scene* scene = Manager::GetScene();
+			
+			//フラッシュ
 			DamageFade* damageFade = scene->AddGameObject<DamageFade>(2);
 			damageFade->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.3f));
+
+			//コイン消費表示
+			m_Coin -= 50;
 			InfoLog* infoLog = scene->AddGameObject<InfoLog>(2);
 			infoLog->SetNum(44, 2, D3DXVECTOR3(460, 370, 0));
-			m_Coin -= 50;
+			
+			//抽選
 			m_PlColor = irand(0,6);
 			m_PlClown = irand(0,6);
-			m_TitleScore->SetColorClown(m_PlColor, m_PlClown);//羊の容姿のデータを送る
-			m_TitleScore->SetCountCoin(m_Coin);				  //コイン描画を更新
 
+			//描画更新
+			m_TitleScore->SetColorClown(m_PlColor, m_PlClown);
+			m_TitleScore->SetCountCoin(m_Coin);
 		}
 		else { m_MissSE->Play(1.0f); }	//購入できなかった
 	}

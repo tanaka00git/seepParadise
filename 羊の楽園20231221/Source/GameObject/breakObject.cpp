@@ -127,9 +127,9 @@ void BreakObject::UpdateMove()
 
 	//ぬるぬる出現
 	m_Scale.x += 0.05f; m_Scale.y += 0.05f; m_Scale.z += 0.05f;
-	if (m_Scale.x >= 1.0f) { m_Scale.x = 1.0f; }
-	if (m_Scale.y >= 1.0f) { m_Scale.y = 1.0f; }
-	if (m_Scale.z >= 1.0f) { m_Scale.z = 1.0f; }
+	if (m_Scale.x >= m_OriginalScale.x) { m_Scale.x = m_OriginalScale.x; }
+	if (m_Scale.y >= m_OriginalScale.y) { m_Scale.y = m_OriginalScale.y; }
+	if (m_Scale.z >= m_OriginalScale.z) { m_Scale.z = m_OriginalScale.z; }
 
 	//HPバー表示
 	LifeBarMove();
