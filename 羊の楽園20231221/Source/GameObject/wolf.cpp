@@ -592,7 +592,7 @@ void Wolf::SetDamageMove()
 	scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
 
 	Camera*camera = scene->GetGameObject<Camera>();
-	camera->SetShake(0.05f);
+	camera->SetShake(0.1f);
 }
 
 void Wolf::SetPosEnemyData(D3DXVECTOR3 Position, int Num)

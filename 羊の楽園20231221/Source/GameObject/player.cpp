@@ -295,8 +295,8 @@ void Player::Collision(float & groundHeight)
 
 	//”j‰ó‰ÂƒuƒƒbƒN
 	auto breakObjects = scene->GetGameObjects<BreakObject>();
-	for (BreakObject* breakObject : breakObjects) {
-
+	for (BreakObject* breakObject : breakObjects) 
+	{
 		if (breakObject->GetState() != BREAKOBJECT_STATE::DEATH)
 		{
 			D3DXVECTOR3 position = breakObject->GetPosition();
@@ -354,6 +354,10 @@ void Player::SetDamageMove()
 	Scene* scene = Manager::GetScene();
 	InfoLog* infoLog = scene->AddGameObject<InfoLog>(2);
 	infoLog->SetNum(4, 2, D3DXVECTOR3(100, -10, 0));
+
+	//ƒJƒƒ‰—h‚ç‚·
+	Camera* camera = scene->GetGameObject<Camera>();
+	camera->SetShake(0.5f);
 
 	//SE
 	m_DamageSE->Play(1.0f);

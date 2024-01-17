@@ -3,6 +3,7 @@
 #include "..\App\renderer.h"
 #include "..\App\audio.h"
 #include "..\Scene\scene.h"
+#include "..\GameObject\camera.h"
 #include "..\GameObject\score.h"
 #include "..\GameObject\goal.h"
 #include "..\GameObject\goalScope.h"
@@ -91,6 +92,11 @@ void Goal::Update()
 			follow->SetPosition(D3DXVECTOR3(PLPos.x, PLPos.y + FOLLOW_MAKE_POSITION_Y, PLPos.z));
 			follow->SetDrop();
 		}
+
+		//‰æ–Ê‚ð—h‚ç‚·
+		Camera* camera = scene->GetGameObject<Camera>();
+		camera->SetShake(0.2f);
+
 		SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2));
 	}
 }
