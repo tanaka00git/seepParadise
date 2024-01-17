@@ -301,48 +301,93 @@ void Player::Collision(float & groundHeight)
 		{
 			D3DXVECTOR3 position = breakObject->GetPosition();
 			D3DXVECTOR3 scale = breakObject->GetScale();
-			if (position.x - scale.x < m_Position.x && m_Position.x < position.x + scale.x &&
-				position.z - scale.z < m_Position.z && m_Position.z < position.z + scale.z) {
-				if (m_Position.y < position.y + scale.y) {//2.0fはモデルで調整
-					m_Velocity.x = (m_Position.x - position.x) * 0.02f;
-					m_Velocity.z = (m_Position.z - position.z) * 0.02f;
+			D3DXVECTOR3 right = breakObject->GetRight();		//x軸分離
+			D3DXVECTOR3 forward = breakObject->GetForward();	//z軸分離
+			D3DXVECTOR3 direction = m_Position - position;		//直方体からプレイヤーまでの方向ベクトル
+			float abbx = D3DXVec3Dot(&direction, &right);		//X軸分離方向プレイヤー距離
+			float abbz = D3DXVec3Dot(&direction, &forward);		//Z軸分離方向プレイヤー距離
+
+			if (fabs(abbx) < scale.x && fabs(abbz) < scale.z)
+			{
+				if (m_Position.y < position.y + scale.y)
+				{
+					float penetrationX = scale.x - abs(abbx);
+					float penetrationZ = scale.z - abs(abbz);
+
+					if (penetrationX < penetrationZ)
+					{
+						if (abbx > 0) { m_Position += penetrationX * right; }
+						else { m_Position -= penetrationX * right; }
+					}
+					else
+					{
+						if (abbz > 0) { m_Position += penetrationZ * forward; }
+						else { m_Position -= penetrationZ * forward; }
+					}
 				}
-				else { groundHeight = position.y + scale.y; }	//こちらも2.0
+				else { groundHeight = position.y + scale.y; }
 			}
 		}
 	}
 
 	//円系
 	auto cylinders = scene->GetGameObjects<Cylinder>();
-	for (Cylinder * cylinder : cylinders)			  
+	for (Cylinder* cylinder : cylinders)
 	{
 		D3DXVECTOR3 position = cylinder->GetPosition();
 		D3DXVECTOR3 scale = cylinder->GetScale();
 		D3DXVECTOR3 direction = m_Position - position;
 		float length = D3DXVec3Length(&direction);
-		if (length < scale.x*1.2f) //*1.2は調整
+		float radius = scale.x * 1.2f;  // 1.2は調整
+
+		if (length < radius)
 		{
 			if (m_Position.y < position.y + scale.y)
 			{
-				m_Velocity.x = (m_Position.x - position.x) * 0.02f;
-				m_Velocity.z = (m_Position.z - position.z) * 0.02f;
+				// 衝突している方向に押し戻す
+				D3DXVECTOR3 normalizedDirection = direction / length;
+
+				float penetration = radius - length;
+				m_Position += penetration * normalizedDirection;
 			}
-			else { groundHeight = position.y + scale.y; }
+			else
+			{
+				groundHeight = position.y + scale.y;
+			}
 		}
 	}
 
+
 	//直方体
-	auto boxs = scene->GetGameObjects<Box>();
-	for (Box* box : boxs)
+	auto boxs = scene->GetGameObjects<Box>();//リストを取得
+	for (Box* box : boxs) //範囲forループ
 	{
 		D3DXVECTOR3 position = box->GetPosition();
 		D3DXVECTOR3 scale = box->GetScale();
-		if (position.x - scale.x < m_Position.x && m_Position.x < position.x + scale.x &&
-			position.z - scale.z < m_Position.z && m_Position.z < position.z + scale.z) {
-			if (m_Position.y < position.y + scale.y * 1.8f - 0.5f) //2.0fはモデルで調整
+		D3DXVECTOR3 right = box->GetRight();				//x軸分離
+		D3DXVECTOR3 forward = box->GetForward();			//z軸分離
+		D3DXVECTOR3 direction = m_Position - position;		//直方体からプレイヤーまでの方向ベクトル
+		float abbx = D3DXVec3Dot(&direction, &right);		//X軸分離方向プレイヤー距離
+		float abbz = D3DXVec3Dot(&direction, &forward);		//Z軸分離方向プレイヤー距離
+
+		//OBB
+		if (fabs(abbx) < scale.x && fabs(abbz) < scale.z)
+		{
+			if (m_Position.y < position.y + scale.y * 1.8f - 0.5f)	//2.0fはモデルで調整
 			{
-				m_Velocity.x = (m_Position.x - position.x) * 0.02f;
-				m_Velocity.z = (m_Position.z - position.z) * 0.02f;
+				float penetrationX = scale.x - abs(abbx);
+				float penetrationZ = scale.z - abs(abbz);
+				
+				if (penetrationX < penetrationZ)
+				{
+					if (abbx > 0) { m_Position += penetrationX * right; }
+					else { m_Position -= penetrationX * right; }
+				}
+				else
+				{
+					if (abbz > 0) { m_Position += penetrationZ * forward; }
+					else { m_Position -= penetrationZ * forward; }
+				}
 			}
 			else { groundHeight = position.y + scale.y * 1.8f; }	//こちらも2.0
 		}
