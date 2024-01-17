@@ -18,7 +18,6 @@ private:
 	ID3D11PixelShader* m_PixelShader{};
 	ID3D11InputLayout* m_VertexLayout{};
 
-
 	static class Model* m_Model;
 	static class Model* m_Model2;
 	static class Model* m_Model3;
@@ -28,8 +27,9 @@ private:
 	class HpBarS* m_HpBarS{};
 
 	//メンバ変数
-	D3DXVECTOR3 m_Velocity = D3DXVECTOR3(0.0f, 0.0f, 0.0f); //速度
-	D3DXVECTOR3 m_PLForward{};								//プレイヤーの向き
+	D3DXVECTOR3 m_Velocity = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			//速度
+	D3DXVECTOR3 m_OriginalScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);	//キャラのサイズ
+	D3DXVECTOR3 m_PLForward{};										//プレイヤーの向き
 
 	D3DXCOLOR m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	bool	  m_TextureEnable = true;
@@ -55,7 +55,6 @@ private:
 	int		m_FullLife = 3;
 	float	m_Speed = 0.02f;									//速度
 	int		m_CoinDrop = 2;										//コインドロップ数
-	D3DXVECTOR3 m_CharaScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);	//キャラのサイズ
 	D3DXVECTOR3 m_BarScale = D3DXVECTOR3(0.7f,0.7f,0.7f);		//HPバーのサイズ
 	float m_HpBarPosY = 1.8f;									//HPバーのY座標
 	float m_Tracking = 5.0f;									//追尾範囲

@@ -11,6 +11,8 @@ private:
 	static class Model* m_Model;
 	class Shadow* m_Shadow{};
 
+	D3DXVECTOR3 m_OriginalScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);	//キャラのサイズ
+
 public:
 	static void Load();
 	static void Unload();

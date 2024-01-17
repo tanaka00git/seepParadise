@@ -94,8 +94,8 @@ void ItemObject::UpdateMove()
 	if (m_DaathTime <= 0) { m_ItemState = ITEM_STATE::DEATH; }
 
 	//‚Ê‚é‚Ê‚éoŒ»
-	if (m_Scale.y < 1.0f) { m_Scale.y += 0.05f; }
-	else { m_Scale.y = 1.0f; }
+	if (m_Scale.y < m_OriginalScale.y) { m_Scale.y += 0.05f; }
+	else { m_Scale.y = m_OriginalScale.y; }
 
 	//ƒWƒƒƒ“ƒv‚µ‚Ä‚½‚ç‚±‚ÌŒã‚Ìˆ—‚ð‚µ‚È‚¢
 	if (m_DropJump) { return; }

@@ -103,9 +103,9 @@ void Wolf::Update()
 		m_Scale.x += 0.05f;
 		m_Scale.y += 0.05f;
 		m_Scale.z += 0.05f;
-		if (m_Scale.x >= m_CharaScale.x) { m_Scale.x = m_CharaScale.x; }
-		if (m_Scale.y >= m_CharaScale.y) { m_Scale.y = m_CharaScale.y; }
-		if (m_Scale.z >= m_CharaScale.z) { m_Scale.z = m_CharaScale.z; }
+		if (m_Scale.x >= m_OriginalScale.x) { m_Scale.x = m_OriginalScale.x; }
+		if (m_Scale.y >= m_OriginalScale.y) { m_Scale.y = m_OriginalScale.y; }
+		if (m_Scale.z >= m_OriginalScale.z) { m_Scale.z = m_OriginalScale.z; }
 	}
 
 	//生死時の処理
@@ -663,7 +663,7 @@ void Wolf::SetEnemyData(int data)
 		m_FullLife = 5;
 		m_Speed = 0.032f;
 		m_CoinDrop = 1;
-		m_CharaScale = D3DXVECTOR3(0.6f, 0.6f, 0.6f);	//キャラのサイズ
+		m_OriginalScale = D3DXVECTOR3(0.6f, 0.6f, 0.6f);	//キャラのサイズ
 		m_BarScale = D3DXVECTOR3(0.5f, 0.7f, 0.7f);		//HPバーのサイズ
 		m_HpBarPosY = 1.8f;
 	}
@@ -672,7 +672,7 @@ void Wolf::SetEnemyData(int data)
 		m_FullLife = 7;
 		m_Speed = 0.032f;
 		m_CoinDrop = 2;
-		m_CharaScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+		m_OriginalScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 		m_BarScale = D3DXVECTOR3(0.7f, 0.7f, 0.7f);	
 		m_HpBarPosY = 1.8f;
 
@@ -682,7 +682,7 @@ void Wolf::SetEnemyData(int data)
 		m_FullLife = 13;
 		m_Speed = 0.034f;
 		m_CoinDrop = 3;
-		m_CharaScale = D3DXVECTOR3(1.3f, 1.3f, 1.3f);
+		m_OriginalScale = D3DXVECTOR3(1.3f, 1.3f, 1.3f);
 		m_BarScale = D3DXVECTOR3(1.0f, 0.7f, 0.7f);
 		m_HpBarPosY = 2.2f;
 	}
@@ -691,7 +691,7 @@ void Wolf::SetEnemyData(int data)
 		m_FullLife = 15;
 		m_Speed = 0.036f;
 		m_CoinDrop = 4;
-		m_CharaScale = D3DXVECTOR3(1.7f, 1.7f, 1.7f);
+		m_OriginalScale = D3DXVECTOR3(1.7f, 1.7f, 1.7f);
 		m_BarScale = D3DXVECTOR3(1.4f, 0.7f, 0.7f);
 		m_HpBarPosY = 2.8f;
 	}
@@ -701,7 +701,7 @@ void Wolf::SetEnemyData(int data)
 		m_FullLife = 80;
 		m_Speed = 0.04f;
 		m_CoinDrop = 30;
-		m_CharaScale = D3DXVECTOR3(2.9f, 2.9f, 2.9f);	//キャラのサイズ
+		m_OriginalScale = D3DXVECTOR3(2.9f, 2.9f, 2.9f);	//キャラのサイズ
 		m_BarScale = D3DXVECTOR3(5.0f, 1.0f, 1.0f);		//HPバーのサイズ
 		m_Tracking = 200.0f;							//追尾範囲
 		m_Disaster = true;

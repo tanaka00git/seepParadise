@@ -234,7 +234,7 @@ void Player::UpdateDeath()
 
 void Player::UpdateNormal()
 {
-	m_Scale.y = 1.0f;
+	m_Scale.y = m_OriginalScale.y;
 
 	//マウス移動
 	MouseTargetMove();
@@ -247,7 +247,7 @@ void Player::UpdateNormal()
 
 void Player::UpdateDash()
 {
-	m_Scale.y = 1.0f;
+	m_Scale.y = m_OriginalScale.y;
 
 	//マウス移動
 	MouseTargetMove();

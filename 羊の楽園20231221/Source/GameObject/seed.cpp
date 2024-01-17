@@ -38,8 +38,8 @@ void Seed::Uninit()
 
 void Seed::Update()
 {
-	if (m_Scale.y < 1.0f) { m_Scale.y += 0.05f; }
-	else { m_Scale.y = 1.0f; }
+	if (m_Scale.y < m_OriginalScale.y) { m_Scale.y += 0.05f; }
+	else { m_Scale.y = m_OriginalScale.y; }
 }
 
 void Seed::Draw()

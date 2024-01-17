@@ -9,6 +9,7 @@ private:
 	ID3D11InputLayout* m_VertexLayout{};
 
 	static class Model* m_Model;
+	D3DXVECTOR3 m_OriginalScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);	//キャラのサイズ
 
 public:
 	static void Load();

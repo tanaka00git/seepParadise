@@ -25,9 +25,10 @@ private:
 	class Shadow* m_Shadow{};
 
 	//メンバ変数
-	D3DXVECTOR3 m_Velocity		= D3DXVECTOR3(0.0f,0.0f,0.0f);		 //速度
-	D3DXCOLOR   m_Color			= D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f); //カラー
-	bool	    m_TextureEnable = true;								 //テクスチャ適用するか
+	D3DXVECTOR3 m_Velocity		= D3DXVECTOR3(0.0f,0.0f,0.0f);		//速度
+	D3DXVECTOR3 m_OriginalScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);	//キャラのサイズ
+	D3DXCOLOR   m_Color			= D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);//カラー
+	bool	    m_TextureEnable = true;								//テクスチャ適用するか
 	int	  m_AttackStopTime	    = 0;	 //攻撃を停止する時間
 	int	  m_DaathTime		    = 200;	 //自動消滅
 	int	  m_OrientationTime	    = 0;	 //向き変更時間

@@ -20,6 +20,7 @@ protected:
 
 	//メンバ変数
 	D3DXVECTOR3 m_Velocity = D3DXVECTOR3(0.0f,0.0f,0.0f);
+	D3DXVECTOR3 m_OriginalScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);	//キャラのサイズ
 	int  m_DaathTime  = 500;
 	bool m_DeleteInit = false;	//消去時初期化
 	bool m_DropJump   = false;	//ジャンプする

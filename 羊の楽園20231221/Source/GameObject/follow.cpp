@@ -148,7 +148,7 @@ void Follow::Draw()
 void Follow::UpdateFree()
 {
 	//ぬるぬる出現
-	if (m_Scale.y < 1.0f) { m_Scale.y += 0.05f; }
+	if (m_Scale.y < m_OriginalScale.y) { m_Scale.y += 0.05f; }
 	
 	//再仲間化スパン
 	m_AgainFollow --;
@@ -184,7 +184,7 @@ void Follow::UpdateFree()
 void Follow::UpdateNormal()
 {
 	//ぬるぬる出現
-	if (m_Scale.y < 1.0f) { m_Scale.y += 0.05f; }
+	if (m_Scale.y < m_OriginalScale.y) { m_Scale.y += 0.05f; }
 
 	m_Velocity.x = GetForward().x * (m_Speed * MOVE_SPEED_NORMAL);
 	m_Velocity.z = GetForward().z * (m_Speed * MOVE_SPEED_NORMAL);
@@ -195,7 +195,7 @@ void Follow::UpdateNormal()
 void Follow::UpdateDash()
 {
 	//ぬるぬる出現
-	if (m_Scale.y < 1.0f) { m_Scale.y += 0.05f; }
+	if (m_Scale.y < m_OriginalScale.y) { m_Scale.y += 0.05f; }
 
 	//エフェクト
 	WalkEffect();
