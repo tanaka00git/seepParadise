@@ -57,9 +57,9 @@ void Score::Update()
 {
 	GameObject::Update();
 
-	if (m_Count > 99) { m_Count = 99; }
+	if (m_CountSeep > 99) { m_CountSeep = 99; }
 	if (m_CountCoin > 999) { m_CountCoin = 999; }
-	if (m_FullCount < m_Count) { m_FullCount = m_Count; }
+	if (m_FullCount < m_CountSeep) { m_FullCount = m_CountSeep; }
 }
 
 void Score::Draw()
@@ -78,7 +78,7 @@ void Score::Draw()
 	GameObject::Draw();
 
 	//‚»‚ê‚¼‚ê‚Ì•`‰æ
-	DrawCount();
+	DrawCountSeep();
 	DrawCountCoin();
 	DrawCountDay();
 	DrawCountCombo();
@@ -86,9 +86,9 @@ void Score::Draw()
 	DrawLife();
 }
 
-void Score::DrawCount()
+void Score::DrawCountSeep()
 {
-	int count = m_Count;
+	int count = m_CountSeep;
 	for (int i = 0; i < 3; i++)
 	{
 		//’¸“_À•WŽZo

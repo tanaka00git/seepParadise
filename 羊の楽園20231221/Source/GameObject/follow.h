@@ -71,6 +71,6 @@ public:
 
 	void SetDrop();
 	void SetAttackStop(int attackStop) { m_AttackStopTime = attackStop; };
-	void AddLife(int Life) { m_Life += Life; }
+	void AddLife(int life) { m_Life += life; }
 	void SetState(FOLLOW_STATE followState) { m_FollowState = followState; }
 };

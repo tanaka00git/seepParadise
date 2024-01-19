@@ -91,10 +91,10 @@ public:
 	void SetDamageMove();
 	void AddCharge(int charge) { m_Charge += charge; };
 	void SetCharge(int charge) { m_Charge = charge; };
-	void AddLife(int Life){m_Life += Life;}
-	void AddSpeed(float Speed) { m_Speed += Speed; };
-	void AddFullLife(int Life) { m_FullLife += Life; };
-	void AddEye(int Eye) { m_Eye += Eye; };
+	void AddLife(int life){m_Life += life;}
+	void AddSpeed(float speed) { m_Speed += speed; };
+	void AddFullLife(int life) { m_FullLife += life; };
+	void AddEye(int eye) { m_Eye += eye; };
 	void SetAttackStop(int attackStop) { m_AttackStopTime = attackStop; };
 	void AddCombo(int combo) { m_Combo += combo; }
 

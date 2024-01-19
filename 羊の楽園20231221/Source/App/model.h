@@ -39,13 +39,13 @@ private:
 	SUBSET*	m_SubsetArray;
 	unsigned int	m_SubsetNum;
 
-	void LoadObj(const char *FileName, MODEL *Model);
-	void LoadMaterial( const char *FileName, MODEL_MATERIAL **MaterialArray, unsigned int *MaterialNum );
+	void LoadObj(const char *fileName, MODEL *model);
+	void LoadMaterial( const char *FileName, MODEL_MATERIAL **materialArray, unsigned int *materialNum );
 
 public:
 	void Draw();
-	void DrawColor(D3DXCOLOR Color, bool TextureEnable);
+	void DrawColor(D3DXCOLOR color, bool textureEnable);
 
-	void Load( const char *FileName );
+	void Load( const char *fileName );
 	void Unload();
 };

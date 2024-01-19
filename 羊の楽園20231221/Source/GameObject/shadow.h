@@ -19,7 +19,7 @@ private:
 	D3DXCOLOR m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 public:
-	void SetPosition(D3DXVECTOR3 Position){m_Position = Position;}
+	void SetPosition(D3DXVECTOR3 position){m_Position = position;}
 
 	static void Load();
 	static void Unload();

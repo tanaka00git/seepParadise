@@ -72,6 +72,6 @@ public:
 	static ID3D11DeviceContext* GetDeviceContext( void ){ return m_DeviceContext; }
 
 
-	static void CreateVertexShader(ID3D11VertexShader** VertexShader, ID3D11InputLayout** VertexLayout, const char* FileName);
-	static void CreatePixelShader(ID3D11PixelShader** PixelShader, const char* FileName);
+	static void CreateVertexShader(ID3D11VertexShader** vertexShader, ID3D11InputLayout** vertexLayout, const char* fileName);
+	static void CreatePixelShader(ID3D11PixelShader** pixelShader, const char* fileName);
 };

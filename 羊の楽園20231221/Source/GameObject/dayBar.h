@@ -25,6 +25,6 @@ public:
 	void Update();
 	void Draw();
 
-	void SetTimeFC(int f, int c) { m_FullTime = static_cast<float>(f); m_CurrentTime = static_cast<float>(c); }
+	void SetTimeFC(int fullTime, int currentTime) { m_FullTime = static_cast<float>(fullTime); m_CurrentTime = static_cast<float>(currentTime); }
 
 };

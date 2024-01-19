@@ -25,8 +25,8 @@ public:
 	void Update();
 	void Draw();
 
-	void AddCountCoin(int CountCoin) { m_CountCoin += CountCoin; }
-	void SetCountCoin(int CountCoin) { m_CountCoin = CountCoin; }
+	void AddCountCoin(int countCoin) { m_CountCoin += countCoin; }
+	void SetCountCoin(int countCoin) { m_CountCoin = countCoin; }
 	void SetColorClown(int color, int clown) { m_PlColor = color;  m_PlClown = clown; }
 	void SetAlpha(bool alpha) { m_AlphaMove = alpha;};
 

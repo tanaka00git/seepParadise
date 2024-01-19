@@ -35,9 +35,9 @@ public:
 	void Update();
 	void Draw();
 
-	void SetPosition(D3DXVECTOR3 Position) { m_Position = Position; }
+	void SetPosition(D3DXVECTOR3 position) { m_Position = position; }
 	void SetLifeDateFC(int full, int current) { m_FullLife = static_cast<float>(full); m_CurrentLife = static_cast<float>(current); }
 	void SetCharge(int currentCharge, int fullCharge, bool dash) { m_CurrentCharge = static_cast<float>(currentCharge); m_FullCharge = static_cast<float>(fullCharge); m_DashOn = dash; m_ChargeOn = true; }
-	void SetScale(D3DXVECTOR3 Scale) { m_Scale = Scale; }//色変え用
+	void SetScale(D3DXVECTOR3 scale) { m_Scale = scale; }//色変え用
 
 };

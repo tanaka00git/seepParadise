@@ -24,9 +24,9 @@ public:
 
 	using Component::Component;
 	void Uninit();
-	void Load(const char *FileName);
-	void Play(float Volume, bool Loop = false);
-	void Volume(float Volume);
+	void Load(const char *fileName);
+	void Play(float volume, bool loop = false);
+	void Volume(float volume);
 
 	void FadeUpdate();
 	void FadeToVolume(float targetVolume, float fadeSpeed);

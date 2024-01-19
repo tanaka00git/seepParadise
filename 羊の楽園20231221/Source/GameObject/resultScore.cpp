@@ -80,7 +80,7 @@ void ResultScore::Draw()
 	//GameObject::Draw();
 
 	//órêî
-	int count = m_Count;
+	int count = m_CountSeep;
 	
 	for (int i = 0; i < 2; i++) {
 		//í∏ì_ç¿ïWéZèo

@@ -13,8 +13,8 @@ public:
 	static void Uninit();
 	static void Update();
 
-	static bool GetKeyPress(BYTE KeyCode);
-	static bool GetKeyTrigger(BYTE KeyCode);
+	static bool GetKeyPress(BYTE keyCode);
+	static bool GetKeyTrigger(BYTE keyCode);
 	static POINT GetMousePosition();
 	static bool IsMouseClickInArea(int startX, int startY, int endX, int endY);
 };

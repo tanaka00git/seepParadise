@@ -85,6 +85,6 @@ public:
 
 	void AddLife(int life) { m_Life += life; }
 	void SetDamageMove();
-	void SetPosEnemyData(D3DXVECTOR3 Position, int Num);
+	void SetPosEnemyData(D3DXVECTOR3 position, int num);
 	void SetEnemyData(int data);
 };
