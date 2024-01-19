@@ -28,7 +28,7 @@ bool Follow::m_SE_FollowCheck{};
 #define MOVE_MAGNIFY_FREE 6.5f  //自由状態の移動速度の倍率(それ以外の状態ではプレイヤーと同期)
 #define DELETE_DISTANCE   25.0f //プレイヤーと離れているときに自動消滅する距離
 #define INIT_JUMP 0.25f			//出現のジャンプの高さ
-
+#define ATTACK_STOP 20
 void Follow::Load()
 {
 	m_Model = new Model();
@@ -279,6 +279,14 @@ void Follow::Collision(float & groundHeight)
 
 			if (fabs(abbx) < scale.x && fabs(abbz) < scale.z)
 			{
+				//ダッシュ攻撃
+				if (m_FollowState == FOLLOW_STATE::DASH && GetAttackStop() <= 0)
+				{
+					breakObject->SetDamageMove();
+					SetAttackStop(ATTACK_STOP);
+					Player* player = scene->GetGameObject<Player>();
+					player->AddCombo(1);
+				}
 				if (m_Position.y < position.y + scale.y)
 				{
 					float penetrationX = scale.x - abs(abbx);

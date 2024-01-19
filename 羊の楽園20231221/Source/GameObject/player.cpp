@@ -36,6 +36,7 @@ int Player::m_PlClown{};
 #define FULL_SPEED 9.5
 #define FULL_EYE 6
 #define WALK_EFFECT_TIME 13
+#define ATTACK_STOP 20
 
 void Player::Load()
 {
@@ -309,6 +310,13 @@ void Player::Collision(float & groundHeight)
 
 			if (fabs(abbx) < scale.x && fabs(abbz) < scale.z)
 			{
+				//ƒ_ƒbƒVƒ…UŒ‚
+				if (m_PlayerState == PLAYER_STATE::DASH && GetAttackStop() <= 0)
+				{
+					breakObject->SetDamageMove();
+					SetAttackStop(ATTACK_STOP);
+					AddCombo(1);
+				}
 				if (m_Position.y < position.y + scale.y)
 				{
 					float penetrationX = scale.x - abs(abbx);

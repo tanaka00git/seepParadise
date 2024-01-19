@@ -87,44 +87,6 @@ void BreakObject::UpdateMove()
 {
 	Scene* scene = Manager::GetScene();
 
-	//接触されてるプレイヤーとフォロー取得用
-	auto follows = scene->GetGameObjects<Follow>();
-	Player* player = scene->GetGameObject<Player>();
-
-	//プレイヤー用
-	if (player->GetState() == PLAYER_STATE::DASH)
-	{
-		if (player->GetAttackStop() <= 0)
-		{
-			D3DXVECTOR3 position = player->GetPosition();
-			D3DXVECTOR3 scale = player->GetScale();
-			if (m_Position.x - m_Scale.x < position.x && position.x < m_Position.x + m_Scale.x &&
-				m_Position.z - m_Scale.z < position.z && position.z < m_Position.z + m_Scale.z) {
-				SetDamageMove();
-				player->SetAttackStop(GIVE_ATTACK_STOP);
-				player->AddCombo(1);
-			}
-		}
-	}
-
-	//味方用
-	for (Follow* follow : follows) {
-		if (follow->GetState() == FOLLOW_STATE::DASH)
-		{
-			if (follow->GetAttackStop() <= 0)
-			{
-				D3DXVECTOR3 position = follow->GetPosition();
-				D3DXVECTOR3 scale = follow->GetScale();
-				if (m_Position.x - m_Scale.x < position.x && position.x < m_Position.x + m_Scale.x &&
-					m_Position.z - m_Scale.z < position.z && position.z < m_Position.z + m_Scale.z) {
-					SetDamageMove();
-					follow->SetAttackStop(GIVE_ATTACK_STOP);
-					player->AddCombo(1);
-				}
-			}
-		}
-	}
-
 	//ぬるぬる出現
 	m_Scale.x += 0.05f; m_Scale.y += 0.05f; m_Scale.z += 0.05f;
 	if (m_Scale.x >= m_OriginalScale.x) { m_Scale.x = m_OriginalScale.x; }

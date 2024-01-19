@@ -49,7 +49,7 @@
 #define COIN_START_NUM 10
 #define SEED_START_NUM 70
 #define ROCK_START_NUM 10
-#define ENEMY_MAKE_DISTANCE 10.0f	//敵が出現する範囲
+#define ENEMY_MAKE_DISTANCE 15.0f	//敵が出現する範囲
 #define STAGE_MAKE_XY 110.0f
 #define STAGE_MAKE_PL_XY 35.0f
 
@@ -136,9 +136,6 @@ void Game::Init()
 	for (int i = 0; i < SEED_START_NUM; i++) {AddGameObject<Seed>(1)->SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2));}
 	//岩
 	for (int i = 0; i < ROCK_START_NUM; i++) { AddGameObject<Rock>(1)->SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2)); }
-
-	//フェンス
-	for (int i = 0; i < 40; i++) { AddGameObject<Fence>(1)->SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2)); }
 
 	AddGameObject<MouseIcon>(3);
 	m_TimeFade = AddGameObject<TimeFade>(2);
@@ -346,6 +343,10 @@ void Game::TimeEvent_Time2Loop()
 	//岩
 	a = irand(0, 2);
 	if (1 == a) { AddGameObject<Rock>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2));}
+
+	//柵
+	a = irand(0, 2);
+	if (1 == a) { AddGameObject<Fence>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2)); }
 }
 
 void Game::TimeEvent_Time20()
