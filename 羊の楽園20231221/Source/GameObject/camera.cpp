@@ -54,16 +54,16 @@ void Camera::Draw()
     Renderer::SetViewMatrix(&m_ViewMatrix);
 
 	//プロジェクションマトリクス設定
-	D3DXMatrixPerspectiveFovLH(&m_ProjectionMateix, 1.0f,
+	D3DXMatrixPerspectiveFovLH(&m_ProjectionMatrix, 1.0f,
 		(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 1.0f, 1000.0f);
 
-	Renderer::SetProjectionMatrix(&m_ProjectionMateix);
+	Renderer::SetProjectionMatrix(&m_ProjectionMatrix);
 }
 
 bool Camera::CheckView(D3DXVECTOR3 Position, D3DXVECTOR3 Scale)
 {
 	D3DXMATRIX vp, invvp;
-	vp = m_ViewMatrix * m_ProjectionMateix;
+	vp = m_ViewMatrix * m_ProjectionMatrix;
 	D3DXMatrixInverse(&invvp, NULL, &vp);
 
 	D3DXVECTOR3 vpos[4];

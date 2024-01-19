@@ -14,7 +14,7 @@ private:
 	CAMERA_STATE m_CameraState = CAMERA_STATE::TITLE;
 	D3DXVECTOR3	m_Target{};
 	D3DXMATRIX	m_ViewMatrix{};
-	D3DXMATRIX  m_ProjectionMateix{};
+	D3DXMATRIX  m_ProjectionMatrix{};
 
 	//ÉÅÉìÉoïœêî
 	float m_ShakeAmplitudeX = 0.0f;
@@ -44,5 +44,5 @@ public:
 	//ÉQÉbÉgä÷êî
 	bool CheckView(D3DXVECTOR3 Position, D3DXVECTOR3 Scale);
 	D3DXMATRIX	GetViewMatrix() { return m_ViewMatrix; };
-	D3DXMATRIX	GetProjectionMateix() { return m_ProjectionMateix; };
+	D3DXMATRIX	GetProjectionMatrix() { return m_ProjectionMatrix; };
 };
