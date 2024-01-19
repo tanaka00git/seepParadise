@@ -230,9 +230,6 @@ void Follow::Collision(float & groundHeight)
 	Scene* scene = Manager::GetScene();
 	auto follows = scene->GetGameObjects<Follow>();
 
-
-
-
 	//–ì—Ç—r‚Æ‚ÌŠÖŒW«
 	for (Follow * follow : follows)
 	{
@@ -308,7 +305,6 @@ void Follow::Collision(float & groundHeight)
 		}
 	}
 
-
 	//‰~Œn
 	auto cylinders = scene->GetGameObjects<Cylinder>();
 	for (Cylinder* cylinder : cylinders)
@@ -330,9 +326,7 @@ void Follow::Collision(float & groundHeight)
 				m_Position += penetration * normalizedDirection;
 			}
 			else
-			{
-				groundHeight = position.y + scale.y;
-			}
+			{ groundHeight = position.y + scale.y; }
 		}
 	}
 

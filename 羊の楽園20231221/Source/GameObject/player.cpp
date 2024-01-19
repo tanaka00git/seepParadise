@@ -153,6 +153,9 @@ void Player::Update()
 	float groundHeight = 0.0f;
 	Collision(groundHeight);
 
+	//プレイヤー位置の変更
+	m_Position += m_Velocity;
+
 	//接地
 	if (m_Position.y < groundHeight && m_Velocity.y < 0.0f)
 	{
@@ -168,9 +171,6 @@ void Player::Update()
 
 	//攻撃停止
 	AttackStop();
-
-	//プレイヤー位置の変更
-	m_Position += m_Velocity;
 
 	//影の移動
 	D3DXVECTOR3 shadowPosition = m_Position;
@@ -211,9 +211,7 @@ void Player::Draw()
 	// 通常の描画
 	m_Model->DrawColor(m_Color, m_TextureEnable);
 	m_ModelClown->DrawColor(m_Color, m_TextureEnable);
-
 }
-
 
 void Player::UpdateDeath()
 {
@@ -337,7 +335,6 @@ void Player::Collision(float & groundHeight)
 			}
 		}
 	}
-
 	//円系
 	auto cylinders = scene->GetGameObjects<Cylinder>();
 	for (Cylinder* cylinder : cylinders)
@@ -358,10 +355,7 @@ void Player::Collision(float & groundHeight)
 				float penetration = radius - length;
 				m_Position += penetration * normalizedDirection;
 			}
-			else
-			{
-				groundHeight = position.y + scale.y;
-			}
+			else { groundHeight = position.y + scale.y; }
 		}
 	}
 
