@@ -36,6 +36,18 @@ D3DXVECTOR3 GameObject::GetRight()
 	return forward;
 }
 
+D3DXVECTOR3 GameObject::GetUp()
+{
+	D3DXMATRIX rot;
+	D3DXMatrixRotationYawPitchRoll(&rot, m_Rotation.y, m_Rotation.x, m_Rotation.z);
+
+	D3DXVECTOR3 up;
+	up.x = rot._21;
+	up.y = rot._22;
+	up.z = rot._23;
+	return up;
+}
+
 void GameObject::Uninit()
 {
 	for (Component* component : m_Component)//îÕàÕforÉãÅ[Év

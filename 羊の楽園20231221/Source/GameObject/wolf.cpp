@@ -476,92 +476,167 @@ void Wolf::Collision(float & groundHeight)
 			D3DXVECTOR3 scale = breakObject->GetScale();
 			D3DXVECTOR3 right = breakObject->GetRight();		//x軸分離
 			D3DXVECTOR3 forward = breakObject->GetForward();	//z軸分離
-			D3DXVECTOR3 direction = m_Position - position;		//直方体からプレイヤーまでの方向ベクトル
-			float abbx = D3DXVec3Dot(&direction, &right);		//X軸分離方向プレイヤー距離
-			float abbz = D3DXVec3Dot(&direction, &forward);		//Z軸分離方向プレイヤー距離
+			D3DXVECTOR3 up = breakObject->GetUp();				//y軸分離
+			D3DXVECTOR3 direction = m_Position - position;		//直方体からキャラまでの方向ベクトル
+			float abbx = D3DXVec3Dot(&direction, &right);		//X軸分離方向キャラ距離
+			float abbz = D3DXVec3Dot(&direction, &forward);		//Z軸分離方向キャラ距離
+			float abby = D3DXVec3Dot(&direction, &up);			//Y軸分離方向キャラ距離
 
+			//影の高さ設定
 			if (fabs(abbx) < scale.x && fabs(abbz) < scale.z)
 			{
-				if (m_Position.y < position.y + scale.y)
-				{
-					float penetrationX = scale.x - abs(abbx);
-					float penetrationZ = scale.z - abs(abbz);
-
-					if (penetrationX < penetrationZ)
-					{
-						if (abbx > 0) { m_Position += penetrationX * right; }
-						else { m_Position -= penetrationX * right; }
-					}
-					else
-					{
-						if (abbz > 0) { m_Position += penetrationZ * forward; }
-						else { m_Position -= penetrationZ * forward; }
-					}
-				}
-				else { groundHeight = position.y + scale.y; }
+				if (m_Position.y > position.y + scale.y - 0.5f) { groundHeight = max(groundHeight, position.y + scale.y); }
 			}
-		}
-	}
-
-	//円系
-	auto cylinders = scene->GetGameObjects<Cylinder>();
-	for (Cylinder* cylinder : cylinders)
-	{
-		D3DXVECTOR3 position = cylinder->GetPosition();
-		D3DXVECTOR3 scale = cylinder->GetScale();
-		D3DXVECTOR3 direction = m_Position - position;
-		float length = D3DXVec3Length(&direction);
-		float radius = scale.x * 1.2f;  // 1.2は調整
-
-		if (length < radius)
-		{
-			if (m_Position.y < position.y + scale.y)
-			{
-				// 衝突している方向に押し戻す
-				D3DXVECTOR3 normalizedDirection = direction / length;
-
-				float penetration = radius - length;
-				m_Position += penetration * normalizedDirection;
-			}
-			else
-			{
-				groundHeight = position.y + scale.y;
-			}
-		}
-	}
-	//直方体
-	auto boxs = scene->GetGameObjects<Box>();//リストを取得
-	for (Box* box : boxs) //範囲forループ
-	{
-		D3DXVECTOR3 position = box->GetPosition();
-		D3DXVECTOR3 scale = box->GetScale();
-		D3DXVECTOR3 right = box->GetRight();				//x軸分離
-		D3DXVECTOR3 forward = box->GetForward();			//z軸分離
-		D3DXVECTOR3 direction = m_Position - position;		//直方体からプレイヤーまでの方向ベクトル
-		float abbx = D3DXVec3Dot(&direction, &right);		//X軸分離方向プレイヤー距離
-		float abbz = D3DXVec3Dot(&direction, &forward);		//Z軸分離方向プレイヤー距離
-
-		//OBB
-		if (fabs(abbx) < scale.x && fabs(abbz) < scale.z)
-		{
-			if (m_Position.y < position.y + scale.y * 1.8f - 0.5f)	//2.0fはモデルで調整
+			//OBB
+			if (fabs(abbx) < scale.x && fabs(abbz) < scale.z && fabs(abby) < scale.y)
 			{
 				float penetrationX = scale.x - abs(abbx);
 				float penetrationZ = scale.z - abs(abbz);
+				float penetrationY = scale.y - abs(abby);
 
-				if (penetrationX < penetrationZ)
+				if (penetrationX < penetrationZ && penetrationX < penetrationY)
 				{
 					if (abbx > 0) { m_Position += penetrationX * right; }
 					else { m_Position -= penetrationX * right; }
 				}
-				else
+				else if (penetrationZ < penetrationY)
 				{
 					if (abbz > 0) { m_Position += penetrationZ * forward; }
 					else { m_Position -= penetrationZ * forward; }
 				}
+				else
+				{
+					if (abby > 0)
+					{
+						m_Position += penetrationY * up;
+						m_Velocity.y = 0.0f;			//上に乗ったら垂直速度を0にする
+					}
+					else
+					{
+						m_Position -= penetrationY * up;
+						m_Velocity.y = -m_Velocity.y;	//下から触れたら垂直速度を反転する
+					}
+				}
 			}
-			else { groundHeight = position.y + scale.y * 1.8f; }	//こちらも2.0
 		}
+	}
+
+	//円柱
+	auto cylinders = scene->GetGameObjects<Cylinder>();		//円柱のリストを取得
+	for (Cylinder* cylinder : cylinders)
+	{
+		D3DXVECTOR3 position = cylinder->GetPosition();
+		D3DXVECTOR3 scale = cylinder->GetScale();
+		scale.x *= 1.2f, scale.z *= 1.2f;					//半径の調整
+		D3DXVECTOR3 direction = m_Position - position;		//円柱中心からキャラまでのベクトル
+		float length = D3DXVec3Length(&direction);			//キャラと円柱中心の距離
+		D3DXVECTOR3 up = cylinder->GetUp();					//円柱の上方向ベクトル
+		float abbr = D3DXVec3Dot(&direction, &up);			//円柱の上方向への軸分離
+
+		direction -= up * abbr;	//y軸の接触を無視するために、directionからupの成分を引く
+		length = D3DXVec3Length(&direction); //新しいlengthを計算する
+
+		//影
+		if (length < scale.x && m_Position.y > position.y + scale.y - 0.5f)
+		{
+			groundHeight = max(groundHeight, position.y + scale.y);
+		}
+		// OBB
+		if (length < scale.x && fabs(abbr) < scale.y)
+		{
+			// 円柱の上下方向への押し出し処理
+			float penetrationH = scale.y - fabs(abbr);
+			float penetrationX = scale.x - length;
+
+			// 横から触れた場合の処理
+			if (penetrationX < penetrationH)
+			{
+				// 円柱内に入った場合の処理
+				D3DXVECTOR3 normalizedDirection = direction / length;
+				float penetration = scale.x - length;
+
+				// 入った方向に押し出し処理
+				m_Position += penetration * normalizedDirection;
+			}
+			else
+			{
+				if (abbr > 0)
+				{
+					m_Position += penetrationH * up;
+					m_Velocity.y = 0.0f;  // 上に乗ったら垂直速度を0にする
+				}
+				else
+				{
+					m_Position -= penetrationH * up;
+					m_Velocity.y -= m_Velocity.y; // 下から触れたら垂直速度を反転する
+				}
+			}
+		}
+	}
+
+	//直方体
+	auto boxs = scene->GetGameObjects<Box>();	//リストを取得
+	for (Box* box : boxs)						//範囲forループ
+	{
+		D3DXVECTOR3 position = box->GetPosition();
+		D3DXVECTOR3 scale = box->GetScale();
+		scale.y *= 1.8f;								//高さ調整
+		D3DXVECTOR3 right = box->GetRight();			//x軸分離
+		D3DXVECTOR3 forward = box->GetForward();		//z軸分離
+		D3DXVECTOR3 up = box->GetUp();					//y軸分離
+		D3DXVECTOR3 direction = m_Position - position;	//直方体からキャラまでの方向ベクトル
+		float abbx = D3DXVec3Dot(&direction, &right);	//X軸分離方向キャラ距離
+		float abbz = D3DXVec3Dot(&direction, &forward);	//Z軸分離方向キャラ距離
+		float abby = D3DXVec3Dot(&direction, &up);		//Y軸分離方向キャラ距離
+
+		//影の高さ設定
+		if (fabs(abbx) < scale.x && fabs(abbz) < scale.z)
+		{
+			if (m_Position.y > position.y + scale.y - 0.5f) { groundHeight = max(groundHeight, position.y + scale.y); }
+		}
+		//OBB
+		if (fabs(abbx) < scale.x && fabs(abbz) < scale.z && fabs(abby) < scale.y)
+		{
+			//キャラが直方体よりも上にいるかどうかの判定
+			if (m_Position.y > position.y + scale.y)
+			{
+				groundHeight = position.y + scale.y;
+			}
+
+			float penetrationX = scale.x - abs(abbx);	//X軸方向への押し出し量
+			float penetrationZ = scale.z - abs(abbz);	//Y軸方向への押し出し量
+			float penetrationY = scale.y - abs(abby);	//Z軸方向への押し出し量
+
+			if (penetrationX < penetrationZ && penetrationX < penetrationY)
+			{
+				if (abbx > 0) { m_Position += penetrationX * right; }
+				else { m_Position -= penetrationX * right; }
+			}
+			else if (penetrationZ < penetrationY)
+			{
+				if (abbz > 0) { m_Position += penetrationZ * forward; }
+				else { m_Position -= penetrationZ * forward; }
+			}
+			else
+			{
+				if (abby > 0)
+				{
+					m_Position += penetrationY * up;
+					m_Velocity.y = 0.0f;			//上に乗ったら垂直速度を0にする
+				}
+				else
+				{
+					m_Position -= penetrationY * up;
+					m_Velocity.y = -m_Velocity.y;	//下から触れたら垂直速度を反転する
+				}
+			}
+		}
+	}
+
+	if (m_Position.y < 0.0f && m_Velocity.y < 0.0f)
+	{
+		m_Position.y = 0.0f;
+		m_Velocity.y = 0.0f;
 	}
 }
 

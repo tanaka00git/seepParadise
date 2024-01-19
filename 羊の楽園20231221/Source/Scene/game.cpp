@@ -85,11 +85,15 @@ void Game::Init()
 	InfoLog::Load();
 	DayBar::Load();
 
+	//カメラ
 	Camera*camera = AddGameObject<Camera>(0);
 	camera->SetCameraState(CAMERA_STATE::GAME);
 
+	//フィールド
 	AddGameObject<Field>(1);
-	AddGameObject<Goal>(1);
+	
+	//ゴール
+	//AddGameObject<Goal>(1);
 	
 	//プレイヤー
 	Player* player = AddGameObject<Player>(1);

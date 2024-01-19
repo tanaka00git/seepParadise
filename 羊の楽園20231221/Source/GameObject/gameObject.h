@@ -26,6 +26,7 @@ public:
 	D3DXVECTOR3 GetRotation(){return m_Rotation;}
 	D3DXVECTOR3 GetForward();
 	D3DXVECTOR3 GetRight();
+	D3DXVECTOR3 GetUp();
 
 	virtual void Init(){};
 	virtual void Uninit();
