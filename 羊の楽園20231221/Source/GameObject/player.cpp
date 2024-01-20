@@ -423,11 +423,6 @@ void Player::Collision(float & groundHeight)
 		//OBB
 		if (fabs(obbx) < scale.x && fabs(obbz) < scale.z && fabs(obby) < scale.y)
 		{
-			//ƒvƒŒƒCƒ„[‚ª’¼•û‘Ì‚æ‚è‚àã‚É‚¢‚é‚©‚Ç‚¤‚©‚Ì”»’è
-			if (m_Position.y > position.y + scale.y)
-			{
-				groundHeight = position.y + scale.y;
-			}
 			D3DXVECTOR3 penetration = D3DXVECTOR3(scale.x - abs(obbx), scale.y - abs(obby), scale.z - abs(obbz));
 	
 			if (penetration.x < penetration.z && penetration.x < penetration.y)
