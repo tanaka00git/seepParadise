@@ -232,7 +232,8 @@ void Player::UpdateNormal()
 
 	m_Velocity.x = GetForward().x * (m_Speed * 0.01f);
 	m_Velocity.z = GetForward().z * (m_Speed * 0.01f);
-
+	
+	if (Input::GetKeyTrigger(VK_RBUTTON) ) { m_Velocity.y = 0.3f; }
 	if (Input::GetKeyPress(VK_LBUTTON) && m_Charge >= 10) { m_PlayerState = PLAYER_STATE::DASH; }
 }
 
@@ -298,17 +299,17 @@ void Player::Collision(float & groundHeight)
 			D3DXVECTOR3 forward = breakObject->GetForward();	//z軸分離
 			D3DXVECTOR3 up = breakObject->GetUp();				//y軸分離
 			D3DXVECTOR3 direction = m_Position - position;		//直方体からプレイヤーまでの方向ベクトル
-			float abbx = D3DXVec3Dot(&direction, &right);		//X軸分離方向プレイヤー距離
-			float abbz = D3DXVec3Dot(&direction, &forward);		//Z軸分離方向プレイヤー距離
-			float abby = D3DXVec3Dot(&direction, &up);			//Y軸分離方向プレイヤー距離
+			float obbx = D3DXVec3Dot(&direction, &right);		//X軸分離方向プレイヤー距離
+			float obbz = D3DXVec3Dot(&direction, &forward);		//Z軸分離方向プレイヤー距離
+			float obby = D3DXVec3Dot(&direction, &up);			//Y軸分離方向プレイヤー距離
 			
 			//影の高さ設定
-			if (fabs(abbx) < scale.x && fabs(abbz) < scale.z)
+			if (fabs(obbx) < scale.x && fabs(obbz) < scale.z)
 			{
 				if (m_Position.y > position.y + scale.y - 0.5f) { groundHeight = max(groundHeight, position.y + scale.y); }
 			}
 			//OBB
-			if (fabs(abbx) < scale.x && fabs(abbz) < scale.z && fabs(abby) < scale.y)
+			if (fabs(obbx) < scale.x && fabs(obbz) < scale.z && fabs(obby) < scale.y)
 			{
 				//ダッシュ攻撃
 				if (m_PlayerState == PLAYER_STATE::DASH && GetAttackStop() <= 0)
@@ -317,31 +318,28 @@ void Player::Collision(float & groundHeight)
 					SetAttackStop(ATTACK_STOP);
 					AddCombo(1);
 				}
+				D3DXVECTOR3 penetration = D3DXVECTOR3(scale.x - abs(obbx), scale.y - abs(obby), scale.z - abs(obbz));
 
-				float penetrationX = scale.x - abs(abbx);
-				float penetrationZ = scale.z - abs(abbz);
-				float penetrationY = scale.y - abs(abby);
-
-				if (penetrationX < penetrationZ && penetrationX < penetrationY)
+				if (penetration.x < penetration.z && penetration.x < penetration.y)
 				{
-					if (abbx > 0) { m_Position += penetrationX * right; }
-					else { m_Position -= penetrationX * right; }
+					if (obbx > 0) { m_Position += penetration.x * right; }
+					else { m_Position -= penetration.x * right; }
 				}
-				else if (penetrationZ < penetrationY)
+				else if (penetration.z < penetration.y)
 				{
-					if (abbz > 0) { m_Position += penetrationZ * forward; }
-					else { m_Position -= penetrationZ * forward; }
+					if (obbz > 0) { m_Position += penetration.z * forward; }
+					else { m_Position -= penetration.z * forward; }
 				}
 				else
 				{
-					if (abby > 0)
+					if (obby > 0)
 					{
-						m_Position += penetrationY * up;
+						m_Position += penetration.z * up;
 						m_Velocity.y = 0.0f;			//上に乗ったら垂直速度を0にする
 					}
 					else
 					{
-						m_Position -= penetrationY * up;
+						m_Position -= penetration.y * up;
 						m_Velocity.y = -m_Velocity.y;	//下から触れたら垂直速度を反転する
 					}
 				}
@@ -359,9 +357,9 @@ void Player::Collision(float & groundHeight)
 		D3DXVECTOR3 direction = m_Position - position;		//円柱中心からプレイヤーまでのベクトル
 		float length = D3DXVec3Length(&direction);			//プレイヤーと円柱中心の距離
 		D3DXVECTOR3 up = cylinder->GetUp();					//円柱の上方向ベクトル
-		float abbr = D3DXVec3Dot(&direction, &up);			//円柱の上方向への軸分離
+		float obbr = D3DXVec3Dot(&direction, &up);			//円柱の上方向への軸分離
 
-		direction -= up * abbr;	//y軸の接触を無視するために、directionからupの成分を引く
+		direction -= up * obbr;	//y軸の接触を無視するために、directionからupの成分を引く
 		length = D3DXVec3Length(&direction); //新しいlengthを計算する
 
 		//影
@@ -370,10 +368,10 @@ void Player::Collision(float & groundHeight)
 			groundHeight = max(groundHeight, position.y + scale.y);
 		}
 		// OBB
-		if (length < scale.x && fabs(abbr) < scale.y)
+		if (length < scale.x && fabs(obbr) < scale.y)
 		{
 			// 円柱の上下方向への押し出し処理
-			float penetrationH = scale.y - fabs(abbr);
+			float penetrationH = scale.y - static_cast<float>(fabs(obbr));
 			float penetrationX = scale.x - length;
 
 			// 横から触れた場合の処理
@@ -388,7 +386,7 @@ void Player::Collision(float & groundHeight)
 			}
 			else
 			{
-				if (abbr > 0)
+				if (obbr > 0)
 				{
 					m_Position += penetrationH * up;
 					m_Velocity.y = 0.0f;  // 上に乗ったら垂直速度を0にする
@@ -413,48 +411,45 @@ void Player::Collision(float & groundHeight)
 		D3DXVECTOR3 forward = box->GetForward();		//z軸分離
 		D3DXVECTOR3 up = box->GetUp();					//y軸分離
 		D3DXVECTOR3 direction = m_Position - position;	//直方体からプレイヤーまでの方向ベクトル
-		float abbx = D3DXVec3Dot(&direction, &right);	//X軸分離方向プレイヤー距離
-		float abbz = D3DXVec3Dot(&direction, &forward);	//Z軸分離方向プレイヤー距離
-		float abby = D3DXVec3Dot(&direction, &up);		//Y軸分離方向プレイヤー距離
+		float obbx = D3DXVec3Dot(&direction, &right);	//X軸分離方向プレイヤー距離
+		float obbz = D3DXVec3Dot(&direction, &forward);	//Z軸分離方向プレイヤー距離
+		float obby = D3DXVec3Dot(&direction, &up);		//Y軸分離方向プレイヤー距離
 		
 		//影の高さ設定
-		if (fabs(abbx) < scale.x && fabs(abbz) < scale.z)
+		if (fabs(obbx) < scale.x && fabs(obbz) < scale.z)
 		{
 			if (m_Position.y > position.y + scale.y - 0.5f) { groundHeight = max(groundHeight, position.y + scale.y); }
 		}
 		//OBB
-		if (fabs(abbx) < scale.x && fabs(abbz) < scale.z && fabs(abby) < scale.y)
+		if (fabs(obbx) < scale.x && fabs(obbz) < scale.z && fabs(obby) < scale.y)
 		{
 			//プレイヤーが直方体よりも上にいるかどうかの判定
 			if (m_Position.y > position.y + scale.y)
 			{
 				groundHeight = position.y + scale.y;
 			}
-
-			float penetrationX = scale.x - abs(abbx);	//X軸方向への押し出し量
-			float penetrationZ = scale.z - abs(abbz);	//Y軸方向への押し出し量
-			float penetrationY = scale.y - abs(abby);	//Z軸方向への押し出し量
-
-			if (penetrationX < penetrationZ && penetrationX < penetrationY)
+			D3DXVECTOR3 penetration = D3DXVECTOR3(scale.x - abs(obbx), scale.y - abs(obby), scale.z - abs(obbz));
+	
+			if (penetration.x < penetration.z && penetration.x < penetration.y)
 			{
-				if (abbx > 0) { m_Position += penetrationX * right; }
-				else { m_Position -= penetrationX * right; }
+				if (obbx > 0) { m_Position += penetration.x * right; }
+				else { m_Position -= penetration.x * right; }
 			}
-			else if (penetrationZ < penetrationY)
+			else if (penetration.z < penetration.y)
 			{
-				if (abbz > 0) { m_Position += penetrationZ * forward; }
-				else { m_Position -= penetrationZ * forward; }
+				if (obbz > 0) { m_Position += penetration.z * forward; }
+				else { m_Position -= penetration.z * forward; }
 			}
 			else
 			{
-				if (abby > 0)
+				if (obby > 0)
 				{
-					m_Position += penetrationY * up;
+					m_Position += penetration.y * up;
 					m_Velocity.y = 0.0f;			//上に乗ったら垂直速度を0にする
 				}
 				else
 				{
-					m_Position -= penetrationY * up;
+					m_Position -= penetration.y * up;
 					m_Velocity.y = -m_Velocity.y;	//下から触れたら垂直速度を反転する
 				}
 			}
