@@ -133,7 +133,7 @@ bool Goal::Collision()
 	//プレイヤー用
 	if (player)
 	{
-		if (player->GetState() != PLAYER_STATE::DEATH)
+		if (player->GetCharacterState() == CHARACTER_STATE::ALIVE)
 		{
 			D3DXVECTOR3 position = player->GetPosition();
 			D3DXVECTOR3 scale = player->GetScale();

@@ -154,6 +154,7 @@
     <ClCompile Include="Source\GameObject\box.cpp" />
     <ClCompile Include="Source\GameObject\breakObject.cpp" />
     <ClCompile Include="Source\GameObject\camera.cpp" />
+    <ClCompile Include="Source\GameObject\characterObject.cpp" />
     <ClCompile Include="Source\GameObject\chest.cpp" />
     <ClCompile Include="Source\GameObject\coin.cpp" />
     <ClCompile Include="Source\GameObject\concentrationLine.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="Source\GameObject\box.h" />
     <ClInclude Include="Source\GameObject\breakObject.h" />
     <ClInclude Include="Source\GameObject\camera.h" />
+    <ClInclude Include="Source\GameObject\characterObject.h" />
     <ClInclude Include="Source\GameObject\chest.h" />
     <ClInclude Include="Source\GameObject\coin.h" />
     <ClInclude Include="Source\GameObject\concentrationLine.h" />

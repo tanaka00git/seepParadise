@@ -5,12 +5,11 @@
 #include "..\App\audio.h"
 #include "..\Scene\scene.h"
 #include "..\Scene\game.h"
+#include "..\GameObject\characterObject.h"
 #include "..\GameObject\player.h"
-#include "..\GameObject\box.h"
 #include "..\GameObject\chest.h"
 #include "..\GameObject\rock.h"
 #include "..\GameObject\breakObject.h"
-#include "..\GameObject\cylinder.h"
 #include "..\GameObject\shadow.h"
 #include "..\GameObject\hpBarS.h"
 #include "..\GameObject\score.h"
@@ -80,6 +79,7 @@ void Player::Unload()
 
 void Player::Init()
 {
+
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
 
@@ -91,7 +91,7 @@ void Player::Init()
 
 void Player::Uninit()
 {
-	GameObject::Uninit();
+	CharacterObject::Uninit();
 
 	m_VertexLayout->Release();
 	m_VertexShader->Release();
@@ -100,51 +100,40 @@ void Player::Uninit()
 
 void Player::Update()
 {
-	GameObject::Update();
+	CharacterObject::Update();
+
 	Scene* scene = Manager::GetScene();
 	Score* score = scene->GetGameObject<Score>();
 
 	//上限値制限
-	if (m_FullLife > FULL_LIFE)  { m_FullLife = FULL_LIFE; }
-	if (m_Life > m_FullLife)	 { m_Life = m_FullLife; }
-	if (m_Speed > FULL_SPEED)	 { m_Speed = FULL_SPEED; }
-	if (m_Eye > FULL_EYE)		 { m_Eye = FULL_EYE; }
+	if (m_FullLife > FULL_LIFE) { m_FullLife = FULL_LIFE; }
+	if (m_Life > m_FullLife) { m_Life = m_FullLife; }
+	if (m_Speed > FULL_SPEED) { m_Speed = FULL_SPEED; }
+	if (m_Eye > FULL_EYE) { m_Eye = FULL_EYE; }
 	if (m_Charge > m_FullCharge) { m_Charge = m_FullCharge; }
 
 	//コンボデータを渡す
-	m_ComboWait --;
+	m_ComboWait--;
 	if (m_ComboWait <= 0) { m_ComboWait = 0; }
 	if (m_PlayerState == PLAYER_STATE::DASH)
 	{
 		m_ComboWait = 30;
-		score->SetCountCombo(m_Combo); 
+		score->SetCountCombo(m_Combo);
 	}
 	else { m_Combo = 0; }
+
 
 	//体力データを渡す
 	if (m_Life <= 0) { m_Life = 0; }
 	m_HpBarS->SetLifeDateFC(m_FullLife, m_Life);		  //ライフをHPバーにセットする
 	m_HpBarS->SetCharge(m_Charge, m_FullCharge, m_Dash);  //チャージをHPバーにセットする
-	score->SetLifeF(m_Life,m_FullLife);
+	score->SetLifeF(m_Life, m_FullLife);
 
-	//生死時の処理
-	if (m_Life <= 0) { m_PlayerState = PLAYER_STATE::DEATH; }
+	//HPバーの移動
+	D3DXVECTOR3 HpBarPosition = m_Position;
+	HpBarPosition.y += 2.0f;
+	m_HpBarS->SetPosition(HpBarPosition);
 
-	switch (m_PlayerState)
-	{
-	case PLAYER_STATE::NORMAL:
-		UpdateNormal();
-		break;
-	case PLAYER_STATE::DASH:
-		UpdateDash();
-		break;
-	case PLAYER_STATE::DEATH:
-		UpdateDeath();
-		break;
-	case  PLAYER_STATE::UNUSED:
-		UpdateUnused();
-		break;
-	}
 
 	//攻撃停止
 	AttackStop();
@@ -152,15 +141,12 @@ void Player::Update()
 	//重力
 	m_Velocity.y -= 0.015f;
 	
-	//プレイヤー位置の変更
+	//移動
 	m_Position += m_Velocity;
 
 	//当たり判定
 	float groundHeight = 0.0f;
 	Collision(groundHeight);
-
-	//ダメージフラッシュ
-	DamageFlash();
 
 	//無敵時間の色変え
 	InvincibleColor();
@@ -170,11 +156,6 @@ void Player::Update()
 	shadowPosition.y = groundHeight + 0.01f;
 	m_Shadow->SetPosition(shadowPosition);
 	m_Shadow->SetScale(D3DXVECTOR3(m_Scale.x, m_Scale.y, m_Scale.z));
-
-	//HPバーの移動
-	D3DXVECTOR3 HpBarPosition = m_Position;
-	HpBarPosition.y += 2.0f;
-	m_HpBarS->SetPosition(HpBarPosition);
 
 	//疑似アニメ
 	Anime();
@@ -206,6 +187,24 @@ void Player::Draw()
 	m_ModelClown->DrawColor(m_Color, m_TextureEnable);
 }
 
+void Player::UpdateAlive()
+{
+	CharacterObject::UpdateAlive();
+
+	//マウス移動
+	MouseTargetMove();
+
+	switch (m_PlayerState)
+	{
+	case PLAYER_STATE::NORMAL:
+		UpdateNormal();
+		break;
+	case PLAYER_STATE::DASH:
+		UpdateDash();
+		break;
+	}
+}
+
 void Player::UpdateDeath()
 {
 	m_Velocity *= 0;
@@ -219,7 +218,7 @@ void Player::UpdateDeath()
 	if (m_Scale.y < 0.0f)
 	{
 		m_Scale *= 0.0f;
-		m_PlayerState = PLAYER_STATE::UNUSED;
+		m_CharacterState = CHARACTER_STATE::UNUSED;
 	}
 }
 
@@ -227,22 +226,15 @@ void Player::UpdateNormal()
 {
 	m_Scale.y = m_OriginalScale.y;
 
-	//マウス移動
-	MouseTargetMove();
-
 	m_Velocity.x = GetForward().x * (m_Speed * 0.01f);
 	m_Velocity.z = GetForward().z * (m_Speed * 0.01f);
 	
-	if (Input::GetKeyTrigger(VK_RBUTTON) ) { m_Velocity.y = 0.3f; }
 	if (Input::GetKeyPress(VK_LBUTTON) && m_Charge >= 10) { m_PlayerState = PLAYER_STATE::DASH; }
 }
 
 void Player::UpdateDash()
 {
 	m_Scale.y = m_OriginalScale.y;
-
-	//マウス移動
-	MouseTargetMove();
 
 	//ダッシュ初回時
 	if (!m_DashInit)
@@ -274,187 +266,7 @@ void Player::UpdateDash()
 	if (!Input::GetKeyPress(VK_LBUTTON)) 
 	{ 
 		m_DashInit = false;
-		m_PlayerState = PLAYER_STATE::NORMAL; 
-	}
-}
-
-void Player::UpdateUnused()
-{
-	m_Scale *= 0.0f;
-}
-
-void Player::Collision(float & groundHeight)
-{
-	Scene* scene = Manager::GetScene();
-
-	//破壊可ブロック
-	auto breakObjects = scene->GetGameObjects<BreakObject>();
-	for (BreakObject* breakObject : breakObjects) 
-	{
-		if (breakObject->GetState() != BREAKOBJECT_STATE::DEATH)
-		{
-			D3DXVECTOR3 position = breakObject->GetPosition();
-			D3DXVECTOR3 scale = breakObject->GetScale();
-			D3DXVECTOR3 right = breakObject->GetRight();		//x軸分離
-			D3DXVECTOR3 forward = breakObject->GetForward();	//z軸分離
-			D3DXVECTOR3 up = breakObject->GetUp();				//y軸分離
-			D3DXVECTOR3 direction = m_Position - position;		//直方体からプレイヤーまでの方向ベクトル
-			float obbx = D3DXVec3Dot(&direction, &right);		//X軸分離方向プレイヤー距離
-			float obbz = D3DXVec3Dot(&direction, &forward);		//Z軸分離方向プレイヤー距離
-			float obby = D3DXVec3Dot(&direction, &up);			//Y軸分離方向プレイヤー距離
-			
-			//影の高さ設定
-			if (fabs(obbx) < scale.x && fabs(obbz) < scale.z)
-			{
-				if (m_Position.y > position.y + scale.y - 0.5f) { groundHeight = max(groundHeight, position.y + scale.y); }
-			}
-			//OBB
-			if (fabs(obbx) < scale.x && fabs(obbz) < scale.z && fabs(obby) < scale.y)
-			{
-				//ダッシュ攻撃
-				if (m_PlayerState == PLAYER_STATE::DASH && GetAttackStop() <= 0)
-				{
-					breakObject->SetDamageMove();
-					SetAttackStop(ATTACK_STOP);
-					AddCombo(1);
-				}
-				D3DXVECTOR3 penetration = D3DXVECTOR3(scale.x - abs(obbx), scale.y - abs(obby), scale.z - abs(obbz));
-
-				if (penetration.x < penetration.z && penetration.x < penetration.y)
-				{
-					if (obbx > 0) { m_Position += penetration.x * right; }
-					else { m_Position -= penetration.x * right; }
-				}
-				else if (penetration.z < penetration.y)
-				{
-					if (obbz > 0) { m_Position += penetration.z * forward; }
-					else { m_Position -= penetration.z * forward; }
-				}
-				else
-				{
-					if (obby > 0)
-					{
-						m_Position += penetration.z * up;
-						m_Velocity.y = 0.0f;			//上に乗ったら垂直速度を0にする
-					}
-					else
-					{
-						m_Position -= penetration.y * up;
-						m_Velocity.y = -m_Velocity.y;	//下から触れたら垂直速度を反転する
-					}
-				}
-			}
-		}
-	}
-
-	//円柱
-	auto cylinders = scene->GetGameObjects<Cylinder>();		//円柱のリストを取得
-	for (Cylinder* cylinder : cylinders)
-	{
-		D3DXVECTOR3 position = cylinder->GetPosition();
-		D3DXVECTOR3 scale = cylinder->GetScale();
-		scale.x *= 1.2f,scale.z *= 1.2f;					//半径の調整
-		D3DXVECTOR3 direction = m_Position - position;		//円柱中心からプレイヤーまでのベクトル
-		float length = D3DXVec3Length(&direction);			//プレイヤーと円柱中心の距離
-		D3DXVECTOR3 up = cylinder->GetUp();					//円柱の上方向ベクトル
-		float obbr = D3DXVec3Dot(&direction, &up);			//円柱の上方向への軸分離
-
-		direction -= up * obbr;	//y軸の接触を無視するために、directionからupの成分を引く
-		length = D3DXVec3Length(&direction); //新しいlengthを計算する
-
-		//影
-		if (length < scale.x && m_Position.y > position.y + scale.y - 0.5f)
-		{
-			groundHeight = max(groundHeight, position.y + scale.y);
-		}
-		// OBB
-		if (length < scale.x && fabs(obbr) < scale.y)
-		{
-			// 円柱の上下方向への押し出し処理
-			float penetrationH = scale.y - static_cast<float>(fabs(obbr));
-			float penetrationX = scale.x - length;
-
-			// 横から触れた場合の処理
-			if (penetrationX < penetrationH)
-			{
-				// 円柱内に入った場合の処理
-				D3DXVECTOR3 normalizedDirection = direction / length;
-				float penetration = scale.x - length;
-
-				// 入った方向に押し出し処理
-				m_Position += penetration * normalizedDirection;
-			}
-			else
-			{
-				if (obbr > 0)
-				{
-					m_Position += penetrationH * up;
-					m_Velocity.y = 0.0f;  // 上に乗ったら垂直速度を0にする
-				}
-				else
-				{
-					m_Position -= penetrationH * up;
-					m_Velocity.y -= m_Velocity.y; // 下から触れたら垂直速度を反転する
-				}
-			}
-		}
-	}
-
-	//直方体
-	auto boxs = scene->GetGameObjects<Box>();	//リストを取得
-	for (Box* box : boxs)						//範囲forループ
-	{
-		D3DXVECTOR3 position = box->GetPosition();
-		D3DXVECTOR3 scale = box->GetScale();
-		scale.y *= 1.8f;								//高さ調整
-		D3DXVECTOR3 right = box->GetRight();			//x軸分離
-		D3DXVECTOR3 forward = box->GetForward();		//z軸分離
-		D3DXVECTOR3 up = box->GetUp();					//y軸分離
-		D3DXVECTOR3 direction = m_Position - position;	//直方体からプレイヤーまでの方向ベクトル
-		float obbx = D3DXVec3Dot(&direction, &right);	//X軸分離方向プレイヤー距離
-		float obbz = D3DXVec3Dot(&direction, &forward);	//Z軸分離方向プレイヤー距離
-		float obby = D3DXVec3Dot(&direction, &up);		//Y軸分離方向プレイヤー距離
-		
-		//影の高さ設定
-		if (fabs(obbx) < scale.x && fabs(obbz) < scale.z)
-		{
-			if (m_Position.y > position.y + scale.y - 0.5f) { groundHeight = max(groundHeight, position.y + scale.y); }
-		}
-		//OBB
-		if (fabs(obbx) < scale.x && fabs(obbz) < scale.z && fabs(obby) < scale.y)
-		{
-			D3DXVECTOR3 penetration = D3DXVECTOR3(scale.x - abs(obbx), scale.y - abs(obby), scale.z - abs(obbz));
-	
-			if (penetration.x < penetration.z && penetration.x < penetration.y)
-			{
-				if (obbx > 0) { m_Position += penetration.x * right; }
-				else { m_Position -= penetration.x * right; }
-			}
-			else if (penetration.z < penetration.y)
-			{
-				if (obbz > 0) { m_Position += penetration.z * forward; }
-				else { m_Position -= penetration.z * forward; }
-			}
-			else
-			{
-				if (obby > 0)
-				{
-					m_Position += penetration.y * up;
-					m_Velocity.y = 0.0f;			//上に乗ったら垂直速度を0にする
-				}
-				else
-				{
-					m_Position -= penetration.y * up;
-					m_Velocity.y = -m_Velocity.y;	//下から触れたら垂直速度を反転する
-				}
-			}
-		}
-	}
-
-	if (m_Position.y < 0.0f && m_Velocity.y < 0.0f)
-	{
-		m_Position.y = 0.0f;
-		m_Velocity.y = 0.0f;
+		m_PlayerState = PLAYER_STATE::NORMAL;
 	}
 }
 
@@ -555,16 +367,6 @@ void Player::MouseTargetMove()
 	m_Rotation.y = atan2f(toLookAt.x, toLookAt.z);
 }
 
-void Player::DamageFlash()
-{
-	if (m_DamageFlashTime > 0)
-	{
-		m_DamageFlashTime--;
-		m_TextureEnable = false;
-	}
-	else { m_TextureEnable = true; }
-}
-
 void Player::InvincibleColor()
 {
 	if (m_InvincibleTime > 0)
@@ -605,7 +407,70 @@ void Player::Anime()
 		m_AnimePause = !m_AnimePause;
 		m_AnimeTime = 0;
 	}
-
 }
 
+void Player::Collision(float& groundHeight)
+{
+	CharacterObject::Collision(groundHeight);
+	Scene* scene = Manager::GetScene();
 
+	//破壊可ブロック
+	auto breakObjects = scene->GetGameObjects<BreakObject>();
+	for (BreakObject* breakObject : breakObjects)
+	{
+		if (breakObject->GetState() != BREAKOBJECT_STATE::DEATH)
+		{
+			D3DXVECTOR3 position = breakObject->GetPosition();
+			D3DXVECTOR3 scale = breakObject->GetScale();
+			D3DXVECTOR3 right = breakObject->GetRight();		//x軸分離
+			D3DXVECTOR3 forward = breakObject->GetForward();	//z軸分離
+			D3DXVECTOR3 up = breakObject->GetUp();				//y軸分離
+			D3DXVECTOR3 direction = m_Position - position;		//直方体からプレイヤーまでの方向ベクトル
+			float obbx = D3DXVec3Dot(&direction, &right);		//X軸分離方向プレイヤー距離
+			float obbz = D3DXVec3Dot(&direction, &forward);		//Z軸分離方向プレイヤー距離
+			float obby = D3DXVec3Dot(&direction, &up);			//Y軸分離方向プレイヤー距離
+
+			//影の高さ設定
+			if (fabs(obbx) < scale.x && fabs(obbz) < scale.z)
+			{
+				if (m_Position.y > position.y + scale.y - 0.5f) { groundHeight = max(groundHeight, position.y + scale.y); }
+			}
+			//OBB
+			if (fabs(obbx) < scale.x && fabs(obbz) < scale.z && fabs(obby) < scale.y)
+			{
+				//ダッシュ攻撃
+				if (m_PlayerState == PLAYER_STATE::DASH && GetAttackStop() <= 0)
+				{
+					breakObject->SetDamageMove();
+					SetAttackStop(ATTACK_STOP);
+					AddCombo(1);
+				}
+				D3DXVECTOR3 penetration = D3DXVECTOR3(scale.x - abs(obbx), scale.y - abs(obby), scale.z - abs(obbz));
+
+				if (penetration.x < penetration.z && penetration.x < penetration.y)
+				{
+					if (obbx > 0) { m_Position += penetration.x * right; }
+					else { m_Position -= penetration.x * right; }
+				}
+				else if (penetration.z < penetration.y)
+				{
+					if (obbz > 0) { m_Position += penetration.z * forward; }
+					else { m_Position -= penetration.z * forward; }
+				}
+				else
+				{
+					if (obby > 0)
+					{
+						m_Position += penetration.y * up;
+						m_Velocity.y = 0.0f;			//上に乗ったら垂直速度を0にする
+					}
+					else
+					{
+						m_Position -= penetration.y * up;
+						m_Velocity.y = -m_Velocity.y;	//下から触れたら垂直速度を反転する
+					}
+				}
+			}
+		}
+	}
+}

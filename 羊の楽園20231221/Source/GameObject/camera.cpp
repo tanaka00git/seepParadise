@@ -143,7 +143,7 @@ void Camera::UpdateGame()
 	for (Follow * follow : follows)
 	{
 		D3DXVECTOR3 position = follow->GetPosition();
-		if (follow->GetState() != FOLLOW_STATE::FREE && follow->GetState() != FOLLOW_STATE::DEATH)
+		if (follow->GetState() != FOLLOW_STATE::FREE && follow->GetCharacterState() != CHARACTER_STATE::DEAD)
 		{
 			cameraMove += CAMERA_MOVE_VALUE;
 			followmove++;

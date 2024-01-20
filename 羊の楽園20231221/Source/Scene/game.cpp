@@ -238,7 +238,7 @@ void Game::Update()
 	}
 
 	//プレイヤーが食べられたらゲームオーバー
-	if (player->GetState() == PLAYER_STATE::UNUSED) {m_Fade->FadeOut();}
+	if (player->GetCharacterState() == CHARACTER_STATE::UNUSED) {m_Fade->FadeOut();}
 	if (m_Fade->GetFadeFinish()) {
 		//リザルトに情報をセットする
 		Result* result = scene->GetGameObject<Result>();

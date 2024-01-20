@@ -1,0 +1,11 @@
+diff a/羊の楽園20231221/Source/GameObject/wolf.cpp b/羊の楽園20231221/Source/GameObject/wolf.cpp	(rejected hunks)
+@@ -478,6 +478,9 @@
+ 			D3DXVECTOR3 forward = breakObject->GetForward();	//z������
+ 			D3DXVECTOR3 up = breakObject->GetUp();				//y������
+ 			D3DXVECTOR3 direction = m_Position - position;		//�����̂���L�����܂ł̕����x�N�g��
++			float abbx = D3DXVec3Dot(&direction, &right);		//X�����������L��������
++			float abbz = D3DXVec3Dot(&direction, &forward);		//Z�����������L��������
++			float abby = D3DXVec3Dot(&direction, &up);			//Y�����������L��������
+ 
+ 			//�e�̍����ݒ�
+ 			if (fabs(abbx) < scale.x && fabs(abbz) < scale.z)

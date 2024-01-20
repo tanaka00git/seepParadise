@@ -3,12 +3,11 @@
 #include "..\App\renderer.h"
 #include "..\Scene\scene.h"
 #include "..\App\input.h"
+#include "..\GameObject\characterObject.h"
 #include "..\GameObject\wolf.h"
 #include "..\GameObject\follow.h"
 #include "..\GameObject\player.h"
-#include "..\GameObject\box.h"
 #include "..\GameObject\rock.h"
-#include "..\GameObject\cylinder.h"
 #include "..\GameObject\explosion.h"
 #include "..\App\audio.h"
 #include "..\GameObject\shadow.h"
@@ -67,6 +66,8 @@ void Wolf::Unload()
 
 void Wolf::Init()
 {
+	CharacterObject::Init();
+
 	m_Scale.y = 0.01f;
 
 	m_Rotation.y = frand() * 2 * D3DX_PI;
@@ -82,7 +83,7 @@ void Wolf::Init()
 
 void Wolf::Uninit()
 {
-	GameObject::Uninit();
+	CharacterObject::Uninit();
 	m_VertexLayout->Release();
 	m_VertexShader->Release();
 	m_PixelShader->Release();
@@ -90,7 +91,7 @@ void Wolf::Uninit()
 
 void Wolf::Update()
 {
-	GameObject::Update();
+	CharacterObject::Update();
 	Scene* scene = Manager::GetScene();
 
 	m_HpBarS->SetLifeDateFC(m_FullLife, m_Life);
@@ -106,28 +107,6 @@ void Wolf::Update()
 		if (m_Scale.x >= m_OriginalScale.x) { m_Scale.x = m_OriginalScale.x; }
 		if (m_Scale.y >= m_OriginalScale.y) { m_Scale.y = m_OriginalScale.y; }
 		if (m_Scale.z >= m_OriginalScale.z) { m_Scale.z = m_OriginalScale.z; }
-	}
-
-	//生死時の処理
-	if (m_Life <= 0) { m_WolfState = WOLF_STATE::DEATH; }
-
-	switch (m_WolfState)
-	{
-	case WOLF_STATE::FREE:
-		UpdateFree();
-		break;
-	case WOLF_STATE::EATING:
-		UpdateEating();
-		break;
-	case WOLF_STATE::DAMAGE:
-		UpdateDamage();
-		break;
-	case WOLF_STATE::TARGETING:
-		UpdateTargeting();
-		break;
-	case WOLF_STATE::DEATH:
-		UpdateDeath();
-		break;
 	}
 
 	//重力
@@ -303,6 +282,28 @@ void Wolf::UpdateEating()
 	}
 }
 
+void Wolf::UpdateAlive()
+{
+	CharacterObject::UpdateAlive();
+
+	switch (m_WolfState)
+	{
+	case WOLF_STATE::FREE:
+		UpdateFree();
+		break;
+	case WOLF_STATE::EATING:
+		UpdateEating();
+		break;
+	case WOLF_STATE::DAMAGE:
+		UpdateDamage();
+		break;
+	case WOLF_STATE::TARGETING:
+		UpdateTargeting();
+		break;
+	}
+
+}
+
 void Wolf::UpdateDeath()
 {
 	Scene* scene = Manager::GetScene();
@@ -378,261 +379,6 @@ void Wolf::UpdateDamage()
 	{
 		m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 		m_WolfState = WOLF_STATE::FREE;
-	}
-}
-
-void Wolf::Collision(float & groundHeight)
-{
-	if (m_WolfState == WOLF_STATE::DEATH) { return; };
-
-	Scene* scene = Manager::GetScene();
-	Player* player = scene->GetGameObject<Player>();
-
-	if(player->GetInvincibleTime() <= 0)
-	{
-		//プレイヤーの距離を取得	
-		D3DXVECTOR3 direction = m_Position - player->GetPosition();
-		D3DXVECTOR3 pscale = player->GetScale();
-		float plength = D3DXVec3Length(&direction);
-
-		if (player->GetAttackStop() <= 0)
-		{
-			D3DXVECTOR3 scale = player->GetScale();
-			if (plength < scale.x && plength < scale.y && plength < scale.z)
-			{
-				//プレイヤーがダッシュ時にぶつかった場合
-				if (player->GetState() == PLAYER_STATE::DASH)
-				{
-					SetDamageMove();
-					player->SetAttackStop(GIVE_ATTACK_STOP);
-					player->AddCombo(1);
-					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
-				}
-				//普通にぶつかった場合
-				else if (m_StunTime <= 0 && m_WolfState != WOLF_STATE::EATING)
-				{
-					m_WolfState = WOLF_STATE::EATING;
-					player->AddLife(-1);
-					player->SetDamageMove();
-					m_SE_Eat->Play(1.0f);
-					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
-				}
-			}
-		}
-		
-	}
-
-	auto follows = scene->GetGameObjects<Follow>();
-	for (Follow* follow : follows) {
-		D3DXVECTOR3 position = follow->GetPosition();
-		D3DXVECTOR3 scale = follow->GetScale();
-		D3DXVECTOR3 direction = m_Position - position;
-		float length = D3DXVec3Length(&direction);
-
-		if (length < scale.x && length < scale.y && length < scale.z)
-		{
-			if (follow->GetAttackStop() <= 0) 
-			{
-				if (follow->GetState() == FOLLOW_STATE::DASH)
-				{
-					SetDamageMove();
-					follow->SetAttackStop(GIVE_ATTACK_STOP);
-					player->AddCombo(1);
-					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
-
-				}
-				else if (m_StunTime <= 0 && m_WolfState != WOLF_STATE::EATING) 
-				{
-					m_WolfState = WOLF_STATE::EATING;
-					m_SE_Eat->Play(1.0f);
-					follow->AddLife(-1);
-					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
-				}
-			}
-		}
-	}
-
-	//他の仲間に重ならないようにする処理
-	auto wolfs = scene->GetGameObjects<Wolf>();
-	for (Wolf* wolf : wolfs)
-	{
-		D3DXVECTOR3 position = wolf->GetPosition();
-		D3DXVECTOR3 scale = wolf->GetScale();
-		D3DXVECTOR3 direction = m_Position - position;
-		float flength = D3DXVec3Length(&direction);
-		if (flength < scale.x && flength < scale.y && flength < scale.z) {
-			m_Position.x += (m_Position.x - wolf->GetPosition().x) * 0.02f;
-			m_Position.z += (m_Position.z - wolf->GetPosition().z) * 0.02f;
-		}
-	}
-
-	//破壊可ブロック
-	auto breakObjects = scene->GetGameObjects<BreakObject>();
-	for (BreakObject* breakObject : breakObjects)
-	{
-		if (breakObject->GetState() != BREAKOBJECT_STATE::DEATH)
-		{
-			D3DXVECTOR3 position = breakObject->GetPosition();
-			D3DXVECTOR3 scale = breakObject->GetScale();
-			D3DXVECTOR3 right = breakObject->GetRight();		//x軸分離
-			D3DXVECTOR3 forward = breakObject->GetForward();	//z軸分離
-			D3DXVECTOR3 up = breakObject->GetUp();				//y軸分離
-			D3DXVECTOR3 direction = m_Position - position;		//直方体からキャラまでの方向ベクトル
-			float obbx = D3DXVec3Dot(&direction, &right);		//X軸分離方向キャラ距離
-			float obbz = D3DXVec3Dot(&direction, &forward);		//Z軸分離方向キャラ距離
-			float obby = D3DXVec3Dot(&direction, &up);			//Y軸分離方向キャラ距離
-
-			//影の高さ設定
-			if (fabs(obbx) < scale.x && fabs(obbz) < scale.z)
-			{
-				if (m_Position.y > position.y + scale.y - 0.5f) { groundHeight = max(groundHeight, position.y + scale.y); }
-			}
-			//OBB
-			if (fabs(obbx) < scale.x && fabs(obbz) < scale.z && fabs(obby) < scale.y)
-			{
-				D3DXVECTOR3 penetration = D3DXVECTOR3(scale.x - abs(obbx), scale.y - abs(obby), scale.z - abs(obbz));
-
-				if (penetration.x < penetration.z && penetration.x < penetration.y)
-				{
-					if (obbx > 0) { m_Position += penetration.x * right; }
-					else { m_Position -= penetration.x * right; }
-				}
-				else if (penetration.z < penetration.y)
-				{
-					if (obbz > 0) { m_Position += penetration.z * forward; }
-					else { m_Position -= penetration.z * forward; }
-				}
-				else
-				{
-					if (obby > 0)
-					{
-						m_Position += penetration.y * up;
-						m_Velocity.y = 0.0f;			//上に乗ったら垂直速度を0にする
-					}
-					else
-					{
-						m_Position -= penetration.y * up;
-						m_Velocity.y = -m_Velocity.y;	//下から触れたら垂直速度を反転する
-					}
-				}
-			}
-		}
-	}
-
-	//円柱
-	auto cylinders = scene->GetGameObjects<Cylinder>();		//円柱のリストを取得
-	for (Cylinder* cylinder : cylinders)
-	{
-		D3DXVECTOR3 position = cylinder->GetPosition();
-		D3DXVECTOR3 scale = cylinder->GetScale();
-		scale.x *= 1.2f, scale.z *= 1.2f;					//半径の調整
-		D3DXVECTOR3 direction = m_Position - position;		//円柱中心からキャラまでのベクトル
-		float length = D3DXVec3Length(&direction);			//キャラと円柱中心の距離
-		D3DXVECTOR3 up = cylinder->GetUp();					//円柱の上方向ベクトル
-		float abbr = D3DXVec3Dot(&direction, &up);			//円柱の上方向への軸分離
-
-		direction -= up * abbr;	//y軸の接触を無視するために、directionからupの成分を引く
-		length = D3DXVec3Length(&direction); //新しいlengthを計算する
-
-		//影
-		if (length < scale.x && m_Position.y > position.y + scale.y - 0.5f)
-		{
-			groundHeight = max(groundHeight, position.y + scale.y);
-		}
-		// OBB
-		if (length < scale.x && fabs(abbr) < scale.y)
-		{
-			// 円柱の上下方向への押し出し処理
-			float penetrationH = scale.y - static_cast<float>(fabs(abbr));
-			float penetrationX = scale.x - length;
-
-			// 横から触れた場合の処理
-			if (penetrationX < penetrationH)
-			{
-				// 円柱内に入った場合の処理
-				D3DXVECTOR3 normalizedDirection = direction / length;
-				float penetration = scale.x - length;
-
-				// 入った方向に押し出し処理
-				m_Position += penetration * normalizedDirection;
-			}
-			else
-			{
-				if (abbr > 0)
-				{
-					m_Position += penetrationH * up;
-					m_Velocity.y = 0.0f;  // 上に乗ったら垂直速度を0にする
-				}
-				else
-				{
-					m_Position -= penetrationH * up;
-					m_Velocity.y -= m_Velocity.y; // 下から触れたら垂直速度を反転する
-				}
-			}
-		}
-	}
-
-	//直方体
-	auto boxs = scene->GetGameObjects<Box>();	//リストを取得
-	for (Box* box : boxs)						//範囲forループ
-	{
-		D3DXVECTOR3 position = box->GetPosition();
-		D3DXVECTOR3 scale = box->GetScale();
-		scale.y *= 1.8f;								//高さ調整
-		D3DXVECTOR3 right = box->GetRight();			//x軸分離
-		D3DXVECTOR3 forward = box->GetForward();		//z軸分離
-		D3DXVECTOR3 up = box->GetUp();					//y軸分離
-		D3DXVECTOR3 direction = m_Position - position;	//直方体からキャラまでの方向ベクトル
-		float obbx = D3DXVec3Dot(&direction, &right);	//X軸分離方向キャラ距離
-		float obbz = D3DXVec3Dot(&direction, &forward);	//Z軸分離方向キャラ距離
-		float obby = D3DXVec3Dot(&direction, &up);		//Y軸分離方向キャラ距離
-
-		//影の高さ設定
-		if (fabs(obbx) < scale.x && fabs(obbz) < scale.z)
-		{
-			if (m_Position.y > position.y + scale.y - 0.5f) { groundHeight = max(groundHeight, position.y + scale.y); }
-		}
-		//OBB
-		if (fabs(obbx) < scale.x && fabs(obbz) < scale.z && fabs(obby) < scale.y)
-		{
-			//キャラが直方体よりも上にいるかどうかの判定
-			if (m_Position.y > position.y + scale.y)
-			{
-				groundHeight = position.y + scale.y;
-			}
-
-			D3DXVECTOR3 penetration = D3DXVECTOR3(scale.x - abs(obbx), scale.y - abs(obby), scale.z - abs(obbz));
-
-			if (penetration.x < penetration.z && penetration.x < penetration.y)
-			{
-				if (obbx > 0) { m_Position += penetration.x * right; }
-				else { m_Position -= penetration.x * right; }
-			}
-			else if (penetration.z < penetration.y)
-			{
-				if (obbz > 0) { m_Position += penetration.z * forward; }
-				else { m_Position -= penetration.z * forward; }
-			}
-			else
-			{
-				if (obby > 0)
-				{
-					m_Position += penetration.y * up;
-					m_Velocity.y = 0.0f;			//上に乗ったら垂直速度を0にする
-				}
-				else
-				{
-					m_Position -= penetration.y * up;
-					m_Velocity.y = -m_Velocity.y;	//下から触れたら垂直速度を反転する
-				}
-			}
-		}
-	}
-
-	if (m_Position.y < 0.0f && m_Velocity.y < 0.0f)
-	{
-		m_Position.y = 0.0f;
-		m_Velocity.y = 0.0f;
 	}
 }
 
@@ -781,3 +527,144 @@ void Wolf::SetEnemyData(int data)
 	
 }
 
+void Wolf::Collision(float& groundHeight)
+{
+	if (m_CharacterState == CHARACTER_STATE::DEAD) { return; };
+
+	CharacterObject::Collision(groundHeight);
+
+	Scene* scene = Manager::GetScene();
+	Player* player = scene->GetGameObject<Player>();
+
+	if (player->GetInvincibleTime() <= 0)
+	{
+		//プレイヤーの距離を取得	
+		D3DXVECTOR3 direction = m_Position - player->GetPosition();
+		D3DXVECTOR3 pscale = player->GetScale();
+		float plength = D3DXVec3Length(&direction);
+
+		if (player->GetAttackStop() <= 0)
+		{
+			D3DXVECTOR3 scale = player->GetScale();
+			if (plength < scale.x && plength < scale.y && plength < scale.z)
+			{
+				//プレイヤーがダッシュ時にぶつかった場合
+				if (player->GetCharacterState() == CHARACTER_STATE::ALIVE &&
+					player->GetPlayerState() == PLAYER_STATE::DASH)
+				{
+					SetDamageMove();
+					player->SetAttackStop(GIVE_ATTACK_STOP);
+					player->AddCombo(1);
+					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
+				}
+				//普通にぶつかった場合
+				else if (m_StunTime <= 0 && m_WolfState != WOLF_STATE::EATING)
+				{
+					m_WolfState = WOLF_STATE::EATING;
+					player->AddLife(-1);
+					player->SetDamageMove();
+					m_SE_Eat->Play(1.0f);
+					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
+				}
+			}
+		}
+
+	}
+
+	auto follows = scene->GetGameObjects<Follow>();
+	for (Follow* follow : follows) {
+		D3DXVECTOR3 position = follow->GetPosition();
+		D3DXVECTOR3 scale = follow->GetScale();
+		D3DXVECTOR3 direction = m_Position - position;
+		float length = D3DXVec3Length(&direction);
+
+		if (length < scale.x && length < scale.y && length < scale.z)
+		{
+			if (follow->GetAttackStop() <= 0)
+			{
+				if (follow->GetState() == FOLLOW_STATE::DASH)
+				{
+					SetDamageMove();
+					follow->SetAttackStop(GIVE_ATTACK_STOP);
+					player->AddCombo(1);
+					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
+
+				}
+				else if (m_StunTime <= 0 && m_WolfState != WOLF_STATE::EATING)
+				{
+					m_WolfState = WOLF_STATE::EATING;
+					m_SE_Eat->Play(1.0f);
+					follow->AddLife(-1);
+					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
+				}
+			}
+		}
+	}
+
+	//他の仲間に重ならないようにする処理
+	auto wolfs = scene->GetGameObjects<Wolf>();
+	for (Wolf* wolf : wolfs)
+	{
+		D3DXVECTOR3 position = wolf->GetPosition();
+		D3DXVECTOR3 scale = wolf->GetScale();
+		D3DXVECTOR3 direction = m_Position - position;
+		float flength = D3DXVec3Length(&direction);
+		if (flength < scale.x && flength < scale.y && flength < scale.z) {
+			m_Position.x += (m_Position.x - wolf->GetPosition().x) * 0.02f;
+			m_Position.z += (m_Position.z - wolf->GetPosition().z) * 0.02f;
+		}
+	}
+
+	//破壊可ブロック
+	auto breakObjects = scene->GetGameObjects<BreakObject>();
+	for (BreakObject* breakObject : breakObjects)
+	{
+		if (breakObject->GetState() != BREAKOBJECT_STATE::DEATH)
+		{
+			D3DXVECTOR3 position = breakObject->GetPosition();
+			D3DXVECTOR3 scale = breakObject->GetScale();
+			D3DXVECTOR3 right = breakObject->GetRight();		//x軸分離
+			D3DXVECTOR3 forward = breakObject->GetForward();	//z軸分離
+			D3DXVECTOR3 up = breakObject->GetUp();				//y軸分離
+			D3DXVECTOR3 direction = m_Position - position;		//直方体からキャラまでの方向ベクトル
+			float obbx = D3DXVec3Dot(&direction, &right);		//X軸分離方向キャラ距離
+			float obbz = D3DXVec3Dot(&direction, &forward);		//Z軸分離方向キャラ距離
+			float obby = D3DXVec3Dot(&direction, &up);			//Y軸分離方向キャラ距離
+
+			//影の高さ設定
+			if (fabs(obbx) < scale.x && fabs(obbz) < scale.z)
+			{
+				if (m_Position.y > position.y + scale.y - 0.5f) { groundHeight = max(groundHeight, position.y + scale.y); }
+			}
+			//OBB
+			if (fabs(obbx) < scale.x && fabs(obbz) < scale.z && fabs(obby) < scale.y)
+			{
+				D3DXVECTOR3 penetration = D3DXVECTOR3(scale.x - abs(obbx), scale.y - abs(obby), scale.z - abs(obbz));
+
+				if (penetration.x < penetration.z && penetration.x < penetration.y)
+				{
+					if (obbx > 0) { m_Position += penetration.x * right; }
+					else { m_Position -= penetration.x * right; }
+				}
+				else if (penetration.z < penetration.y)
+				{
+					if (obbz > 0) { m_Position += penetration.z * forward; }
+					else { m_Position -= penetration.z * forward; }
+				}
+				else
+				{
+					if (obby > 0)
+					{
+						m_Position += penetration.y * up;
+						m_Velocity.y = 0.0f;			//上に乗ったら垂直速度を0にする
+					}
+					else
+					{
+						m_Position -= penetration.y * up;
+						m_Velocity.y = -m_Velocity.y;	//下から触れたら垂直速度を反転する
+					}
+				}
+			}
+		}
+	}
+}

@@ -7,9 +7,7 @@
 #include "..\GameObject\score.h"
 #include "..\GameObject\follow.h"
 #include "..\GameObject\player.h"
-#include "..\GameObject\box.h"
 #include "..\GameObject\rock.h"
-#include "..\GameObject\cylinder.h"
 #include "..\GameObject\chest.h"
 #include "..\GameObject\shadow.h"
 #include "..\GameObject\camera.h"
@@ -27,8 +25,8 @@ bool Follow::m_SE_FollowCheck{};
 #define MOVE_SPEED_DASH   0.02f //ダッシュ時移動速度
 #define MOVE_MAGNIFY_FREE 6.5f  //自由状態の移動速度の倍率(それ以外の状態ではプレイヤーと同期)
 #define DELETE_DISTANCE   25.0f //プレイヤーと離れているときに自動消滅する距離
-#define INIT_JUMP 0.25f			//出現のジャンプの高さ
 #define ATTACK_STOP 20
+
 void Follow::Load()
 {
 	m_Model = new Model();
@@ -48,6 +46,8 @@ void Follow::Unload()
 
 void Follow::Init()
 {
+	CharacterObject::Init();
+
 	m_Scale.y = 0.01f;
 	m_Rotation.y = frand() * 2 * D3DX_PI;
 	m_WalkEffectTime = irand(0, WALK_EFFECT_TIME);
@@ -60,7 +60,7 @@ void Follow::Init()
 
 void Follow::Uninit()
 {
-	GameObject::Uninit();
+	CharacterObject::Uninit();
 
 	m_VertexLayout->Release();
 	m_VertexShader->Release();
@@ -69,26 +69,10 @@ void Follow::Uninit()
 
 void Follow::Update()
 {
-	GameObject::Update();
+	CharacterObject::Update();
 
 	//死亡時の処理
-	if (m_Life <= 0) { m_FollowState = FOLLOW_STATE::DEATH; }
-
-	switch (m_FollowState)
-	{
-	case FOLLOW_STATE::FREE:
-		UpdateFree();
-		break;
-	case FOLLOW_STATE::NORMAL:
-		UpdateNormal();
-		break;
-	case FOLLOW_STATE::DASH:
-		UpdateDash();
-		break;
-	case FOLLOW_STATE::DEATH:
-		UpdateDeath();
-		break;
-	}
+	if (m_Life <= 0) { m_CharacterState = CHARACTER_STATE::DEAD; }
 
 	//攻撃停止(また攻撃できるまで)
 	AttackStop();
@@ -96,7 +80,7 @@ void Follow::Update()
 	//重力
 	m_Velocity.y -= 0.015f;
 
-	//障害物との衝突判定
+	//当たり判定
 	float groundHeight = 0.0f;
 	Collision(groundHeight);
 
@@ -145,10 +129,29 @@ void Follow::Draw()
 	m_Model->Draw();
 }
 
-void Follow::UpdateFree()
+void Follow::UpdateAlive()
 {
+	CharacterObject::UpdateAlive();
+
 	//ぬるぬる出現
 	if (m_Scale.y < m_OriginalScale.y) { m_Scale.y += 0.05f; }
+
+	switch (m_FollowState)
+	{
+	case FOLLOW_STATE::FREE:
+		UpdateFree();
+		break;
+	case FOLLOW_STATE::NORMAL:
+		UpdateNormal();
+		break;
+	case FOLLOW_STATE::DASH:
+		UpdateDash();
+		break;
+	}
+}
+
+void Follow::UpdateFree()
+{
 	
 	//再仲間化スパン
 	m_AgainFollow --;
@@ -183,9 +186,6 @@ void Follow::UpdateFree()
 
 void Follow::UpdateNormal()
 {
-	//ぬるぬる出現
-	if (m_Scale.y < m_OriginalScale.y) { m_Scale.y += 0.05f; }
-
 	m_Velocity.x = GetForward().x * (m_Speed * MOVE_SPEED_NORMAL);
 	m_Velocity.z = GetForward().z * (m_Speed * MOVE_SPEED_NORMAL);
 
@@ -194,9 +194,6 @@ void Follow::UpdateNormal()
 
 void Follow::UpdateDash()
 {
-	//ぬるぬる出現
-	if (m_Scale.y < m_OriginalScale.y) { m_Scale.y += 0.05f; }
-
 	//エフェクト
 	WalkEffect();
 
@@ -225,17 +222,134 @@ void Follow::UpdateDeath()
 	}
 }
 
-void Follow::Collision(float & groundHeight)
+void Follow::Anime()
+{
+	m_AnimeTime++;
+	
+	//時間調整
+	int time = 14;
+	if (m_FollowState == FOLLOW_STATE::DASH) { time = 4; }
+
+	if (m_AnimeTime > time)
+	{
+		//傾ける
+		if (m_FollowState == FOLLOW_STATE::DASH) { m_Rotation.x = (0.08f * m_AnimePause); }
+		else { m_Rotation.x = (0.03f * m_AnimePause); }
+
+		//リセット
+		m_AnimePause = !m_AnimePause;
+		m_AnimeTime = 0;
+	}
+}
+
+void Follow::OrtOrientationChange()
+{
+	m_OrientationTime ++;
+	//向き変更
+	if (m_OrientationTime > m_NextOrientationTime){ m_Rotation.y += 0.02f * m_NextRot;}
+	if (m_OrientationTime > m_NextOrientationTime + 50)
+	{
+		//次回の向きを設定
+		int a = rand() * 2;
+		if (a == 1) { m_NextRot *= -1; }
+
+		// 次の回転までの時間をランダムに設定
+		m_NextOrientationTime = irand(80, 200);
+
+		// 時間リセット
+		m_OrientationTime = 0;
+	}
+
+}
+
+void Follow::WalkEffect()
+{
+	m_WalkEffectTime++;
+
+	//エフェクト発生位置調整(キャラの後ろ)
+	D3DXVECTOR3 effectPosition = m_Position;
+	effectPosition.x -= GetForward().x * 0.8f;
+	effectPosition.z -= GetForward().z * 0.8f;
+
+	//仲間の量で減らす
+	Scene* scene = Manager::GetScene();
+	Score* score = scene->GetGameObject<Score>();
+	int count = score->GetCount();
+
+	//数フレーム歩いたらエフェクト発生
+	if (m_WalkEffectTime >= WALK_EFFECT_TIME + count / 5)
+	{
+		Scene* scene = Manager::GetScene();
+		scene->AddGameObject<Smoke>(1)->SetPosition(effectPosition);//爆発エフェクト
+		m_WalkEffectTime = 0;
+	}
+}
+
+void Follow::PlayerTracking()
 {
 	Scene* scene = Manager::GetScene();
-	auto follows = scene->GetGameObjects<Follow>();
+	Player* player = scene->GetGameObject<Player>();
+	D3DXVECTOR3 direction = m_Position - player->GetPosition();
+	float length = D3DXVec3Length(&direction);
+	D3DXVECTOR3 scale = player->GetScale();
 
+	//プレイヤー模倣
+	PLAYER_STATE aliveState = player->GetPlayerState();
+	if (aliveState == PLAYER_STATE::NORMAL)
+	{
+		m_FollowState = FOLLOW_STATE::NORMAL;
+	}
+	else if (aliveState == PLAYER_STATE::DASH)
+	{
+		m_FollowState = FOLLOW_STATE::DASH;
+	}
+
+
+	m_Rotation.y = player->GetRotation().y;
+	m_Speed = player->GetSpeed();
+
+	//プレイヤーに地味に近付く
+	m_Velocity.x += (player->GetPosition().x - m_Position.x)*((length * 3) *0.0005f);
+	m_Velocity.z += (player->GetPosition().z - m_Position.z)*((length * 3) *0.0005f);
+
+	//プレイヤーに接触してたらズレる
+	if (length < scale.x)
+	{
+		m_Velocity.x += (m_Position.x - player->GetPosition().x) * CONTACT_EXTRUSION;
+		m_Velocity.z += (m_Position.z - player->GetPosition().z) * CONTACT_EXTRUSION;
+	}
+	//プレイヤーから離れすぎてたら仲間解除
+	if (length > 8.0f)
+	{
+		m_AgainFollow = 20;
+		m_SE_Release->Play(1.0f);
+		m_FollowState = FOLLOW_STATE::FREE;
+	}
+}
+
+void Follow::AttackStop()
+{
+	m_AttackStopTime --;
+	if (m_AttackStopTime > 0)
+	{
+		m_Velocity.x = (GetForward().x * 0.03f) * -1;
+		m_Velocity.z = (GetForward().z * 0.03f) * -1;
+	}
+	if (m_AttackStopTime <= 0) { m_AttackStopTime = 0; }
+}
+
+void Follow::Collision(float& groundHeight)
+{
+	CharacterObject::Collision(groundHeight);
+
+	Scene* scene = Manager::GetScene();
 	//野良羊との関係性
-	for (Follow * follow : follows)
+	auto follows = scene->GetGameObjects<Follow>();
+	for (Follow* follow : follows)
 	{
 		//自分自身の場合はスキップ
 		if (follow == this) { continue; }
-		
+
 		D3DXVECTOR3 position = follow->GetPosition();
 		D3DXVECTOR3 scale = follow->GetScale();
 		D3DXVECTOR3 direction = m_Position - position;
@@ -321,256 +435,4 @@ void Follow::Collision(float & groundHeight)
 			}
 		}
 	}
-
-	//円柱
-	auto cylinders = scene->GetGameObjects<Cylinder>();		//円柱のリストを取得
-	for (Cylinder* cylinder : cylinders)
-	{
-		D3DXVECTOR3 position = cylinder->GetPosition();
-		D3DXVECTOR3 scale = cylinder->GetScale();
-		scale.x *= 1.2f, scale.z *= 1.2f;					//半径の調整
-		D3DXVECTOR3 direction = m_Position - position;		//円柱中心からキャラまでのベクトル
-		float length = D3DXVec3Length(&direction);			//キャラと円柱中心の距離
-		D3DXVECTOR3 up = cylinder->GetUp();					//円柱の上方向ベクトル
-		float abbr = D3DXVec3Dot(&direction, &up);			//円柱の上方向への軸分離
-
-		direction -= up * abbr;	//y軸の接触を無視するために、directionからupの成分を引く
-		length = D3DXVec3Length(&direction); //新しいlengthを計算する
-
-		//影
-		if (length < scale.x && m_Position.y > position.y + scale.y - 0.5f)
-		{
-			groundHeight = max(groundHeight, position.y + scale.y);
-		}
-		// OBB
-		if (length < scale.x && fabs(abbr) < scale.y)
-		{
-			// 円柱の上下方向への押し出し処理
-			float penetrationH = scale.y - static_cast<float>(fabs(abbr));
-			float penetrationX = scale.x - length;
-
-			// 横から触れた場合の処理
-			if (penetrationX < penetrationH)
-			{
-				// 円柱内に入った場合の処理
-				D3DXVECTOR3 normalizedDirection = direction / length;
-				float penetration = scale.x - length;
-
-				// 入った方向に押し出し処理
-				m_Position += penetration * normalizedDirection;
-			}
-			else
-			{
-				if (abbr > 0)
-				{
-					m_Position += penetrationH * up;
-					m_Velocity.y = 0.0f;  // 上に乗ったら垂直速度を0にする
-				}
-				else
-				{
-					m_Position -= penetrationH * up;
-					m_Velocity.y -= m_Velocity.y; // 下から触れたら垂直速度を反転する
-				}
-			}
-		}
-	}
-
-	//直方体
-	auto boxs = scene->GetGameObjects<Box>();	//リストを取得
-	for (Box* box : boxs)						//範囲forループ
-	{
-		D3DXVECTOR3 position = box->GetPosition();
-		D3DXVECTOR3 scale = box->GetScale();
-		scale.y *= 1.8f;								//高さ調整
-		D3DXVECTOR3 right = box->GetRight();			//x軸分離
-		D3DXVECTOR3 forward = box->GetForward();		//z軸分離
-		D3DXVECTOR3 up = box->GetUp();					//y軸分離
-		D3DXVECTOR3 direction = m_Position - position;	//直方体からキャラまでの方向ベクトル
-		float obbx = D3DXVec3Dot(&direction, &right);	//X軸分離方向キャラ距離
-		float obbz = D3DXVec3Dot(&direction, &forward);	//Z軸分離方向キャラ距離
-		float obby = D3DXVec3Dot(&direction, &up);		//Y軸分離方向キャラ距離
-
-		//影の高さ設定
-		if (fabs(obbx) < scale.x && fabs(obbz) < scale.z)
-		{
-			if (m_Position.y > position.y + scale.y - 0.5f) { groundHeight = max(groundHeight, position.y + scale.y); }
-		}
-		//OBB
-		if (fabs(obbx) < scale.x && fabs(obbz) < scale.z && fabs(obby) < scale.y)
-		{
-			//キャラが直方体よりも上にいるかどうかの判定
-			if (m_Position.y > position.y + scale.y)
-			{
-				groundHeight = position.y + scale.y;
-			}
-			D3DXVECTOR3 penetration = D3DXVECTOR3(scale.x - abs(obbx), scale.y - abs(obby), scale.z - abs(obbz));
-
-			if (penetration.x < penetration.z && penetration.x < penetration.y)
-			{
-				if (obbx > 0) { m_Position += penetration.x * right; }
-				else { m_Position -= penetration.x * right; }
-			}
-			else if (penetration.z < penetration.y)
-			{
-				if (obbz > 0) { m_Position += penetration.z * forward; }
-				else { m_Position -= penetration.z * forward; }
-			}
-			else
-			{
-				if (obby > 0)
-				{
-					m_Position += penetration.z * up;
-					m_Velocity.y = 0.0f;			//上に乗ったら垂直速度を0にする
-				}
-				else
-				{
-					m_Position -= penetration.y * up;
-					m_Velocity.y = -m_Velocity.y;	//下から触れたら垂直速度を反転する
-				}
-			}
-		}
-	}
-	
-	if (m_Position.y < 0.0f && m_Velocity.y < 0.0f)
-	{
-		m_Position.y = 0.0f;
-		m_Velocity.y = 0.0f;
-	}
-}
-
-void Follow::Anime()
-{
-	m_AnimeTime++;
-	
-	//時間調整
-	int time = 14;
-	if (m_FollowState == FOLLOW_STATE::DASH) { time = 4; }
-
-	if (m_AnimeTime > time)
-	{
-		//傾ける
-		if (m_FollowState == FOLLOW_STATE::DASH) { m_Rotation.x = (0.08f * m_AnimePause); }
-		else { m_Rotation.x = (0.03f * m_AnimePause); }
-
-		//リセット
-		m_AnimePause = !m_AnimePause;
-		m_AnimeTime = 0;
-	}
-}
-
-void Follow::DamageFlash()
-{
-	if (m_DamageFlashTime > 0)
-	{
-		m_DamageFlashTime--;
-		m_TextureEnable = false;
-	}
-	else
-	{
-		m_TextureEnable = true;
-	}
-}
-
-void Follow::OrtOrientationChange()
-{
-	m_OrientationTime ++;
-	//向き変更
-	if (m_OrientationTime > m_NextOrientationTime){ m_Rotation.y += 0.02f * m_NextRot;}
-	if (m_OrientationTime > m_NextOrientationTime + 50)
-	{
-		//次回の向きを設定
-		int a = rand() * 2;
-		if (a == 1) { m_NextRot *= -1; }
-
-		// 次の回転までの時間をランダムに設定
-		m_NextOrientationTime = irand(80, 200);
-
-		// 時間リセット
-		m_OrientationTime = 0;
-	}
-
-}
-
-void Follow::WalkEffect()
-{
-	m_WalkEffectTime++;
-
-	//エフェクト発生位置調整(キャラの後ろ)
-	D3DXVECTOR3 effectPosition = m_Position;
-	effectPosition.x -= GetForward().x * 0.8f;
-	effectPosition.z -= GetForward().z * 0.8f;
-
-	//仲間の量で減らす
-	Scene* scene = Manager::GetScene();
-	Score* score = scene->GetGameObject<Score>();
-	int count = score->GetCount();
-
-	//数フレーム歩いたらエフェクト発生
-	if (m_WalkEffectTime >= WALK_EFFECT_TIME + count / 5)
-	{
-		Scene* scene = Manager::GetScene();
-		scene->AddGameObject<Smoke>(1)->SetPosition(effectPosition);//爆発エフェクト
-		m_WalkEffectTime = 0;
-	}
-}
-
-void Follow::PlayerTracking()
-{
-	Scene* scene = Manager::GetScene();
-	Player* player = scene->GetGameObject<Player>();
-	D3DXVECTOR3 direction = m_Position - player->GetPosition();
-	float length = D3DXVec3Length(&direction);
-	D3DXVECTOR3 scale = player->GetScale();
-
-	//プレイヤー模倣
-	PLAYER_STATE playerstate = player->GetState();
-	if (playerstate == PLAYER_STATE::NORMAL)
-	{
-		m_FollowState = FOLLOW_STATE::NORMAL;
-	}
-	else if (playerstate == PLAYER_STATE::DASH)
-	{
-		m_FollowState = FOLLOW_STATE::DASH;
-	}
-
-
-	m_Rotation.y = player->GetRotation().y;
-	m_Speed = player->GetSpeed();
-
-	//プレイヤーに地味に近付く
-	m_Velocity.x += (player->GetPosition().x - m_Position.x)*((length * 3) *0.0005f);
-	m_Velocity.z += (player->GetPosition().z - m_Position.z)*((length * 3) *0.0005f);
-
-	//プレイヤーに接触してたらズレる
-	if (length < scale.x)
-	{
-		m_Velocity.x += (m_Position.x - player->GetPosition().x) * CONTACT_EXTRUSION;
-		m_Velocity.z += (m_Position.z - player->GetPosition().z) * CONTACT_EXTRUSION;
-	}
-	//プレイヤーから離れすぎてたら仲間解除
-	if (length > 8.0f)
-	{
-		m_AgainFollow = 20;
-		m_SE_Release->Play(1.0f);
-		m_FollowState = FOLLOW_STATE::FREE;
-	}
-}
-
-void Follow::AttackStop()
-{
-	m_AttackStopTime --;
-	if (m_AttackStopTime > 0)
-	{
-		m_Velocity.x = (GetForward().x * 0.03f) * -1;
-		m_Velocity.z = (GetForward().z * 0.03f) * -1;
-	}
-	if (m_AttackStopTime <= 0) { m_AttackStopTime = 0; }
-}
-
-void Follow::SetDrop()
-{
-	m_Velocity.y = INIT_JUMP;
-	m_Rotation.y = frand() * 90;
-	m_Velocity.x = GetForward().x * (frand() * 0.08f);
-	m_Velocity.z = GetForward().z * (frand() * 0.08f);
 }

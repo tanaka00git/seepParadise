@@ -1,15 +1,13 @@
 #pragma once
-#include "..\GameObject\gameObject.h"
+#include "..\GameObject\characterObject.h"
 
 enum class PLAYER_STATE
 {
 	NORMAL,
 	DASH,
-	DEATH,
-	UNUSED,
 };
 
-class Player : public GameObject
+class Player : public CharacterObject
 {
 private:
 	PLAYER_STATE m_PlayerState = PLAYER_STATE::NORMAL;
@@ -19,8 +17,6 @@ private:
 	D3DXMATRIX	m_ViewMatrix{};
 
 	//読み込み
-	class Shadow*	m_Shadow{};
-	class HpBarS*	m_HpBarS{};
 	static int		m_PlColor;		//羊の色
 	static int		m_PlClown;		//王冠
 	static class Model* m_Model;
@@ -32,12 +28,7 @@ private:
 
 	//メンバ変数
 	static int	m_DebugMode;											//デバッグモード判定
-	D3DXCOLOR	m_Color			 = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);	//配色
-	bool		m_TextureEnable  = true;								//テクスチャを描画するか
-	D3DXVECTOR3 m_Velocity		 = D3DXVECTOR3(0.0f,0.0f,0.0f);			//速度
-	D3DXVECTOR3 m_OriginalScale  = D3DXVECTOR3(1.0f, 1.0f, 1.0f);		//キャラのサイズ
 	int			m_InvincibleTime = 0;									//無敵時間
-
 	bool  m_DashInit = false;	//ダッシュ初回時
 	bool  m_Dash;				//ダッシュ用
 	int   m_Combo = 0;			//コンボ数
@@ -55,33 +46,26 @@ private:
 	bool m_AnimePause = true;		//アニメの向き切り替え
 	int  m_AnimeTime = 0;			//アニメの向き変更の時間
 	int  m_WalkEffectTime = 0;		//エフェクトを発生させる間隔時間
-	int	 m_DamageFlashTime = 0;		//フラッシュを発生させる時間
 
 	//ステータス系
-	float m_Speed = 6.5;
 	int	  m_Eye = 0;
-	int   m_Life = 3;
-	int   m_FullLife = 3;
-	D3DXVECTOR3 m_BarScale = D3DXVECTOR3(1.2f, 1.0f, 1.2f);		//HPバーのサイズ
 
 	//関数
-	void UpdateDeath();
+	void UpdateAlive() override;
+	void UpdateDeath() override;
 	void UpdateNormal();
 	void UpdateDash();
-	void UpdateUnused();
-	void Collision(float& groundHeight);
+	void Collision(float& groundHeight) override;
 	void WalkEffect();
 	void TutorialText();
 	void MouseTargetMove();
 	void InvincibleColor();
-	void DamageFlash();
 	void AttackStop();
 	void Anime();
 
 public:
 	static void Load();
 	static void Unload();
-
 	void Init()override;
 	void Uninit()override;
 	void Update()override;
@@ -91,7 +75,6 @@ public:
 	void SetDamageMove();
 	void AddCharge(int charge) { m_Charge += charge; };
 	void SetCharge(int charge) { m_Charge = charge; };
-	void AddLife(int life){m_Life += life;}
 	void AddSpeed(float speed) { m_Speed += speed; };
 	void AddFullLife(int life) { m_FullLife += life; };
 	void AddEye(int eye) { m_Eye += eye; };
@@ -109,7 +92,7 @@ public:
 	int   GetEye() const { return m_Eye; }
 	bool  GetDebug() const { return m_DebugMode; }
 	int   GetInvincibleTime() const { return m_InvincibleTime; }
-	PLAYER_STATE GetState() const { return m_PlayerState; }
+	PLAYER_STATE GetPlayerState() const { return m_PlayerState; }
 
 	void SetColorClown(int color, int clown) { m_PlColor = color; m_PlClown = clown; };
 	void SetDebugMode(bool debug) { m_DebugMode = debug; };

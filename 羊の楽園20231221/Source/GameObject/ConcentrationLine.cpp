@@ -94,8 +94,7 @@ void ConcentrationLine::Update()
 
 	Scene* scene = Manager::GetScene();
 	Player* player = scene->GetGameObject<Player>();
-	PLAYER_STATE playerState = player->GetState();
-	if (playerState != PLAYER_STATE::DASH) { m_AlphaAll -= 0.1f; }
+	if (player->GetPlayerState() != PLAYER_STATE::DASH) { m_AlphaAll -= 0.1f; }
 	if (m_AlphaAll <= 0) { SetDestroy(); }
 
 	m_Sprite1->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, m_Alpha1 * m_AlphaAll));
