@@ -8,6 +8,8 @@
 
 Model*Seed::m_Model{};
 
+#define ORIGINAL_SCALSE D3DXVECTOR3(2.0f, 2.0f, 2.0f)
+
 void Seed::Load()
 {
 	m_Model = new Model();
@@ -23,7 +25,11 @@ void Seed::Unload()
 
 void Seed::Init()
 {
+	m_OriginalScale = ORIGINAL_SCALSE;
 	m_Scale.y = 0.01f;
+	m_Scale.x = m_OriginalScale.x;
+	m_Scale.z = m_OriginalScale.z;
+
 
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
@@ -54,7 +60,7 @@ void Seed::Draw()
 
 	// マトリクス設定
 	D3DXMATRIX world, scale, rot, trans;
-	D3DXMatrixScaling(&scale, m_Scale.x, m_Scale.y, m_Scale.z);
+	D3DXMatrixScaling(&scale, m_Scale.x / 2, m_Scale.y / 2, m_Scale.z / 2);
 	D3DXMatrixRotationYawPitchRoll(&rot, m_Rotation.y, m_Rotation.x, m_Rotation.z);
 	D3DXMatrixTranslation(&trans, m_Position.x, m_Position.y, m_Position.z);
 	world = scale * rot * trans;
