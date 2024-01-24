@@ -41,11 +41,12 @@ private:
 	int   m_OldCharge = 0;
 	int   m_FullCharge = 2000;
 
-	bool m_TutorialEnd = false;		//チュートリアル終わった？
-	bool m_DeleteInit = false;		//死亡時初回
-	bool m_AnimePause = true;		//アニメの向き切り替え
-	int  m_AnimeTime = 0;			//アニメの向き変更の時間
-	int  m_WalkEffectTime = 0;		//エフェクトを発生させる間隔時間
+	bool  m_TutorialEnd = false;		//チュートリアル終わった？
+	bool  m_DeleteInit = false;		//死亡時初回
+	bool  m_AnimePause = true;		//アニメの向き切り替え
+	int   m_AnimeTime = 0;			//アニメの向き変更の時間
+	float m_AnimeRotationX = 0.0f;	//アニメの表示の傾き(実際の向きとは違う)
+	int   m_WalkEffectTime = 0;		//エフェクトを発生させる間隔時間
 
 	//ステータス系
 	int	  m_Eye = 0;

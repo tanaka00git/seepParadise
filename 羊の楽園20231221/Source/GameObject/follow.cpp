@@ -120,7 +120,7 @@ void Follow::Draw()
 	// マトリクス設定
 	D3DXMATRIX world, scale, rot, trans;
 	D3DXMatrixScaling(&scale, m_Scale.x, m_Scale.y, m_Scale.z);
-	D3DXMatrixRotationYawPitchRoll(&rot, m_Rotation.y, m_Rotation.x, m_Rotation.z);
+	D3DXMatrixRotationYawPitchRoll(&rot, m_Rotation.y, m_Rotation.x + m_AnimeRotationX, m_Rotation.z);
 	D3DXMatrixTranslation(&trans, m_Position.x, m_Position.y, m_Position.z);
 	world = scale * rot * trans;
 
@@ -233,8 +233,8 @@ void Follow::Anime()
 	if (m_AnimeTime > time)
 	{
 		//傾ける
-		if (m_FollowState == FOLLOW_STATE::DASH) { m_Rotation.x = (0.08f * m_AnimePause); }
-		else { m_Rotation.x = (0.03f * m_AnimePause); }
+		if (m_FollowState == FOLLOW_STATE::DASH) { m_AnimeRotationX = (0.08f * m_AnimePause); }
+		else { m_AnimeRotationX = (0.03f * m_AnimePause); }
 
 		//リセット
 		m_AnimePause = !m_AnimePause;

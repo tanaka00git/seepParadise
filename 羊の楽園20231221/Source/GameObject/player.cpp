@@ -31,6 +31,7 @@ int Player::m_DebugMode{};
 int Player::m_PlColor{};
 int Player::m_PlClown{};
 
+#define INIT_LIFE 3
 #define FULL_LIFE 9
 #define FULL_SPEED 9.5
 #define FULL_EYE 6
@@ -79,10 +80,12 @@ void Player::Unload()
 
 void Player::Init()
 {
-
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
 
+	m_Life = INIT_LIFE;
+	m_FullLife
+		= INIT_LIFE;
 	m_Shadow = AddComponent<Shadow>();
 	m_HpBarS = AddComponent<HpBarS>();
 	m_HpBarS->SetLifeDateFC(m_FullLife, m_Life);
@@ -167,7 +170,6 @@ void Player::Update()
 void Player::Draw()
 {
 	GameObject::Draw();
-
 	// 通常の描画
 	Renderer::GetDeviceContext()->IASetInputLayout(m_VertexLayout);
 	Renderer::GetDeviceContext()->VSSetShader(m_VertexShader, NULL, 0);
@@ -176,7 +178,7 @@ void Player::Draw()
 	// マトリクス設定
 	D3DXMATRIX world, scale, rot, trans;
 	D3DXMatrixScaling(&scale, m_Scale.x, m_Scale.y, m_Scale.z);
-	D3DXMatrixRotationYawPitchRoll(&rot, m_Rotation.y, m_Rotation.x, m_Rotation.z);
+	D3DXMatrixRotationYawPitchRoll(&rot, m_Rotation.y, m_Rotation.x + m_AnimeRotationX, m_Rotation.z);
 	D3DXMatrixTranslation(&trans, m_Position.x, m_Position.y, m_Position.z);
 	world = scale * rot * trans;
 
@@ -390,7 +392,6 @@ void Player::AttackStop()
 
 void Player::Anime()
 {
-
 	m_AnimeTime++;
 	int time = 14;
 	if (m_PlayerState == PLAYER_STATE::DASH) { time = 4; }
@@ -400,8 +401,8 @@ void Player::Anime()
 		if (m_AnimePause) { m_WalkSE->Play(1.0f); }
 
 		//傾ける
-		if (m_PlayerState == PLAYER_STATE::DASH) { m_Rotation.x = (0.08f * m_AnimePause); }
-		else { m_Rotation.x = (0.03f * m_AnimePause); }
+		if (m_PlayerState == PLAYER_STATE::DASH) { m_AnimeRotationX = (0.08f * m_AnimePause); }
+		else { m_AnimeRotationX = (0.03f * m_AnimePause); }
 
 		//リセット
 		m_AnimePause = !m_AnimePause;

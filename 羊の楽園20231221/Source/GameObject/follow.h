@@ -31,6 +31,7 @@ private:
 	int	  m_AgainFollow			= 0;	 //再度仲間になれるまでの時間
 	int   m_AnimeTime			= 0;	 //アニメの向きの時間
 	bool  m_AnimePause			= true;  //アニメの向きの判定
+	float m_AnimeRotationX		= 0.0f;	 //アニメの表示の傾き(実際の向きとは違う)
 	float m_Death				= 0.14f; //死亡するまでの時間
 	int   m_WalkEffectTime		= 0;	 //煙エフェクトが出るまでの時間
 

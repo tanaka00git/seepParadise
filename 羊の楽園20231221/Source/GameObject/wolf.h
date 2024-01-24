@@ -31,9 +31,10 @@ private:
 	
 	bool	m_AnimePause = true;
 	int		m_AnimeTime = 0;
-	float   m_OrientationTime = 0.0f;	 //向き変更時間
-	float   m_NextRotTime = 0.0f;		 //次に向き変更するまで
-	int     m_NextRot = 1;			     //次の向き
+	float	m_AnimeRotationX = 0.0f;	//アニメの表示の傾き(実際の向きとは違う)
+	float   m_OrientationTime = 0.0f;	//向き変更時間
+	float   m_NextRotTime = 0.0f;		//次に向き変更するまで
+	int     m_NextRot = 1;				//次の向き
 	int	    m_EatStop = 0;
 	float	m_Death = 0.14f;
 	int		m_KnockBackTime = 0;

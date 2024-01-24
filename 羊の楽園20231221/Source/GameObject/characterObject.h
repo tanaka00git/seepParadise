@@ -22,7 +22,7 @@ protected:
 	bool		m_TextureEnable = true;								//テクスチャを描画するか
 	D3DXVECTOR3 m_Velocity = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			//速度
 	D3DXVECTOR3 m_OriginalScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);	//キャラのサイズ
-	int	 m_DamageFlashTime = 0;										//フラッシュを発生させる時間
+	int			m_DamageFlashTime = 0;								//フラッシュを発生させる時間
 	D3DXVECTOR3 m_BarScale = D3DXVECTOR3(1.2f, 1.0f, 1.2f);			//HPバーのサイズ
 
 	//ステータス
