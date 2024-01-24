@@ -414,7 +414,7 @@ void Player::Collision(float& groundHeight)
 	CharacterObject::Collision(groundHeight);
 	Scene* scene = Manager::GetScene();
 
-	//破壊可ブロック
+	// 破壊可ブロック
 	auto breakObjects = scene->GetGameObjects<BreakObject>();
 	for (BreakObject* breakObject : breakObjects)
 	{
@@ -422,53 +422,47 @@ void Player::Collision(float& groundHeight)
 		{
 			D3DXVECTOR3 position = breakObject->GetPosition();
 			D3DXVECTOR3 scale = breakObject->GetScale();
-			D3DXVECTOR3 right = breakObject->GetRight();		//x軸分離
-			D3DXVECTOR3 forward = breakObject->GetForward();	//z軸分離
-			D3DXVECTOR3 up = breakObject->GetUp();				//y軸分離
-			D3DXVECTOR3 direction = m_Position - position;		//直方体からプレイヤーまでの方向ベクトル
-			float obbx = D3DXVec3Dot(&direction, &right);		//X軸分離方向プレイヤー距離
-			float obbz = D3DXVec3Dot(&direction, &forward);		//Z軸分離方向プレイヤー距離
-			float obby = D3DXVec3Dot(&direction, &up);			//Y軸分離方向プレイヤー距離
+			D3DXVECTOR3 right = breakObject->GetRight();
+			D3DXVECTOR3 forward = breakObject->GetForward();
+			D3DXVECTOR3 up = breakObject->GetUp();
+			D3DXVECTOR3 direction = m_Position - position;
+			float obbX = D3DXVec3Dot(&direction, &right);
+			float obbZ = D3DXVec3Dot(&direction, &forward);
+			float obbY = D3DXVec3Dot(&direction, &up);
 
-			//影の高さ設定
-			if (fabs(obbx) < scale.x && fabs(obbz) < scale.z)
+			// 影の高さ設定
+			if (fabs(obbX) < scale.x && fabs(obbZ) < scale.z)
 			{
 				if (m_Position.y > position.y + scale.y - 0.5f) { groundHeight = max(groundHeight, position.y + scale.y); }
 			}
-			//OBB
-			if (fabs(obbx) < scale.x && fabs(obbz) < scale.z && fabs(obby) < scale.y)
+			// OBB
+			if (fabs(obbX) < scale.x && fabs(obbZ) < scale.z && fabs(obbY) < scale.y)
 			{
-				//ダッシュ攻撃
+				// ダッシュ攻撃
 				if (m_PlayerState == PLAYER_STATE::DASH && GetAttackStop() <= 0)
 				{
 					breakObject->SetDamageMove();
 					SetAttackStop(ATTACK_STOP);
 					AddCombo(1);
 				}
-				D3DXVECTOR3 penetration = D3DXVECTOR3(scale.x - abs(obbx), scale.y - abs(obby), scale.z - abs(obbz));
 
+				D3DXVECTOR3 penetration = D3DXVECTOR3(scale.x - fabs(obbX), scale.y - fabs(obbY), scale.z - fabs(obbZ));
+
+				//左右から触れる
 				if (penetration.x < penetration.z && penetration.x < penetration.y)
 				{
-					if (obbx > 0) { m_Position += penetration.x * right; }
-					else { m_Position -= penetration.x * right; }
+					m_Position += (obbX > 0) ? (penetration.x * right) : (-penetration.x * right);
 				}
+				//前後から触れる
 				else if (penetration.z < penetration.y)
 				{
-					if (obbz > 0) { m_Position += penetration.z * forward; }
-					else { m_Position -= penetration.z * forward; }
+					m_Position += (obbZ > 0) ? (penetration.z * forward) : (-penetration.z * forward);
 				}
+				//上下から触れる
 				else
 				{
-					if (obby > 0)
-					{
-						m_Position += penetration.y * up;
-						m_Velocity.y = 0.0f;			//上に乗ったら垂直速度を0にする
-					}
-					else
-					{
-						m_Position -= penetration.y * up;
-						m_Velocity.y = -m_Velocity.y;	//下から触れたら垂直速度を反転する
-					}
+					m_Position += (obbY > 0) ? (penetration.y * up) : (-penetration.y * up);
+					m_Velocity.y = (obbY > 0) ? 0.0f : -m_Velocity.y; // 上に乗ったら垂直速度を0にする、下から触れたら反転する
 				}
 			}
 		}
