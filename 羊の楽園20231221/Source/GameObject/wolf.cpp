@@ -655,8 +655,8 @@ void Wolf::Collision(float& groundHeight)
 				//上下から触れる
 				else
 				{
-					m_Position += (obbY > 0) ? (penetration.y * up) : (-penetration.y * up);
-					m_Velocity.y = (obbY > 0) ? 0.0f : -m_Velocity.y; // 上に乗ったら垂直速度を0にする、下から触れたら反転する
+					m_Position += (m_Position.y < obbY) ? (-penetration.y * up) : penetration.y * up;
+					m_Velocity.y = (m_Position.y < obbY) ? -m_Velocity.y : 0.0f; // 上に乗ったら垂直速度を0にする、下から触れたら反転する
 				}
 			}
 		}

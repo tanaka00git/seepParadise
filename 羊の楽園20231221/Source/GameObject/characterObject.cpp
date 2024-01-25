@@ -88,24 +88,23 @@ void CharacterObject::Collision(float& groundHeight)
 		D3DXVECTOR3 scale = cylinder->GetScale();
 		scale.x *= 1.2f, scale.z *= 1.2f;					//半径の調整
 		D3DXVECTOR3 direction = m_Position - position;		//円柱中心からキャラまでのベクトル
-		float length = D3DXVec3Length(&direction);			//キャラと円柱中心の距離
 		D3DXVECTOR3 up = cylinder->GetUp();					//円柱の上方向ベクトル
-		float obbR = D3DXVec3Dot(&direction, &up);			//円柱の上方向への軸分離
+		float obbY = D3DXVec3Dot(&direction, &up);			//円柱の上方向への軸分離
 
 		//影の高さを調整するため用
-		direction -= up * obbR;								//y軸の接触を無視するために、directionからupの成分を引く
-		length = D3DXVec3Length(&direction);				//新しいlengthを計算する
+		direction -= up * obbY;								//y軸の接触を無視するために、directionからupの成分を引く
+		float length = D3DXVec3Length(&direction);			//新しいlengthを計算する（キャラと円柱中心の距離）
 
 		// 影
 		if (length < scale.x && m_Position.y > position.y + scale.y - 0.5f)
 		{
 			groundHeight = max(groundHeight, position.y + scale.y);
 		}
-		// OBB
-		if (length < scale.x && fabs(obbR) < scale.y)
+		//当たり判定
+		if (length < scale.x && fabs(obbY) < scale.y)
 		{
 			D3DXVECTOR3 normalizedDirection = direction / length;
-			float penetrationY = scale.y - static_cast<float>(fabs(obbR));
+			float penetrationY = scale.y - static_cast<float>(fabs(obbY));
 			float penetrationX = scale.x - length;
 
 			// 円柱内に入った場合の処理
@@ -116,8 +115,8 @@ void CharacterObject::Collision(float& groundHeight)
 			}
 			else
 			{
-				m_Position += (obbR > 0) ? (penetrationY * up) : (-penetrationY * up);
-				m_Velocity.y = (obbR > 0) ? 0.0f : -m_Velocity.y; // 上に乗ったら垂直速度を0にする、下から触れたら反転する
+				m_Position += (obbY > 0) ? (penetrationY * up) : (-penetrationY * up);
+				m_Velocity.y = (obbY > 0) ? 0.0f : -m_Velocity.y; // 上に乗ったら垂直速度を0にする、下から触れたら反転する
 			}
 		}
 	}
@@ -161,8 +160,8 @@ void CharacterObject::Collision(float& groundHeight)
 			//上下から触れる
 			else
 			{
-				m_Position += (obbY > 0) ? (penetration.y * up) : (-penetration.y * up);
-				m_Velocity.y = (obbY > 0) ? 0.0f : -m_Velocity.y; // 上に乗ったら垂直速度を0にする、下から触れたら反転する
+				m_Position += (m_Position.y < obbY) ? (-penetration.y * up) : penetration.y * up;
+				m_Velocity.y = (m_Position.y < obbY) ? -m_Velocity.y : 0.0f; // 上に乗ったら垂直速度を0にする、下から触れたら反転する
 			}
 		}
 	}

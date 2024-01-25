@@ -231,6 +231,7 @@ void Player::UpdateNormal()
 	m_Velocity.x = GetForward().x * (m_Speed * 0.01f);
 	m_Velocity.z = GetForward().z * (m_Speed * 0.01f);
 	
+	if (Input::GetKeyTrigger(VK_RBUTTON)) { m_Velocity.y = 0.5f; }
 	if (Input::GetKeyPress(VK_LBUTTON) && m_Charge >= 10) { m_PlayerState = PLAYER_STATE::DASH; }
 }
 
@@ -462,8 +463,8 @@ void Player::Collision(float& groundHeight)
 				//上下から触れる
 				else
 				{
-					m_Position += (obbY > 0) ? (penetration.y * up) : (-penetration.y * up);
-					m_Velocity.y = (obbY > 0) ? 0.0f : -m_Velocity.y; // 上に乗ったら垂直速度を0にする、下から触れたら反転する
+					m_Position += (m_Position.y < obbY) ? (-penetration.y * up) : penetration.y * up;
+					m_Velocity.y = (m_Position.y < obbY) ? -m_Velocity.y : 0.0f; // 上に乗ったら垂直速度を0にする、下から触れたら反転する
 				}
 			}
 		}
