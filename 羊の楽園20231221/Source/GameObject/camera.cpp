@@ -160,6 +160,11 @@ void Camera::UpdateGame()
 	m_Target = player->GetPosition();
 	m_Target += D3DXVECTOR3(0.0f, cameraMove, -cameraMove);
 
+	if (player->GetPlayerState() == PLAYER_STATE::DASH)
+	{
+		player->SetCharge(100);
+		m_Target += D3DXVECTOR3(0.0f, -CAMERA_MOVE_VALUE, CAMERA_MOVE_VALUE);
+	}
 	//‘O‰ñÀ•W‚Æ”äŠr‚µ‚ÄüŒ`•âŠ®
 	D3DXVECTOR3 distance = m_Target - OldTarget;
 	float speed = CAMERA_SPEED;
