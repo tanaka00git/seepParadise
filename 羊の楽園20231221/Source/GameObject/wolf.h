@@ -62,7 +62,6 @@ private:
 	void Collision(float& groundHeight)override;
 	void KnockBack();
 	void DisasterMove();
-	void DamageFlash();
 	void Anime();
 
 public:
@@ -73,7 +72,6 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	void AddLife(int life) { m_Life += life; }
 	void SetDamageMove();
 	void SetPosEnemyData(D3DXVECTOR3 position, int num);
 	void SetEnemyData(int data);

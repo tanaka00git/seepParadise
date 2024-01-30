@@ -411,21 +411,6 @@ void Wolf::DisasterMove()
 	}
 }
 
-void Wolf::DamageFlash()
-{
-	m_ColorChange--;
-	if (m_ColorChange > 0)
-	{
-		m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		m_TextureEnable = false;
-	}
-	else
-	{
-		m_TextureEnable = true;
-		m_ColorChange = 0;
-	}
-}
-
 void Wolf::Anime()
 {
 	m_AnimeTime++;
