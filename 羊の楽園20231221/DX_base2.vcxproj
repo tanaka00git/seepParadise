@@ -171,6 +171,7 @@
     <ClCompile Include="Source\GameObject\goalScope.cpp" />
     <ClCompile Include="Source\GameObject\hpBar.cpp" />
     <ClCompile Include="Source\GameObject\hpBarS.cpp" />
+    <ClCompile Include="Source\GameObject\human.cpp" />
     <ClCompile Include="Source\GameObject\infoLog.cpp" />
     <ClCompile Include="Source\GameObject\infoLogTutorial.cpp" />
     <ClCompile Include="Source\GameObject\itemEye.cpp" />
@@ -233,6 +234,7 @@
     <ClInclude Include="Source\GameObject\goalScope.h" />
     <ClInclude Include="Source\GameObject\hpBar.h" />
     <ClInclude Include="Source\GameObject\hpBarS.h" />
+    <ClInclude Include="Source\GameObject\human.h" />
     <ClInclude Include="Source\GameObject\InfoLog.h" />
     <ClInclude Include="Source\GameObject\infoLogTutorial.h" />
     <ClInclude Include="Source\GameObject\itemEye.h" />

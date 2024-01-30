@@ -219,6 +219,9 @@
     <ClCompile Include="Source\GameObject\characterObject.cpp">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameObject\human.cpp">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App\audio.h">
@@ -402,6 +405,9 @@
       <Filter>ソース ファイル\GameObject\Break</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameObject\characterObject.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\human.h">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClInclude>
   </ItemGroup>

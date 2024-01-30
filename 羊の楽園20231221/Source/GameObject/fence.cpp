@@ -30,12 +30,6 @@ void Fence::Init()
 {
 	BreakObject::Init();
 
-	int a = irand(0, 2);
-	if (a == 1)
-	{
-		m_Rotation.y = 3.14f / 2;
-	}
-
 	m_Scale = D3DXVECTOR3(4.0f, 0.0f, 0.0f);
 	m_OriginalScale = D3DXVECTOR3(4.0f, 1.0f, 1.0f);
 }

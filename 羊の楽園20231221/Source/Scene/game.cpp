@@ -8,6 +8,7 @@
 #include "..\GameObject\camera.h"
 #include "..\GameObject\field.h"
 #include "..\GameObject\player.h"
+#include "..\GameObject\human.h"
 #include "..\GameObject\goal.h"
 #include "..\GameObject\goalScope.h"
 #include "..\GameObject\tree.h"
@@ -65,6 +66,7 @@ void Game::Init()
 	GoalScope::Load();
 	Seed::Load();
 	Wolf::Load();
+	Human::Load();
 	Explosion::Load();
 	Smoke::Load();
 	Shine::Load();
@@ -175,6 +177,7 @@ void Game::Uninit()
 	Cylinder::Unload();
 	Tree::Unload();
 	Follow::Unload();
+	Human::Unload();
 	Goal::Unload();
 	GoalScope::Unload();
 	Player::Unload();
@@ -336,6 +339,8 @@ void Game::TimeEvent_Time2Loop()
 	int a = irand(0, 2);
 	if (1 == a) { AddGameObject<Follow>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2)); }
 	
+	//êlä‘ê∂ê¨
+	AddGameObject<Human>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2));
 	//ÉäÉìÉS
 	a = irand(0, 5);
 	if (1 == a) { AddGameObject<Apple>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2)); }
@@ -347,10 +352,6 @@ void Game::TimeEvent_Time2Loop()
 	//ä‚
 	a = irand(0, 2);
 	if (1 == a) { AddGameObject<Rock>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2));}
-
-	//çÚ
-	a = irand(0, 2);
-	if (1 == a) { AddGameObject<Fence>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2)); }
 }
 
 void Game::TimeEvent_Time20()
