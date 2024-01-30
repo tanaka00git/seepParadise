@@ -58,6 +58,7 @@ void Camera::Draw()
 		(float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 1.0f, 1000.0f);
 
 	Renderer::SetProjectionMatrix(&m_ProjectionMatrix);
+	Renderer::SetCameraPosition(m_Position);
 }
 
 bool Camera::CheckView(D3DXVECTOR3 Position, D3DXVECTOR3 Scale)

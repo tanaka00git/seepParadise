@@ -15,6 +15,7 @@ ID3D11Buffer*			Renderer::m_ViewBuffer{};
 ID3D11Buffer*			Renderer::m_ProjectionBuffer{};
 ID3D11Buffer*			Renderer::m_MaterialBuffer{};
 ID3D11Buffer*			Renderer::m_LightBuffer{};
+ID3D11Buffer*			Renderer::m_CameraBuffer{};
 
 ID3D11DepthStencilState* Renderer::m_DepthStateEnable{};
 ID3D11DepthStencilState* Renderer::m_DepthStateDisable{};
@@ -186,6 +187,9 @@ void Renderer::Init()
 	m_DeviceContext->PSSetConstantBuffers( 3, 1, &m_MaterialBuffer );
 
 
+	m_Device->CreateBuffer(&bufferDesc, NULL, &m_CameraBuffer);
+	m_DeviceContext->PSSetConstantBuffers(5, 1, &m_CameraBuffer);
+
 	bufferDesc.ByteWidth = sizeof(LIGHT);
 
 	m_Device->CreateBuffer( &bufferDesc, NULL, &m_LightBuffer );
@@ -306,6 +310,11 @@ void Renderer::SetMaterial( MATERIAL Material )
 void Renderer::SetLight( LIGHT Light )
 {
 	m_DeviceContext->UpdateSubresource(m_LightBuffer, 0, NULL, &Light, 0, 0);
+}
+
+void Renderer::SetCameraPosition(D3DXVECTOR3 CameraPosition)
+{
+	m_DeviceContext->UpdateSubresource(m_CameraBuffer, 0, NULL, &CameraPosition, 0, 0);
 }
 
 void Renderer::CreateVertexShader( ID3D11VertexShader** VertexShader, ID3D11InputLayout** VertexLayout, const char* FileName )
