@@ -83,6 +83,7 @@ void Title::Uninit()
 {
 	Scene::Uninit();
 
+	TitleSeep::Unload();
 	TitleBox::Unload();
 	TitleSky::Unload();
 	TimeFade::Unload();

@@ -112,7 +112,7 @@ void Game::Init()
 		box->SetScale(D3DXVECTOR3(3.0f, 1.0f, 3.0f));
 		box->SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2));
 	}
-	for (int i = 0; i <= 23; i++) {
+	for (int i = 0; i <= 24; i++) {
 		Box*box = AddGameObject<Box>(1);
 		box->SetScale(D3DXVECTOR3(5.0f, 2.5f, 5.0f));
 		box->SetPosition(D3DXVECTOR3(5.0f * i -60.0f, -1.0f, 60.0f));
@@ -254,8 +254,9 @@ void Game::Update()
 
 	//デバッグモード専用処理
 	bool debug = player->GetDebug();
+	if (Input::GetKeyTrigger('O') && debug) { m_Fade->FadeOut(); }		//次シーンへ
 	if (Input::GetKeyTrigger('I') && debug) { m_GameTimeSeconds = 38; }	//時間カット
-	if (Input::GetKeyTrigger(VK_RBUTTON) && debug) { AddGameObject<Follow>(1)->SetPosition(D3DXVECTOR3(PLPos.x, 1.0f, PLPos.z));}	//羊増量
+	if (Input::GetKeyPress(VK_RBUTTON) && debug) { AddGameObject<Follow>(1)->SetPosition(D3DXVECTOR3(PLPos.x, 1.0f, PLPos.z));}	//羊増量
 }
 
 void Game::TimeSecondsUpdate()
@@ -306,8 +307,7 @@ void Game::TimeEvent_Time2Loop()
 		}
 
 		//人間生成
-	
-		a = irand(0, 7);
+		a = irand(0, 8);
 		if (1 == a)
 		{
 			float rot = frand() * 2 * D3DX_PI;
