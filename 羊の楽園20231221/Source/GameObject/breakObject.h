@@ -23,7 +23,7 @@ protected:
 	D3DXVECTOR3 m_Velocity      = D3DXVECTOR3(0.0f,0.0f,0.0f);		//速度
 	D3DXVECTOR3 m_OriginalScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);	//本来のスケール
 	bool		m_DeleteInit    = false;							//削除時初回
-	int			m_DaathTime     = 3000;								//自動消滅時間
+	int			m_DaathTime     = 2000;								//自動消滅時間
 
 	//ステータス
 	int			m_FullLife	 = 7;							//最大体力
