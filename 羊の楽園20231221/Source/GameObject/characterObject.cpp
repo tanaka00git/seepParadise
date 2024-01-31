@@ -115,8 +115,8 @@ void CharacterObject::Collision(float& groundHeight)
 			}
 			else
 			{
-				m_Position += (obbY > 0) ? (penetrationY * up) : (-penetrationY * up);
-				m_Velocity.y = (obbY > 0) ? 0.0f : -m_Velocity.y; // 上に乗ったら垂直速度を0にする、下から触れたら反転する
+				m_Position += (m_Position.y < obbY) ? (-penetrationY * up) : penetrationY * up;
+				m_Velocity.y = (m_Position.y < obbY) ? -m_Velocity.y : 0.0f; // 上に乗ったら垂直速度を0にする、下から触れたら反転する
 			}
 		}
 	}
