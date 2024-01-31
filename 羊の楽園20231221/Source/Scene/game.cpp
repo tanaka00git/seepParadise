@@ -217,6 +217,9 @@ void Game::Update()
 	case GAME_STATE::NORMAL:
 		UpdateNormal();
 		break;
+	case GAME_STATE::CLEAR:
+		UpdateClear();
+		break;
 	case GAME_STATE::FADE:
 		UpdateFade();
 		break;
@@ -251,35 +254,45 @@ void Game::UpdateNormal()
 	//プレイヤーが食べられたらゲームオーバー
 	Scene* scene = Manager::GetScene();
 	Player* player = scene->GetGameObject<Player>();
-	if (player->GetCharacterState() == CHARACTER_STATE::DEAD) 
-	{ 
+	if (player->GetCharacterState() == CHARACTER_STATE::UNUSED)
+	{
 		m_BGM->FadeToVolume(0.0f, 0.01f);
 		m_BGM_Night->FadeToVolume(0.0f, 0.01f);
-		m_GameState = GAME_STATE::FADE; 
+		m_GameState = GAME_STATE::FADE;
 	}
+	//仲間が100匹になったらゲームクリア
+	Score* score = scene->GetGameObject<Score>();
+	if (score->GetFullCount() >= 100) { m_GameState = GAME_STATE::CLEAR; }
 
 	//デバッグモード専用処理
 	bool debug = player->GetDebug();
-	if (Input::GetKeyTrigger('O') && debug) { m_GameState = GAME_STATE::FADE; ; }		//次シーンへ
-	if (Input::GetKeyTrigger('I') && debug) { m_GameTimeSeconds = 38; }	//時間カット
-	if (Input::GetKeyPress(VK_RBUTTON) && debug) 
-	{ 
+	if (Input::GetKeyTrigger('O') && debug) { m_GameState = GAME_STATE::FADE; }		//次シーンへ
+	if (Input::GetKeyTrigger('I') && debug) { m_GameTimeSeconds = 38; }				//時間カット
+	if (Input::GetKeyPress(VK_RBUTTON) && debug)									//羊増量
+	{
 		D3DXVECTOR3 PLPos = player->GetPosition();
-		AddGameObject<Follow>(1)->SetPosition(D3DXVECTOR3(PLPos.x, 1.0f, PLPos.z)); }	//羊増量
+		AddGameObject<Follow>(1)->SetPosition(D3DXVECTOR3(PLPos.x, 1.0f, PLPos.z));
+	}	
+}
+
+void Game::UpdateClear()
+{
+	m_ClearTime++;
+
+	if (m_ClearTime >= 120) { m_GameState = GAME_STATE::FADE; }
 }
 
 void Game::UpdateFade()
 {
-	Scene* scene = Manager::GetScene();
-	Player* player = scene->GetGameObject<Player>();
 
-	if (player->GetCharacterState() == CHARACTER_STATE::UNUSED) { m_Fade->FadeOut(); }
+	m_Fade->FadeOut(); 
 
 	//フェードが終わったら
 	if (m_Fade->GetFadeFinish())
 	{
-		Score* score = scene->GetGameObject<Score>();
 		//リザルトに情報をセットする
+		Scene* scene = Manager::GetScene();
+		Score* score = scene->GetGameObject<Score>();
 		Result* result = scene->GetGameObject<Result>();
 		result->SetDay(score->GetCountDay());
 		result->SetCoin(score->GetCountCoin());

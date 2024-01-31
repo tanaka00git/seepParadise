@@ -4,6 +4,7 @@
 enum class GAME_STATE
 {
 	NORMAL,
+	CLEAR,
 	FADE,
 };
 
@@ -25,12 +26,14 @@ private:
 	int m_GameTimeSeconds	= 0;
 	int m_Day				= 0;
 
-	int m_NawEvent			= 0;
+	int  m_NawEvent			= 0;
 	bool m_Event1			= false;
 	bool m_Event2			= false;
+	int	 m_ClearTime		= 0;
 
 	//ä÷êî
 	void UpdateNormal();
+	void UpdateClear();
 	void UpdateFade();
 	void TimeSecondsUpdate();
 	void TimeEvent_Time2Loop();
