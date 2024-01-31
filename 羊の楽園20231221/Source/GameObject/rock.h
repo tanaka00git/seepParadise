@@ -7,7 +7,7 @@ private:
 	static class Model* m_Model;
 
 	//ä÷êî
-	void UpdateDeath() override;
+	void UpdateDead() override;
 
 public:
 	static void Load();

@@ -8,7 +8,7 @@ private:
 	static class Audio* m_SE_Chest;
 	
 	//ä÷êî
-	void UpdateDeath() override;
+	void UpdateDead() override;
 
 public:
 	static void Load();

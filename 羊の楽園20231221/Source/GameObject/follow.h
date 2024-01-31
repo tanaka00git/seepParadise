@@ -37,7 +37,7 @@ private:
 
 	//ä÷êî
 	void UpdateAlive() override;
-	void UpdateDeath() override;
+	void UpdateDead() override;
 	void UpdateFree();
 	void UpdateNormal();
 	void UpdateDash();

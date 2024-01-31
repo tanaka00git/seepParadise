@@ -57,7 +57,7 @@ void BreakObject::Update()
 		UpdateMove();
 		break;
 	case BREAKOBJECT_STATE::DEATH:
-		UpdateDeath();
+		UpdateDead();
 		break;
 	case BREAKOBJECT_STATE::ORTDEATH:
 		UpdateDelete();
@@ -128,7 +128,7 @@ void BreakObject::UpdateDelete()
 	if (m_Scale.y <= 0.0f) { SetDestroy(); }
 }
 
-void BreakObject::UpdateDeath()
+void BreakObject::UpdateDead()
 {
 	m_Position.y += 0.5f;
 	m_Scale.x -= 0.05f; m_Scale.y -= 0.05f; m_Scale.z -= 0.05f;

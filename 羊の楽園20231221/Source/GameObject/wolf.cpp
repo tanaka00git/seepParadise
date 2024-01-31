@@ -304,7 +304,7 @@ void Wolf::UpdateAlive()
 
 }
 
-void Wolf::UpdateDeath()
+void Wolf::UpdateDead()
 {
 	Scene* scene = Manager::GetScene();
 
@@ -615,12 +615,6 @@ void Wolf::Collision(float& groundHeight)
 			float obbX = D3DXVec3Dot(&direction, &right);
 			float obbZ = D3DXVec3Dot(&direction, &forward);
 			float obbY = D3DXVec3Dot(&direction, &up);
-
-			// âeÇÃçÇÇ≥ê›íË
-			if (fabs(obbX) < scale.x && fabs(obbZ) < scale.z && m_Position.y > position.y + scale.y - 0.5f)
-			{
-				groundHeight = max(groundHeight, position.y + scale.y);
-			}
 
 			// OBB
 			if (fabs(obbX) < scale.x && fabs(obbZ) < scale.z && fabs(obbY) < scale.y)

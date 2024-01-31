@@ -11,8 +11,8 @@
 
 Model* Fence::m_Model{};
 
-#define DROP_RAIT 12
 #define COIN_DROP 3
+#define ORIGINAL_SCALE_X 3.0f
 
 void Fence::Load()
 {
@@ -30,8 +30,8 @@ void Fence::Init()
 {
 	BreakObject::Init();
 
-	m_Scale = D3DXVECTOR3(4.0f, 0.0f, 0.0f);
-	m_OriginalScale = D3DXVECTOR3(4.0f, 1.0f, 1.0f);
+	m_Scale = D3DXVECTOR3(ORIGINAL_SCALE_X, 0.0f, 0.0f);
+	m_OriginalScale = D3DXVECTOR3(ORIGINAL_SCALE_X, 1.0f, 1.0f);
 }
 
 void Fence::Draw()
@@ -40,9 +40,9 @@ void Fence::Draw()
 	m_Model->Draw();
 }
 
-void Fence::UpdateDeath()
+void Fence::UpdateDead()
 {
-	BreakObject::UpdateDeath();
+	BreakObject::UpdateDead();
 
 	//Initˆ—
 	if (!m_DeleteInit)

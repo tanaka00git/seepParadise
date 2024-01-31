@@ -32,7 +32,7 @@ protected:
 	//ä÷êî
 	virtual void UpdateMove();
 	virtual void UpdateDelete();
-	virtual void UpdateDeath();
+	virtual void UpdateDead();
 
 public:
 	static void Load();

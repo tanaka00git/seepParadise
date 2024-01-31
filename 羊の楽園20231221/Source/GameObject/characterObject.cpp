@@ -28,7 +28,7 @@ void CharacterObject::Update()
 		UpdateAlive();
 		break;
 	case CHARACTER_STATE::DEAD:
-		UpdateDeath();
+		UpdateDead();
 		break;
 	case CHARACTER_STATE::UNUSED:
 		UpdateUnused();
@@ -49,7 +49,7 @@ void CharacterObject::UpdateAlive()
 	if (m_Life <= 0) { m_CharacterState = CHARACTER_STATE::DEAD; }
 }
 
-void CharacterObject::UpdateDeath()
+void CharacterObject::UpdateDead()
 {
 }
 

@@ -35,9 +35,9 @@ void Rock::Draw()
 	m_Model->Draw();
 }
 
-void Rock::UpdateDeath()
+void Rock::UpdateDead()
 {
-	BreakObject::UpdateDeath();
+	BreakObject::UpdateDead();
 
 	//Initˆ—
 	if (!m_DeleteInit)

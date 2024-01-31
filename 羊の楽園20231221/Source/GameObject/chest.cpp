@@ -40,9 +40,9 @@ void Chest::Draw()
 	m_Model->Draw();
 }
 
-void Chest::UpdateDeath()
+void Chest::UpdateDead()
 {
-	BreakObject::UpdateDeath();
+	BreakObject::UpdateDead();
 
 	//Initˆ—
 	if (!m_DeleteInit)

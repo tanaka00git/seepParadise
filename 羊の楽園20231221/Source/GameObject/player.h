@@ -53,7 +53,7 @@ private:
 
 	//ä÷êî
 	void UpdateAlive() override;
-	void UpdateDeath() override;
+	void UpdateDead() override;
 	void UpdateNormal();
 	void UpdateDash();
 	void Collision(float& groundHeight) override;

@@ -32,7 +32,7 @@ protected:
 
 	//ä÷êî
 	virtual void UpdateAlive();
-	virtual void UpdateDeath();
+	virtual void UpdateDead();
 	virtual void UpdateUnused();
 	virtual void DamageFlash();
 	virtual void Collision(float& groundHeight);

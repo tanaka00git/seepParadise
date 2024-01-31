@@ -84,8 +84,7 @@ void Player::Init()
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
 
 	m_Life = INIT_LIFE;
-	m_FullLife
-		= INIT_LIFE;
+	m_FullLife = INIT_LIFE;
 	m_Shadow = AddComponent<Shadow>();
 	m_HpBarS = AddComponent<HpBarS>();
 	m_HpBarS->SetLifeDateFC(m_FullLife, m_Life);
@@ -207,7 +206,7 @@ void Player::UpdateAlive()
 	}
 }
 
-void Player::UpdateDeath()
+void Player::UpdateDead()
 {
 	m_Velocity *= 0;
 	m_Rotation.z += m_Death / 2.0f;
@@ -431,11 +430,6 @@ void Player::Collision(float& groundHeight)
 			float obbZ = D3DXVec3Dot(&direction, &forward);
 			float obbY = D3DXVec3Dot(&direction, &up);
 
-			// âeÇÃçÇÇ≥ê›íË
-			if (fabs(obbX) < scale.x && fabs(obbZ) < scale.z)
-			{
-				if (m_Position.y > position.y + scale.y - 0.5f) { groundHeight = max(groundHeight, position.y + scale.y); }
-			}
 			// OBB
 			if (fabs(obbX) < scale.x && fabs(obbZ) < scale.z && fabs(obbY) < scale.y)
 			{
