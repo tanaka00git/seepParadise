@@ -29,7 +29,6 @@ Audio*Wolf::m_SE_Eat{};
 Audio*Wolf::m_SE_Kick{};
 
 #define EATING_TIME 45
-#define EATING_COUNT 5
 #define DROP_RATE 20
 #define APPLE_RATE 20
 #define GIVE_ATTACK_STOP 20
@@ -273,7 +272,7 @@ void Wolf::UpdateEating()
 	m_EatStop ++;
 	if (m_EatStop % EATING_TIME == 0)
 	{ 
-		if(m_EatStop >= EATING_TIME * EATING_COUNT)
+		if(m_EatStop >= EATING_TIME * m_BiteCount)
 		{
 			m_EatStop = 0;
 			m_WolfState = WOLF_STATE::FREE;
@@ -428,8 +427,14 @@ void Wolf::Anime()
 
 void Wolf::SetDamageMove()
 {
-	m_StunTime = STUN_TIME;
-	m_WolfState = WOLF_STATE::DAMAGE;
+	//たくさん攻撃を与えるとダメージ状態になる
+	m_StanGuardCount++;
+	if (m_StanGuardCount >= m_StanGuard) 
+	{
+		m_StanGuardCount = 0;
+		m_StunTime = STUN_TIME;
+		m_WolfState = WOLF_STATE::DAMAGE; 
+	}
 
 	m_Velocity.y = 0.1f;
 	m_KnockBackTime = KNOCK_BACK_TIME;
@@ -443,7 +448,7 @@ void Wolf::SetDamageMove()
 	scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
 
 	Camera*camera = scene->GetGameObject<Camera>();
-	camera->SetShake(0.1f, 0.0f);
+	camera->SetShake(0.2f, 0.0f);
 }
 
 void Wolf::SetPosEnemyData(D3DXVECTOR3 Position, int Num)
@@ -462,18 +467,22 @@ void Wolf::SetEnemyData(int data)
 
 	if (m_Data == 1)
 	{
+		m_BiteCount = 5;
 		m_FullLife = 5;
 		m_Speed = 0.032f;
 		m_CoinDrop = 1;
+		m_StanGuard = 2;
 		m_OriginalScale = D3DXVECTOR3(0.6f, 0.6f, 0.6f);	//キャラのサイズ
 		m_BarScale = D3DXVECTOR3(0.5f, 0.7f, 0.7f);		//HPバーのサイズ
 		m_HpBarPosY = 1.8f;
 	}
 	else if (m_Data == 2)
 	{
-		m_FullLife = 7;
+		m_BiteCount = 4;
+		m_FullLife = 8;
 		m_Speed = 0.032f;
 		m_CoinDrop = 2;
+		m_StanGuard = 4;
 		m_OriginalScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 		m_BarScale = D3DXVECTOR3(0.7f, 0.7f, 0.7f);	
 		m_HpBarPosY = 1.8f;
@@ -481,18 +490,22 @@ void Wolf::SetEnemyData(int data)
 	}
 	else if (m_Data == 3)
 	{
-		m_FullLife = 13;
+		m_BiteCount = 3;
+		m_FullLife = 14;
 		m_Speed = 0.034f;
 		m_CoinDrop = 3;
+		m_StanGuard = 7;
 		m_OriginalScale = D3DXVECTOR3(1.3f, 1.3f, 1.3f);
 		m_BarScale = D3DXVECTOR3(1.0f, 0.7f, 0.7f);
 		m_HpBarPosY = 2.2f;
 	}
 	else if (m_Data == 4)
 	{
-		m_FullLife = 15;
+		m_BiteCount = 3;
+		m_FullLife = 18;
 		m_Speed = 0.036f;
 		m_CoinDrop = 4;
+		m_StanGuard = 9;
 		m_OriginalScale = D3DXVECTOR3(1.7f, 1.7f, 1.7f);
 		m_BarScale = D3DXVECTOR3(1.4f, 0.7f, 0.7f);
 		m_HpBarPosY = 2.8f;
@@ -500,12 +513,14 @@ void Wolf::SetEnemyData(int data)
 	else if (m_Data == 5) 
 	{
 		m_Item = false;
+		m_BiteCount = 2;
 		m_FullLife = 80;
 		m_Speed = 0.04f;
 		m_CoinDrop = 30;
+		m_StanGuard = 40;
 		m_OriginalScale = D3DXVECTOR3(2.9f, 2.9f, 2.9f);	//キャラのサイズ
-		m_BarScale = D3DXVECTOR3(5.0f, 1.0f, 1.0f);		//HPバーのサイズ
-		m_Tracking = 200.0f;							//追尾範囲
+		m_BarScale = D3DXVECTOR3(5.0f, 1.0f, 1.0f);			//HPバーのサイズ
+		m_Tracking = 200.0f;								//追尾範囲
 		m_Disaster = true;
 	}
 	m_Life = m_FullLife;
