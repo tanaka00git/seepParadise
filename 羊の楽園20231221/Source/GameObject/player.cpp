@@ -11,6 +11,8 @@
 #include "..\GameObject\rock.h"
 #include "..\GameObject\breakObject.h"
 #include "..\GameObject\shadow.h"
+#include "..\GameObject\goal.h"
+#include "..\GameObject\goalNavigation.h"
 #include "..\GameObject\hpBarS.h"
 #include "..\GameObject\score.h"
 #include "..\GameObject\infoLog.h"
@@ -27,6 +29,7 @@ Audio* Player::m_ShotSE{};
 Audio* Player::m_WalkSE{};
 Audio* Player::m_DamageSE{};
 Audio* Player::m_DashSE{};
+GoalNavigation* Player::m_GoalNavigation{};
 int Player::m_DebugMode{};
 int Player::m_PlColor{};
 int Player::m_PlClown{};
@@ -89,6 +92,9 @@ void Player::Init()
 	m_HpBarS = AddComponent<HpBarS>();
 	m_HpBarS->SetLifeDateFC(m_FullLife, m_Life);
 	m_HpBarS->SetScale(m_BarScale);
+
+	Scene* scene = Manager::GetScene();
+	m_GoalNavigation = scene->AddGameObject<GoalNavigation>(1);
 }
 
 void Player::Uninit()
@@ -158,6 +164,17 @@ void Player::Update()
 	shadowPosition.y = groundHeight + 0.01f;
 	m_Shadow->SetPosition(shadowPosition);
 	m_Shadow->SetScale(D3DXVECTOR3(m_Scale.x, m_Scale.y, m_Scale.z));
+
+
+	//ゴールナビの移動
+	Goal* goal = scene->GetGameObject<Goal>();
+	D3DXVECTOR3 goalNavigationRotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 goalNavigationPosition = m_Position;
+	goalNavigationRotation.y = atan2f((goal->GetPosition().x) - m_Position.x, (goal->GetPosition().z) - m_Position.z);
+	goalNavigationPosition.x += m_GoalNavigation->GetForward().x * 5;
+	goalNavigationPosition.z += m_GoalNavigation->GetForward().z * 5;
+	m_GoalNavigation->SetPosition(goalNavigationPosition);
+	m_GoalNavigation->SetRotation(goalNavigationRotation);
 
 	//疑似アニメ
 	Anime();

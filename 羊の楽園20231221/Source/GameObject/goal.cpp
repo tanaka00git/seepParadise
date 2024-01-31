@@ -18,8 +18,9 @@ Audio* Goal::m_SE_Goal{};
 
 #define SCOPE_SIZE 10.0f
 #define ROTATION_SPEED 0.1f
-#define STAGE_MAKE_XY 30.0f//110
+#define STAGE_MAKE_XY 110.0f
 #define FOLLOW_MAKE_POSITION_Y 1.1f
+#define MAKE_MINMUM_DISTANCE 40.0f	//生成されるプレイヤーとゴールの距離の最低距離
 
 void Goal::Load()
 {
@@ -45,6 +46,8 @@ void Goal::Init()
 
 	m_GoalScope = AddComponent<GoalScope>();
 	m_GoalScope->SetScale(m_ScopeScale);
+
+	SetNextGoal();
 }
 
 void Goal::Uninit()
@@ -97,7 +100,8 @@ void Goal::Update()
 		Camera* camera = scene->GetGameObject<Camera>();
 		camera->SetShake(0.0f, 0.4f);
 
-		SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2));
+		//次の位置にゴールを設定する
+		SetNextGoal();
 	}
 }
 
@@ -165,4 +169,25 @@ bool Goal::Collision()
 	}
 
 	return false;
+}
+
+void Goal::SetNextGoal()
+{
+	Scene* scene = Manager::GetScene();
+	Player* player = scene->GetGameObject<Player>();
+
+	D3DXVECTOR3 newGoalPosition;
+	D3DXVECTOR3 position = player->GetPosition();
+	D3DXVECTOR3 scale = player->GetScale();
+	D3DXVECTOR3 direction;
+	float length;
+
+	do {
+		newGoalPosition = D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2);
+		direction = newGoalPosition - position;  // プレイヤーから新しいゴールへのベクトルを計算
+		length = D3DXVec3Length(&direction);
+	} while (length < MAKE_MINMUM_DISTANCE);  // 最低40.0f離れるまで再試行
+
+
+	SetPosition(newGoalPosition);
 }

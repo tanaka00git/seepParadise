@@ -7,6 +7,7 @@
 #include "..\App\audio.h"
 #include "..\GameObject\camera.h"
 #include "..\GameObject\field.h"
+#include "..\GameObject\goalNavigation.h"
 #include "..\GameObject\player.h"
 #include "..\GameObject\human.h"
 #include "..\GameObject\goal.h"
@@ -61,6 +62,7 @@ void Game::Init()
 	Box::Load();
 	Cylinder::Load();
 	Tree::Load();
+	GoalNavigation::Load();
 	Player::Load();
 	Follow::Load();
 	Goal::Load();
@@ -95,13 +97,13 @@ void Game::Init()
 
 	//フィールド
 	AddGameObject<Field>(1);
-	
-	//ゴール
-	AddGameObject<Goal>(1);
-	
+
 	//プレイヤー
 	Player* player = AddGameObject<Player>(1);
 	player->SetPosition(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+
+	//ゴール
+	AddGameObject<Goal>(1);
 
 	for (int i = 0; i <= CYLINDER_START_NUM; i++) {
 		Cylinder*cylinder = AddGameObject<Cylinder>(1);
@@ -182,6 +184,7 @@ void Game::Uninit()
 	Human::Unload();
 	Goal::Unload();
 	GoalScope::Unload();
+	GoalNavigation::Unload();
 	Player::Unload();
 	Seed::Unload();
 	Wolf::Unload();

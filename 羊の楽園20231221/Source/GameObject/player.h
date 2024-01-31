@@ -25,6 +25,7 @@ private:
 	static class Audio* m_WalkSE;
 	static class Audio* m_DamageSE;
 	static class Audio* m_DashSE;
+	static class GoalNavigation* m_GoalNavigation;
 
 	//メンバ変数
 	static int	m_DebugMode;											//デバッグモード判定

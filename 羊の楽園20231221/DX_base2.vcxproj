@@ -168,6 +168,7 @@
     <ClCompile Include="Source\GameObject\follow.cpp" />
     <ClCompile Include="Source\GameObject\gameObject.cpp" />
     <ClCompile Include="Source\GameObject\goal.cpp" />
+    <ClCompile Include="Source\GameObject\goalNavigation.cpp" />
     <ClCompile Include="Source\GameObject\goalScope.cpp" />
     <ClCompile Include="Source\GameObject\hpBar.cpp" />
     <ClCompile Include="Source\GameObject\hpBarS.cpp" />
@@ -232,6 +233,7 @@
     <ClInclude Include="Source\GameObject\follow.h" />
     <ClInclude Include="Source\GameObject\gameObject.h" />
     <ClInclude Include="Source\GameObject\goal.h" />
+    <ClInclude Include="Source\GameObject\goalNavigation.h" />
     <ClInclude Include="Source\GameObject\goalScope.h" />
     <ClInclude Include="Source\GameObject\hpBar.h" />
     <ClInclude Include="Source\GameObject\hpBarS.h" />
