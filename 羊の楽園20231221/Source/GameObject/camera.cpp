@@ -150,7 +150,7 @@ void Camera::UpdateGame()
 			followmove++;
 		}
 	}
-	if (followmove > 99) { followmove = 99; }
+	if (followmove > 100) { followmove = 100; }
 	score->SetCount(followmove);		//Œ»Ý‚Ì’‡ŠÔ‚Ì”‚Ìƒf[ƒ^‚ð‘—‚é
 
 	//Ž‹–ì”ÍˆÍ‚Ì’²®

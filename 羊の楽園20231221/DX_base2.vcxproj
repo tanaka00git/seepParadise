@@ -184,6 +184,7 @@
     <ClCompile Include="Source\GameObject\resultLogo.cpp" />
     <ClCompile Include="Source\GameObject\resultScore.cpp" />
     <ClCompile Include="Source\GameObject\resultSeep.cpp" />
+    <ClCompile Include="Source\GameObject\resultSky.cpp" />
     <ClCompile Include="Source\GameObject\rock.cpp" />
     <ClCompile Include="Source\GameObject\score.cpp" />
     <ClCompile Include="Source\GameObject\seed.cpp" />
@@ -247,6 +248,7 @@
     <ClInclude Include="Source\GameObject\resultLogo.h" />
     <ClInclude Include="Source\GameObject\resultScore.h" />
     <ClInclude Include="Source\GameObject\resultSeep.h" />
+    <ClInclude Include="Source\GameObject\resultSky.h" />
     <ClInclude Include="Source\GameObject\rock.h" />
     <ClInclude Include="Source\GameObject\score.h" />
     <ClInclude Include="Source\GameObject\seed.h" />

@@ -57,7 +57,7 @@ void Score::Update()
 {
 	GameObject::Update();
 
-	if (m_CountSeep > 99) { m_CountSeep = 99; }
+	if (m_CountSeep > 100) { m_CountSeep = 100; }
 	if (m_CountCoin > 999) { m_CountCoin = 999; }
 	if (m_FullCount < m_CountSeep) { m_FullCount = m_CountSeep; }
 }
@@ -89,17 +89,17 @@ void Score::Draw()
 void Score::DrawCountSeep()
 {
 	int count = m_CountSeep;
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		//頂点座標算出
-		float vx = 70 - i * 20.0f;
+		float vx = 90 - i * 20.0f;
 		float vy = 30.0f;
 		float height = 32.0f;
 		float width = 32.0f;
 
 		//桁内の値をずらす
 		int number = 0;
-		if (i == 2) {
+		if (i == 3) {
 			number = 11;
 			vx -= 13;
 		}
@@ -118,7 +118,7 @@ void Score::DrawCountCoin()
 	int countCoin = m_CountCoin;
 	for (int c = 0; c < 4; c++) {
 		//頂点座標算出
-		float vx = 70 + 20 - c * 20.0f;
+		float vx = 90 - c * 20.0f;
 		float vy = 70.0f;
 		float height = 32.0f;
 		float width = 32.0f;

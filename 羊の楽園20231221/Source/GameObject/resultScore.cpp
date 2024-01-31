@@ -82,7 +82,7 @@ void ResultScore::Draw()
 	//羊数
 	int count = m_CountSeep;
 	
-	for (int i = 0; i < 2; i++) {
+	for (int i = 0; i < 3; i++) {
 		//頂点座標算出
 		float vx = 425 - i * 33.0f;
 		float vy = 105.0f;
@@ -240,7 +240,7 @@ void ResultScore::Draw()
 		//頂点座標算出
 		float vx = 420 - c * 40.0f;
 		float vy = 280.0f;
-		float height = 62.0f;
+		float height = 65.0f;
 		float width = 62.0f;
 
 		int number = 0;

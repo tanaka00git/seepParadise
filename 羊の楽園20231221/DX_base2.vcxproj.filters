@@ -37,6 +37,9 @@
     <Filter Include="ソース ファイル\GameObject\Effect">
       <UniqueIdentifier>{216b3fc7-c404-48c4-b132-dc848ff54557}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\GameObject\Character">
+      <UniqueIdentifier>{9cce7b91-2586-4a87-b954-d20a4f2613c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\App\audio.cpp">
@@ -156,12 +159,6 @@
     <ClCompile Include="Source\GameObject\field.cpp">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameObject\follow.cpp">
-      <Filter>ソース ファイル\GameObject\Normal</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\GameObject\player.cpp">
-      <Filter>ソース ファイル\GameObject\Normal</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GameObject\resultCoin.cpp">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClCompile>
@@ -216,11 +213,20 @@
     <ClCompile Include="Source\GameObject\gameObject.cpp">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameObject\characterObject.cpp">
+    <ClCompile Include="Source\GameObject\resultSky.cpp">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameObject\follow.cpp">
+      <Filter>ソース ファイル\GameObject\Character</Filter>
+    </ClCompile>
     <ClCompile Include="Source\GameObject\human.cpp">
-      <Filter>ソース ファイル\GameObject\Normal</Filter>
+      <Filter>ソース ファイル\GameObject\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\player.cpp">
+      <Filter>ソース ファイル\GameObject\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\characterObject.cpp">
+      <Filter>ソース ファイル\GameObject\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -347,13 +353,7 @@
     <ClInclude Include="Source\GameObject\field.h">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameObject\follow.h">
-      <Filter>ソース ファイル\GameObject\Normal</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GameObject\gameObject.h">
-      <Filter>ソース ファイル\GameObject\Normal</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\GameObject\player.h">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameObject\resultCoin.h">
@@ -404,11 +404,20 @@
     <ClInclude Include="Source\GameObject\fence.h">
       <Filter>ソース ファイル\GameObject\Break</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameObject\characterObject.h">
+    <ClInclude Include="Source\GameObject\resultSky.h">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClInclude>
+    <ClInclude Include="Source\GameObject\follow.h">
+      <Filter>ソース ファイル\GameObject\Character</Filter>
+    </ClInclude>
     <ClInclude Include="Source\GameObject\human.h">
-      <Filter>ソース ファイル\GameObject\Normal</Filter>
+      <Filter>ソース ファイル\GameObject\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\characterObject.h">
+      <Filter>ソース ファイル\GameObject\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\player.h">
+      <Filter>ソース ファイル\GameObject\Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

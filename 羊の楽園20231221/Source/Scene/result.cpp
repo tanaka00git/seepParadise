@@ -9,6 +9,7 @@
 #include "..\GameObject\resultCoin.h"
 #include "..\GameObject\resultLogo.h"
 #include "..\GameObject\resultScore.h"
+#include "..\GameObject\resultSky.h"
 #include "..\Scene\title.h"
 #include "..\GameObject\fade.h"
 #include "..\App\audio.h"
@@ -21,6 +22,7 @@ void Result::Init()
 {
 	ResultSeep::Load();
 	ResultCoin::Load();
+	ResultSky::Load();
 
 	Camera*camera = AddGameObject<Camera>(0);
 	camera->SetCameraState(CAMERA_STATE::RESULT);
@@ -31,6 +33,10 @@ void Result::Init()
 	resultScore->SetCount(m_Count);
 	resultScore->SetCountCoin(m_Coin);
 	resultScore->SetCountDay(m_Day);
+
+	//‹ó(ƒQ[ƒ€‚Å’‡ŠÔ‚É‚È‚Á‚½”‚¾‚¯–¾‚é‚­‚È‚é)
+	ResultSky* resultSky = AddGameObject<ResultSky>(0);
+	resultSky->SetCount(m_Count);
 
 	//—r(ƒQ[ƒ€‚Å’‡ŠÔ‚É‚È‚Á‚½‚¾‚¯‘‚¦‚é)
 	for (int i = 1; i <= m_Count; i++) {
@@ -59,13 +65,12 @@ void Result::Uninit()
 	Scene::Uninit();
 	ResultSeep::Unload();
 	ResultCoin::Unload();
-
+	ResultSky::Unload();
 }
 
 void Result::Update()
 {
 	Scene::Update();
-
 
 	switch (m_ResultState)
 	{
