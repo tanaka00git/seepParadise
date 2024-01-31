@@ -26,6 +26,7 @@
 #include "..\GameObject\score.h"
 #include "..\GameObject\fade.h"
 #include "..\GameObject\timeFade.h"
+#include "..\GameObject\goal.h"
 #include "..\GameObject\chest.h"
 #include "..\GameObject\rock.h"
 #include "..\GameObject\fence.h"
@@ -77,6 +78,7 @@ void Game::Init()
 	ItemEye::Load();
 	ItemLife::Load();
 	BreakObject::Load();
+	Goal::Load();
 	Chest::Load();
 	Rock::Load();
 	Fence::Load();
@@ -95,7 +97,7 @@ void Game::Init()
 	AddGameObject<Field>(1);
 	
 	//ゴール
-	//AddGameObject<Goal>(1);
+	AddGameObject<Goal>(1);
 	
 	//プレイヤー
 	Player* player = AddGameObject<Player>(1);
