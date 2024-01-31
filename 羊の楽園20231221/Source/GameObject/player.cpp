@@ -231,7 +231,6 @@ void Player::UpdateNormal()
 	m_Velocity.x = GetForward().x * (m_Speed * 0.01f);
 	m_Velocity.z = GetForward().z * (m_Speed * 0.01f);
 	
-	if (Input::GetKeyTrigger(VK_RBUTTON)) { m_Velocity.y = 0.5f; }
 	if (Input::GetKeyPress(VK_LBUTTON) && m_Charge >= 10) { m_PlayerState = PLAYER_STATE::DASH; }
 }
 

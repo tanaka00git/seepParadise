@@ -163,7 +163,6 @@ void Camera::UpdateGame()
 
 	if (player->GetPlayerState() == PLAYER_STATE::DASH)
 	{
-		player->SetCharge(100);
 		m_Target += D3DXVECTOR3(0.0f, -CAMERA_MOVE_VALUE, CAMERA_MOVE_VALUE);
 	}
 	//‘O‰ñÀ•W‚Æ”äŠr‚µ‚ÄüŒ`•âŠ®
