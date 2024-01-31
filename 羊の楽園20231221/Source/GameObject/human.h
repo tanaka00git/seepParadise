@@ -43,7 +43,7 @@ private:
 	//ステータス
 	bool	m_Item = false;
 	int		m_CoinDrop = 4;										//コインドロップ数
-	D3DXVECTOR3 m_BarScale = D3DXVECTOR3(1.0f, 1.5f, 1.0f);		//HPバーのサイズ
+	D3DXVECTOR3 m_BarScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);		//HPバーのサイズ
 	float m_HpBarPosY = 1.8f;									//HPバーのY座標
 	float m_Tracking = 10.0f;									//追尾範囲
 

@@ -93,7 +93,7 @@ void HpBarS::Draw()
 	Renderer::SetWorldMatrix(&world);
 
 	float weight = 0.4f;
-	float height = 0.03f;
+	float height = 0.05f;
 	float weight2 = weight;
 	float vz = 0.0f;
 	float vy = -0.7f;
@@ -131,7 +131,7 @@ void HpBarS::Draw()
 		else  if (i == 3) {//çï2
 			Diffuse = D3DXVECTOR4(0.4f, 0.4f, 0.4f, 1.0f);
 			height = 0.015f;
-			weight2 = 0.4f;
+			weight2 = weight;
 			vy -= 0.045f;
 		}
 		else  if (i == 4) {//îí
