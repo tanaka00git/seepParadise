@@ -43,9 +43,9 @@ void Coin::MoveGet()
 	InfoLog* infoLog = scene->AddGameObject<InfoLog>(2);
 	infoLog->SetNum(3, 2, D3DXVECTOR3(50.0f, 50.0f, 0.0f));
 	score->AddCountCoin(+1);
-
+	
 	Player* player = scene->GetGameObject<Player>();
-	player->AddCharge(+300);
+	player->AddCharge(400 / (score->GetCount()) + 100 );
 
 	m_SE_Get->Play(1.0f);
 
