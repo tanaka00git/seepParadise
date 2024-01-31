@@ -521,85 +521,73 @@ void Wolf::Collision(float& groundHeight)
 	Scene* scene = Manager::GetScene();
 	Player* player = scene->GetGameObject<Player>();
 
-	if (player->GetInvincibleTime() <= 0)
+	//キャラクターオブジェクトとの接触判定
+	auto characterObjects = scene->GetGameObjects<CharacterObject>();
+	for (CharacterObject* characterObject : characterObjects)
 	{
-		//プレイヤーの距離を取得	
-		D3DXVECTOR3 direction = m_Position - player->GetPosition();
-		D3DXVECTOR3 pscale = player->GetScale();
-		float plength = D3DXVec3Length(&direction);
+		//自分自身の場合はスキップ
+		if (characterObject == this) { continue; }
 
-		if (player->GetAttackStop() <= 0)
-		{
-			D3DXVECTOR3 scale = player->GetScale();
-			if (plength < scale.x && plength < scale.y && plength < scale.z)
-			{
-				//プレイヤーがダッシュ時にぶつかった場合
-				if (player->GetCharacterState() == CHARACTER_STATE::ALIVE &&
-					player->GetPlayerState() == PLAYER_STATE::DASH)
-				{
-					SetDamageMove();
-					player->SetAttackStop(GIVE_ATTACK_STOP);
-					player->AddCombo(1);
-					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
-				}
-				//普通にぶつかった場合
-				else if (m_StunTime <= 0 && m_WolfState != WOLF_STATE::EATING)
-				{
-					m_WolfState = WOLF_STATE::EATING;
-					player->AddLife(-1);
-					player->SetDamageMove();
-					m_SE_Eat->Play(1.0f);
-					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
-				}
-			}
-		}
-
-	}
-
-	auto follows = scene->GetGameObjects<Follow>();
-	for (Follow* follow : follows) {
-		D3DXVECTOR3 position = follow->GetPosition();
-		D3DXVECTOR3 scale = follow->GetScale();
+		D3DXVECTOR3 position = characterObject->GetPosition();
+		D3DXVECTOR3 scale = characterObject->GetScale();
 		D3DXVECTOR3 direction = m_Position - position;
 		float length = D3DXVec3Length(&direction);
-
 		if (length < scale.x && length < scale.y && length < scale.z)
 		{
-			if (follow->GetAttackStop() <= 0)
+			//インスタンスがPlayerであるか判定
+			if (Player* playerObject = dynamic_cast<Player*>(characterObject))
 			{
-				if (follow->GetState() == FOLLOW_STATE::DASH)
+				if (playerObject->GetAttackStop() <= 0 && playerObject->GetInvincibleTime() <= 0)
 				{
-					SetDamageMove();
-					follow->SetAttackStop(GIVE_ATTACK_STOP);
-					player->AddCombo(1);
-					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
-
-				}
-				else if (m_StunTime <= 0 && m_WolfState != WOLF_STATE::EATING)
-				{
-					m_WolfState = WOLF_STATE::EATING;
-					m_SE_Eat->Play(1.0f);
-					follow->AddLife(-1);
-					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
+					//プレイヤーがダッシュ時にぶつかった場合
+					if (playerObject->GetCharacterState() == CHARACTER_STATE::ALIVE &&
+						playerObject->GetPlayerState() == PLAYER_STATE::DASH)
+					{
+						SetDamageMove();
+						playerObject->SetAttackStop(GIVE_ATTACK_STOP);
+						playerObject->AddCombo(1);
+						scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
+					}
+					//普通にぶつかった場合
+					else if (m_StunTime <= 0 && m_WolfState != WOLF_STATE::EATING)
+					{
+						m_WolfState = WOLF_STATE::EATING;
+						playerObject->AddLife(-1);
+						playerObject->SetDamageMove();
+						m_SE_Eat->Play(1.0f);
+						scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
+					}
 				}
 			}
+
+			//インスタンスがFollowであるか判定
+			else if (Follow* followObject = dynamic_cast<Follow*>(characterObject))
+			{
+				if (followObject->GetAttackStop() <= 0)
+				{
+					if (followObject->GetState() == FOLLOW_STATE::DASH)
+					{
+						SetDamageMove();
+						followObject->SetAttackStop(GIVE_ATTACK_STOP);
+						player->AddCombo(1);
+						scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
+
+					}
+					else if (m_StunTime <= 0 && m_WolfState != WOLF_STATE::EATING)
+					{
+						m_WolfState = WOLF_STATE::EATING;
+						m_SE_Eat->Play(1.0f);
+						followObject->AddLife(-1);
+						scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
+					}
+				}
+			}
+			//オブジェクト問わずズレる
+			m_Position.x += (m_Position.x - characterObject->GetPosition().x) * 0.04f;
+			m_Position.z += (m_Position.z - characterObject->GetPosition().z) * 0.04f;
 		}
 	}
-
-	//他の仲間に重ならないようにする処理
-	auto wolfs = scene->GetGameObjects<Wolf>();
-	for (Wolf* wolf : wolfs)
-	{
-		D3DXVECTOR3 position = wolf->GetPosition();
-		D3DXVECTOR3 scale = wolf->GetScale();
-		D3DXVECTOR3 direction = m_Position - position;
-		float flength = D3DXVec3Length(&direction);
-		if (flength < scale.x && flength < scale.y && flength < scale.z) {
-			m_Position.x += (m_Position.x - wolf->GetPosition().x) * 0.02f;
-			m_Position.z += (m_Position.z - wolf->GetPosition().z) * 0.02f;
-		}
-	}
-
+	
 	// 破壊可ブロック
 	auto breakObjects = scene->GetGameObjects<BreakObject>();
 	for (BreakObject* breakObject : breakObjects)

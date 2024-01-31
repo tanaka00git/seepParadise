@@ -470,71 +470,76 @@ void Human::Collision(float& groundHeight)
 	if (m_CharacterState == CHARACTER_STATE::DEAD) { return; };
 
 	CharacterObject::Collision(groundHeight);
-
 	Scene* scene = Manager::GetScene();
 	Player* player = scene->GetGameObject<Player>();
 
-	if (player->GetInvincibleTime() <= 0)
+	//キャラクターオブジェクトとの接触判定
+	auto characterObjects = scene->GetGameObjects<CharacterObject>();
+	for (CharacterObject* characterObject : characterObjects)
 	{
-		//プレイヤーの距離を取得	
-		D3DXVECTOR3 direction = m_Position - player->GetPosition();
-		D3DXVECTOR3 scale = player->GetScale();
-		float length = D3DXVec3Length(&direction);
+		//自分自身の場合はスキップ
+		if (characterObject == this) { continue; }
 
-		if (length < TARGET_LENGTH && m_StunTime <= 0 && m_HumanState != HUMAN_STATE::MAKING 
-			&& m_HumanState != HUMAN_STATE::NIGHT){ m_HumanState = HUMAN_STATE::MAKING; }
-
-
-		if (player->GetAttackStop() <= 0)
-		{
-			D3DXVECTOR3 scale = player->GetScale();
-			if (length < scale.x && length < scale.y && length < scale.z)
-			{
-				//プレイヤーがダッシュ時にぶつかった場合
-				if (player->GetCharacterState() == CHARACTER_STATE::ALIVE &&
-					player->GetPlayerState() == PLAYER_STATE::DASH)
-				{
-					SetDamageMove();
-					player->SetAttackStop(GIVE_ATTACK_STOP);
-					player->AddCombo(1);
-					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
-				}
-				//普通にぶつかった場合
-				else if (m_StunTime <= 0 && m_HumanState != HUMAN_STATE::MAKING)
-				{
-					m_HumanState = HUMAN_STATE::MAKING;
-				}
-			}
-		}
-
-	}
-
-	auto follows = scene->GetGameObjects<Follow>();
-	for (Follow* follow : follows) {
-		D3DXVECTOR3 position = follow->GetPosition();
-		D3DXVECTOR3 scale = follow->GetScale();
+		D3DXVECTOR3 position = characterObject->GetPosition();
+		D3DXVECTOR3 scale = characterObject->GetScale();
 		D3DXVECTOR3 direction = m_Position - position;
 		float length = D3DXVec3Length(&direction);
 
-		if (length < TARGET_LENGTH && m_StunTime <= 0 && m_HumanState != HUMAN_STATE::MAKING &&
-			follow->GetState() != FOLLOW_STATE::FREE && m_HumanState != HUMAN_STATE::NIGHT)
-		{ m_HumanState = HUMAN_STATE::MAKING; }
+		//どのオブジェクトか判定
+		Player* playerObject = dynamic_cast<Player*>(characterObject);
+		Follow* followObject = dynamic_cast<Follow*>(characterObject);
 
 		if (length < scale.x && length < scale.y && length < scale.z)
 		{
-			if (follow->GetAttackStop() <= 0)
-			{
-				if (follow->GetState() == FOLLOW_STATE::DASH)
-				{
-					SetDamageMove();
-					follow->SetAttackStop(GIVE_ATTACK_STOP);
-					player->AddCombo(1);
-					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
+			//オブジェクト問わずズレる
+			m_Position.x += (m_Position.x - characterObject->GetPosition().x) * 0.04f;
+			m_Position.z += (m_Position.z - characterObject->GetPosition().z) * 0.04f;
 
+			//インスタンスがPlayerであるか判定
+			if (playerObject)
+			{
+				if (playerObject->GetAttackStop() <= 0 && playerObject->GetInvincibleTime() <= 0)
+				{
+					//プレイヤーがダッシュ時にぶつかった場合
+					if (player->GetCharacterState() == CHARACTER_STATE::ALIVE &&
+						player->GetPlayerState() == PLAYER_STATE::DASH)
+					{
+						SetDamageMove();
+						playerObject->SetAttackStop(GIVE_ATTACK_STOP);
+						player->AddCombo(1);
+						scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
+					}
+					//普通にぶつかった場合
+					else if (m_StunTime <= 0 && m_HumanState != HUMAN_STATE::MAKING)
+					{
+						m_HumanState = HUMAN_STATE::MAKING;
+					}
+				}
+			}
+
+			//インスタンスがFollowであるか判定
+			else if (followObject)
+			{
+				if (followObject->GetAttackStop() <= 0)
+				{
+					if (followObject->GetState() == FOLLOW_STATE::DASH)
+					{
+						SetDamageMove();
+						followObject->SetAttackStop(GIVE_ATTACK_STOP);
+						player->AddCombo(1);
+						scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
+					}
 				}
 			}
 		}
+
+		//枠内にプレイヤーいて夜じゃなくてメイキングしてなければ
+		if (length < TARGET_LENGTH && m_StunTime <= 0 && m_HumanState != HUMAN_STATE::MAKING && m_HumanState != HUMAN_STATE::NIGHT)
+		{
+			if (playerObject || (followObject && followObject->GetState() != FOLLOW_STATE::FREE)) { m_HumanState = HUMAN_STATE::MAKING; }
+		}
 	}
+
 
 	// 破壊可ブロック
 	auto breakObjects = scene->GetGameObjects<BreakObject>();
