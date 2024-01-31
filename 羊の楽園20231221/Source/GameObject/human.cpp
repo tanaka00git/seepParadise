@@ -435,7 +435,7 @@ void Human::Anime()
 	if (m_AnimeTime > 7)
 	{
 		//ŒX‚¯‚é
-		if (m_HumanState == HUMAN_STATE::TARGETING) { m_AnimeRotationX = (0.16f * m_AnimePause); }
+		if (m_HumanState == HUMAN_STATE::TARGETING || m_HumanState == HUMAN_STATE::MAKING) { m_AnimeRotationX = (0.16f * m_AnimePause); }
 		else { m_AnimeRotationX = (0.04f * m_AnimePause); }
 
 		//ƒŠƒZƒbƒg
