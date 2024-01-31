@@ -25,16 +25,18 @@
 
 Model* Human::m_Model{};
 Audio* Human::m_SE_Kick{};
+Audio* Human::m_SE_Make{};
 
 #define LIFE 4
-#define SPEED 0.04f
-#define EATING_TIME 45
-#define EATING_COUNT 5
+#define SPEED 0.08f
+#define MAKING_TIME 30
+#define MAKING_COUNT 4
 #define DROP_RATE 20
 #define APPLE_RATE 20
 #define GIVE_ATTACK_STOP 20
 #define KNOCK_BACK_TIME 14
-#define STUN_TIME 100
+#define STUN_TIME 60
+#define TARGET_LENGTH 3.0f
 
 void Human::Load()
 {
@@ -42,6 +44,8 @@ void Human::Load()
 	m_Model->Load("asset\\model\\human.obj");
 	m_SE_Kick = new Audio();
 	m_SE_Kick->Load("asset\\audio\\小キックb.wav");
+	m_SE_Make = new Audio();
+	m_SE_Make->Load("asset\\audio\\木材に釘を打つ.wav");
 }
 
 void Human::Unload()
@@ -192,7 +196,8 @@ void Human::UpdateFree()
 
 	//追尾範囲に入るか夜であれば
 	TimeFade* timeFade = scene->GetGameObject<TimeFade>();
-	if (plength < m_Tracking || timeFade->GetTimeZone()) { m_HumanState = HUMAN_STATE::TARGETING; }
+	if (plength < m_Tracking) { m_HumanState = HUMAN_STATE::TARGETING; }
+	if (timeFade->GetTimeZone()) { m_HumanState = HUMAN_STATE::NIGHT; }
 }
 
 void Human::UpdateTargeting()
@@ -235,14 +240,13 @@ void Human::UpdateTargeting()
 
 	//移動処理(時間)
 	bool timeFede = timeFade->GetTimeZone();
-	m_Velocity.x = GetForward().x * (m_Speed + (timeFede * m_Speed));
-	m_Velocity.z = GetForward().z * (m_Speed + (timeFede * m_Speed));
-
-	//災害狼専用イベント
-	if (m_Disaster) { DisasterMove(); }
+	m_Velocity.x = GetForward().x * m_Speed;
+	m_Velocity.z = GetForward().z * m_Speed;
 
 	//無視範囲を超えたら
 	if (plength > m_Tracking) { m_HumanState = HUMAN_STATE::FREE; }//追尾しない
+	//夜なら
+	if (timeFede) { m_HumanState = HUMAN_STATE::NIGHT; }
 }
 
 void Human::UpdateDelete()
@@ -254,28 +258,35 @@ void Human::UpdateDelete()
 	if (m_Scale.y <= 0.0f) { SetDestroy(); }
 }
 
-void Human::UpdateEating()
+void Human::UpdateMaking()
 {
+	//移動しない
 	m_Velocity = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-	m_EatStop++;
-	if (m_EatStop % EATING_TIME == 0)
+
+	m_MakingTime++;
+	if (m_MakingTime % MAKING_TIME == 0)
 	{
-		if (m_EatStop >= EATING_TIME * EATING_COUNT)
+		//オブジェクト発生位置調整(お邪魔者の前)
+		D3DXVECTOR3 objectPosition = m_Position;
+		objectPosition.x += GetForward().x;
+		objectPosition.z += GetForward().z;
+		
+		//効果音とエフェクト
+		m_SE_Make->Play(1.0f);
+		Scene* scene = Manager::GetScene();
+		scene->AddGameObject<Explosion>(1)->SetPosition(objectPosition);//爆発エフェクト
+
+
+		if (m_MakingTime >= MAKING_TIME * MAKING_COUNT)
 		{
-			m_EatStop = 0;
+			m_MakingTime = 0;
 			m_HumanState = HUMAN_STATE::FREE;
 
-			//柵発生位置調整(お邪魔者の前)
-			D3DXVECTOR3 objectPosition = m_Position;
-			objectPosition.x += GetForward().x * 0.8f;
-			objectPosition.z += GetForward().z * 0.8f;
-
-			Scene* scene = Manager::GetScene();
+			//柵発生
 			Fence* fence = scene->AddGameObject<Fence>(1);
 			fence->SetPosition(objectPosition);
 			fence->SetRotation(m_Rotation);
 		}
-		
 	}
 }
 
@@ -289,10 +300,13 @@ void Human::UpdateAlive()
 		UpdateFree();
 		break;
 	case HUMAN_STATE::MAKING:
-		UpdateEating();
+		UpdateMaking();
 		break;
 	case HUMAN_STATE::DAMAGE:
 		UpdateDamage();
+		break;
+	case HUMAN_STATE::NIGHT:
+		UpdateNight();
 		break;
 	case HUMAN_STATE::TARGETING:
 		UpdateTargeting();
@@ -300,7 +314,7 @@ void Human::UpdateAlive()
 	}
 }
 
-void Human::UpdateDeath()
+void Human::UpdateDead()
 {
 	Scene* scene = Manager::GetScene();
 
@@ -366,8 +380,11 @@ void Human::UpdateDeath()
 void Human::UpdateDamage()
 {
 	m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.6f);
-	m_Velocity *= 0;
-	m_Rotation.y += 0.2f;
+
+	Scene* scene = Manager::GetScene();
+	Player* player = scene->GetGameObject<Player>();
+
+	Escape();
 
 	//攻撃受けたときの処理
 	m_StunTime--;
@@ -376,6 +393,15 @@ void Human::UpdateDamage()
 		m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 		m_HumanState = HUMAN_STATE::FREE;
 	}
+}
+
+void Human::UpdateNight()
+{
+	Escape();
+
+	Scene* scene = Manager::GetScene();
+	TimeFade* timeFade = scene->GetGameObject<TimeFade>();
+	if (!timeFade->GetTimeZone()) { m_HumanState = HUMAN_STATE::FREE; }
 }
 
 void Human::KnockBack()
@@ -390,21 +416,17 @@ void Human::KnockBack()
 	}
 }
 
-void Human::DisasterMove()
+void Human::Escape()
 {
-	//自動消滅しないように適当な値で上書き
-	m_DaathTime = 1000;
+	Scene* scene = Manager::GetScene();
+	Player* player = scene->GetGameObject<Player>();
 
-	//一定時間経つとオートで敵を生み出す
-	//Scene* scene = Manager::GetScene();
-	//m_DisasterCount++;
-	//if (m_DisasterCount >= 150)
-	//{
-	//	Wolf* wolf = scene->AddGameObject<Wolf>(1);
-	//	wolf->SetEnemyData(1);
-	//	wolf->SetPosition(m_Position);
-	//	m_DisasterCount = 0;
-	//}
+	//プレイヤーの反対を向く
+	m_Rotation.y = atan2f(m_Position.x - player->GetPosition().x, m_Position.z - player->GetPosition().z);
+
+	//移動処理(時間)
+	m_Velocity.x = GetForward().x * (m_Speed * 2.0f);
+	m_Velocity.z = GetForward().z * (m_Speed * 2.0f);
 }
 
 void Human::Anime()
@@ -432,6 +454,7 @@ void Human::SetDamageMove()
 	m_Life--;
 	m_SE_Kick->Play(1.0f);
 	m_ColorChange = 5;
+	m_MakingTime = 0;
 
 	Scene* scene = Manager::GetScene();
 	Player* player = scene->GetGameObject<Player>();
@@ -455,13 +478,17 @@ void Human::Collision(float& groundHeight)
 	{
 		//プレイヤーの距離を取得	
 		D3DXVECTOR3 direction = m_Position - player->GetPosition();
-		D3DXVECTOR3 pscale = player->GetScale();
-		float plength = D3DXVec3Length(&direction);
+		D3DXVECTOR3 scale = player->GetScale();
+		float length = D3DXVec3Length(&direction);
+
+		if (length < TARGET_LENGTH && m_StunTime <= 0 && m_HumanState != HUMAN_STATE::MAKING 
+			&& m_HumanState != HUMAN_STATE::NIGHT){ m_HumanState = HUMAN_STATE::MAKING; }
+
 
 		if (player->GetAttackStop() <= 0)
 		{
 			D3DXVECTOR3 scale = player->GetScale();
-			if (plength < scale.x && plength < scale.y && plength < scale.z)
+			if (length < scale.x && length < scale.y && length < scale.z)
 			{
 				//プレイヤーがダッシュ時にぶつかった場合
 				if (player->GetCharacterState() == CHARACTER_STATE::ALIVE &&
@@ -489,6 +516,10 @@ void Human::Collision(float& groundHeight)
 		D3DXVECTOR3 direction = m_Position - position;
 		float length = D3DXVec3Length(&direction);
 
+		if (length < TARGET_LENGTH && m_StunTime <= 0 && m_HumanState != HUMAN_STATE::MAKING &&
+			follow->GetState() != FOLLOW_STATE::FREE && m_HumanState != HUMAN_STATE::NIGHT)
+		{ m_HumanState = HUMAN_STATE::MAKING; }
+
 		if (length < scale.x && length < scale.y && length < scale.z)
 		{
 			if (follow->GetAttackStop() <= 0)
@@ -500,10 +531,6 @@ void Human::Collision(float& groundHeight)
 					player->AddCombo(1);
 					scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
 
-				}
-				else if (m_StunTime <= 0 && m_HumanState != HUMAN_STATE::MAKING)
-				{
-					m_HumanState = HUMAN_STATE::MAKING;
 				}
 			}
 		}
@@ -525,12 +552,6 @@ void Human::Collision(float& groundHeight)
 			float obbX = D3DXVec3Dot(&direction, &right);
 			float obbZ = D3DXVec3Dot(&direction, &forward);
 			float obbY = D3DXVec3Dot(&direction, &up);
-
-			// 影の高さ設定
-			if (fabs(obbX) < scale.x && fabs(obbZ) < scale.z && m_Position.y > position.y + scale.y - 0.5f)
-			{
-				groundHeight = max(groundHeight, position.y + scale.y);
-			}
 
 			// OBB
 			if (fabs(obbX) < scale.x && fabs(obbZ) < scale.z && fabs(obbY) < scale.y)
@@ -557,3 +578,4 @@ void Human::Collision(float& groundHeight)
 		}
 	}
 }
+

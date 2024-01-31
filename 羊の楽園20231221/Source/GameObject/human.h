@@ -6,6 +6,7 @@ enum class HUMAN_STATE
 	FREE,
 	MAKING,
 	DAMAGE,
+	NIGHT,
 	TARGETING,
 };
 
@@ -19,6 +20,7 @@ private:
 
 	static class Model* m_Model;
 	static class Audio* m_SE_Kick;
+	static class Audio* m_SE_Make;
 
 	//メンバ変数
 	D3DXVECTOR3 m_PLForward{};										//プレイヤーの向き
@@ -32,7 +34,7 @@ private:
 	float   m_OrientationTime = 0.0f;	//向き変更時間
 	float   m_NextRotTime = 0.0f;		//次に向き変更するまで
 	int     m_NextRot = 1;				//次の向き
-	int	    m_EatStop = 0;
+	int	    m_MakingTime = 0;
 	float	m_Death = 0.14f;
 	int		m_KnockBackTime = 0;
 	int		m_StunTime = 0;
@@ -40,24 +42,23 @@ private:
 
 	//ステータス
 	bool	m_Item = false;
-	int		m_CoinDrop = 8;										//コインドロップ数
-	D3DXVECTOR3 m_BarScale = D3DXVECTOR3(0.7f, 0.7f, 0.7f);		//HPバーのサイズ
+	int		m_CoinDrop = 4;										//コインドロップ数
+	D3DXVECTOR3 m_BarScale = D3DXVECTOR3(1.0f, 1.5f, 1.0f);		//HPバーのサイズ
 	float m_HpBarPosY = 1.8f;									//HPバーのY座標
-	float m_Tracking = 5.0f;									//追尾範囲
-	bool  m_Disaster = false;									//やばい奴
-	int   m_DisasterCount = 0;									//やばい奴
+	float m_Tracking = 10.0f;									//追尾範囲
 
 	//関数
 	void UpdateAlive() override;
-	void UpdateDeath() override;
+	void UpdateDead() override;
 	void UpdateFree();
 	void UpdateTargeting();
 	void UpdateDelete();
-	void UpdateEating();
+	void UpdateMaking();
 	void UpdateDamage();
+	void UpdateNight();
 	void Collision(float& groundHeight)override;
+	void Escape();
 	void KnockBack();
-	void DisasterMove();
 	void Anime();
 
 public:
