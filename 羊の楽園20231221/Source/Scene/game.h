@@ -1,9 +1,16 @@
 #pragma once
 #include "scene.h"
 
+enum class GAME_STATE
+{
+	NORMAL,
+	FADE,
+};
+
 class Game : public Scene
 {
 private:
+	GAME_STATE m_GameState = GAME_STATE::NORMAL; // ゲームステート
 	class Audio* m_BGM{};
 	class Audio* m_BGM_Night{};
 	class Audio* m_SE_SeepCry{};
@@ -14,15 +21,17 @@ private:
 	class TimeFade* m_TimeFade{};
 	class DamageFade* m_DamageFade{};
 
-	int m_GameTime		  = 0;
-	int m_GameTimeSeconds = 0;
-	int m_Day			  = 0;
+	int m_GameTime			= 0;
+	int m_GameTimeSeconds	= 0;
+	int m_Day				= 0;
 
-	int m_NawEvent		  = 0;
-	bool m_Event1		  = false;
-	bool m_Event2		  = false;
+	int m_NawEvent			= 0;
+	bool m_Event1			= false;
+	bool m_Event2			= false;
 
 	//関数
+	void UpdateNormal();
+	void UpdateFade();
 	void TimeSecondsUpdate();
 	void TimeEvent_Time2Loop();
 	void TimeEvent_Time20();

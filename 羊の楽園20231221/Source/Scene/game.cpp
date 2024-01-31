@@ -208,41 +208,77 @@ void Game::Update()
 {
 	Scene::Update();
 
-	Scene* scene = Manager::GetScene();
-	Player* player = scene->GetGameObject<Player>();
-	D3DXVECTOR3 PLPos = player->GetPosition();
-	Score* score = scene->GetGameObject<Score>();
-
 	//BGMのフェード更新
 	m_BGM->FadeUpdate();
 	m_BGM_Night->FadeUpdate();
 
+	switch (m_GameState)
+	{
+	case GAME_STATE::NORMAL:
+		UpdateNormal();
+		break;
+	case GAME_STATE::FADE:
+		UpdateFade();
+		break;
+	}
+}
+
+void Game::UpdateNormal()
+{
 	//秒数更新
-	m_GameTime ++;
-	if (m_GameTime > 60) 
+	m_GameTime++;
+	if (m_GameTime > 60)
 	{
 		TimeSecondsUpdate();
 		m_GameTime = 0;
 	}
 
 	//秒毎のイベント
-	if (m_GameTime == 0) 
+	if (m_GameTime == 0)
 	{
 		//20秒に1回
-		if (m_GameTimeSeconds == 20) {TimeEvent_Time20();}
+		if (m_GameTimeSeconds == 20) { TimeEvent_Time20(); }
 		//40秒に1回
-		if (m_GameTimeSeconds == 40) {TimeEvent_Time40();}
+		if (m_GameTimeSeconds == 40) { TimeEvent_Time40(); }
 		//3秒ごと
-		if (m_GameTimeSeconds % 2 == 0){TimeEvent_Time2Loop();}
+		if (m_GameTimeSeconds % 2 == 0) { TimeEvent_Time2Loop(); }
 		//4日ごと
-		if (m_Day % 3 == 0 && m_GameTimeSeconds == 0) {TimeEvent_Day3Loop();}
+		if (m_Day % 3 == 0 && m_GameTimeSeconds == 0) { TimeEvent_Day3Loop(); }
 		//10か30秒に1回
 		if (m_GameTimeSeconds == 10 || m_GameTimeSeconds == 30) { TimeEvent_Time10or30(); }
 	}
 
 	//プレイヤーが食べられたらゲームオーバー
-	if (player->GetCharacterState() == CHARACTER_STATE::UNUSED) {m_Fade->FadeOut();}
-	if (m_Fade->GetFadeFinish()) {
+	Scene* scene = Manager::GetScene();
+	Player* player = scene->GetGameObject<Player>();
+	if (player->GetCharacterState() == CHARACTER_STATE::DEAD) 
+	{ 
+		m_BGM->FadeToVolume(0.0f, 0.01f);
+		m_BGM_Night->FadeToVolume(0.0f, 0.01f);
+		m_GameState = GAME_STATE::FADE; 
+	}
+
+	//デバッグモード専用処理
+	bool debug = player->GetDebug();
+	if (Input::GetKeyTrigger('O') && debug) { m_GameState = GAME_STATE::FADE; ; }		//次シーンへ
+	if (Input::GetKeyTrigger('I') && debug) { m_GameTimeSeconds = 38; }	//時間カット
+	if (Input::GetKeyPress(VK_RBUTTON) && debug) 
+	{ 
+		D3DXVECTOR3 PLPos = player->GetPosition();
+		AddGameObject<Follow>(1)->SetPosition(D3DXVECTOR3(PLPos.x, 1.0f, PLPos.z)); }	//羊増量
+}
+
+void Game::UpdateFade()
+{
+	Scene* scene = Manager::GetScene();
+	Player* player = scene->GetGameObject<Player>();
+
+	if (player->GetCharacterState() == CHARACTER_STATE::UNUSED) { m_Fade->FadeOut(); }
+
+	//フェードが終わったら
+	if (m_Fade->GetFadeFinish())
+	{
+		Score* score = scene->GetGameObject<Score>();
 		//リザルトに情報をセットする
 		Result* result = scene->GetGameObject<Result>();
 		result->SetDay(score->GetCountDay());
@@ -251,12 +287,6 @@ void Game::Update()
 
 		Manager::SetScene<Result>();
 	}
-
-	//デバッグモード専用処理
-	bool debug = player->GetDebug();
-	if (Input::GetKeyTrigger('O') && debug) { m_Fade->FadeOut(); }		//次シーンへ
-	if (Input::GetKeyTrigger('I') && debug) { m_GameTimeSeconds = 38; }	//時間カット
-	if (Input::GetKeyPress(VK_RBUTTON) && debug) { AddGameObject<Follow>(1)->SetPosition(D3DXVECTOR3(PLPos.x, 1.0f, PLPos.z));}	//羊増量
 }
 
 void Game::TimeSecondsUpdate()
