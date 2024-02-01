@@ -468,7 +468,7 @@ void Wolf::SetEnemyData(int data)
 	if (m_Data == 1)
 	{
 		m_BiteCount = 5;
-		m_FullLife = 5;
+		m_FullLife = 4;
 		m_Speed = 0.032f;
 		m_CoinDrop = 1;
 		m_StanGuard = 2;
@@ -479,10 +479,10 @@ void Wolf::SetEnemyData(int data)
 	else if (m_Data == 2)
 	{
 		m_BiteCount = 4;
-		m_FullLife = 8;
+		m_FullLife = 6;
 		m_Speed = 0.032f;
-		m_CoinDrop = 2;
-		m_StanGuard = 4;
+		m_CoinDrop = 1;
+		m_StanGuard = 3;
 		m_OriginalScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 		m_BarScale = D3DXVECTOR3(0.7f, 0.7f, 0.7f);	
 		m_HpBarPosY = 1.8f;
@@ -491,10 +491,10 @@ void Wolf::SetEnemyData(int data)
 	else if (m_Data == 3)
 	{
 		m_BiteCount = 3;
-		m_FullLife = 14;
+		m_FullLife = 12;
 		m_Speed = 0.034f;
-		m_CoinDrop = 3;
-		m_StanGuard = 7;
+		m_CoinDrop = 2;
+		m_StanGuard = 6;
 		m_OriginalScale = D3DXVECTOR3(1.3f, 1.3f, 1.3f);
 		m_BarScale = D3DXVECTOR3(1.0f, 0.7f, 0.7f);
 		m_HpBarPosY = 2.2f;
@@ -504,7 +504,7 @@ void Wolf::SetEnemyData(int data)
 		m_BiteCount = 3;
 		m_FullLife = 18;
 		m_Speed = 0.036f;
-		m_CoinDrop = 4;
+		m_CoinDrop = 2;
 		m_StanGuard = 9;
 		m_OriginalScale = D3DXVECTOR3(1.7f, 1.7f, 1.7f);
 		m_BarScale = D3DXVECTOR3(1.4f, 0.7f, 0.7f);
@@ -622,7 +622,8 @@ void Wolf::Collision(float& groundHeight)
 			// OBB
 			if (fabs(obbX) < scale.x && fabs(obbZ) < scale.z && fabs(obbY) < scale.y)
 			{
-				D3DXVECTOR3 penetration = D3DXVECTOR3(scale.x - fabs(obbX), scale.y - fabs(obbY), scale.z - fabs(obbZ));
+	
+				D3DXVECTOR3 penetration = D3DXVECTOR3(fabsf(scale.x) - fabsf(obbX), fabsf(scale.y) - fabsf(obbY), fabsf(scale.z) - fabsf(obbZ));
 
 				//¶‰E‚©‚çG‚ê‚é
 				if (penetration.x < penetration.z && penetration.x < penetration.y)
