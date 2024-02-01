@@ -458,7 +458,7 @@ void Player::Collision(float& groundHeight)
 					AddCombo(1);
 				}
 
-				D3DXVECTOR3 penetration = D3DXVECTOR3(scale.x - fabs(obbX), scale.y - fabs(obbY), scale.z - fabs(obbZ));
+				D3DXVECTOR3 penetration = D3DXVECTOR3(fabsf(scale.x) - fabsf(obbX), fabsf(scale.y) - fabsf(obbY), fabsf(scale.z) - fabsf(obbZ));
 
 				//ç∂âEÇ©ÇÁêGÇÍÇÈ
 				if (penetration.x < penetration.z && penetration.x < penetration.y)
