@@ -19,10 +19,18 @@ void Input::Uninit()
 void Input::Update()
 {
 	memcpy(m_OldKeyState, m_KeyState, 256);
-	GetKeyboardState(m_KeyState);
 
-	GetCursorPos(&m_MousePos);
-	ScreenToClient(GetForegroundWindow(), &m_MousePos);
+	// マウス位置の取得
+	POINT rawMousePos;
+	GetCursorPos(&rawMousePos);
+	ScreenToClient(GetForegroundWindow(), &rawMousePos);
+
+	// マウス位置の更新
+	m_MousePos.x = rawMousePos.x;
+	m_MousePos.y = rawMousePos.y;
+
+	// キーボードの状態の更新
+	GetKeyboardState(m_KeyState);
 }
 
 bool Input::GetKeyPress(BYTE KeyCode)
