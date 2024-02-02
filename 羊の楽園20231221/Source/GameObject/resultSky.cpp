@@ -13,7 +13,7 @@ Model* ResultSky::m_Model{};
 void ResultSky::Load()
 {
 	m_Model = new Model();
-	m_Model->Load("asset\\model\\skydm02.obj");//mtl‚Ìkd‚ð1‚É‚·‚é‚±‚ÆI
+	m_Model->Load("asset\\model\\sky.obj");//mtl‚Ìkd‚ð1‚É‚·‚é‚±‚ÆI
 }
 
 void ResultSky::Unload()
@@ -52,7 +52,9 @@ void ResultSky::Update()
 	if (m_ColorValue >= m_CountSeep / 100.0f) { m_ColorValue = m_CountSeep / 100; }
 
 	m_Color = D3DXCOLOR(m_ColorValue, m_ColorValue, m_ColorValue, 1.0f);
-
+	
+	//‰ñ“]
+	m_Rotation.y -= 0.0001f;
 }
 
 void ResultSky::Draw()
