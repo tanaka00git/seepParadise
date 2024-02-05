@@ -21,6 +21,8 @@
 #include "..\GameObject\damageFade.h"
 #include "..\GameObject\camera.h"
 #include "..\GameObject\smoke.h"
+#include "..\GameObject\angelRing.h"
+
 #include "..\App\model.h"
 
 Model*Player::m_Model{};
@@ -235,6 +237,10 @@ void Player::UpdateDead()
 	if (m_Death < 0.0f) { m_Death = 0.0f; }
 	if (m_Scale.y < 0.0f)
 	{
+		Scene* scene = Manager::GetScene();
+		scene->AddGameObject<AngelRing>(1)->SetPosition(m_Position);//天使エフェクト
+		m_WalkEffectTime = 0;
+
 		m_Scale *= 0.0f;
 		m_CharacterState = CHARACTER_STATE::UNUSED;
 	}

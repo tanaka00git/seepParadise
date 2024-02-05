@@ -150,6 +150,7 @@
     </ClCompile>
     <ClCompile Include="Source\App\renderer.cpp" />
     <ClCompile Include="Source\App\sprite.cpp" />
+    <ClCompile Include="Source\GameObject\angelRing.cpp" />
     <ClCompile Include="Source\GameObject\apple.cpp" />
     <ClCompile Include="Source\GameObject\box.cpp" />
     <ClCompile Include="Source\GameObject\breakObject.cpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="Source\App\model.h" />
     <ClInclude Include="Source\App\renderer.h" />
     <ClInclude Include="Source\App\sprite.h" />
+    <ClInclude Include="Source\GameObject\angelRing.h" />
     <ClInclude Include="Source\GameObject\apple.h" />
     <ClInclude Include="Source\GameObject\box.h" />
     <ClInclude Include="Source\GameObject\breakObject.h" />

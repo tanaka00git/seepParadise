@@ -12,6 +12,7 @@
 #include "..\GameObject\shadow.h"
 #include "..\GameObject\camera.h"
 #include "..\GameObject\smoke.h"
+#include "..\GameObject\angelRing.h"
 #include "..\App\model.h"
 
 Model*Follow::m_Model{};
@@ -217,6 +218,10 @@ void Follow::UpdateDead()
 	if (m_Death < 0.0f) { m_Death = 0.0f; }
 	if (m_Scale.y < 0.0f)
 	{
+		Scene* scene = Manager::GetScene();
+		scene->AddGameObject<AngelRing>(1)->SetPosition(m_Position);//天使エフェクト
+		m_WalkEffectTime = 0;
+
 		m_Scale *= 0.0f;
 		SetDestroy();
 	}
@@ -280,7 +285,7 @@ void Follow::WalkEffect()
 	if (m_WalkEffectTime >= WALK_EFFECT_TIME + count / 5)
 	{
 		Scene* scene = Manager::GetScene();
-		scene->AddGameObject<Smoke>(1)->SetPosition(effectPosition);//爆発エフェクト
+		scene->AddGameObject<Smoke>(1)->SetPosition(effectPosition);//煙エフェクト
 		m_WalkEffectTime = 0;
 	}
 }

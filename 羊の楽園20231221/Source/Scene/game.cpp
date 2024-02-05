@@ -17,6 +17,7 @@
 #include "..\GameObject\coin.h"
 #include "..\GameObject\explosion.h"
 #include "..\GameObject\smoke.h"
+#include "..\GameObject\angelRing.h"
 #include "..\GameObject\shine.h"
 #include "..\GameObject\shine2.h"
 #include "..\GameObject\cylinder.h"
@@ -49,7 +50,7 @@
 
 #define CYLINDER_START_NUM 30
 #define BOX_START_NUM 30
-#define TREE_START_NUM 55
+#define TREE_START_NUM 20
 #define COIN_START_NUM 10
 #define SEED_START_NUM 70
 #define ROCK_START_NUM 10
@@ -74,6 +75,7 @@ void Game::Init()
 	Human::Load();
 	Explosion::Load();
 	Smoke::Load();
+	AngelRing::Load();
 	Shine::Load();
 	Shine2::Load();
 	HpBarS::Load();
@@ -193,6 +195,7 @@ void Game::Uninit()
 	DisasterWolf::Unload();
 	Explosion::Unload();
 	Smoke::Unload();
+	AngelRing::Unload();
 	Shine::Unload();
 	Shine2::Unload();
 	HpBarS::Unload();
