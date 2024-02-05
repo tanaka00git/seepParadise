@@ -43,6 +43,7 @@
 #include "..\GameObject\infoLog.h"
 #include "..\GameObject\damageFade.h"
 #include "..\GameObject\shadow.h"
+#include "..\GameObject\attackMarker.h"
 #include "..\GameObject\timeFade.h"
 #include "..\GameObject\concentrationLine.h"
 #include "..\GameObject\daybar.h"
@@ -90,6 +91,7 @@ void Game::Init()
 	Fence::Load();
 	DamageFade::Load();
 	Shadow::Load();
+	AttackMarker::Load();
 	TimeFade::Load();
 	ConcentrationLine::Load();
 	InfoLog::Load();
@@ -209,6 +211,7 @@ void Game::Uninit()
 	ItemLife::Unload();
 	DamageFade::Unload();
 	Shadow::Unload();
+	AttackMarker::Unload();
 	TimeFade::Unload();
 	ConcentrationLine::Unload();
 	InfoLog::Unload();

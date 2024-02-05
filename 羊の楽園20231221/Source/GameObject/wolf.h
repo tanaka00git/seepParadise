@@ -23,6 +23,7 @@ protected:
 	static class Model* m_ModelApple;
 	static class Audio* m_SE_Eat;
 	static class Audio* m_SE_Kick;
+	class AttackMarker* m_AttackMarker{};
 
 	//メンバ変数
 	D3DXVECTOR3 m_PLForward{};										//プレイヤーの向き

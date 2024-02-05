@@ -1,16 +1,16 @@
 #include "..\App\main.h"
 #include "..\App\renderer.h"
-#include "..\GameObject\shadow.h"
+#include "..\GameObject\attackMarker.h"
 
-ID3D11ShaderResourceView*Shadow::m_Texture{};
+ID3D11ShaderResourceView* AttackMarker::m_Texture{};
 
 #define SCALE 0.7f
 
-void Shadow::Load()
+void AttackMarker::Load()
 {
 	// テクスチャ読み込み
 	D3DX11CreateShaderResourceViewFromFile(Renderer::GetDevice(),
-		"asset\\texture\\shadow.png",
+		"asset\\texture\\attackMarker.png",
 		NULL,
 		NULL,
 		&m_Texture,
@@ -18,12 +18,12 @@ void Shadow::Load()
 	assert(m_Texture);
 }
 
-void Shadow::Unload()
+void AttackMarker::Unload()
 {
 	m_Texture->Release();
 }
 
-void Shadow::Init()
+void AttackMarker::Init()
 {
 	//適当な初期値でInit時の描画を隠す
 	m_Position.y = 999.0f;
@@ -75,7 +75,7 @@ void Shadow::Init()
 
 }
 
-void Shadow::Uninit()
+void AttackMarker::Uninit()
 {
 
 	m_VertexBuffer->Release();
@@ -87,11 +87,11 @@ void Shadow::Uninit()
 
 }
 
-void Shadow::Update()
+void AttackMarker::Update()
 {
 }
 
-void Shadow::Draw()
+void AttackMarker::Draw()
 {
 	//入力レイアウト設定
 	Renderer::GetDeviceContext()->IASetInputLayout(m_VertexLayout);
@@ -105,7 +105,7 @@ void Shadow::Draw()
 	D3DXMATRIX world, scale, rot, trans;
 	D3DXMatrixScaling(&scale, m_Scale.x, m_Scale.y, m_Scale.z);
 	D3DXMatrixRotationYawPitchRoll(&rot, m_Rotation.y, m_Rotation.x, m_Rotation.z);
-	D3DXMatrixTranslation(&trans, m_Position.x, m_Position.y, m_Position.z);
+	D3DXMatrixTranslation(&trans, m_Position.x, m_Position.y, m_Position.z );
 	world = scale * rot * trans;
 	Renderer::SetWorldMatrix(&world);
 

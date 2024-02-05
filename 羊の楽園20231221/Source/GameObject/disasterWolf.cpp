@@ -7,6 +7,7 @@
 #include "..\App\model.h"
 #include "..\GameObject\camera.h"
 #include "..\GameObject\timeFade.h"
+#include "..\GameObject\AttackMarker.h"
 #include "..\App\audio.h"
 
 Model* DisasterWolf::m_ModelClown{};
@@ -33,6 +34,19 @@ void DisasterWolf::Init()
 
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\pixelLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\pixelLightingPS.cso");
+
+	m_AttackMarker = AddComponent<AttackMarker>();
+}
+
+void DisasterWolf::Update()
+{
+	Wolf::Update();
+	
+	//アタックマーカーの移動
+	D3DXVECTOR3 attackMarkerPosition = m_Position;
+	m_AttackMarker->SetPosition(attackMarkerPosition);
+	m_AttackMarker->SetRotation(m_Rotation);
+
 }
 
 void DisasterWolf::Draw()
@@ -93,6 +107,7 @@ void DisasterWolf::UpdateTargeting()
 void DisasterWolf::UpdateSuperCharge()
 {
 	m_Velocity *= 0;
+	m_AttackMarker->SetScale(D3DXVECTOR3(m_Scale.x, m_Scale.y, m_Scale.z * 5));
 
 	m_SuparChargeCount++;
 	if (m_SuparChargeCount >= 60)
@@ -106,6 +121,8 @@ void DisasterWolf::UpdateSuperAttack()
 {
 	m_Velocity.x = GetForward().x * (m_Speed) * 6;
 	m_Velocity.z = GetForward().z * (m_Speed) * 6;
+
+	m_AttackMarker->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	m_SuparChargeCount--;
 	if (m_SuparChargeCount <= 0)

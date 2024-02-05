@@ -6,6 +6,7 @@ class DisasterWolf : public Wolf
 private:
 	static class Model* m_ModelClown;
 	static class Audio* m_SE_SuperAttack;
+	class AttackMarker* m_AttackMarker{};
 
 	bool  m_Disaster = false;									//ŠëŒ¯ŒÂ‘Ì”»•Ê—p
 	int   m_DisasterCount = 0;									//“G‚ªoŒ»‚·‚é
@@ -20,6 +21,7 @@ public:
 	static void Unload();
 
 	void Init()override;
+	void Update()override;
 	void Draw()override;
 	void SetEnemyData(int data) override;
 };

@@ -237,6 +237,9 @@
     <ClCompile Include="Source\GameObject\angelRing.cpp">
       <Filter>ソース ファイル\GameObject\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameObject\attackMarker.cpp">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App\audio.h">
@@ -436,6 +439,9 @@
     </ClInclude>
     <ClInclude Include="Source\GameObject\angelRing.h">
       <Filter>ソース ファイル\GameObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\attackMarker.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
