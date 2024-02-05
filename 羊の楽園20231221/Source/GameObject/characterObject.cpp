@@ -39,18 +39,10 @@ void CharacterObject::Update()
 	DamageFlash();
 }
 
-void CharacterObject::Draw()
-{
-}
-
 void CharacterObject::UpdateAlive()
 {
 	//¶€‚Ìˆ—
 	if (m_Life <= 0) { m_CharacterState = CHARACTER_STATE::DEAD; }
-}
-
-void CharacterObject::UpdateDead()
-{
 }
 
 void CharacterObject::UpdateUnused()

@@ -32,7 +32,7 @@ protected:
 
 	//ä÷êî
 	virtual void UpdateAlive();
-	virtual void UpdateDead();
+	virtual void UpdateDead() {};
 	virtual void UpdateUnused();
 	virtual void DamageFlash();
 	virtual void Collision(float& groundHeight);
@@ -41,7 +41,7 @@ public:
 	virtual void Init();
 	virtual void Uninit();
 	virtual void Update();
-	virtual void Draw();
+	virtual void Draw() {};
 
 	//ÉZÉbÉgä÷êî
 	void SetDrop();
