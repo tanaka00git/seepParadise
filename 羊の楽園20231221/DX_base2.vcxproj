@@ -161,6 +161,7 @@
     <ClCompile Include="Source\GameObject\cylinder.cpp" />
     <ClCompile Include="Source\GameObject\damageFade.cpp" />
     <ClCompile Include="Source\GameObject\dayBar.cpp" />
+    <ClCompile Include="Source\GameObject\disasterWolf.cpp" />
     <ClCompile Include="Source\GameObject\explosion.cpp" />
     <ClCompile Include="Source\GameObject\fade.cpp" />
     <ClCompile Include="Source\GameObject\fence.cpp" />
@@ -226,6 +227,7 @@
     <ClInclude Include="Source\GameObject\cylinder.h" />
     <ClInclude Include="Source\GameObject\damageFade.h" />
     <ClInclude Include="Source\GameObject\dayBar.h" />
+    <ClInclude Include="Source\GameObject\disasterWolf.h" />
     <ClInclude Include="Source\GameObject\explosion.h" />
     <ClInclude Include="Source\GameObject\fade.h" />
     <ClInclude Include="Source\GameObject\fence.h" />

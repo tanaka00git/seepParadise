@@ -11,15 +11,14 @@ enum class WOLF_STATE
 
 class Wolf : public CharacterObject
 {
-private:
+protected:
 	WOLF_STATE m_WolfState = WOLF_STATE::FREE;
 	ID3D11VertexShader* m_VertexShader{};
 	ID3D11PixelShader* m_PixelShader{};
 	ID3D11InputLayout* m_VertexLayout{};
 
 	static class Model* m_Model;
-	static class Model* m_Model2;
-	static class Model* m_Model3;
+	static class Model* m_ModelApple;
 	static class Audio* m_SE_Eat;
 	static class Audio* m_SE_Kick;
 
@@ -52,20 +51,17 @@ private:
 	D3DXVECTOR3 m_BarScale = D3DXVECTOR3(0.7f,0.7f,0.7f);		//HPバーのサイズ
 	float m_HpBarPosY = 1.8f;									//HPバーのY座標
 	float m_Tracking = 5.0f;									//追尾範囲
-	bool  m_Disaster = false;									//危険個体判別用
-	int   m_DisasterCount = 0;									//敵が出現する
 
 	//関数
 	void UpdateAlive() override;
 	void UpdateDead() override;
 	void UpdateFree();
-	void UpdateTargeting();
+	virtual void UpdateTargeting();
 	void UpdateDelete();
 	void UpdateEating();
 	void UpdateDamage();
 	void Collision(float& groundHeight)override;
 	void KnockBack();
-	void DisasterMove();
 	void Anime();
 
 public:
@@ -74,9 +70,9 @@ public:
 	void Init()override;
 	void Uninit()override;
 	void Update()override;
-	void Draw()override;
+	virtual void Draw()override;
 
 	void SetDamageMove();
 	void SetPosEnemyData(D3DXVECTOR3 position, int num);
-	void SetEnemyData(int data);
+	virtual void SetEnemyData(int data);
 };

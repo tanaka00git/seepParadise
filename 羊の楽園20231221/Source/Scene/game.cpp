@@ -22,6 +22,7 @@
 #include "..\GameObject\cylinder.h"
 #include "..\GameObject\box.h"
 #include "..\GameObject\wolf.h"
+#include "..\GameObject\DisasterWolf.h"
 #include "..\GameObject\apple.h"
 #include "..\GameObject\seed.h"
 #include "..\GameObject\score.h"
@@ -69,6 +70,7 @@ void Game::Init()
 	GoalScope::Load();
 	Seed::Load();
 	Wolf::Load();
+	DisasterWolf::Load();
 	Human::Load();
 	Explosion::Load();
 	Smoke::Load();
@@ -188,6 +190,7 @@ void Game::Uninit()
 	Player::Unload();
 	Seed::Unload();
 	Wolf::Unload();
+	DisasterWolf::Unload();
 	Explosion::Unload();
 	Smoke::Unload();
 	Shine::Unload();
@@ -488,5 +491,5 @@ void Game::TimeEvent_Day3Loop()
 	AddGameObject<InfoLog>(2)->SetNum(13,3,D3DXVECTOR3(900,480,0));
 
 	float rot = frand() * 2 * D3DX_PI;
-	AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z), 5);
+	AddGameObject<DisasterWolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z), 5);
 }

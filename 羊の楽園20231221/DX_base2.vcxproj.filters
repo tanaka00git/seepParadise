@@ -180,9 +180,6 @@
     <ClCompile Include="Source\GameObject\tree.cpp">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameObject\wolf.cpp">
-      <Filter>ソース ファイル\GameObject\Normal</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GameObject\titleSeep.cpp">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClCompile>
@@ -230,6 +227,12 @@
     </ClCompile>
     <ClCompile Include="Source\GameObject\goalNavigation.cpp">
       <Filter>ソース ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\wolf.cpp">
+      <Filter>ソース ファイル\GameObject\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\disasterWolf.cpp">
+      <Filter>ソース ファイル\GameObject\Character</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -380,9 +383,6 @@
     <ClInclude Include="Source\GameObject\tree.h">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameObject\wolf.h">
-      <Filter>ソース ファイル\GameObject\Normal</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GameObject\titleSeep.h">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClInclude>
@@ -424,6 +424,12 @@
     </ClInclude>
     <ClInclude Include="Source\GameObject\goalNavigation.h">
       <Filter>ソース ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\wolf.h">
+      <Filter>ソース ファイル\GameObject\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\disasterWolf.h">
+      <Filter>ソース ファイル\GameObject\Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

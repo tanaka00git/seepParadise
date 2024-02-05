@@ -23,8 +23,7 @@
 #include "..\App\model.h"
 
 Model*Wolf::m_Model{};
-Model*Wolf::m_Model2{};
-Model*Wolf::m_Model3{};
+Model*Wolf::m_ModelApple{};
 Audio*Wolf::m_SE_Eat{};
 Audio*Wolf::m_SE_Kick{};
 
@@ -33,16 +32,15 @@ Audio*Wolf::m_SE_Kick{};
 #define APPLE_RATE 20
 #define GIVE_ATTACK_STOP 20
 #define KNOCK_BACK_TIME 14
-#define STUN_TIME 100
+#define STUN_TIME 240
 
 void Wolf::Load()
 {
 	m_Model = new Model();
 	m_Model->Load("asset\\model\\wolf_a.obj");
-	m_Model2 = new Model();
-	m_Model2->Load("asset\\model\\wolfClown1.obj");
-	m_Model3 = new Model();
-	m_Model3->Load("asset\\model\\wolfClown3.obj");
+
+	m_ModelApple = new Model();
+	m_ModelApple->Load("asset\\model\\wolfClown3.obj");
 	m_SE_Eat = new Audio();
 	m_SE_Eat->Load("asset\\audio\\eat3b.wav");
 	m_SE_Kick = new Audio();
@@ -52,14 +50,11 @@ void Wolf::Load()
 void Wolf::Unload()
 {
 	m_Model->Unload();
-	m_Model2->Unload();
-	m_Model3->Unload();
+	m_ModelApple->Unload();
 	delete m_Model;
-	delete m_Model2;
-	delete m_Model3;
+	delete m_ModelApple;
 	m_Model = nullptr;
-	m_Model2 = nullptr;
-	m_Model3 = nullptr;
+	m_ModelApple = nullptr;
 
 }
 
@@ -173,8 +168,7 @@ void Wolf::Draw()
 
 	m_Model->DrawColor(m_Color, m_TextureEnable);
 
-	if (m_Data == 5) { m_Model2->DrawColor(m_Color, m_TextureEnable); }
-	if (m_Item) { m_Model3->DrawColor(m_Color, m_TextureEnable); }
+	if (m_Item) { m_ModelApple->DrawColor(m_Color, m_TextureEnable); }
 }
 
 void Wolf::UpdateFree()
@@ -250,8 +244,7 @@ void Wolf::UpdateTargeting()
 	m_Velocity.x = GetForward().x * (m_Speed + (timeFede * m_Speed));
 	m_Velocity.z = GetForward().z * (m_Speed + (timeFede * m_Speed));
 
-	//災害狼専用イベント
-	if (m_Disaster) { DisasterMove(); }
+
 
 	//無視範囲を超えたら
 	if (plength > m_Tracking) { m_WolfState = WOLF_STATE::FREE; }//追尾しない
@@ -393,23 +386,6 @@ void Wolf::KnockBack()
 	}
 }
 
-void Wolf::DisasterMove()
-{
-	//自動消滅しないように適当な値で上書き
-	m_DaathTime = 1000;
-
-	//一定時間経つとオートで敵を生み出す
-	Scene* scene = Manager::GetScene();
-	m_DisasterCount ++;
-	if (m_DisasterCount >= 150) 
-	{
-		Wolf* wolf = scene->AddGameObject<Wolf>(1);
-		wolf->SetEnemyData(1);
-		wolf->SetPosition(m_Position);
-		m_DisasterCount = 0;
-	}
-}
-
 void Wolf::Anime()
 {
 	m_AnimeTime++;
@@ -509,19 +485,6 @@ void Wolf::SetEnemyData(int data)
 		m_OriginalScale = D3DXVECTOR3(1.7f, 1.7f, 1.7f);
 		m_BarScale = D3DXVECTOR3(1.4f, 0.7f, 0.7f);
 		m_HpBarPosY = 2.8f;
-	}
-	else if (m_Data == 5) 
-	{
-		m_Item = false;
-		m_BiteCount = 2;
-		m_FullLife = 80;
-		m_Speed = 0.04f;
-		m_CoinDrop = 30;
-		m_StanGuard = 40;
-		m_OriginalScale = D3DXVECTOR3(2.9f, 2.9f, 2.9f);	//キャラのサイズ
-		m_BarScale = D3DXVECTOR3(5.0f, 1.0f, 1.0f);			//HPバーのサイズ
-		m_Tracking = 200.0f;								//追尾範囲
-		m_Disaster = true;
 	}
 	m_Life = m_FullLife;
 	
