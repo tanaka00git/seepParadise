@@ -35,6 +35,7 @@ protected:
 	virtual void UpdateMove();
 	virtual void UpdateDelete();
 	virtual void UpdateDead();
+	virtual void Collision(float& groundHeight);
 
 public:
 	static void Load();

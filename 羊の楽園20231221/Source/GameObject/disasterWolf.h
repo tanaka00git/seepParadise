@@ -16,6 +16,7 @@ public:
 	static void Load();
 	static void Unload();
 
-	virtual void Draw()override;
+	void Init()override;
+	void Draw()override;
 	void SetEnemyData(int data) override;
 };

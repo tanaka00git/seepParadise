@@ -63,14 +63,12 @@ void Wolf::Init()
 	CharacterObject::Init();
 
 	m_Scale.y = 0.01f;
-
 	m_Rotation.y = frand() * 2 * D3DX_PI;
 
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
 	
 	m_Shadow = AddComponent<Shadow>();
-
 	m_HpBarS = AddComponent<HpBarS>();
 	m_HpBarS->SetLifeDateFC(m_FullLife, m_Life);
 }

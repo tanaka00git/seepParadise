@@ -7,6 +7,8 @@
 #include "..\GameObject\follow.h"
 #include "..\GameObject\player.h"
 #include "..\GameObject\hpBarS.h"
+#include "..\GameObject\cylinder.h"
+#include "..\GameObject\box.h"
 
 Audio*BreakObject::m_SE_Kick{};
 
@@ -59,6 +61,10 @@ void BreakObject::Update()
 		UpdateDelete();
 		break;
 	}
+
+	//当たり判定
+	float groundHeight = 0.0f;
+	Collision(groundHeight);
 }
 
 void BreakObject::UpdateMove()
@@ -133,4 +139,90 @@ void BreakObject::LifeBarMove()
 
 	//情報送信
 	m_HpBarS->SetLifeDateFC(m_FullLife, m_Life);
+}
+
+void BreakObject::Collision(float& groundHeight)
+{
+	Scene* scene = Manager::GetScene();
+
+	// 円柱
+	auto cylinders = scene->GetGameObjects<Cylinder>();    // 円柱のリストを取得
+	for (Cylinder* cylinder : cylinders)
+	{
+		D3DXVECTOR3 position = cylinder->GetPosition();
+		D3DXVECTOR3 scale = cylinder->GetScale();
+		scale.x *= 1.2f, scale.z *= 1.2f;					//半径の調整
+		D3DXVECTOR3 direction = m_Position - position;		//円柱中心からキャラまでのベクトル
+		D3DXVECTOR3 up = cylinder->GetUp();					//円柱の上方向ベクトル
+		float obbY = D3DXVec3Dot(&direction, &up);			//円柱の上方向への軸分離
+
+		//影の高さを調整するため用
+		direction -= up * obbY;								//y軸の接触を無視するために、directionからupの成分を引く
+		float length = D3DXVec3Length(&direction);			//新しいlengthを計算する（キャラと円柱中心の距離）
+
+		//当たり判定
+		if (length < scale.x && fabs(obbY) < scale.y)
+		{
+			D3DXVECTOR3 normalizedDirection = direction / length;
+			float penetrationY = scale.y - static_cast<float>(fabs(obbY));
+			float penetrationX = scale.x - length;
+
+			// 円柱内に入った場合の処理
+			if (penetrationX < penetrationY)
+			{
+				// 入った方向に押し出し処理
+				m_Position += penetrationX * normalizedDirection;
+			}
+			else
+			{
+				m_Position += (m_Position.y < obbY) ? (-penetrationY * up) : penetrationY * up;
+				m_Velocity.y = (m_Position.y < obbY) ? -m_Velocity.y : 0.0f; // 上に乗ったら垂直速度を0にする、下から触れたら反転する
+			}
+		}
+	}
+
+	//直方体
+	auto boxs = scene->GetGameObjects<Box>();	//リストを取得
+	for (Box* box : boxs)						//範囲forループ
+	{
+		D3DXVECTOR3 position = box->GetPosition();
+		D3DXVECTOR3 scale = box->GetScale();
+		scale.y *= 1.8f;								//高さ調整
+		D3DXVECTOR3 right = box->GetRight();			//x軸分離
+		D3DXVECTOR3 forward = box->GetForward();		//z軸分離
+		D3DXVECTOR3 up = box->GetUp();					//y軸分離
+		D3DXVECTOR3 direction = m_Position - position;	//直方体からキャラまでの方向ベクトル
+		float obbX = D3DXVec3Dot(&direction, &right);
+		float obbZ = D3DXVec3Dot(&direction, &forward);
+		float obbY = D3DXVec3Dot(&direction, &up);
+		//OBB
+		if (fabs(obbX) < scale.x && fabs(obbZ) < scale.z && fabs(obbY) < scale.y)
+		{
+			//どれだけ押し出すかを調べる
+			D3DXVECTOR3 penetration = D3DXVECTOR3(static_cast<float>(scale.x - fabs(obbX)), static_cast<float>(scale.y - fabs(obbY)), static_cast<float>(scale.z - fabs(obbZ)));
+
+			//左右から触れる
+			if (penetration.x < penetration.z && penetration.x < penetration.y)
+			{
+				m_Position += (obbX > 0) ? (penetration.x * right) : (-penetration.x * right);
+			}
+			//前後から触れる
+			else if (penetration.z < penetration.y)
+			{
+				m_Position += (obbZ > 0) ? (penetration.z * forward) : (-penetration.z * forward);
+			}
+			//上下から触れる
+			else
+			{
+				m_Position += (m_Position.y < obbY) ? (-penetration.y * up) : penetration.y * up;
+				m_Velocity.y = (m_Position.y < obbY) ? -m_Velocity.y : 0.0f; // 上に乗ったら垂直速度を0にする、下から触れたら反転する
+			}
+		}
+	}
+
+	if (m_Position.y < 0.0f && m_Velocity.y < 0.0f)
+	{
+		m_Position.y = 0.0f;
+		m_Velocity.y = 0.0f;
+	}
 }

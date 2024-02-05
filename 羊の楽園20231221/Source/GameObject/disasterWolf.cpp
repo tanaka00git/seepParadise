@@ -22,29 +22,12 @@ void DisasterWolf::Unload()
 	m_ModelClown = nullptr;
 }
 
-void DisasterWolf::DisasterMove()
+void DisasterWolf::Init()
 {
-	//自動消滅しないように適当な値で上書き
-	m_DaathTime = 1000;
+	Wolf::Init();
 
-	//一定時間経つとオートで敵を生み出す
-	Scene* scene = Manager::GetScene();
-	m_DisasterCount++;
-	if (m_DisasterCount >= 150)
-	{
-		Wolf* wolf = scene->AddGameObject<Wolf>(1);
-		wolf->SetEnemyData(1);
-		wolf->SetPosition(m_Position);
-		m_DisasterCount = 0;
-	}
-}
-
-void DisasterWolf::UpdateTargeting()
-{
-	Wolf::UpdateTargeting();
-
-	//災害狼専用イベント
-	DisasterMove();
+	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\pixelLightingVS.cso");
+	Renderer::CreatePixelShader(&m_PixelShader, "shader\\pixelLightingPS.cso");
 }
 
 void DisasterWolf::Draw()
@@ -71,6 +54,32 @@ void DisasterWolf::Draw()
 	m_Model->DrawColor(m_Color, m_TextureEnable);
 	m_ModelClown->DrawColor(m_Color, m_TextureEnable);
 }
+
+void DisasterWolf::DisasterMove()
+{
+	//自動消滅しないように適当な値で上書き
+	m_DaathTime = 1000;
+
+	//一定時間経つとオートで敵を生み出す
+	Scene* scene = Manager::GetScene();
+	m_DisasterCount++;
+	if (m_DisasterCount >= 150)
+	{
+		Wolf* wolf = scene->AddGameObject<Wolf>(1);
+		wolf->SetEnemyData(1);
+		wolf->SetPosition(m_Position);
+		m_DisasterCount = 0;
+	}
+}
+
+void DisasterWolf::UpdateTargeting()
+{
+	Wolf::UpdateTargeting();
+
+	//災害狼専用イベント
+	DisasterMove();
+}
+
 
 void DisasterWolf::SetEnemyData(int data)
 {
