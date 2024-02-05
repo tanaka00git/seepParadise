@@ -34,7 +34,7 @@ public:
 	virtual void Init();
 	virtual void Uninit();
 	virtual void Update();
-	virtual void Draw();
+	virtual void Draw() {};
 
 	virtual void SetDrop();
 };
