@@ -5,6 +5,7 @@
 #include "..\GameObject\wolf.h"
 #include "..\GameObject\disasterWolf.h"
 #include "..\App\model.h"
+#include "..\GameObject\camera.h"
 
 Model* DisasterWolf::m_ModelClown{};
 
@@ -48,8 +49,28 @@ void DisasterWolf::UpdateTargeting()
 
 void DisasterWolf::Draw()
 {
-	Wolf::Draw();
-	m_ModelClown->DrawColor(m_Color, m_TextureEnable); 
+	Scene* scene = Manager::GetScene();
+	Camera* camera = scene->GetGameObject<Camera>();
+	if (!camera->CheckView(m_Position, m_Scale)) { return; }
+
+	GameObject::Draw();
+
+	Renderer::GetDeviceContext()->IASetInputLayout(m_VertexLayout);
+	Renderer::GetDeviceContext()->VSSetShader(m_VertexShader, NULL, 0);
+	Renderer::GetDeviceContext()->PSSetShader(m_PixelShader, NULL, 0);
+
+	// マトリクス設定
+	D3DXMATRIX world, scale, rot, trans;
+	D3DXMatrixScaling(&scale, m_Scale.x, m_Scale.y, m_Scale.z);
+	D3DXMatrixRotationYawPitchRoll(&rot, m_Rotation.y, m_Rotation.x + m_AnimeRotationX, m_Rotation.z);
+	D3DXMatrixTranslation(&trans, m_Position.x, m_Position.y, m_Position.z);
+	world = scale * rot * trans;
+
+	Renderer::SetWorldMatrix(&world);
+
+	m_Model->DrawColor(m_Color, m_TextureEnable);
+
+	if (m_Item) { m_ModelApple->DrawColor(m_Color, m_TextureEnable); }
 }
 
 void DisasterWolf::SetEnemyData(int data)
