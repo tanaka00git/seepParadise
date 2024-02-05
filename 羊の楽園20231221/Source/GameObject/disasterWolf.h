@@ -5,6 +5,7 @@ class DisasterWolf : public Wolf
 {
 private:
 	static class Model* m_ModelClown;
+	static class Audio* m_SE_SuperAttack;
 
 	bool  m_Disaster = false;									//ŠëŒ¯ŒÂ‘Ì”»•Ê—p
 	int   m_DisasterCount = 0;									//“G‚ªoŒ»‚·‚é

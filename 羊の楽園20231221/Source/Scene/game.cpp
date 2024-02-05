@@ -396,7 +396,7 @@ void Game::TimeEvent_Time2Loop()
 	for (int i = 0; i <= 4; i++) {AddGameObject<Coin>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2));}
 	
 	//仲間
-	int a = irand(0, 2);
+	int a = irand(0, 1);
 	if (1 == a) { AddGameObject<Follow>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2)); }
 	
 	//チェスト

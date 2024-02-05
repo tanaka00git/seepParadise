@@ -7,13 +7,17 @@
 #include "..\App\model.h"
 #include "..\GameObject\camera.h"
 #include "..\GameObject\timeFade.h"
+#include "..\App\audio.h"
 
 Model* DisasterWolf::m_ModelClown{};
+Audio* DisasterWolf::m_SE_SuperAttack{};
 
 void DisasterWolf::Load()
 {
 	m_ModelClown = new Model();
 	m_ModelClown->Load("asset\\model\\wolfClown1.obj");
+	m_SE_SuperAttack = new Audio();
+	m_SE_SuperAttack->Load("asset\\audio\\ƒpƒ“ƒ`‚ÌˆßŽC‚ê1.wav");
 }
 
 void DisasterWolf::Unload()
@@ -93,6 +97,7 @@ void DisasterWolf::UpdateSuperCharge()
 	m_SuparChargeCount++;
 	if (m_SuparChargeCount >= 60)
 	{
+		m_SE_SuperAttack->Play(1.0f ,false);
 		m_WolfState = WOLF_STATE::SUPER_ATTACK;
 	}
 }
@@ -106,7 +111,7 @@ void DisasterWolf::UpdateSuperAttack()
 	if (m_SuparChargeCount <= 0)
 	{
 		m_SuparChargeCount = 0;
-		m_WolfState = WOLF_STATE::DAMAGE;
+		m_WolfState = WOLF_STATE::TARGETING;
 	}
 }
 

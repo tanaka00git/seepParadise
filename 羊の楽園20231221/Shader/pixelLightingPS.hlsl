@@ -26,6 +26,6 @@ void main(in PS_IN In, out float4 outDiffuse : SV_Target)
 	rim = pow(rim, 6) * 2.0f; //スペキュラと同じような処理を適当に行う。
 	rim = saturate(rim); //rimをサチュレートする
 
-	outDiffuse.rgb += rim; //通常の色へ加算する。
+	outDiffuse.r += rim; //通常の色へ加算する。
 	outDiffuse.a = In.Diffuse.a;
 }
