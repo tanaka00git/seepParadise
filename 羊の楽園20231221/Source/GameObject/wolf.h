@@ -6,6 +6,8 @@ enum class WOLF_STATE
 	FREE,
 	EATING,
 	DAMAGE,
+	SUPER_CHARGE,
+	SUPER_ATTACK,
 	TARGETING,
 };
 
@@ -47,7 +49,6 @@ protected:
 	int		m_CoinDrop = 2;										//コインドロップ数
 	int		m_StanGuard = 1;									//スタンになるまでに必要な攻撃回数
 	int		m_BiteCount = 1;									//咀嚼回数
-
 	D3DXVECTOR3 m_BarScale = D3DXVECTOR3(0.7f,0.7f,0.7f);		//HPバーのサイズ
 	float m_HpBarPosY = 1.8f;									//HPバーのY座標
 	float m_Tracking = 5.0f;									//追尾範囲
@@ -60,6 +61,8 @@ protected:
 	void UpdateDelete();
 	void UpdateEating();
 	void UpdateDamage();
+	virtual void UpdateSuperCharge() {};
+	virtual void UpdateSuperAttack() {};
 	void Collision(float& groundHeight)override;
 	void KnockBack();
 	void Anime();

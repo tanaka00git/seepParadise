@@ -6,6 +6,7 @@
 #include "..\GameObject\disasterWolf.h"
 #include "..\App\model.h"
 #include "..\GameObject\camera.h"
+#include "..\GameObject\timeFade.h"
 
 Model* DisasterWolf::m_ModelClown{};
 
@@ -55,8 +56,10 @@ void DisasterWolf::Draw()
 	m_ModelClown->DrawColor(m_Color, m_TextureEnable);
 }
 
-void DisasterWolf::DisasterMove()
+void DisasterWolf::UpdateTargeting()
 {
+	Wolf::UpdateTargeting();
+
 	//自動消滅しないように適当な値で上書き
 	m_DaathTime = 1000;
 
@@ -65,32 +68,59 @@ void DisasterWolf::DisasterMove()
 	m_DisasterCount++;
 	if (m_DisasterCount >= 150)
 	{
-		Wolf* wolf = scene->AddGameObject<Wolf>(1);
-		wolf->SetEnemyData(1);
-		wolf->SetPosition(m_Position);
-		m_DisasterCount = 0;
+		for (int i = 0; i < 10; i++)
+		{
+			Wolf* wolf = scene->AddGameObject<Wolf>(1);
+			wolf->SetEnemyData(1);
+			wolf->SetPosition(m_Position);
+			wolf->SetDrop();
+			m_DisasterCount = 0;
+		}
+	}
+
+	m_SuparChargeCount++;
+	if (m_SuparChargeCount >= 60)
+	{
+		m_SuparChargeCount = 0;
+		m_WolfState = WOLF_STATE::SUPER_CHARGE;
 	}
 }
 
-void DisasterWolf::UpdateTargeting()
+void DisasterWolf::UpdateSuperCharge()
 {
-	Wolf::UpdateTargeting();
+	m_Velocity *= 0;
 
-	//災害狼専用イベント
-	DisasterMove();
+	m_SuparChargeCount++;
+	if (m_SuparChargeCount >= 60)
+	{
+		m_WolfState = WOLF_STATE::SUPER_ATTACK;
+	}
 }
 
+void DisasterWolf::UpdateSuperAttack()
+{
+	m_Velocity.x = GetForward().x * (m_Speed) * 6;
+	m_Velocity.z = GetForward().z * (m_Speed) * 6;
+
+	m_SuparChargeCount--;
+	if (m_SuparChargeCount <= 0)
+	{
+		m_SuparChargeCount = 0;
+		m_WolfState = WOLF_STATE::DAMAGE;
+	}
+}
 
 void DisasterWolf::SetEnemyData(int data)
 {
 	m_Item = false;
 	m_BiteCount = 2;
-	m_FullLife = 80;
+	m_FullLife = 80 * data;
 	m_Speed = 0.04f;
-	m_CoinDrop = 30;
-	m_StanGuard = 40;
-	m_OriginalScale = D3DXVECTOR3(2.9f, 2.9f, 2.9f);	//キャラのサイズ
+	m_CoinDrop = 30 * data;
+	m_StanGuard = 40 * data;
+	m_OriginalScale = D3DXVECTOR3(6.0f, 6.0f, 6.0f);	//キャラのサイズ
 	m_BarScale = D3DXVECTOR3(5.0f, 1.0f, 1.0f);			//HPバーのサイズ
 	m_Tracking = 200.0f;								//追尾範囲
 	m_Life = m_FullLife;
 }
+

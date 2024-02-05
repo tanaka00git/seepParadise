@@ -242,8 +242,6 @@ void Wolf::UpdateTargeting()
 	m_Velocity.x = GetForward().x * (m_Speed + (timeFede * m_Speed));
 	m_Velocity.z = GetForward().z * (m_Speed + (timeFede * m_Speed));
 
-
-
 	//無視範囲を超えたら
 	if (plength > m_Tracking) { m_WolfState = WOLF_STATE::FREE; }//追尾しない
 }
@@ -286,6 +284,12 @@ void Wolf::UpdateAlive()
 		break;
 	case WOLF_STATE::DAMAGE:
 		UpdateDamage();
+		break;
+	case WOLF_STATE::SUPER_CHARGE:
+		UpdateSuperCharge();
+		break;
+	case WOLF_STATE::SUPER_ATTACK:
+		UpdateSuperAttack();
 		break;
 	case WOLF_STATE::TARGETING:
 		UpdateTargeting();
@@ -460,7 +464,6 @@ void Wolf::SetEnemyData(int data)
 		m_OriginalScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 		m_BarScale = D3DXVECTOR3(0.7f, 0.7f, 0.7f);	
 		m_HpBarPosY = 1.8f;
-
 	}
 	else if (m_Data == 3)
 	{
@@ -516,7 +519,14 @@ void Wolf::Collision(float& groundHeight)
 				if (playerObject->GetAttackStop() <= 0 && playerObject->GetInvincibleTime() <= 0)
 				{
 					//プレイヤーがダッシュ時にぶつかった場合
-					if (playerObject->GetCharacterState() == CHARACTER_STATE::ALIVE &&
+					if (m_WolfState == WOLF_STATE::SUPER_ATTACK)
+					{
+						playerObject->AddLife(-1);
+						playerObject->SetDamageMove();
+						m_SE_Eat->Play(1.0f);
+						scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
+					}
+					else if (playerObject->GetCharacterState() == CHARACTER_STATE::ALIVE &&
 						playerObject->GetPlayerState() == PLAYER_STATE::DASH)
 					{
 						SetDamageMove();
@@ -541,7 +551,13 @@ void Wolf::Collision(float& groundHeight)
 			{
 				if (followObject->GetAttackStop() <= 0)
 				{
-					if (followObject->GetState() == FOLLOW_STATE::DASH)
+					if (m_WolfState == WOLF_STATE::SUPER_ATTACK)
+					{
+						m_SE_Eat->Play(1.0f);
+						followObject->AddLife(-1);
+						scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
+					}
+					else if (followObject->GetState() == FOLLOW_STATE::DASH)
 					{
 						SetDamageMove();
 						followObject->SetAttackStop(GIVE_ATTACK_STOP);
