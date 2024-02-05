@@ -26,8 +26,10 @@ protected:
 	int			m_DaathTime     = 2000;								//自動消滅時間
 
 	//ステータス
-	int			m_FullLife	 = 7;							//最大体力
-	int			m_Life		 = 7;							//体力
+	int			m_FullLife	= 7;									//最大体力
+	int			m_Life		= 7;									//体力
+	D3DXVECTOR3 m_BarScale	= D3DXVECTOR3(1.2f, 0.8f, 0.8f);		//HPバーのサイズ
+	float		m_HpBarPosY	= 1.5f;									//HPバーのY座標
 
 	//関数
 	virtual void UpdateMove();
@@ -36,7 +38,7 @@ protected:
 
 public:
 	static void Load();
-	static void Unload();
+	static void Unload() {};
 
 	virtual void Init();
 	virtual void Uninit();

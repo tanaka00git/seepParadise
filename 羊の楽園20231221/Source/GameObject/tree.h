@@ -1,23 +1,23 @@
 #pragma once
-#include "..\GameObject\gameObject.h"
+#include "..\GameObject\breakObject.h"
 
-class Tree : public GameObject
+class Tree : public BreakObject
 {
 private:
-	ID3D11VertexShader* m_VertexShader{};
-	ID3D11PixelShader* m_PixelShader{};
-	ID3D11InputLayout* m_VertexLayout{};
-
 	static class Model* m_Model;
+	static class Model* m_ModelAppleTree;
 	class Shadow* m_Shadow{};
 
-	D3DXVECTOR3 m_OriginalScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);	//キャラのサイズ
+	bool m_ApplePossession = false;	//リンゴを所持しているか
+
+	//関数
+	void UpdateDead() override;
 
 public:
 	static void Load();
 	static void Unload();
-	void Init();
-	void Uninit();
-	void Update();
-	void Draw();
+	void Init() override;
+	void Update() override;
+	void Draw() override;
+
 };

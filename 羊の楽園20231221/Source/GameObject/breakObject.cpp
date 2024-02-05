@@ -19,10 +19,6 @@ void BreakObject::Load()
 	m_SE_Kick->Load("asset\\audio\\小キックb.wav");
 }
 
-void BreakObject::Unload()
-{
-}
-
 void BreakObject::Init()
 {
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
@@ -127,12 +123,12 @@ void BreakObject::SetDamageMove()
 void BreakObject::LifeBarMove()
 {
 	//スケール設定
-	if (m_FullLife != m_Life) { m_HpBarS->SetScale(D3DXVECTOR3(1.2f, 0.8f, 0.8f)); }
+	if (m_FullLife != m_Life) { m_HpBarS->SetScale(m_BarScale); }
 	else { m_HpBarS->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f)); }
 
 	//HPバーの位置変更
 	D3DXVECTOR3 HpBarPosition = m_Position;
-	HpBarPosition.y += 1.5f;
+	HpBarPosition.y += m_HpBarPosY;
 	m_HpBarS->SetPosition(HpBarPosition);
 
 	//情報送信

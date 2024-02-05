@@ -69,8 +69,7 @@ void DisasterWolf::Draw()
 	Renderer::SetWorldMatrix(&world);
 
 	m_Model->DrawColor(m_Color, m_TextureEnable);
-
-	if (m_Item) { m_ModelApple->DrawColor(m_Color, m_TextureEnable); }
+	m_ModelClown->DrawColor(m_Color, m_TextureEnable);
 }
 
 void DisasterWolf::SetEnemyData(int data)

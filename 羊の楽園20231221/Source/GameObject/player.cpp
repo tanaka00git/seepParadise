@@ -268,7 +268,7 @@ void Player::UpdateDash()
 	m_Velocity.z = GetForward().z * (m_Speed * 0.02f);
 
 	//チャージ消費
-	m_Charge -= 10;
+	m_Charge -= 8;
 
 	//エフェクト
 	WalkEffect();

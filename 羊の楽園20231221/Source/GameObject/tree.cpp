@@ -1,69 +1,72 @@
 #include "..\App\main.h"
-#include "..\App\renderer.h"
-#include "..\GameObject\tree.h"
-#include "..\GameObject\shadow.h"
-#include "..\App\model.h"
-#include "..\Scene\scene.h"
 #include "..\App\manager.h"
-#include "..\GameObject\camera.h"
+#include "..\App\renderer.h"
+#include "..\Scene\scene.h"
+#include "..\GameObject\tree.h"
+#include "..\GameObject\breakObject.h"
+#include "..\GameObject\shadow.h"
+#include "..\App\audio.h"
+#include "..\GameObject\coin.h"
+#include "..\GameObject\Apple.h"
+#include "..\GameObject\hpBarS.h"
+#include "..\App\model.h"
 
-Model*Tree::m_Model{};
+Model* Tree::m_Model{};
+Model* Tree::m_ModelAppleTree{};
+
+#define DROP_RAIT 4
+#define COIN_DROP 2
+#define LIFE 3
+#define HP_BAR_POS_Y 3.0f
 
 void Tree::Load()
 {
 	m_Model = new Model();
 	m_Model->Load("asset\\model\\tree_a.obj");
+	m_ModelAppleTree = new Model();
+	m_ModelAppleTree->Load("asset\\model\\tree_a2.obj");
 }
 
 void Tree::Unload()
 {
 	m_Model->Unload();
 	delete m_Model;
-	m_Model = nullptr;
+	m_ModelAppleTree->Unload();
+	delete m_ModelAppleTree;
 }
 
 void Tree::Init()
 {
-	m_Scale.y = 0.01f;
+	BreakObject::Init();
 
-	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
-	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
+	//初期化
+	m_FullLife = LIFE;			//最大体力
+	m_Life = LIFE;				//体力
+	m_HpBarPosY = HP_BAR_POS_Y;	//HPポジションy
+
+	//リンゴを持ってる確率
+	int randam;
+	randam = irand(0, DROP_RAIT-1);
+	if (randam == 1) { m_ApplePossession = true; }
+
 
 	m_Shadow = AddComponent<Shadow>();
-
 }
-
-void Tree::Uninit()
-{
-	GameObject::Uninit();
-
-	m_VertexLayout->Release();
-	m_VertexShader->Release();
-	m_PixelShader->Release();
-
-}
-
 
 void Tree::Update()
 {
-	GameObject::Update();
+	BreakObject::Update();
 
-	if (m_Scale.y < m_OriginalScale.y) {m_Scale.y += 0.05f;}
-	else { m_Scale.y = m_OriginalScale.y;}
-
-	//影の移動
+	//影更新
+	float groundHeight = 0.0f;
 	D3DXVECTOR3 shadowPosition = m_Position;
-	shadowPosition.y = m_Position.y + 0.01f;
+	shadowPosition.y = groundHeight + 0.01f;
 	m_Shadow->SetPosition(shadowPosition);
+	m_Shadow->SetScale(D3DXVECTOR3(m_Scale.x, m_Scale.y, m_Scale.z));
 }
-
 
 void Tree::Draw()
 {
-	Scene* scene = Manager::GetScene();
-	Camera* camera = scene->GetGameObject<Camera>();
-	if (!camera->CheckView(m_Position, m_Scale)) { return; }
-
 	GameObject::Draw();
 
 	Renderer::GetDeviceContext()->IASetInputLayout(m_VertexLayout);
@@ -79,5 +82,37 @@ void Tree::Draw()
 
 	Renderer::SetWorldMatrix(&world);
 
-	m_Model->Draw();
+	if(m_ApplePossession){m_ModelAppleTree->Draw();}
+	else{ m_Model->Draw(); }
 }
+
+void Tree::UpdateDead()
+{
+	BreakObject::UpdateDead();
+
+	//Init処理
+	if (!m_DeleteInit)
+	{
+		Scene* scene = Manager::GetScene();
+
+		m_DeleteInit = true;
+		m_HpBarS->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+
+		//リンゴドロップ
+		if (m_ApplePossession)
+		{
+			Apple* apple = scene->AddGameObject<Apple>(1);
+			apple->SetPosition(m_Position);
+			apple->SetDrop();
+		}
+
+		//コインドロップ
+		for (int i = 0; i <= COIN_DROP; i++)
+		{
+			Coin* coin = scene->AddGameObject<Coin>(1);
+			coin->SetPosition(m_Position);
+			coin->SetDrop();
+		}
+	}
+}
+
