@@ -13,6 +13,8 @@
 Model* DisasterWolf::m_ModelClown{};
 Audio* DisasterWolf::m_SE_SuperAttack{};
 
+#define INITIAL_SUPAR_CHARGE_COUNT 0
+
 void DisasterWolf::Load()
 {
 	m_ModelClown = new Model();
@@ -32,9 +34,14 @@ void DisasterWolf::Init()
 {
 	Wolf::Init();
 
+	//定数で初期化
+	m_SuparChargeCount = INITIAL_SUPAR_CHARGE_COUNT;
+
+	//シェーダー上書き
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\pixelLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\pixelLightingPS.cso");
 
+	//アタックマーカーのアタッチ
 	m_AttackMarker = AddComponent<AttackMarker>();
 	m_AttackMarker->SetDraw(false);
 }
@@ -82,21 +89,6 @@ void DisasterWolf::UpdateTargeting()
 
 	//自動消滅しないように適当な値で上書き
 	m_DaathTime = 1000;
-
-	//一定時間経つとオートで敵を生み出す
-	//Scene* scene = Manager::GetScene();
-	//m_DisasterCount++;
-	//if (m_DisasterCount >= 150)
-	//{
-	//	for (int i = 0; i < 10; i++)
-	//	{
-	//		Wolf* wolf = scene->AddGameObject<Wolf>(1);
-	//		wolf->SetEnemyData(1);
-	//		wolf->SetPosition(m_Position);
-	//		wolf->SetDrop();
-	//		m_DisasterCount = 0;
-	//	}
-	//}
 
 	m_SuparChargeCount++;
 	if (m_SuparChargeCount >= 60)

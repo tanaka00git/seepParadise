@@ -27,32 +27,30 @@ protected:
 	class AttackMarker* m_AttackMarker{};
 
 	//メンバ変数
-	D3DXVECTOR3 m_PLForward{};										//プレイヤーの向き
+	D3DXVECTOR3 m_PLForward{};			 //プレイヤーの向き
 
-	int     m_DaathTime = 1400;	 //自動消滅
-	
-	bool	m_AnimePause = true;
-	int		m_AnimeTime = 0;
-	float	m_AnimeRotationX = 0.0f;	//アニメの表示の傾き(実際の向きとは違う)
-	float   m_OrientationTime = 0.0f;	//向き変更時間
-	float   m_NextRotTime = 0.0f;		//次に向き変更するまで
-	int     m_NextRot = 1;				//次の向き
-	int	    m_EatStop = 0;
-	float	m_Death = 0.14f;
-	int		m_KnockBackTime = 0;
-	int		m_StunTime = 0;
-	int		m_StanGuardCount = 0;									//スタン判定するための攻撃された回数
-	bool	m_DeleteInit = false;
+	int     m_DaathTime			= 1400;	 //自動消滅
+	bool	m_AnimePause		= true;
+	int		m_AnimeTime			= 0;
+	float	m_AnimeRotationX	= 0.0f;	//アニメの表示の傾き(実際の向きとは違う)
+	float   m_OrientationTime	= 0.0f;	//向き変更時間
+	float   m_NextRotTime		= 0.0f;	//次に向き変更するまで
+	int     m_NextRot			= 1;	//次の向き
+	int	    m_EatStop			= 0;
+	float	m_DeathStaging		= 0.14f;
+	int		m_KnockBackTime		= 0;
+	int		m_StunTime			= 0;
+	int		m_StanGuardCount	= 0;	//スタン判定するための攻撃された回数
+	bool	m_DeleteInit		= false;
 
 	//ステータス
-	int		m_Data = 2;
-	bool	m_Item = false;										//アイテム所持判別用
-	int		m_CoinDrop = 2;										//コインドロップ数
-	int		m_StanGuard = 1;									//スタンになるまでに必要な攻撃回数
-	int		m_BiteCount = 1;									//咀嚼回数
+	bool	m_Item				= false;						//アイテム所持判別用
+	int		m_CoinDrop			= 2;							//コインドロップ数
+	int		m_StanGuard			= 1;							//スタンになるまでに必要な攻撃回数
+	int		m_BiteCount			= 1;							//咀嚼回数
 	D3DXVECTOR3 m_BarScale = D3DXVECTOR3(0.7f,0.7f,0.7f);		//HPバーのサイズ
-	float m_HpBarPosY = 1.8f;									//HPバーのY座標
-	float m_Tracking = 5.0f;									//追尾範囲
+	float m_HpBarPosY			= 1.8f;							//HPバーのY座標
+	float m_Tracking			= 5.0f;							//追尾範囲
 
 	//関数
 	void UpdateAlive() override;

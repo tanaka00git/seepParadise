@@ -9,15 +9,28 @@
 #include "..\Scene\scene.h"
 #include "..\GameObject\camera.h"
 
+#define INITIAL_VELOCITY D3DXVECTOR3(0.0f, 0.0f, 0.0f)
+#define INITIAL_ORIGINAL_SCALE D3DXVECTOR3(1.0f, 1.0f, 1.0f)
+#define INITIAL_DAATH_TIME 500
+#define INITIAL_DELETE_INIT false
+#define INITIAL_DROP_JUMP false
+#define INITIAL_SCALE_Y 0.01f
 #define GRAVITY 0.015f
 
 void ItemObject::Init()
 {
-	m_Scale.y = 0.01f;
+	m_Scale.y = INITIAL_SCALE_Y;
+
+	m_Velocity = INITIAL_VELOCITY;
+	m_OriginalScale = INITIAL_ORIGINAL_SCALE;
+	m_DaathTime = INITIAL_DAATH_TIME;
+	m_DeleteInit = INITIAL_DELETE_INIT;
+	m_DropJump = INITIAL_DROP_JUMP;
 
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
 
+	//アタッチ
 	m_Shadow = AddComponent<Shadow>();
 	m_Shadow->SetScale(D3DXVECTOR3(0.4f, 0.4f, 0.4f));
 }

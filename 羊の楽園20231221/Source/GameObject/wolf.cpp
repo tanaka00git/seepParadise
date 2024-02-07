@@ -28,6 +28,29 @@ Audio*Wolf::m_SE_Eat{};
 Audio*Wolf::m_SE_Kick{};
 Audio*Wolf::m_SE_Critical{};
 
+#define INITIAL_DAATH_TIME 1400
+#define INITIAL_ANIME_PAUSE true
+#define INITIAL_ANIME_TIME 0
+#define INITIAL_ANIME_ROTATION_X 0.0f
+#define INITIAL_ORIENTATION_TIME 0.0f
+#define INITIAL_NEXT_ROT_TIME 0.0f
+#define INITIAL_NEXT_ROTATION 1
+#define INITIAL_EAT_STOP 0
+#define INITIAL_DEATH_STAGING 0.14f
+#define INITIAL_KNOCK_BACK_TIME 0
+#define INITIAL_STUN_TIME 0
+#define INITIAL_STAN_GUARD_COUNT 0
+#define INITIAL_DELETE_INIT false
+
+#define INITIAL_ITEM false
+#define INITIAL_COIN_DROP 2
+#define INITIAL_STAN_GUARD 1
+#define INITIAL_BITE_COUNT 1
+#define INITIAL_BAR_SCALE D3DXVECTOR3(0.7f, 0.7f, 0.7f)
+#define INITIAL_HP_BAR_POS_Y 1.8f
+#define INITIAL_TRACKING 5.0f
+#define INITIAL_SCALE_Y 0.01f
+
 #define EATING_TIME 45
 #define DROP_RATE 20
 #define APPLE_RATE 20
@@ -65,8 +88,30 @@ void Wolf::Init()
 {
 	CharacterObject::Init();
 
-	m_Scale.y = 0.01f;
+	m_Scale.y = INITIAL_SCALE_Y;
 	m_Rotation.y = frand() * 2 * D3DX_PI;
+
+	m_DaathTime = INITIAL_DAATH_TIME;
+	m_AnimePause = INITIAL_ANIME_PAUSE;
+	m_AnimeTime = INITIAL_ANIME_TIME;
+	m_AnimeRotationX = INITIAL_ANIME_ROTATION_X;
+	m_OrientationTime = INITIAL_ORIENTATION_TIME;
+	m_NextRotTime = INITIAL_NEXT_ROT_TIME;
+	m_NextRot = INITIAL_NEXT_ROTATION;
+	m_EatStop = INITIAL_EAT_STOP;
+	m_DeathStaging = INITIAL_DEATH_STAGING;
+	m_KnockBackTime = INITIAL_KNOCK_BACK_TIME;
+	m_StunTime = INITIAL_STUN_TIME;
+	m_StanGuardCount = INITIAL_STAN_GUARD_COUNT;
+	m_DeleteInit = INITIAL_DELETE_INIT;
+
+	m_Item = INITIAL_ITEM;
+	m_CoinDrop = INITIAL_COIN_DROP;
+	m_StanGuard = INITIAL_STAN_GUARD;
+	m_BiteCount = INITIAL_BITE_COUNT;
+	m_BarScale = INITIAL_BAR_SCALE;
+	m_HpBarPosY = INITIAL_HP_BAR_POS_Y;
+	m_Tracking = INITIAL_TRACKING;
 
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
@@ -347,11 +392,11 @@ void Wolf::UpdateDead()
 		}
 	}
 
-	m_Rotation.z += m_Death / 2.0f;
-	m_Rotation.y -= m_Death;
+	m_Rotation.z += m_DeathStaging / 2.0f;
+	m_Rotation.y -= m_DeathStaging;
 	m_Position.y += 0.5f;
 	m_Scale.x -= 0.1f; m_Scale.y -= 0.1f; m_Scale.z -= 0.1f;
-	m_Death -= 0.01f;
+	m_DeathStaging -= 0.01f;
 
 	if (m_Scale.y <= 0.0f) 
 	{
@@ -436,8 +481,6 @@ void Wolf::SetPosEnemyData(D3DXVECTOR3 Position, int Num)
 
 void Wolf::SetEnemyData(int data)
 {
-	m_Data = data;
-
 	//低確率でリンゴを頭に乗せる
 	int dropPercent = irand(0,19);
 	if (dropPercent == 0) { m_Item = true; }
@@ -449,25 +492,25 @@ void Wolf::SetEnemyData(int data)
 	m_OriginalScale = D3DXVECTOR3(0.5f * data, 0.5f * data, 0.5f * data);	//キャラのサイズ
 	m_Speed = 0.03f + (0.0025f * data);
 
-	if (m_Data == 1)
+	if (data == 1)
 	{
 		m_BiteCount = 5;
 		m_BarScale = D3DXVECTOR3(0.5f, 0.7f, 0.7f);		//HPバーのサイズ
 		m_HpBarPosY = 1.8f;
 	}
-	else if (m_Data == 2)
+	else if (data == 2)
 	{
 		m_BiteCount = 4;
 		m_BarScale = D3DXVECTOR3(0.7f, 0.7f, 0.7f);	
 		m_HpBarPosY = 1.8f;
 	}
-	else if (m_Data == 3)
+	else if (data == 3)
 	{
 		m_BiteCount = 3;
 		m_BarScale = D3DXVECTOR3(1.0f, 0.7f, 0.7f);
 		m_HpBarPosY = 2.2f;
 	}
-	else if (m_Data == 4)
+	else if (data == 4)
 	{
 		m_BiteCount = 3;
 		m_BarScale = D3DXVECTOR3(1.4f, 0.7f, 0.7f);

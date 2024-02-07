@@ -14,10 +14,6 @@
 #include "..\GameObject\shadow.h"
 #include "..\GameObject\hpBarS.h"
 #include "..\GameObject\coin.h"
-#include "..\GameObject\apple.h"
-#include "..\GameObject\itemEye.h"
-#include "..\GameObject\itemSpeed.h"
-#include "..\GameObject\itemLife.h"
 #include "..\GameObject\chest.h"
 #include "..\GameObject\timeFade.h"
 #include "..\GameObject\camera.h"
@@ -28,8 +24,26 @@ Audio* Human::m_SE_Kick{};
 Audio* Human::m_SE_Critical{};
 Audio* Human::m_SE_Make{};
 
-#define LIFE 4
-#define SPEED 0.08f
+#define INITIAL_LIFE 4
+#define INITIAL_SPEED 0.08f
+#define INITIAL_SCALE_Y 0.01f
+#define INITIAL_DEATH_TIME 1400
+#define INITIAL_ANIME_PAUSE true
+#define INITIAL_ANIME_TIME 0
+#define INITIAL_ANIME_ROTATION_X 0.0f
+#define INITIAL_ORIENTATION_TIME 0.0f
+#define INITIAL_NEXT_ROT_TIME 0.0f
+#define INITIAL_NEXT_ROTATION 1
+#define INITIAL_MAKING_TIME 0
+#define INITIAL_KNOCK_BACK_TIME 0
+#define INITIAL_STUN_TIME 0
+#define INITIAL_DELETE_INIT false
+#define INITIAL_COIN_DROP 4
+#define INITIAL_DEATH_STAGING 0.14f
+#define INITIAL_BAR_SCALE D3DXVECTOR3(1.0f, 1.0f, 1.0f)
+#define INITIAL_HP_BAR_POS_Y 1.8f
+#define INITIAL_TRACKING 10.0f
+
 #define MAKING_TIME 30
 #define MAKING_COUNT 4
 #define DROP_RATE 20
@@ -62,12 +76,30 @@ void Human::Init()
 {
 	CharacterObject::Init();
 
-	m_Life = LIFE;
-	m_FullLife = LIFE;
-	m_Speed = SPEED;
-	m_Scale.y = 0.01f;
-
+	m_Life = INITIAL_LIFE;
+	m_FullLife = INITIAL_LIFE;
+	m_Speed = INITIAL_SPEED;
+	m_Scale.y = INITIAL_SCALE_Y;
 	m_Rotation.y = frand() * 2 * D3DX_PI;
+
+	m_DaathTime = INITIAL_DEATH_TIME;
+	m_AnimePause = INITIAL_ANIME_PAUSE;
+	m_AnimeTime = INITIAL_ANIME_TIME;
+	m_AnimeRotationX = INITIAL_ANIME_ROTATION_X;
+	m_OrientationTime = INITIAL_ORIENTATION_TIME;
+	m_NextRotTime = INITIAL_NEXT_ROT_TIME;
+	m_NextRot = INITIAL_NEXT_ROTATION;
+	m_MakingTime = INITIAL_MAKING_TIME;
+	m_DeathStaging = INITIAL_DEATH_STAGING;
+	m_KnockBackTime = INITIAL_KNOCK_BACK_TIME;
+	m_StunTime = INITIAL_STUN_TIME;
+	m_DeleteInit = INITIAL_DELETE_INIT;
+
+	m_CoinDrop = INITIAL_COIN_DROP;
+	m_BarScale = INITIAL_BAR_SCALE;
+	m_HpBarPosY = INITIAL_HP_BAR_POS_Y;
+	m_Tracking = INITIAL_TRACKING;
+
 
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
@@ -331,43 +363,12 @@ void Human::UpdateDead()
 			coin->SetPosition(m_Position);
 			coin->SetDrop();
 		}
-
-		//リンゴドロップ
-		if (m_Item)
-		{
-			Apple* apple = scene->AddGameObject<Apple>(1);
-			apple->SetPosition(m_Position);
-			apple->SetDrop();
-		}
-
-		//アイテムドロップ
-		int a = irand(0, DROP_RATE - 1);
-		if (a == 0) {
-			a = irand(0, 2);
-			if (a == 0) {
-				ItemSpeed* itemSpeed = scene->AddGameObject<ItemSpeed>(1);
-				itemSpeed->SetPosition(m_Position);
-				itemSpeed->SetDrop();
-			}
-			else if (a == 1) {
-				ItemLife* itemLife = scene->AddGameObject<ItemLife>(1);
-				itemLife->SetPosition(m_Position);
-				itemLife->SetDrop();
-			}
-			else if (a == 2) {
-				ItemEye* itemEye = scene->AddGameObject<ItemEye>(1);
-				itemEye->SetPosition(m_Position);
-				itemEye->SetDrop();
-
-			}
-		}
 	}
-
-	m_Rotation.z += m_Death / 2.0f;
-	m_Rotation.y -= m_Death;
+	m_Rotation.z += m_DeathStaging / 2.0f;
+	m_Rotation.y -= m_DeathStaging;
 	m_Position.y += 0.5f;
 	m_Scale.x -= 0.1f; m_Scale.y -= 0.1f; m_Scale.z -= 0.1f;
-	m_Death -= 0.01f;
+	m_DeathStaging -= 0.01f;
 
 	if (m_Scale.y <= 0.0f)
 	{

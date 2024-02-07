@@ -8,7 +8,7 @@ private:
 	static class Model* m_ModelCageSheep;
 	static class Audio* m_SE_Chest;
 
-	float m_SheepRotationY = 0.0;
+	float m_SheepRotationY = 0.0f;
 
 	//ä÷êî
 	void UpdateDead() override;

@@ -35,7 +35,25 @@ int Player::m_DebugMode{};
 int Player::m_PlColor{};
 int Player::m_PlClown{};
 
-#define INIT_LIFE 3
+#define INITIAL_LIFE 3
+#define INITIAL_INVINCIBLE_TIME 0
+#define INITIAL_DASH_INIT false
+#define INITIAL_DASH false
+#define INITIAL_COMBO 0
+#define INITIAL_COMBO_WAIT 0
+#define INITIAL_DEATH_STAGING 0.14f
+#define INITIAL_ATTACK_STOP_TIME 0
+#define INITIAL_CHARGE 0
+#define INITIAL_OLD_CHARGE 0
+#define INITIAL_FULL_CHARGE 2000
+#define INITIAL_TUTORIAL_END false
+#define INITIAL_DELETE_INIT false
+#define INITIAL_ANIME_PAUSE true
+#define INITIAL_ANIME_TIME 0
+#define INITIAL_ANIME_ROTATION_X 0.0f
+#define INITIAL_WALK_EFFECT_TIME 0
+#define INITIAL_EYE 0
+
 #define FULL_LIFE 9
 #define FULL_SPEED 9.5
 #define FULL_EYE 6
@@ -88,13 +106,32 @@ void Player::Init()
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
 
-	m_Life = INIT_LIFE;
-	m_FullLife = INIT_LIFE;
+	//定数で初期化
+	m_Life = INITIAL_LIFE;
+	m_FullLife = INITIAL_LIFE;
+	m_InvincibleTime = INITIAL_INVINCIBLE_TIME;
+	m_DashInit = INITIAL_DASH_INIT;
+	m_Dash = INITIAL_DASH;
+	m_Combo = INITIAL_COMBO;
+	m_ComboWait = INITIAL_COMBO_WAIT;
+	m_DeathStaging = INITIAL_DEATH_STAGING;
+	m_AttackStopTime = INITIAL_ATTACK_STOP_TIME;
+	m_Charge = INITIAL_CHARGE;
+	m_OldCharge = INITIAL_OLD_CHARGE;
+	m_FullCharge = INITIAL_FULL_CHARGE;
+	m_TutorialEnd = INITIAL_TUTORIAL_END;
+	m_DeleteInit = INITIAL_DELETE_INIT;
+	m_AnimePause = INITIAL_ANIME_PAUSE;
+	m_AnimeTime = INITIAL_ANIME_TIME;
+	m_AnimeRotationX = INITIAL_ANIME_ROTATION_X;
+	m_WalkEffectTime = INITIAL_WALK_EFFECT_TIME;
+	m_Eye = INITIAL_EYE;
+
+	//アタッチ
 	m_Shadow = AddComponent<Shadow>();
 	m_HpBarS = AddComponent<HpBarS>();
 	m_HpBarS->SetLifeDateFC(m_FullLife, m_Life);
 	m_HpBarS->SetScale(m_BarScale);
-
 	Scene* scene = Manager::GetScene();
 	m_GoalNavigation = scene->AddGameObject<GoalNavigation>(1);
 }
@@ -228,13 +265,13 @@ void Player::UpdateAlive()
 void Player::UpdateDead()
 {
 	m_Velocity *= 0;
-	m_Rotation.z += m_Death / 2.0f;
-	m_Rotation.y -= m_Death;
-	m_Scale.x -= m_OriginalScale.x / 40; m_Scale.y -= m_OriginalScale.y / 40; m_Scale.z -= m_OriginalScale.z / 40;
-	m_Death -= 0.001f;
+	m_Rotation.z += m_DeathStaging / 2.0f;
+	m_Rotation.y -= m_DeathStaging;
+	m_Scale.x -= 0.005f; m_Scale.y -= 0.005f; m_Scale.z -= 0.005f;
+	m_DeathStaging -= 0.001f;
 
 	if (m_Rotation.z > D3DX_PI / 4) { m_Rotation.z = D3DX_PI / 4; }
-	if (m_Death < 0.0f) { m_Death = 0.0f; }
+	if (m_DeathStaging < 0.0f) { m_DeathStaging = 0.0f; }
 	if (m_Scale.y < 0.0f)
 	{
 		Scene* scene = Manager::GetScene();

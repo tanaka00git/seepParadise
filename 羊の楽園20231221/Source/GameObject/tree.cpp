@@ -16,8 +16,8 @@ Model* Tree::m_ModelAppleTree{};
 
 #define DROP_RAIT 4
 #define COIN_DROP 2
-#define LIFE 3
-#define HP_BAR_POS_Y 3.0f
+#define INITIAL_LIFE 3
+#define INITIAL_HP_BAR_POS_Y 3.0f
 
 void Tree::Load()
 {
@@ -40,14 +40,15 @@ void Tree::Init()
 	BreakObject::Init();
 
 	//初期化
-	m_FullLife = LIFE;			//最大体力
-	m_Life = LIFE;				//体力
-	m_HpBarPosY = HP_BAR_POS_Y;	//HPポジションy
+	m_Life = INITIAL_LIFE;				//体力
+	m_FullLife = INITIAL_LIFE;			//最大体力
+	m_HpBarPosY = INITIAL_HP_BAR_POS_Y;	//HPポジションy
 
 	//リンゴを持ってる確率
 	int randam;
-	randam = irand(0, DROP_RAIT-1);
+	randam = irand(1, DROP_RAIT);
 	if (randam == 1) { m_ApplePossession = true; }
+	else{ m_ApplePossession = false; }
 
 	m_Shadow = AddComponent<Shadow>();
 }

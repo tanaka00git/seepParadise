@@ -8,7 +8,6 @@ private:
 	static class Audio* m_SE_SuperAttack;
 	class AttackMarker* m_AttackMarker{};
 
-	int   m_DisasterCount = 0;									//“G‚ªoŒ»‚·‚é
 	int	  m_SuparChargeCount = 0;
 
 	//ŠÖ”

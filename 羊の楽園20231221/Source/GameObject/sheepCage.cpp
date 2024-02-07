@@ -15,7 +15,9 @@ Audio* SheepCage::m_SE_Chest{};
 
 #define SHEEP_ROTATION_Y 0.01f
 #define SHEEP_DROP 3
-#define HB_BAR_POS_Y 2.3f
+
+#define INITIAL_SHEEP_ROTATION_Y 0.0f
+#define INITIAL_HP_BAR_POS_Y 2.3f
 
 void SheepCage::Load()
 {
@@ -37,7 +39,8 @@ void SheepCage::Unload()
 
 void SheepCage::Init()
 {
-	m_HpBarPosY = HB_BAR_POS_Y;	//HPバーのY座標
+	m_SheepRotationY = INITIAL_SHEEP_ROTATION_Y;	//回転軸軸初期化
+	m_HpBarPosY = INITIAL_HP_BAR_POS_Y;				//HPバーのY座標
 	BreakObject::Init();
 }
 

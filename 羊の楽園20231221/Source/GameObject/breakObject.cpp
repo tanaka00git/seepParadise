@@ -12,9 +12,21 @@
 
 Audio*BreakObject::m_SE_Kick{};
 
+// íËêî
+#define INITIAL_COLOR D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)
+#define INITIAL_TEXTURE_ENABLE true
+#define INITIAL_VELOCITY D3DXVECTOR3(0.0f, 0.0f, 0.0f)
+#define INITIAL_ORIGINAL_SCALE D3DXVECTOR3(1.0f, 1.0f, 1.0f)
+#define INITIAL_DELETE_INIT false
+#define INITIAL_DEATH_TIME 2000
+#define INITIAL_DAMAGE_FLASH_TIME 0
+#define INITIAL_LIFE 7
+#define INITIAL_BAR_SCALE D3DXVECTOR3(1.2f, 0.8f, 0.8f)
+#define INITIAL_HP_BAR_POS_Y 1.5f
+
 #define GRAVITY 0.015f
-#define GIVE_ATTACK_STOP 20
 #define DAMAGE_FLASH_TIME 6
+#define INITIAL_SCALE_Y 0.01f
 
 void BreakObject::Load()
 {
@@ -28,10 +40,22 @@ void BreakObject::Init()
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
 
 	m_HpBarS = AddComponent<HpBarS>();
-	m_HpBarS->SetLifeDateFC(m_FullLife, m_Life);
+	m_HpBarS->SetLifeDateFC(INITIAL_LIFE, INITIAL_LIFE);
 	m_HpBarS->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	m_Scale.y = 0.01f;
+	m_Color = INITIAL_COLOR;
+	m_TextureEnable = INITIAL_TEXTURE_ENABLE;
+	m_Velocity = INITIAL_VELOCITY;
+	m_OriginalScale = INITIAL_ORIGINAL_SCALE;
+	m_DeleteInit = INITIAL_DELETE_INIT;
+	m_DaathTime = INITIAL_DEATH_TIME;
+	m_DamageFlashTime = INITIAL_DAMAGE_FLASH_TIME;
+	m_FullLife = INITIAL_LIFE;
+	m_Life = INITIAL_LIFE;
+	m_BarScale = INITIAL_BAR_SCALE;
+
+	m_Scale.y = INITIAL_SCALE_Y;
 }
 
 void BreakObject::Uninit()
@@ -135,12 +159,10 @@ void BreakObject::DamageFlash()
 {
 	if (m_DamageFlashTime > 0)
 	{
-		m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 		m_DamageFlashTime--;
 		m_TextureEnable = false;
 	}
 	else {
-		m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 		m_TextureEnable = true;
 	}
 }

@@ -13,7 +13,7 @@ Model* Fence::m_Model{};
 
 #define COIN_DROP 3
 #define ORIGINAL_SCALE_X 4.0f
-#define LIFE 16
+#define INITIAL_LIFE 16
 
 void Fence::Load()
 {
@@ -31,8 +31,8 @@ void Fence::Init()
 {
 	BreakObject::Init();
 
-	m_Life = LIFE;
-	m_FullLife = LIFE;
+	m_Life = INITIAL_LIFE;
+	m_FullLife = INITIAL_LIFE;
 	m_Scale = D3DXVECTOR3(ORIGINAL_SCALE_X, 0.0f, 0.0f);
 	m_OriginalScale = D3DXVECTOR3(ORIGINAL_SCALE_X, 1.0f, 1.0f);
 }

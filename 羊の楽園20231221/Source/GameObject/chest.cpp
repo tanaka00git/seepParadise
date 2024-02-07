@@ -69,23 +69,23 @@ void Chest::UpdateDead()
 
 		//アイテムドロップ
 		//どれかが選出される
-		int b = irand(0, 2);
+		int b = irand(1, 3);
 		// スピードアップ
-		if (b == 0)
+		if (b == 1)
 		{
 			ItemSpeed* itemSpeed = scene->AddGameObject<ItemSpeed>(1);
 			itemSpeed->SetPosition(m_Position);
 			itemSpeed->SetDrop();
 		}
 		// ライフアップ
-		else if (b == 1)
+		else if (b == 2)
 		{
 			ItemLife* itemLife = scene->AddGameObject<ItemLife>(1);
 			itemLife->SetPosition(m_Position);
 			itemLife->SetDrop();
 		}
 		// 視野アップ
-		else if (b == 2)
+		else if (b == 3)
 		{
 			ItemEye* itemEye = scene->AddGameObject<ItemEye>(1);
 			itemEye->SetPosition(m_Position);

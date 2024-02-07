@@ -1,6 +1,48 @@
 #include "..\App\main.h"
 #include "..\GameObject\gameObject.h"
 
+//定数
+#define INITIAL_POSITION D3DXVECTOR3(0.0f, 0.0f, 0.0f)
+#define INITIAL_ROTATION D3DXVECTOR3(0.0f, 0.0f, 0.0f)
+#define INITIAL_SCALE D3DXVECTOR3(1.0f, 1.0f, 1.0f)
+
+void GameObject::Init()
+{
+	m_Destroy = false;
+
+	// 各変数の初期化
+	m_Position = INITIAL_POSITION;
+	m_Rotation = INITIAL_ROTATION;
+	m_Scale = INITIAL_SCALE;
+
+	// コンポーネントの初期化
+	for (Component* component : m_Component)
+	{
+		component->Init();
+	}
+}
+
+void GameObject::Uninit()
+{
+	for (Component* component : m_Component)//範囲forループ
+	{
+		component->Uninit();
+		delete	component;
+	}
+
+	m_Component.clear();//リスト構造の削除
+}
+
+void GameObject::Update()
+{
+	for (Component* component : m_Component) { component->Update(); }
+}
+
+void GameObject::Draw()
+{
+	for (Component* component : m_Component) { component->Draw(); }
+}
+
 bool GameObject::Destroy()
 {
 	if (m_Destroy)
@@ -46,25 +88,4 @@ D3DXVECTOR3 GameObject::GetUp()
 	up.y = rot._22;
 	up.z = rot._23;
 	return up;
-}
-
-void GameObject::Uninit()
-{
-	for (Component* component : m_Component)//範囲forループ
-	{
-		component->Uninit();
-		delete	component;
-	}
-
-	m_Component.clear();//リスト構造の削除
-}
-
-void GameObject::Update()
-{
-	for (Component* component : m_Component) { component->Update(); }
-}
-
-void GameObject::Draw()
-{
-	for (Component* component : m_Component) { component->Draw(); }
 }

@@ -20,14 +20,28 @@ Audio*Follow::m_SE_Follow{};
 Audio*Follow::m_SE_Release{};
 bool Follow::m_SE_FollowCheck{};
 
+#define INITIAL_ATTACK_STOP_TIME 0
+#define INITIAL_DAATH_TIME 200
+#define INITIAL_ORIENTATION_TIME 0
+#define INITIAL_NEXT_ORIENTATION_TIME 0
+#define INITIAL_NEXT_ROTATION 1
+#define INITIAL_AGAIN_FOLLOW_TIME 0
+#define INITIAL_ANIME_TIME 0
+#define INITIAL_ANIME_PAUSE true
+#define INITIAL_ANIME_ROTATION_X 0.0f
+#define INITIAL_DEATH_TIME 200
+#define INITIAL_DEATH_STAGING 0.14f
+#define INITIAL_WALK_EFFECT_TIME 0
+#define INITIAL_SCALE_Y 0.01f
+
 #define WALK_EFFECT_TIME 13		//エフェクトが表示される間隔フレーム
 #define CONTACT_EXTRUSION 0.02f	//他の仲間と接触した際の押し出し係数
 #define MOVE_SPEED_NORMAL 0.01f	//移動速度
 #define MOVE_SPEED_DASH   0.02f //ダッシュ時移動速度
 #define MOVE_MAGNIFY_FREE 6.5f  //自由状態の移動速度の倍率(それ以外の状態ではプレイヤーと同期)
 #define DELETE_DISTANCE   25.0f //プレイヤーと離れているときに自動消滅する距離
-#define ATTACK_STOP 22
-#define GRAVITY 0.015f
+#define ATTACK_STOP	22			//攻撃停止時間
+#define GRAVITY 0.015f			//重力
 
 void Follow::Load()
 {
@@ -50,7 +64,19 @@ void Follow::Init()
 {
 	CharacterObject::Init();
 
-	m_Scale.y = 0.01f;
+	m_Scale.y = INITIAL_SCALE_Y;
+	m_AttackStopTime = INITIAL_ATTACK_STOP_TIME;
+	m_DaathTime = INITIAL_DAATH_TIME;
+	m_OrientationTime = INITIAL_ORIENTATION_TIME;
+	m_NextOrientationTime = INITIAL_NEXT_ORIENTATION_TIME;
+	m_NextRot = INITIAL_NEXT_ROTATION;
+	m_AgainFollow = INITIAL_AGAIN_FOLLOW_TIME;
+	m_AnimeTime = INITIAL_ANIME_TIME;
+	m_AnimePause = INITIAL_ANIME_PAUSE;
+	m_AnimeRotationX = INITIAL_ANIME_ROTATION_X;
+	m_DeathStaging = INITIAL_DEATH_STAGING;
+	m_WalkEffectTime = INITIAL_WALK_EFFECT_TIME;
+
 	m_Rotation.y = frand() * 2 * D3DX_PI;
 	m_WalkEffectTime = irand(0, WALK_EFFECT_TIME);
 
@@ -216,13 +242,13 @@ void Follow::UpdateDead()
 {
 	m_Velocity *= 0;
 
-	m_Rotation.z += m_Death / 2.0f;
-	m_Rotation.y -= m_Death;
+	m_Rotation.z += m_DeathStaging / 2.0f;
+	m_Rotation.y -= m_DeathStaging;
 	m_Scale.x -= 0.008f; m_Scale.y -= 0.008f; m_Scale.z -= 0.008f;
-	m_Death -= 0.001f;
+	m_DeathStaging -= 0.001f;
 
 	if (m_Rotation.z > 3.1415f / 4) { m_Rotation.z = 3.1415f / 4; }
-	if (m_Death < 0.0f) { m_Death = 0.0f; }
+	if (m_DeathStaging < 0.0f) { m_DeathStaging = 0.0f; }
 	if (m_Scale.y < 0.0f)
 	{
 		Scene* scene = Manager::GetScene();

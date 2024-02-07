@@ -28,26 +28,26 @@ private:
 	static class GoalNavigation* m_GoalNavigation;
 
 	//メンバ変数
-	static int	m_DebugMode;											//デバッグモード判定
-	int			m_InvincibleTime = 0;									//無敵時間
-	bool  m_DashInit = false;	//ダッシュ初回時
-	bool  m_Dash;				//ダッシュ用
-	int   m_Combo = 0;			//コンボ数
-	int   m_ComboWait = 0;		//コンボを表示する時間
+	static int	m_DebugMode;				//デバッグモード判定
+	int		m_InvincibleTime	= 0;		//無敵時間
+	bool	m_DashInit			= false;	//ダッシュ初回時
+	bool	m_Dash				= false;	//ダッシュ用
+	int		m_Combo				= 0;		//コンボ数
+	int		m_ComboWait			= 0;		//コンボを表示する時間
 
-	float m_Death = 0.14f;		//死亡するまでの時間
-	int   m_AttackStopTime = 0;
+	float	m_DeathStaging		= 0.14f;	//死亡するまでの時間
+	int		m_AttackStopTime	= 0;		//攻撃停止時間
 
-	int   m_Charge = 0;
-	int   m_OldCharge = 0;
-	int   m_FullCharge = 2000;
+	int   m_Charge				= 0;
+	int   m_OldCharge			= 0;
+	int   m_FullCharge			= 2000;
 
-	bool  m_TutorialEnd = false;		//チュートリアル終わった？
-	bool  m_DeleteInit = false;		//死亡時初回
-	bool  m_AnimePause = true;		//アニメの向き切り替え
-	int   m_AnimeTime = 0;			//アニメの向き変更の時間
-	float m_AnimeRotationX = 0.0f;	//アニメの表示の傾き(実際の向きとは違う)
-	int   m_WalkEffectTime = 0;		//エフェクトを発生させる間隔時間
+	bool  m_TutorialEnd			= false;	//チュートリアル終わった？
+	bool  m_DeleteInit			= false;	//死亡時初回
+	bool  m_AnimePause			= true;		//アニメの向き切り替え
+	int   m_AnimeTime			= 0;		//アニメの向き変更の時間
+	float m_AnimeRotationX		= 0.0f;		//アニメの表示の傾き(実際の向きとは違う)
+	int   m_WalkEffectTime		= 0;		//エフェクトを発生させる間隔時間
 
 	//ステータス系
 	int	  m_Eye = 0;

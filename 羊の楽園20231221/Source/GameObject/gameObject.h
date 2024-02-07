@@ -28,7 +28,7 @@ public:
 	D3DXVECTOR3 GetRight();
 	D3DXVECTOR3 GetUp();
 
-	virtual void Init(){};
+	virtual void Init();
 	virtual void Uninit();
 	virtual void Update();
 	virtual void Draw();

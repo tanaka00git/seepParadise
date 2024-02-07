@@ -62,27 +62,27 @@ void Rock::UpdateDead()
 		m_HpBarS->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 		//アイテムドロップ
-		int a = irand(0, DROP_RAIT-1);
-		if (a == 0)
+		int a = irand(1, DROP_RAIT);
+		if (a == 1)
 		{
 			//どれかが選出される
-			int b = irand(0, 2);
+			int b = irand(1, 3);
 			// スピードアップ
-			if (b == 0)
+			if (b == 1)
 			{
 				ItemSpeed* itemSpeed = scene->AddGameObject<ItemSpeed>(1);
 				itemSpeed->SetPosition(m_Position);
 				itemSpeed->SetDrop();
 			}
 			// ライフアップ
-			else if (b == 1)
+			else if (b == 2)
 			{
 				ItemLife* itemLife = scene->AddGameObject<ItemLife>(1);
 				itemLife->SetPosition(m_Position);
 				itemLife->SetDrop();
 			}
 			// 視野アップ
-			else if (b == 2)
+			else if (b == 3)
 			{
 				ItemEye* itemEye = scene->AddGameObject<ItemEye>(1);
 				itemEye->SetPosition(m_Position);
