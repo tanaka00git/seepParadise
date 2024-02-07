@@ -80,7 +80,7 @@ void SheepCage::UpdateDead()
 		Scene* scene = Manager::GetScene();
 
 		m_DeleteInit = true;
-		m_HpBarS->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+		m_HpBarS->SetDraw(false);
 		m_SE_Chest->Play(1.0f);
 
 		//—rƒhƒƒbƒv

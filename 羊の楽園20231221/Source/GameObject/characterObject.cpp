@@ -31,6 +31,11 @@ void CharacterObject::Init()
 	m_Life = INITIAL_LIFE;
 	m_FullLife = INITIAL_LIFE;
 	m_Speed = INITIAL_SPEED;
+
+	m_HpBarS = AddComponent<HpBarS>();
+	m_HpBarS->SetLifeDateFC(m_FullLife, m_Life);
+	m_HpBarS->SetScale(m_BarScale);
+	m_HpBarS->SetDraw(false);
 }
 
 void CharacterObject::Uninit()
@@ -55,6 +60,9 @@ void CharacterObject::Update()
 		break;
 	}
 
+	//体力データを渡す
+	m_HpBarS->SetLifeDateFC(m_FullLife, m_Life);		  //ライフをHPバーにセットする
+
 	//ダメージフラッシュ
 	DamageFlash();
 }
@@ -67,6 +75,7 @@ void CharacterObject::UpdateAlive()
 
 void CharacterObject::UpdateUnused()
 {
+	m_HpBarS->SetDraw(false);
 	m_Scale *= 0.0f;
 }
 
@@ -191,5 +200,27 @@ void CharacterObject::Collision(float& groundHeight)
 	{
 		m_Position.y = 0.0f;
 		m_Velocity.y = 0.0f;
+	}
+}
+
+void CharacterObject::SmoothAppearance(bool growing)
+{
+	if (growing)
+	{
+		m_Scale.x += m_OriginalScale.x / 20;
+		m_Scale.y += m_OriginalScale.y / 20;
+		m_Scale.z += m_OriginalScale.y / 20;
+		if (m_Scale.x >= m_OriginalScale.x) { m_Scale.x = m_OriginalScale.x; }
+		if (m_Scale.y >= m_OriginalScale.y) { m_Scale.y = m_OriginalScale.y; }
+		if (m_Scale.z >= m_OriginalScale.z) { m_Scale.z = m_OriginalScale.z; }
+	}
+	else
+	{
+		m_Scale.x -= m_OriginalScale.y / 20;
+		m_Scale.y -= m_OriginalScale.y / 20;
+		m_Scale.z -= m_OriginalScale.y / 20;
+		if (m_Scale.x <= 0.0f) { m_Scale.x = 0.0f; }
+		if (m_Scale.y <= 0.0f) { m_Scale.y = 0.0f; }
+		if (m_Scale.z <= 0.0f) { m_Scale.z = 0.0f; }
 	}
 }

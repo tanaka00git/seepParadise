@@ -91,8 +91,7 @@ void ItemObject::UpdateMove()
 	if (m_DaathTime <= 0) { m_ItemState = ITEM_STATE::DEATH; }
 
 	//‚Ê‚é‚Ê‚éoŒ»
-	if (m_Scale.y < m_OriginalScale.y) { m_Scale.y += m_OriginalScale.y / 20; }
-	else { m_Scale.y = m_OriginalScale.y; }
+	SmoothAppearance(true);
 
 	//ƒWƒƒƒ“ƒv‚µ‚Ä‚½‚ç‚±‚ÌŒã‚Ìˆ—‚ð‚µ‚È‚¢
 	if (m_DropJump) { return; }
@@ -139,8 +138,30 @@ void ItemObject::UpdateDelete()
 {
 	//‚Ê‚é‚Ê‚éÁ–Å
 	m_Shadow->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	m_Scale.x -= m_OriginalScale.y / 20; m_Scale.y -= m_OriginalScale.y / 20; m_Scale.z -= m_OriginalScale.y / 20;
+	SmoothAppearance(false);
 	if (m_Scale.y <= 0.0f) { SetDestroy(); }
+}
+
+void ItemObject::SmoothAppearance(bool growing)
+{
+	if (growing)
+	{
+		m_Scale.x += m_OriginalScale.x / 20;
+		m_Scale.y += m_OriginalScale.y / 20;
+		m_Scale.z += m_OriginalScale.y / 20;
+		if (m_Scale.x >= m_OriginalScale.x) { m_Scale.x = m_OriginalScale.x; }
+		if (m_Scale.y >= m_OriginalScale.y) { m_Scale.y = m_OriginalScale.y; }
+		if (m_Scale.z >= m_OriginalScale.z) { m_Scale.z = m_OriginalScale.z; }
+	}
+	else
+	{
+		m_Scale.x -= m_OriginalScale.y / 20;
+		m_Scale.y -= m_OriginalScale.y / 20;
+		m_Scale.z -= m_OriginalScale.y / 20;
+		if (m_Scale.x <= 0.0f) { m_Scale.x = 0.0f; }
+		if (m_Scale.y <= 0.0f) { m_Scale.y = 0.0f; }
+		if (m_Scale.z <= 0.0f) { m_Scale.z = 0.0f; }
+	}
 }
 
 void ItemObject::SetDrop()

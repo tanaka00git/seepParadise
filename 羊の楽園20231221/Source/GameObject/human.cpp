@@ -105,9 +105,6 @@ void Human::Init()
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
 
 	m_Shadow = AddComponent<Shadow>();
-
-	m_HpBarS = AddComponent<HpBarS>();
-	m_HpBarS->SetLifeDateFC(m_FullLife, m_Life);
 }
 
 void Human::Uninit()
@@ -130,12 +127,7 @@ void Human::Update()
 	if (m_DaathTime <= 0) { UpdateDelete(); }
 	else
 	{
-		m_Scale.x += m_OriginalScale.x / 20;
-		m_Scale.y += m_OriginalScale.y / 20;
-		m_Scale.z += m_OriginalScale.z / 20;
-		if (m_Scale.x >= m_OriginalScale.x) { m_Scale.x = m_OriginalScale.x; }
-		if (m_Scale.y >= m_OriginalScale.y) { m_Scale.y = m_OriginalScale.y; }
-		if (m_Scale.z >= m_OriginalScale.z) { m_Scale.z = m_OriginalScale.z; }
+		SmoothAppearance(true);
 	}
 
 	//重力
@@ -152,8 +144,7 @@ void Human::Update()
 	m_Position += m_Velocity;
 
 	//HPが最大HPと一緒じゃなければライフバー表示
-	if (m_FullLife != m_Life) { m_HpBarS->SetScale(m_BarScale); }
-	else { m_HpBarS->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f)); }
+	if (m_FullLife != m_Life) { m_HpBarS->SetDraw(true); }
 
 	//影の移動
 	D3DXVECTOR3 shadowPosition = m_Position;
@@ -285,8 +276,8 @@ void Human::UpdateDelete()
 {
 	//ぬるぬる消滅
 	m_Shadow->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	m_HpBarS->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	m_Scale.x -= m_OriginalScale.y / 20; m_Scale.y -= m_OriginalScale.y / 20; m_Scale.z -= m_OriginalScale.y / 20;
+	m_HpBarS->SetDraw(false);
+	SmoothAppearance(false);
 	if (m_Scale.y <= 0.0f) { SetDestroy(); }
 }
 
@@ -354,7 +345,7 @@ void Human::UpdateDead()
 	{
 		m_SE_Critical->Play(1.0f);
 		m_Shadow->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-		m_HpBarS->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+		m_HpBarS->SetDraw(false);
 		m_DeleteInit = true;
 
 		for (int i = 0; i < m_CoinDrop; i++)

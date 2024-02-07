@@ -29,6 +29,7 @@ protected:
 	virtual void UpdateMove();
 	virtual void UpdateDelete();
 	virtual void MoveGet() {};
+	void SmoothAppearance(bool growing);
 
 public:
 	virtual void Init();

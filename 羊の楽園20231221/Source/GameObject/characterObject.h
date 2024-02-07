@@ -36,6 +36,7 @@ protected:
 	virtual void UpdateUnused();
 	virtual void DamageFlash();
 	virtual void Collision(float& groundHeight);
+	void SmoothAppearance(bool growing);
 
 public:
 	virtual void Init();

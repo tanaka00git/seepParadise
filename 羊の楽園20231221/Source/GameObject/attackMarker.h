@@ -28,8 +28,8 @@ public:
 	void Update();
 	void Draw();
 
-	void SetDraw(bool draw) { m_Draw = draw; }//色変え用
-	void SetColor(D3DXCOLOR Color) { m_Color = Color; }//色変え用
-	void SetScale(D3DXVECTOR3 Scale) { m_Scale = Scale; }//スケール用
+	void SetDraw(bool draw) { m_Draw = draw; }				//表示するかどうか
+	void SetColor(D3DXCOLOR Color) { m_Color = Color; }		//色変え用
+	void SetScale(D3DXVECTOR3 Scale) { m_Scale = Scale; }	//スケール用
 	void SetRotation(D3DXVECTOR3 rotation) { m_Rotation = rotation;}//向き変更用
 };

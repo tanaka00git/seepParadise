@@ -64,6 +64,9 @@ void HpBarS::Update()
 
 void HpBarS::Draw()
 {
+	//m_Dwawがfalseなら表示しない
+	if (!m_Draw) { return; }
+
 	Scene* scene = Manager::GetScene();
 
 	//入力レイアウト設定

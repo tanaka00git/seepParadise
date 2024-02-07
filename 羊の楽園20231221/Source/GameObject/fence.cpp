@@ -67,7 +67,7 @@ void Fence::UpdateDead()
 		Scene* scene = Manager::GetScene();
 
 		m_DeleteInit = true;
-		m_HpBarS->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
+		m_HpBarS->SetDraw(false);
 
 		//コインドロップ
 		for (int i = 0; i <= COIN_DROP; i++)

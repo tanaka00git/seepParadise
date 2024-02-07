@@ -39,6 +39,7 @@ protected:
 	virtual void UpdateDelete();
 	virtual void UpdateDead();
 	virtual void Collision(float& groundHeight);
+	void SmoothAppearance(bool growing);
 
 public:
 	static void Load();

@@ -39,10 +39,6 @@ void BreakObject::Init()
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
 
-	m_HpBarS = AddComponent<HpBarS>();
-	m_HpBarS->SetLifeDateFC(INITIAL_LIFE, INITIAL_LIFE);
-	m_HpBarS->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-
 	m_Scale.y = 0.01f;
 	m_Color = INITIAL_COLOR;
 	m_TextureEnable = INITIAL_TEXTURE_ENABLE;
@@ -56,6 +52,10 @@ void BreakObject::Init()
 	m_BarScale = INITIAL_BAR_SCALE;
 
 	m_Scale.y = INITIAL_SCALE_Y;
+
+	m_HpBarS = AddComponent<HpBarS>();
+	m_HpBarS->SetLifeDateFC(INITIAL_LIFE, INITIAL_LIFE);
+	m_HpBarS->SetScale(m_BarScale);
 }
 
 void BreakObject::Uninit()
@@ -100,10 +100,7 @@ void BreakObject::UpdateMove()
 	Scene* scene = Manager::GetScene();
 
 	//ぬるぬる出現
-	m_Scale.x += m_OriginalScale.y / 20; m_Scale.y += m_OriginalScale.y / 20; m_Scale.z += m_OriginalScale.y / 20;
-	if (m_Scale.x >= m_OriginalScale.x) { m_Scale.x = m_OriginalScale.x; }
-	if (m_Scale.y >= m_OriginalScale.y) { m_Scale.y = m_OriginalScale.y; }
-	if (m_Scale.z >= m_OriginalScale.z) { m_Scale.z = m_OriginalScale.z; }
+	SmoothAppearance(true);
 
 	//HPバー表示
 	LifeBarMove();
@@ -135,15 +132,16 @@ void BreakObject::UpdateMove()
 void BreakObject::UpdateDelete()
 {
 	//ぬるぬる消滅
-	m_HpBarS->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	m_Scale.x -= m_OriginalScale.y / 20; m_Scale.y -= m_OriginalScale.y / 20; m_Scale.z -= m_OriginalScale.y / 20;
+	m_HpBarS->SetDraw(false);
+	SmoothAppearance(false);
 	if (m_Scale.y <= 0.0f) { SetDestroy(); }
 }
 
 void BreakObject::UpdateDead()
 {
+	m_HpBarS->SetDraw(false);
 	m_Position.y += 0.5f;
-	m_Scale.x -= m_OriginalScale.y / 20; m_Scale.y -= m_OriginalScale.y / 20; m_Scale.z -= m_OriginalScale.y / 20;
+	SmoothAppearance(false);
 	if (m_Scale.y < 0.0f) { SetDestroy(); }
 }
 
@@ -170,8 +168,8 @@ void BreakObject::DamageFlash()
 void BreakObject::LifeBarMove()
 {
 	//スケール設定
-	if (m_FullLife != m_Life) { m_HpBarS->SetScale(m_BarScale); }
-	else { m_HpBarS->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f)); }
+	//HPが最大HPと一緒じゃなければライフバー表示
+	if (m_FullLife != m_Life) { m_HpBarS->SetDraw(true); }
 
 	//HPバーの位置変更
 	D3DXVECTOR3 HpBarPosition = m_Position;
@@ -265,5 +263,27 @@ void BreakObject::Collision(float& groundHeight)
 	{
 		m_Position.y = 0.0f;
 		m_Velocity.y = 0.0f;
+	}
+}
+
+void BreakObject::SmoothAppearance(bool growing)
+{
+	if (growing)
+	{
+		m_Scale.x += m_OriginalScale.x / 20;
+		m_Scale.y += m_OriginalScale.y / 20;
+		m_Scale.z += m_OriginalScale.y / 20;
+		if (m_Scale.x >= m_OriginalScale.x) { m_Scale.x = m_OriginalScale.x; }
+		if (m_Scale.y >= m_OriginalScale.y) { m_Scale.y = m_OriginalScale.y; }
+		if (m_Scale.z >= m_OriginalScale.z) { m_Scale.z = m_OriginalScale.z; }
+	}
+	else
+	{
+		m_Scale.x -= m_OriginalScale.y / 20;
+		m_Scale.y -= m_OriginalScale.y / 20;
+		m_Scale.z -= m_OriginalScale.y / 20;
+		if (m_Scale.x <= 0.0f) { m_Scale.x = 0.0f; }
+		if (m_Scale.y <= 0.0f) { m_Scale.y = 0.0f; }
+		if (m_Scale.z <= 0.0f) { m_Scale.z = 0.0f; }
 	}
 }

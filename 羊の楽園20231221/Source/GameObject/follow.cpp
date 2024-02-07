@@ -168,7 +168,7 @@ void Follow::UpdateAlive()
 	CharacterObject::UpdateAlive();
 
 	//Ç ÇÈÇ ÇÈèoåª
-	if (m_Scale.y < m_OriginalScale.y) { m_Scale.y += m_OriginalScale.y / 20; }
+	SmoothAppearance(true);
 
 	switch (m_FollowState)
 	{

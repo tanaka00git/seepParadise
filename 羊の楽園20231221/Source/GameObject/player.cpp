@@ -103,6 +103,8 @@ void Player::Unload()
 
 void Player::Init()
 {
+	CharacterObject::Init();
+
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
 
@@ -129,11 +131,10 @@ void Player::Init()
 
 	//アタッチ
 	m_Shadow = AddComponent<Shadow>();
-	m_HpBarS = AddComponent<HpBarS>();
-	m_HpBarS->SetLifeDateFC(m_FullLife, m_Life);
-	m_HpBarS->SetScale(m_BarScale);
+
 	Scene* scene = Manager::GetScene();
 	m_GoalNavigation = scene->AddGameObject<GoalNavigation>(1);
+	m_HpBarS->SetDraw(true);
 }
 
 void Player::Uninit()
@@ -158,6 +159,9 @@ void Player::Update()
 	if (m_Speed > FULL_SPEED) { m_Speed = FULL_SPEED; }
 	if (m_Eye > FULL_EYE) { m_Eye = FULL_EYE; }
 	if (m_Charge > m_FullCharge) { m_Charge = m_FullCharge; }
+	
+	//最低値
+	if (m_Life <= 0) { m_Life = 0; }
 
 	//コンボデータを渡す
 	m_ComboWait--;
@@ -169,11 +173,8 @@ void Player::Update()
 	}
 	else { m_Combo = 0; }
 
-
-	//体力データを渡す
-	if (m_Life <= 0) { m_Life = 0; }
-	m_HpBarS->SetLifeDateFC(m_FullLife, m_Life);		  //ライフをHPバーにセットする
-	m_HpBarS->SetCharge(m_Charge, m_FullCharge, m_Dash);  //チャージをHPバーにセットする
+	//チャージと左上ライフをHPバーにセットする
+	m_HpBarS->SetCharge(m_Charge, m_FullCharge, m_Dash); 
 	score->SetLifeF(m_Life, m_FullLife);
 
 	//HPバーの移動
@@ -285,7 +286,7 @@ void Player::UpdateDead()
 
 void Player::UpdateNormal()
 {
-	m_Scale.y = m_OriginalScale.y;
+	SmoothAppearance(true);	//ぬるぬる出現
 
 	m_Velocity.x = GetForward().x * (m_Speed * 0.01f);
 	m_Velocity.z = GetForward().z * (m_Speed * 0.01f);
@@ -295,7 +296,7 @@ void Player::UpdateNormal()
 
 void Player::UpdateDash()
 {
-	m_Scale.y = m_OriginalScale.y;
+	SmoothAppearance(true);	//ぬるぬる出現
 
 	//ダッシュ初回時
 	if (!m_DashInit)
