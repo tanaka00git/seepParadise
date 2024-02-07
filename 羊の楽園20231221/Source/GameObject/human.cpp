@@ -452,9 +452,6 @@ void Human::SetDamageMove()
 	Player* player = scene->GetGameObject<Player>();
 	m_PLForward = player->GetForward();
 	scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
-
-	Camera* camera = scene->GetGameObject<Camera>();
-	camera->SetShake(0.1f, 0.0f);
 }
 
 void Human::Collision(float& groundHeight)
