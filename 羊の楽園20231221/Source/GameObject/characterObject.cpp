@@ -6,7 +6,8 @@
 #include "..\GameObject\cylinder.h"
 #include "..\GameObject\box.h"
 
-#define INIT_JUMP 0.25f			//出現のジャンプの高さ
+#define DROP_JUMP 0.25f			//出現のジャンプの高さ
+#define DAMAGE_FLASH_TIME 6
 
 void CharacterObject::Init()
 {
@@ -57,13 +58,22 @@ void CharacterObject::DamageFlash()
 		m_DamageFlashTime--;
 		m_TextureEnable = false;
 	}
-	else { m_TextureEnable = true; }
+	else {
+		m_TextureEnable = true; 
+	}
+}
+
+void CharacterObject::SetDamageMove()
+{
+	m_DamageFlashTime = DAMAGE_FLASH_TIME;
+	m_Life--;
+	m_Velocity.y = 0.1f;
 }
 
 void CharacterObject::SetDrop()
 {
-	m_Velocity.y = INIT_JUMP;
-	m_Rotation.y = frand() * 3.1415f;
+	m_Velocity.y = DROP_JUMP;
+	m_Rotation.y = frand() * 2 * D3DX_PI;
 	m_Velocity.x = GetForward().x * (frand() * 0.08f);
 	m_Velocity.z = GetForward().z * (frand() * 0.08f);
 }

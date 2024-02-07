@@ -26,11 +26,11 @@ Model*Wolf::m_Model{};
 Model*Wolf::m_ModelApple{};
 Audio*Wolf::m_SE_Eat{};
 Audio*Wolf::m_SE_Kick{};
+Audio*Wolf::m_SE_Critical{};
 
 #define EATING_TIME 45
 #define DROP_RATE 20
 #define APPLE_RATE 20
-#define GIVE_ATTACK_STOP 20
 #define KNOCK_BACK_TIME 14
 #define STUN_TIME 240
 #define GRAVITY 0.015f
@@ -46,6 +46,8 @@ void Wolf::Load()
 	m_SE_Eat->Load("asset\\audio\\eat3b.wav");
 	m_SE_Kick = new Audio();
 	m_SE_Kick->Load("asset\\audio\\小キックb.wav");
+	m_SE_Critical = new Audio();
+	m_SE_Critical->Load("asset\\audio\\大パンチ.wav");
 }
 
 void Wolf::Unload()
@@ -94,9 +96,9 @@ void Wolf::Update()
 	if (m_DaathTime <= 0){UpdateDelete();}
 	else 
 	{
-		m_Scale.x += 0.05f;
-		m_Scale.y += 0.05f;
-		m_Scale.z += 0.05f;
+		m_Scale.x += m_OriginalScale.x / 20;
+		m_Scale.y += m_OriginalScale.y / 20;
+		m_Scale.z += m_OriginalScale.z / 20;
 		if (m_Scale.x >= m_OriginalScale.x) { m_Scale.x = m_OriginalScale.x; }
 		if (m_Scale.y >= m_OriginalScale.y) { m_Scale.y = m_OriginalScale.y; }
 		if (m_Scale.z >= m_OriginalScale.z) { m_Scale.z = m_OriginalScale.z; }
@@ -139,9 +141,6 @@ void Wolf::Update()
 
 	//疑似アニメ
 	Anime();
-	
-	//ダメージフラッシュ
-	DamageFlash();
 }
 
 void Wolf::Draw()
@@ -252,7 +251,7 @@ void Wolf::UpdateDelete()
 	//ぬるぬる消滅
 	m_Shadow->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	m_HpBarS->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	m_Scale.x -= 0.05f; m_Scale.y -= 0.05f; m_Scale.z -= 0.05f;
+	m_Scale.x -= m_OriginalScale.y / 20; m_Scale.y -= m_OriginalScale.y / 20; m_Scale.z -= m_OriginalScale.y / 20;
 	if (m_Scale.y <= 0.0f) { SetDestroy(); }
 }
 
@@ -305,7 +304,7 @@ void Wolf::UpdateDead()
 
 	if (!m_DeleteInit)
 	{
-		m_SE_Kick->Play(1.0f);
+		m_SE_Critical->Play(1.0f);
 		m_Shadow->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 		m_HpBarS->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 		m_DeleteInit = true;
@@ -383,8 +382,8 @@ void Wolf::KnockBack()
 	if (m_KnockBackTime >= 1) 
 	{
 		m_KnockBackTime --;
-		m_Velocity.x += (m_PLForward.x * (m_KnockBackTime * 0.02f));
-		m_Velocity.z += (m_PLForward.z * (m_KnockBackTime * 0.02f));
+		m_Velocity.x += (m_PLForward.x * (m_KnockBackTime * 0.03f));
+		m_Velocity.z += (m_PLForward.z * (m_KnockBackTime * 0.03f));
 		if (m_KnockBackTime <= 0) { m_KnockBackTime = 0; }
 	}
 }
@@ -406,6 +405,8 @@ void Wolf::Anime()
 
 void Wolf::SetDamageMove()
 {
+	CharacterObject::SetDamageMove();
+
 	//たくさん攻撃を与えるとダメージ状態になる
 	m_StanGuardCount++;
 	if (m_StanGuardCount >= m_StanGuard) 
@@ -415,11 +416,8 @@ void Wolf::SetDamageMove()
 		m_WolfState = WOLF_STATE::DAMAGE; 
 	}
 
-	m_Velocity.y = 0.1f;
 	m_KnockBackTime = KNOCK_BACK_TIME;
-	m_Life --;
 	m_SE_Kick->Play(1.0f);
-	m_ColorChange = 5;
 
 	Scene* scene = Manager::GetScene();
 	Player* player = scene->GetGameObject<Player>();
@@ -449,7 +447,7 @@ void Wolf::SetEnemyData(int data)
 	m_CoinDrop = data;
 	m_StanGuard = m_FullLife / 2;
 	m_OriginalScale = D3DXVECTOR3(0.5f * data, 0.5f * data, 0.5f * data);	//キャラのサイズ
-	m_Speed = 0.035f + (0.0025f * data);
+	m_Speed = 0.03f + (0.0025f * data);
 
 	if (m_Data == 1)
 	{
@@ -509,7 +507,6 @@ void Wolf::Collision(float& groundHeight)
 					//プレイヤーがダッシュ時にぶつかった場合
 					if (m_WolfState == WOLF_STATE::SUPER_ATTACK)
 					{
-						playerObject->AddLife(-1);
 						playerObject->SetDamageMove();
 						m_SE_Eat->Play(1.0f);
 						scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
@@ -518,7 +515,7 @@ void Wolf::Collision(float& groundHeight)
 						playerObject->GetPlayerState() == PLAYER_STATE::DASH)
 					{
 						SetDamageMove();
-						playerObject->SetAttackStop(GIVE_ATTACK_STOP);
+						playerObject->SetKnockBack();
 						playerObject->AddCombo(1);
 						scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
 					}
@@ -526,7 +523,6 @@ void Wolf::Collision(float& groundHeight)
 					else if (m_StunTime <= 0 && m_WolfState != WOLF_STATE::EATING)
 					{
 						m_WolfState = WOLF_STATE::EATING;
-						playerObject->AddLife(-1);
 						playerObject->SetDamageMove();
 						m_SE_Eat->Play(1.0f);
 						scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
@@ -548,7 +544,7 @@ void Wolf::Collision(float& groundHeight)
 					else if (followObject->GetState() == FOLLOW_STATE::DASH)
 					{
 						SetDamageMove();
-						followObject->SetAttackStop(GIVE_ATTACK_STOP);
+						followObject->SetKnockBack();
 						player->AddCombo(1);
 						scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
 

@@ -20,10 +20,13 @@ protected:
 	static class Audio* m_SE_Kick;
 
 	//メンバ変数
+	D3DXCOLOR	m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);		//配色
+	bool		m_TextureEnable = true;
 	D3DXVECTOR3 m_Velocity      = D3DXVECTOR3(0.0f,0.0f,0.0f);		//速度
 	D3DXVECTOR3 m_OriginalScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);	//本来のスケール
 	bool		m_DeleteInit    = false;							//削除時初回
 	int			m_DaathTime     = 2000;								//自動消滅時間
+	int			m_DamageFlashTime = 0;								//ダメージの時間
 
 	//ステータス
 	int			m_FullLife	= 7;									//最大体力
@@ -46,6 +49,7 @@ public:
 	virtual void Update();
 	virtual void Draw() {};
 
+	void DamageFlash();
 	void SetDamageMove();
 	void LifeBarMove();
 	BREAKOBJECT_STATE GetState() { return m_BreakObjectState; }

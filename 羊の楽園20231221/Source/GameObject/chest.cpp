@@ -51,7 +51,7 @@ void Chest::Draw()
 
 	Renderer::SetWorldMatrix(&world);
 
-	m_Model->Draw();
+	m_Model->DrawColor(m_Color, m_TextureEnable);
 }
 
 void Chest::UpdateDead()

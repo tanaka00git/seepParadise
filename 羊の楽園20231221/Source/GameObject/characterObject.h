@@ -44,6 +44,7 @@ public:
 	virtual void Draw() {};
 
 	//ÉZÉbÉgä÷êî
+	virtual void SetDamageMove();
 	void SetDrop();
 	void AddLife(int life) { m_Life += life; }
 

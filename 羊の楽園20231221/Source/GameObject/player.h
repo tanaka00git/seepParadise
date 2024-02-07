@@ -74,13 +74,13 @@ public:
 	void Draw()override;
 
 	//ƒZƒbƒgŠÖ”
-	void SetDamageMove();
+	void SetKnockBack();
+	void SetDamageMove() override;
 	void AddCharge(int charge) { m_Charge += charge; };
 	void SetCharge(int charge) { m_Charge = charge; };
 	void AddSpeed(float speed) { m_Speed += speed; };
 	void AddFullLife(int life) { m_FullLife += life; };
 	void AddEye(int eye) { m_Eye += eye; };
-	void SetAttackStop(int attackStop) { m_AttackStopTime = attackStop; };
 	void AddCombo(int combo) { m_Combo += combo; }
 
 	//æ“¾ŠÖ”

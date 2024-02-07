@@ -49,7 +49,6 @@ void Tree::Init()
 	randam = irand(0, DROP_RAIT-1);
 	if (randam == 1) { m_ApplePossession = true; }
 
-
 	m_Shadow = AddComponent<Shadow>();
 }
 
@@ -82,8 +81,9 @@ void Tree::Draw()
 
 	Renderer::SetWorldMatrix(&world);
 
-	if(m_ApplePossession){m_ModelAppleTree->Draw();}
-	else{ m_Model->Draw(); }
+	if(m_ApplePossession){m_ModelAppleTree->DrawColor(m_Color, m_TextureEnable);
+	}
+	else{m_Model->DrawColor(m_Color, m_TextureEnable);}
 }
 
 void Tree::UpdateDead()

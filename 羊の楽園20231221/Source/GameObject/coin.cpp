@@ -15,7 +15,7 @@ Model*Coin::m_Model{};
 Audio*Coin::m_SE_Get{};
 
 #define MAX_CHARGE 1000
-#define SUBTRACTION_CHARGE 20
+#define SUBTRACTION_CHARGE 50
 #define MIN_CHARGE 100
 
 void Coin::Load()
@@ -62,7 +62,7 @@ void Coin::MoveGet()
 	score->AddCountCoin(+1);
 	
 	Player* player = scene->GetGameObject<Player>();
-	int charge = MAX_CHARGE / score->GetCount();
+	int charge = MAX_CHARGE - (score->GetCount() * SUBTRACTION_CHARGE);
 	charge = (charge <= MIN_CHARGE) ? MIN_CHARGE : charge;
 	player->AddCharge(charge);
 

@@ -14,6 +14,7 @@ Audio*BreakObject::m_SE_Kick{};
 
 #define GRAVITY 0.015f
 #define GIVE_ATTACK_STOP 20
+#define DAMAGE_FLASH_TIME 6
 
 void BreakObject::Load()
 {
@@ -65,6 +66,9 @@ void BreakObject::Update()
 	//当たり判定
 	float groundHeight = 0.0f;
 	Collision(groundHeight);
+
+	//ダメージフラッシュ
+	DamageFlash();
 }
 
 void BreakObject::UpdateMove()
@@ -72,7 +76,7 @@ void BreakObject::UpdateMove()
 	Scene* scene = Manager::GetScene();
 
 	//ぬるぬる出現
-	m_Scale.x += 0.05f; m_Scale.y += 0.05f; m_Scale.z += 0.05f;
+	m_Scale.x += m_OriginalScale.y / 20; m_Scale.y += m_OriginalScale.y / 20; m_Scale.z += m_OriginalScale.y / 20;
 	if (m_Scale.x >= m_OriginalScale.x) { m_Scale.x = m_OriginalScale.x; }
 	if (m_Scale.y >= m_OriginalScale.y) { m_Scale.y = m_OriginalScale.y; }
 	if (m_Scale.z >= m_OriginalScale.z) { m_Scale.z = m_OriginalScale.z; }
@@ -108,14 +112,14 @@ void BreakObject::UpdateDelete()
 {
 	//ぬるぬる消滅
 	m_HpBarS->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	m_Scale.x -= 0.05f; m_Scale.y -= 0.05f; m_Scale.z -= 0.05f;
+	m_Scale.x -= m_OriginalScale.y / 20; m_Scale.y -= m_OriginalScale.y / 20; m_Scale.z -= m_OriginalScale.y / 20;
 	if (m_Scale.y <= 0.0f) { SetDestroy(); }
 }
 
 void BreakObject::UpdateDead()
 {
 	m_Position.y += 0.5f;
-	m_Scale.x -= 0.05f; m_Scale.y -= 0.05f; m_Scale.z -= 0.05f;
+	m_Scale.x -= m_OriginalScale.y / 20; m_Scale.y -= m_OriginalScale.y / 20; m_Scale.z -= m_OriginalScale.y / 20;
 	if (m_Scale.y < 0.0f) { SetDestroy(); }
 }
 
@@ -124,6 +128,21 @@ void BreakObject::SetDamageMove()
 	m_Life --;
 	m_SE_Kick->Play(1.0f);
 	m_Velocity.y = 0.1f;
+	m_DamageFlashTime = DAMAGE_FLASH_TIME;
+}
+
+void BreakObject::DamageFlash()
+{
+	if (m_DamageFlashTime > 0)
+	{
+		m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		m_DamageFlashTime--;
+		m_TextureEnable = false;
+	}
+	else {
+		m_Color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		m_TextureEnable = true;
+	}
 }
 
 void BreakObject::LifeBarMove()

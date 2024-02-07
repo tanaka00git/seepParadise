@@ -23,11 +23,11 @@ protected:
 	static class Model* m_ModelApple;
 	static class Audio* m_SE_Eat;
 	static class Audio* m_SE_Kick;
+	static class Audio* m_SE_Critical;
 	class AttackMarker* m_AttackMarker{};
 
 	//メンバ変数
 	D3DXVECTOR3 m_PLForward{};										//プレイヤーの向き
-	int		m_ColorChange = 0;
 
 	int     m_DaathTime = 1400;	 //自動消滅
 	
@@ -76,7 +76,7 @@ public:
 	void Update()override;
 	virtual void Draw()override;
 
-	void SetDamageMove();
+	void SetDamageMove() override;
 	void SetPosEnemyData(D3DXVECTOR3 position, int num);
 	virtual void SetEnemyData(int data);
 };

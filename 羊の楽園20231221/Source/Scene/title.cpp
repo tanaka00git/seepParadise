@@ -27,15 +27,19 @@ int Title::m_Coin{};
 int Title::m_PlColor{};
 int Title::m_PlClown{};
 
+#define INIT_PLAYER_COLOR 6
+#define INIT_PLAYER_CROWN 6
+#define INIT_COIN 200
+
 void Title::Init()
 {
 	//ãNìÆéûå¿íËèàóù
 	if (!m_Begin) 
 	{
 		m_DebugMode = false;
-		m_PlColor = 6;
-		m_PlClown = 6;
-		m_Coin = 200;
+		m_PlColor = INIT_PLAYER_COLOR;
+		m_PlClown = INIT_PLAYER_CROWN;
+		m_Coin = INIT_COIN;
 		m_Begin = true;
 	}
 

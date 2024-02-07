@@ -12,7 +12,7 @@
 #define CAMERA_POS_Z -6.5f		//カメラ座標Z
 #define CAMERA_MOVE_VALUE 0.2f	//アイテム1個につきカメラの視野広がりする値
 #define CAMERA_MOVE_LIMIT 10.0f	//カメラの視野広がりの上限
-#define CAMERA_SPEED 0.3f		//カメラの速度
+#define CAMERA_SPEED 0.2f		//カメラの速度
 #define SHAKE_SPEED  1.5f		//振動の強さ
 
 void Camera::Init()

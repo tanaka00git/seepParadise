@@ -25,6 +25,7 @@
 
 Model* Human::m_Model{};
 Audio* Human::m_SE_Kick{};
+Audio* Human::m_SE_Critical{};
 Audio* Human::m_SE_Make{};
 
 #define LIFE 4
@@ -33,7 +34,6 @@ Audio* Human::m_SE_Make{};
 #define MAKING_COUNT 4
 #define DROP_RATE 20
 #define APPLE_RATE 20
-#define GIVE_ATTACK_STOP 20
 #define KNOCK_BACK_TIME 14
 #define STUN_TIME 60
 #define TARGET_LENGTH 3.0f
@@ -45,6 +45,8 @@ void Human::Load()
 	m_Model->Load("asset\\model\\human.obj");
 	m_SE_Kick = new Audio();
 	m_SE_Kick->Load("asset\\audio\\小キックb.wav");
+	m_SE_Critical = new Audio();
+	m_SE_Critical->Load("asset\\audio\\大パンチ.wav");
 	m_SE_Make = new Audio();
 	m_SE_Make->Load("asset\\audio\\木材に釘を打つ.wav");
 }
@@ -96,9 +98,9 @@ void Human::Update()
 	if (m_DaathTime <= 0) { UpdateDelete(); }
 	else
 	{
-		m_Scale.x += 0.05f;
-		m_Scale.y += 0.05f;
-		m_Scale.z += 0.05f;
+		m_Scale.x += m_OriginalScale.x / 20;
+		m_Scale.y += m_OriginalScale.y / 20;
+		m_Scale.z += m_OriginalScale.z / 20;
 		if (m_Scale.x >= m_OriginalScale.x) { m_Scale.x = m_OriginalScale.x; }
 		if (m_Scale.y >= m_OriginalScale.y) { m_Scale.y = m_OriginalScale.y; }
 		if (m_Scale.z >= m_OriginalScale.z) { m_Scale.z = m_OriginalScale.z; }
@@ -141,9 +143,6 @@ void Human::Update()
 
 	//疑似アニメ
 	Anime();
-
-	//ダメージフラッシュ
-	DamageFlash();
 }
 
 void Human::Draw()
@@ -255,7 +254,7 @@ void Human::UpdateDelete()
 	//ぬるぬる消滅
 	m_Shadow->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 	m_HpBarS->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	m_Scale.x -= 0.05f; m_Scale.y -= 0.05f; m_Scale.z -= 0.05f;
+	m_Scale.x -= m_OriginalScale.y / 20; m_Scale.y -= m_OriginalScale.y / 20; m_Scale.z -= m_OriginalScale.y / 20;
 	if (m_Scale.y <= 0.0f) { SetDestroy(); }
 }
 
@@ -321,7 +320,7 @@ void Human::UpdateDead()
 
 	if (!m_DeleteInit)
 	{
-		m_SE_Kick->Play(1.0f);
+		m_SE_Critical->Play(1.0f);
 		m_Shadow->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 		m_HpBarS->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 		m_DeleteInit = true;
@@ -447,14 +446,14 @@ void Human::Anime()
 
 void Human::SetDamageMove()
 {
+	CharacterObject::SetDamageMove();
+
 	m_StunTime = STUN_TIME;
 	m_HumanState = HUMAN_STATE::DAMAGE;
 
-	m_Velocity.y = 0.1f;
 	m_KnockBackTime = KNOCK_BACK_TIME;
 	m_Life--;
 	m_SE_Kick->Play(1.0f);
-	m_ColorChange = 5;
 	m_MakingTime = 0;
 
 	Scene* scene = Manager::GetScene();
@@ -506,7 +505,7 @@ void Human::Collision(float& groundHeight)
 						player->GetPlayerState() == PLAYER_STATE::DASH)
 					{
 						SetDamageMove();
-						playerObject->SetAttackStop(GIVE_ATTACK_STOP);
+						playerObject->SetKnockBack();
 						player->AddCombo(1);
 						scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
 					}
@@ -526,7 +525,7 @@ void Human::Collision(float& groundHeight)
 					if (followObject->GetState() == FOLLOW_STATE::DASH)
 					{
 						SetDamageMove();
-						followObject->SetAttackStop(GIVE_ATTACK_STOP);
+						followObject->SetKnockBack();
 						player->AddCombo(1);
 						scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
 					}

@@ -22,7 +22,6 @@
 #include "..\GameObject\camera.h"
 #include "..\GameObject\smoke.h"
 #include "..\GameObject\angelRing.h"
-
 #include "..\App\model.h"
 
 Model*Player::m_Model{};
@@ -41,7 +40,7 @@ int Player::m_PlClown{};
 #define FULL_SPEED 9.5
 #define FULL_EYE 6
 #define WALK_EFFECT_TIME 13
-#define ATTACK_STOP 23
+#define ATTACK_STOP 21
 #define GRAVITY 0.015f
 
 void Player::Load()
@@ -231,10 +230,10 @@ void Player::UpdateDead()
 	m_Velocity *= 0;
 	m_Rotation.z += m_Death / 2.0f;
 	m_Rotation.y -= m_Death;
-	m_Scale.x -= 0.008f; m_Scale.y -= 0.008f; m_Scale.z -= 0.008f;
+	m_Scale.x -= m_OriginalScale.x / 40; m_Scale.y -= m_OriginalScale.y / 40; m_Scale.z -= m_OriginalScale.z / 40;
 	m_Death -= 0.001f;
 
-	if (m_Rotation.z > 3.1415f / 4) { m_Rotation.z = 3.1415f / 4; }
+	if (m_Rotation.z > D3DX_PI / 4) { m_Rotation.z = D3DX_PI / 4; }
 	if (m_Death < 0.0f) { m_Death = 0.0f; }
 	if (m_Scale.y < 0.0f)
 	{
@@ -295,8 +294,16 @@ void Player::UpdateDash()
 	}
 }
 
+void Player::SetKnockBack()
+{
+	m_Velocity.y += 0.1f;
+	m_AttackStopTime = ATTACK_STOP;
+}
+
 void Player::SetDamageMove()
 {
+	CharacterObject::SetDamageMove();
+
 	Scene* scene = Manager::GetScene();
 	InfoLog* infoLog = scene->AddGameObject<InfoLog>(2);
 	infoLog->SetNum(4, 2, D3DXVECTOR3(100, -10, 0));
@@ -309,7 +316,6 @@ void Player::SetDamageMove()
 	m_DamageSE->Play(1.0f);
 	
 	m_InvincibleTime = 180;
-	m_Velocity.y = 0.1f;
 	DamageFade* damageFade = scene->AddGameObject<DamageFade>(2);
 	damageFade->SetColor(D3DXCOLOR(1.0f, 0.0f, 0.0f, 0.3f));
 }
@@ -407,8 +413,8 @@ void Player::AttackStop()
 	m_AttackStopTime--;
 	if (m_AttackStopTime > 0)	//çUåÇí‚é~(Ç‹ÇΩçUåÇÇ≈Ç´ÇÈÇ‹Ç≈)
 	{
-		m_Velocity.x = (GetForward().x * 0.03f) * -1;
-		m_Velocity.z = (GetForward().z * 0.03f) * -1;
+		m_Velocity.x = (GetForward().x * 0.075f) * -1;
+		m_Velocity.z = (GetForward().z * 0.075f) * -1;
 	}
 	if (m_AttackStopTime <= 0) { m_AttackStopTime = 0; }
 }
@@ -461,8 +467,8 @@ void Player::Collision(float& groundHeight)
 				if (m_PlayerState == PLAYER_STATE::DASH && GetAttackStop() <= 0)
 				{
 					breakObject->SetDamageMove();
-					SetAttackStop(ATTACK_STOP);
 					AddCombo(1);
+					SetKnockBack();
 				}
 
 				D3DXVECTOR3 penetration = D3DXVECTOR3(fabsf(scale.x) - fabsf(obbX), fabsf(scale.y) - fabsf(obbY), fabsf(scale.z) - fabsf(obbZ));

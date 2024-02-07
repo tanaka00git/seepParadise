@@ -9,6 +9,8 @@
 #include "..\Scene\scene.h"
 #include "..\GameObject\camera.h"
 
+#define GRAVITY 0.015f
+
 void ItemObject::Init()
 {
 	m_Scale.y = 0.01f;
@@ -48,7 +50,7 @@ void ItemObject::Update()
 
 	//重力
 	float groundHeight = 0.0f;	//地面の高さ
-	m_Velocity.y -= 0.015f;		//落ちる
+	m_Velocity.y -= GRAVITY;		//落ちる
 
 	//接地
 	if (m_Position.y < groundHeight && m_Velocity.y < 0.0f)
@@ -76,7 +78,7 @@ void ItemObject::UpdateMove()
 	if (m_DaathTime <= 0) { m_ItemState = ITEM_STATE::DEATH; }
 
 	//ぬるぬる出現
-	if (m_Scale.y < m_OriginalScale.y) { m_Scale.y += 0.05f; }
+	if (m_Scale.y < m_OriginalScale.y) { m_Scale.y += m_OriginalScale.y / 20; }
 	else { m_Scale.y = m_OriginalScale.y; }
 
 	//ジャンプしてたらこの後の処理をしない
@@ -124,14 +126,14 @@ void ItemObject::UpdateDelete()
 {
 	//ぬるぬる消滅
 	m_Shadow->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
-	m_Scale.x -= 0.1f; m_Scale.y -= 0.1f; m_Scale.z -= 0.1f;
+	m_Scale.x -= m_OriginalScale.y / 20; m_Scale.y -= m_OriginalScale.y / 20; m_Scale.z -= m_OriginalScale.y / 20;
 	if (m_Scale.y <= 0.0f) { SetDestroy(); }
 }
 
 void ItemObject::SetDrop()
 {
 	m_Velocity.y = 0.25f;
-	m_Rotation.y = frand() * 90;
+	m_Rotation.y = frand() * 2 * D3DX_PI;
 	m_Velocity.x = GetForward().x * (frand()* 0.08f);
 	m_Velocity.z = GetForward().z * (frand()* 0.08f);
 	m_DropJump = true;

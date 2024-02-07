@@ -3,6 +3,8 @@
 #include "..\GameObject\resultLogo.h"
 #include "..\App\sprite.h"
 
+#define ALPHA_VALUE 0.03f
+
 void ResultLogo::Init()
 {
 	//ここにシェーダーファイルのロードを追加
@@ -30,11 +32,11 @@ void ResultLogo::Update()
 
 	//ちかちか処理
 	if (m_UpDown) {
-		m_Alpha += 0.03f;
+		m_Alpha += ALPHA_VALUE;
 		if (m_Alpha > 1.0f) { m_UpDown = false; }
 	}
 	else {
-		m_Alpha -= 0.03f;
+		m_Alpha -= ALPHA_VALUE;
 		if (m_Alpha < 0.5f) { m_UpDown = true; }
 	}
 	m_Sprite->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, m_Alpha));

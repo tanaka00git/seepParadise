@@ -20,11 +20,11 @@ private:
 
 	static class Model* m_Model;
 	static class Audio* m_SE_Kick;
+	static class Audio* m_SE_Critical;
 	static class Audio* m_SE_Make;
 
 	//メンバ変数
 	D3DXVECTOR3 m_PLForward{};										//プレイヤーの向き
-	int		m_ColorChange = 0;
 
 	int     m_DaathTime = 1400;	 //自動消滅
 
@@ -70,5 +70,5 @@ public:
 	void Draw()override;
 
 	void AddLife(int life) { m_Life += life; }
-	void SetDamageMove();
+	void SetDamageMove() override;
 };

@@ -26,7 +26,7 @@ bool Follow::m_SE_FollowCheck{};
 #define MOVE_SPEED_DASH   0.02f //ダッシュ時移動速度
 #define MOVE_MAGNIFY_FREE 6.5f  //自由状態の移動速度の倍率(それ以外の状態ではプレイヤーと同期)
 #define DELETE_DISTANCE   25.0f //プレイヤーと離れているときに自動消滅する距離
-#define ATTACK_STOP 23
+#define ATTACK_STOP 21
 #define GRAVITY 0.015f
 
 void Follow::Load()
@@ -131,12 +131,18 @@ void Follow::Draw()
 	m_Model->Draw();
 }
 
+void Follow::SetKnockBack()
+{
+	m_Velocity.y += 0.1f;
+	m_AttackStopTime = ATTACK_STOP;
+}
+
 void Follow::UpdateAlive()
 {
 	CharacterObject::UpdateAlive();
 
 	//ぬるぬる出現
-	if (m_Scale.y < m_OriginalScale.y) { m_Scale.y += 0.05f; }
+	if (m_Scale.y < m_OriginalScale.y) { m_Scale.y += m_OriginalScale.y / 20; }
 
 	switch (m_FollowState)
 	{
@@ -315,8 +321,8 @@ void Follow::PlayerTracking()
 	m_Speed = player->GetSpeed();
 
 	//プレイヤーに地味に近付く
-	m_Velocity.x += (player->GetPosition().x - m_Position.x)*((length * 3) *0.0005f);
-	m_Velocity.z += (player->GetPosition().z - m_Position.z)*((length * 3) *0.0005f);
+	m_Velocity.x += (player->GetPosition().x - m_Position.x)*((length * 3) *0.0006f);
+	m_Velocity.z += (player->GetPosition().z - m_Position.z)*((length * 3) *0.0006f);
 
 	//プレイヤーに接触してたらズレる
 	if (length < scale.x)
@@ -338,8 +344,8 @@ void Follow::AttackStop()
 	m_AttackStopTime --;
 	if (m_AttackStopTime > 0)
 	{
-		m_Velocity.x = (GetForward().x * 0.03f) * -1;
-		m_Velocity.z = (GetForward().z * 0.03f) * -1;
+		m_Velocity.x = (GetForward().x * 0.075f) * -1;
+		m_Velocity.z = (GetForward().z * 0.075f) * -1;
 	}
 	if (m_AttackStopTime <= 0) { m_AttackStopTime = 0; }
 }
@@ -403,7 +409,7 @@ void Follow::Collision(float& groundHeight)
 				if (m_FollowState == FOLLOW_STATE::DASH && GetAttackStop() <= 0)
 				{
 					breakObject->SetDamageMove();
-					SetAttackStop(ATTACK_STOP);
+					SetKnockBack();
 					scene->GetGameObject<Player>()->AddCombo(1);
 				}
 

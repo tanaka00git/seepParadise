@@ -55,7 +55,7 @@
 #define COIN_START_NUM 10
 #define SEED_START_NUM 70
 #define ROCK_START_NUM 10
-#define ENEMY_MAKE_DISTANCE 22.0f	//ìGÇ™èoåªÇ∑ÇÈîÕàÕ
+#define ENEMY_MAKE_DISTANCE 18.0f	//ìGÇ™èoåªÇ∑ÇÈîÕàÕ
 #define STAGE_MAKE_XY 110.0f
 #define STAGE_MAKE_PL_XY 35.0f
 
@@ -347,52 +347,48 @@ void Game::TimeEvent_Time2Loop()
 	Scene* scene = Manager::GetScene();
 	Player* player = scene->GetGameObject<Player>();
 	D3DXVECTOR3 PLPos = player->GetPosition();
+	Score* score = scene->GetGameObject<Score>();
 
-	for (int i = 0; i <= m_Day; i++)
+	int count = score->GetCount();
+	if (count >= 0)
 	{
-		int a = irand(0,5);
-		if (1 == a) 
-		{ 
-			float rot = frand() * 2 * D3DX_PI;
-			AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>((cos(rot))) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>((sin(rot))) * ENEMY_MAKE_DISTANCE + PLPos.z), 1); }
-
-		a = irand(0, 3);
-		if (1 == a) 
-		{
-			float rot = frand() * 2 * D3DX_PI;
-			AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z), 2);
-		}
-
-		//êlä‘ê∂ê¨
-		a = irand(0, 8);
-		if (1 == a)
-		{
-			float rot = frand() * 2 * D3DX_PI;
-			AddGameObject<Human>(1)->SetPosition(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f,static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z));
-		}
-
-		//3ì˙à»è„
-		if (m_Day >= 3) 
-		{
-			a = irand(0, 11);
-			if (1 == a) 
-			{ 
-				float rot = frand() * 2 * D3DX_PI;
-				AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z), 3);
-			}
-		}
-
-		//4ì˙à»è„
-		if (m_Day >= 4) 
-		{
-			a = irand(0, 12);
-			if (1 == a) 
-			{ 
-				float rot = frand() * 2 * D3DX_PI;
-				AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z), 4);
-			}
-		}
+		float rot = frand() * 2 * D3DX_PI;
+		AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z), 2);
+		
+		rot = frand() * 2 * D3DX_PI;
+		AddGameObject<Human>(1)->SetPosition(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z));
 	}
+	if (count >= 5)
+	{
+		float rot = frand() * 2 * D3DX_PI;
+		AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>((cos(rot))) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>((sin(rot))) * ENEMY_MAKE_DISTANCE + PLPos.z), 1);
+	}
+	if (count >= 10)
+	{
+		float rot = frand() * 2 * D3DX_PI;
+		AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z), 2);
+	}
+	if (count >= 15)
+	{
+		float rot = frand() * 2 * D3DX_PI;
+		AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z), 2);
+	}
+	if (count >= 25)
+	{
+		float rot = frand() * 2 * D3DX_PI;
+		AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z), 3);
+	}
+	if (count >= 30)
+	{
+		float rot = frand() * 2 * D3DX_PI;
+		AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z), 4);
+	}
+	if (count >= 35)
+	{
+		float rot = frand() * 2 * D3DX_PI;
+		AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z), 4);
+	}
+
 	if (m_Event1)
 	{
 		AddGameObject<Follow>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2));

@@ -46,7 +46,7 @@ void Rock::Draw()
 
 	Renderer::SetWorldMatrix(&world);
 
-	m_Model->Draw();
+	m_Model->DrawColor(m_Color, m_TextureEnable);
 }
 
 void Rock::UpdateDead()

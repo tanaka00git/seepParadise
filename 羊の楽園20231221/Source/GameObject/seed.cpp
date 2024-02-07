@@ -44,7 +44,7 @@ void Seed::Uninit()
 
 void Seed::Update()
 {
-	if (m_Scale.y < m_OriginalScale.y) { m_Scale.y += 0.05f; }
+	if (m_Scale.y < m_OriginalScale.y) { m_Scale.y += m_OriginalScale.y / 20; }
 	else { m_Scale.y = m_OriginalScale.y; }
 }
 

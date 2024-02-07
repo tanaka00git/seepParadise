@@ -59,6 +59,6 @@ public:
 	FOLLOW_STATE GetState() { return m_FollowState; }
 	int GetAttackStop() { return m_AttackStopTime; }
 
-	void SetAttackStop(int attackStop) { m_AttackStopTime = attackStop; };
+	void SetKnockBack();
 	void SetState(FOLLOW_STATE followState) { m_FollowState = followState; }
 };
