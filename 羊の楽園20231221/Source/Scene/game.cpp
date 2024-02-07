@@ -31,6 +31,7 @@
 #include "..\GameObject\timeFade.h"
 #include "..\GameObject\goal.h"
 #include "..\GameObject\chest.h"
+#include "..\GameObject\sheepCage.h"
 #include "..\GameObject\rock.h"
 #include "..\GameObject\fence.h"
 #include "..\GameObject\mouseIcon.h"
@@ -87,6 +88,7 @@ void Game::Init()
 	BreakObject::Load();
 	Goal::Load();
 	Chest::Load();
+	SheepCage::Load();
 	Rock::Load();
 	Fence::Load();
 	DamageFade::Load();
@@ -204,6 +206,7 @@ void Game::Uninit()
 	Coin::Unload();
 	BreakObject::Unload();
 	Chest::Unload();
+	SheepCage::Unload();
 	Rock::Unload();
 	Fence::Unload();
 	ItemSpeed::Unload();
@@ -398,10 +401,15 @@ void Game::TimeEvent_Time2Loop()
 	for (int i = 0; i <= 4; i++) {AddGameObject<Coin>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2));}
 	
 	//’‡ŠÔ
-	AddGameObject<Follow>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2));
-	
+	int a = irand(0, 1);
+	if (1 == a) { AddGameObject<Follow>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2));}
+
+	//—r‚ÌŸB
+	a = irand(0, 2);
+	if (1 == a) { AddGameObject<SheepCage>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2)); }
+
 	//ƒ`ƒFƒXƒg
-	int a = irand(0, 4);
+	a = irand(0, 4);
 	if (1 == a) { AddGameObject<Chest>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2));}
 	
 	//–Ø

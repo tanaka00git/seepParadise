@@ -4,7 +4,7 @@
 o 
 
 # material
-mtllib seepCage.mtl
+mtllib sheepCage.mtl
 usemtl palette
 
 # normals
