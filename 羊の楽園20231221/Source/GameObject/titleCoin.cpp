@@ -5,6 +5,7 @@
 #include "..\App\input.h"
 
 #define SCALE 30.0f
+#define GRAVITY 0.15f
 
 void TitleCoin::Init()
 {
@@ -41,7 +42,7 @@ void TitleCoin::Update()
 	GameObject::Update();
 
 	//d—Í
-	m_Velocity.y += 0.15f;
+	m_Velocity.y += GRAVITY;
 
 	if (m_Velocity.y >= 0)
 	{

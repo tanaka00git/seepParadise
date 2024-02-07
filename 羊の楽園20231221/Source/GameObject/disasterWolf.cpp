@@ -36,6 +36,7 @@ void DisasterWolf::Init()
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\pixelLightingPS.cso");
 
 	m_AttackMarker = AddComponent<AttackMarker>();
+	m_AttackMarker->SetDraw(false);
 }
 
 void DisasterWolf::Update()
@@ -46,7 +47,8 @@ void DisasterWolf::Update()
 	D3DXVECTOR3 attackMarkerPosition = m_Position;
 	m_AttackMarker->SetPosition(attackMarkerPosition);
 	m_AttackMarker->SetRotation(m_Rotation);
-
+	m_AttackMarker->SetScale(D3DXVECTOR3(m_Scale.x, m_Scale.y, m_Scale.z * 6));
+	
 }
 
 void DisasterWolf::Draw()
@@ -82,19 +84,19 @@ void DisasterWolf::UpdateTargeting()
 	m_DaathTime = 1000;
 
 	//一定時間経つとオートで敵を生み出す
-	Scene* scene = Manager::GetScene();
-	m_DisasterCount++;
-	if (m_DisasterCount >= 150)
-	{
-		for (int i = 0; i < 10; i++)
-		{
-			Wolf* wolf = scene->AddGameObject<Wolf>(1);
-			wolf->SetEnemyData(1);
-			wolf->SetPosition(m_Position);
-			wolf->SetDrop();
-			m_DisasterCount = 0;
-		}
-	}
+	//Scene* scene = Manager::GetScene();
+	//m_DisasterCount++;
+	//if (m_DisasterCount >= 150)
+	//{
+	//	for (int i = 0; i < 10; i++)
+	//	{
+	//		Wolf* wolf = scene->AddGameObject<Wolf>(1);
+	//		wolf->SetEnemyData(1);
+	//		wolf->SetPosition(m_Position);
+	//		wolf->SetDrop();
+	//		m_DisasterCount = 0;
+	//	}
+	//}
 
 	m_SuparChargeCount++;
 	if (m_SuparChargeCount >= 60)
@@ -106,14 +108,16 @@ void DisasterWolf::UpdateTargeting()
 
 void DisasterWolf::UpdateSuperCharge()
 {
+	m_AttackMarker->SetDraw(true);
 	m_Velocity *= 0;
-	m_AttackMarker->SetScale(D3DXVECTOR3(m_Scale.x, m_Scale.y, m_Scale.z * 5));
-
 	m_SuparChargeCount++;
-	if (m_SuparChargeCount >= 60)
+	if (m_SuparChargeCount >= 80)
 	{
+		m_AttackMarker->SetDraw(false);
+		m_AttackMarker->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 		m_SE_SuperAttack->Play(1.0f ,false);
 		m_WolfState = WOLF_STATE::SUPER_ATTACK;
+
 	}
 }
 
@@ -121,8 +125,6 @@ void DisasterWolf::UpdateSuperAttack()
 {
 	m_Velocity.x = GetForward().x * (m_Speed) * 6;
 	m_Velocity.z = GetForward().z * (m_Speed) * 6;
-
-	m_AttackMarker->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 
 	m_SuparChargeCount--;
 	if (m_SuparChargeCount <= 0)

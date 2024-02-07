@@ -37,6 +37,7 @@ Audio* Human::m_SE_Make{};
 #define KNOCK_BACK_TIME 14
 #define STUN_TIME 60
 #define TARGET_LENGTH 3.0f
+#define GRAVITY 0.015f
 
 void Human::Load()
 {
@@ -104,7 +105,7 @@ void Human::Update()
 	}
 
 	//重力
-	m_Velocity.y -= 0.015f;
+	m_Velocity.y -= GRAVITY;
 
 	//ノックバック
 	KnockBack();

@@ -55,7 +55,7 @@
 #define COIN_START_NUM 10
 #define SEED_START_NUM 70
 #define ROCK_START_NUM 10
-#define ENEMY_MAKE_DISTANCE 15.0f	//敵が出現する範囲
+#define ENEMY_MAKE_DISTANCE 22.0f	//敵が出現する範囲
 #define STAGE_MAKE_XY 110.0f
 #define STAGE_MAKE_PL_XY 35.0f
 
@@ -402,11 +402,10 @@ void Game::TimeEvent_Time2Loop()
 	for (int i = 0; i <= 4; i++) {AddGameObject<Coin>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2));}
 	
 	//仲間
-	int a = irand(0, 1);
-	if (1 == a) { AddGameObject<Follow>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2)); }
+	AddGameObject<Follow>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2));
 	
 	//チェスト
-	a = irand(0, 4);
+	int a = irand(0, 4);
 	if (1 == a) { AddGameObject<Chest>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2));}
 	
 	//木

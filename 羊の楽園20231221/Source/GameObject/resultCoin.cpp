@@ -7,6 +7,7 @@
 #include "..\App\model.h"
 
 Model*ResultCoin::m_Model{};
+#define GRAVITY 0.005f
 
 void ResultCoin::Load()
 {
@@ -49,7 +50,7 @@ void ResultCoin::Update()
 	
 	//d—Í
 	float groundHeight = 0.0f;	//’n–Ê‚Ì‚‚³
-	m_Velocity.y -= 0.005f;		//—‚¿‚é
+	m_Velocity.y -= GRAVITY;		//—‚¿‚é
 
 	//Ú’n
 	if (m_Position.y < groundHeight && m_Velocity.y < 0.0f) {

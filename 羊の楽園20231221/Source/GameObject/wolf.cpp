@@ -33,6 +33,7 @@ Audio*Wolf::m_SE_Kick{};
 #define GIVE_ATTACK_STOP 20
 #define KNOCK_BACK_TIME 14
 #define STUN_TIME 240
+#define GRAVITY 0.015f
 
 void Wolf::Load()
 {
@@ -102,7 +103,7 @@ void Wolf::Update()
 	}
 
 	//重力
-	m_Velocity.y -= 0.015f;
+	m_Velocity.y -= GRAVITY;
 
 	//ノックバック
 	KnockBack();
@@ -448,7 +449,7 @@ void Wolf::SetEnemyData(int data)
 	m_CoinDrop = data;
 	m_StanGuard = m_FullLife / 2;
 	m_OriginalScale = D3DXVECTOR3(0.5f * data, 0.5f * data, 0.5f * data);	//キャラのサイズ
-	m_Speed = 0.03f + (0.002f * data);
+	m_Speed = 0.035f + (0.0025f * data);
 
 	if (m_Data == 1)
 	{

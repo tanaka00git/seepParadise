@@ -13,6 +13,7 @@
 #include "..\App\model.h"
 
 Model*ResultSeep::m_Model{};
+#define GRAVITY 0.005f
 
 void ResultSeep::Load()
 {
@@ -86,7 +87,7 @@ void ResultSeep::Update()
 		}
 	}
 	//d—Í
-	m_Velocity.y -= 0.005f;		
+	m_Velocity.y -= GRAVITY;
 
 	//áŠQ•¨‚Æ‚ÌÕ“Ë”»’è
 	float groundHeight = 0.0f;

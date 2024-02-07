@@ -41,7 +41,8 @@ int Player::m_PlClown{};
 #define FULL_SPEED 9.5
 #define FULL_EYE 6
 #define WALK_EFFECT_TIME 13
-#define ATTACK_STOP 20
+#define ATTACK_STOP 23
+#define GRAVITY 0.015f
 
 void Player::Load()
 {
@@ -149,7 +150,7 @@ void Player::Update()
 	AttackStop();
 
 	//èdóÕ
-	m_Velocity.y -= 0.015f;
+	m_Velocity.y -= GRAVITY;
 	
 	//à⁄ìÆ
 	m_Position += m_Velocity;

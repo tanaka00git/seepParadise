@@ -93,6 +93,9 @@ void AttackMarker::Update()
 
 void AttackMarker::Draw()
 {
+	//m_Dwawがfalseなら表示しない
+	if(!m_Draw){ return; }
+
 	//入力レイアウト設定
 	Renderer::GetDeviceContext()->IASetInputLayout(m_VertexLayout);
 

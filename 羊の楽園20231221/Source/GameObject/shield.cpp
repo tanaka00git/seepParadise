@@ -3,22 +3,21 @@
 #include "..\App\renderer.h"
 #include "..\Scene\scene.h"
 #include "..\GameObject\camera.h"
-#include "..\GameObject\angelRing.h"
+#include "..\GameObject\shield.h"
 
-ID3D11ShaderResourceView* AngelRing::m_Texture{};
+ID3D11ShaderResourceView* Shield::m_Texture{};
 
 #define COUNT_FREAM_DELAY 2
 #define POSITION_Y 0.3f
 #define POSITION_Z 0.0f
 #define SCALE 0.8f
-#define VELOCITY_Y 0.05f
 #define ALPHA 0.01f
 
-void AngelRing::Load()
+void Shield::Load()
 {
 	// テクスチャ読み込み
 	D3DX11CreateShaderResourceViewFromFile(Renderer::GetDevice(),
-		"asset\\texture\\angelRing.png",
+		"asset\\texture\\shield.png",
 		NULL,
 		NULL,
 		&m_Texture,
@@ -26,12 +25,12 @@ void AngelRing::Load()
 	assert(m_Texture);
 }
 
-void AngelRing::Unload()
+void Shield::Unload()
 {
 	m_Texture->Release();
 }
 
-void AngelRing::Init()
+void Shield::Init()
 {
 
 	VERTEX_3D vertex[4];
@@ -80,7 +79,7 @@ void AngelRing::Init()
 
 }
 
-void AngelRing::Uninit()
+void Shield::Uninit()
 {
 	m_VertexBuffer->Release();
 
@@ -90,11 +89,10 @@ void AngelRing::Uninit()
 	m_PixelShader->Release();
 }
 
-void AngelRing::Update()
+void Shield::Update()
 {
 	m_CountFrameDelay++;
 
-	m_Position.y += VELOCITY_Y;
 	m_Alpha -= ALPHA;
 	if (m_Alpha <= 0.0f) { SetDestroy(); }
 
@@ -107,7 +105,7 @@ void AngelRing::Update()
 	}
 }
 
-void AngelRing::Draw()
+void Shield::Draw()
 {
 	//テクスチャ座標算出
 	float x = m_Count % 4 * (1.0f / 4);

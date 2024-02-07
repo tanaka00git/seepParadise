@@ -20,7 +20,7 @@ Audio* Goal::m_SE_Goal{};
 #define ROTATION_SPEED 0.1f
 #define STAGE_MAKE_XY 110.0f
 #define FOLLOW_MAKE_POSITION_Y 1.1f
-#define MAKE_MINMUM_DISTANCE 40.0f	//生成されるプレイヤーとゴールの距離の最低距離
+#define MAKE_MINMUM_DISTANCE 25.0f	//生成されるプレイヤーとゴールの距離の最低距離
 
 void Goal::Load()
 {

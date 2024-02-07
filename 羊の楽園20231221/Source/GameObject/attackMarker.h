@@ -4,14 +4,13 @@
 class AttackMarker : public Component
 {
 private:
+	bool m_Draw = false;
 	D3DXVECTOR3 m_Position = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	D3DXVECTOR3 m_Rotation = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 	D3DXVECTOR3 m_Scale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
-	D3DXVECTOR3 m_ObjectScale = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 
 	ID3D11Buffer* m_VertexBuffer{};
 	static ID3D11ShaderResourceView* m_Texture;
-
 
 	ID3D11VertexShader* m_VertexShader{};
 	ID3D11PixelShader* m_PixelShader{};
@@ -29,6 +28,7 @@ public:
 	void Update();
 	void Draw();
 
+	void SetDraw(bool draw) { m_Draw = draw; }//色変え用
 	void SetColor(D3DXCOLOR Color) { m_Color = Color; }//色変え用
 	void SetScale(D3DXVECTOR3 Scale) { m_Scale = Scale; }//スケール用
 	void SetRotation(D3DXVECTOR3 rotation) { m_Rotation = rotation;}//向き変更用

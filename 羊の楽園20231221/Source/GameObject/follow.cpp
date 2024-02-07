@@ -26,7 +26,8 @@ bool Follow::m_SE_FollowCheck{};
 #define MOVE_SPEED_DASH   0.02f //ダッシュ時移動速度
 #define MOVE_MAGNIFY_FREE 6.5f  //自由状態の移動速度の倍率(それ以外の状態ではプレイヤーと同期)
 #define DELETE_DISTANCE   25.0f //プレイヤーと離れているときに自動消滅する距離
-#define ATTACK_STOP 20
+#define ATTACK_STOP 23
+#define GRAVITY 0.015f
 
 void Follow::Load()
 {
@@ -79,7 +80,7 @@ void Follow::Update()
 	AttackStop();
 
 	//重力
-	m_Velocity.y -= 0.015f;
+	m_Velocity.y -= GRAVITY;
 
 	//当たり判定
 	float groundHeight = 0.0f;
