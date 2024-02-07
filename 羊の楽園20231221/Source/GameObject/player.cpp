@@ -40,7 +40,7 @@ int Player::m_PlClown{};
 #define FULL_SPEED 9.5
 #define FULL_EYE 6
 #define WALK_EFFECT_TIME 13
-#define ATTACK_STOP 21
+#define ATTACK_STOP 22
 #define GRAVITY 0.015f
 
 void Player::Load()

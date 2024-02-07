@@ -20,7 +20,7 @@ Audio* Goal::m_SE_Goal{};
 #define ROTATION_SPEED 0.1f
 #define STAGE_MAKE_XY 110.0f
 #define FOLLOW_MAKE_POSITION_Y 1.1f
-#define MAKE_MINMUM_DISTANCE 25.0f	//生成されるプレイヤーとゴールの距離の最低距離
+#define MAKE_MINMUM_DISTANCE 15.0f	//生成されるプレイヤーとゴールの距離の最低距離
 
 void Goal::Load()
 {
@@ -86,7 +86,7 @@ void Goal::Update()
 		//スコアの数
 		Score* score = scene->GetGameObject<Score>();
 		int count = score->GetCount();
-		int numFollows = max(count / 2, 1);
+		int numFollows = max(count / 2, 10);
 
 		//仲間を増やす
 		for (int i = 1; i <= numFollows; i++)
@@ -186,7 +186,7 @@ void Goal::SetNextGoal()
 		newGoalPosition = D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2);
 		direction = newGoalPosition - position;  // プレイヤーから新しいゴールへのベクトルを計算
 		length = D3DXVec3Length(&direction);
-	} while (length < MAKE_MINMUM_DISTANCE);  // 最低40.0f離れるまで再試行
+	} while (length < MAKE_MINMUM_DISTANCE);  // 最低距離離れるまで再試行
 
 
 	SetPosition(newGoalPosition);

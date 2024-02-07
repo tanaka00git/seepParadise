@@ -80,8 +80,8 @@ void SheepCage::UpdateDead()
 		m_HpBarS->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 		m_SE_Chest->Play(1.0f);
 
-		//コインドロップ
-		for (int i = 0; i <= SHEEP_DROP; i++)
+		//羊ドロップ
+		for (int i = 1; i <= SHEEP_DROP; i++)
 		{
 			Follow* follow = scene->AddGameObject<Follow>(1);
 			follow->SetPosition(m_Position);
