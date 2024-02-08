@@ -6,7 +6,7 @@
 #include "..\GameObject\breakObject.h"
 #include "..\GameObject\shadow.h"
 #include "..\App\audio.h"
-#include "..\GameObject\coin.h"
+#include "..\GameObject\feet.h"
 #include "..\GameObject\Apple.h"
 #include "..\GameObject\hpBarS.h"
 #include "..\App\model.h"
@@ -15,7 +15,7 @@ Model* Tree::m_Model{};
 Model* Tree::m_ModelAppleTree{};
 
 #define DROP_RAIT 4
-#define COIN_DROP 2
+#define FEET_DROP 2
 #define INITIAL_LIFE 3
 #define INITIAL_HP_BAR_POS_Y 3.0f
 
@@ -108,11 +108,11 @@ void Tree::UpdateDead()
 		}
 
 		//コインドロップ
-		for (int i = 0; i <= COIN_DROP; i++)
+		for (int i = 0; i <= FEET_DROP; i++)
 		{
-			Coin* coin = scene->AddGameObject<Coin>(1);
-			coin->SetPosition(m_Position);
-			coin->SetDrop();
+			Feet* feet = scene->AddGameObject<Feet>(1);
+			feet->SetPosition(m_Position);
+			feet->SetDrop();
 		}
 	}
 }

@@ -5,13 +5,11 @@
 #include "..\GameObject\fence.h"
 #include "..\GameObject\breakObject.h"
 #include "..\App\audio.h"
-#include "..\GameObject\coin.h"
 #include "..\GameObject\hpBarS.h"
 #include "..\App\model.h"
 
 Model* Fence::m_Model{};
 
-#define COIN_DROP 3
 #define ORIGINAL_SCALE_X 4.0f
 #define INITIAL_LIFE 16
 
@@ -68,14 +66,6 @@ void Fence::UpdateDead()
 
 		m_DeleteInit = true;
 		m_HpBarS->SetDraw(false);
-
-		//コインドロップ
-		for (int i = 0; i <= COIN_DROP; i++)
-		{
-			Coin* coin = scene->AddGameObject<Coin>(1);
-			coin->SetPosition(m_Position);
-			coin->SetDrop();
-		}
 	}
 }
 

@@ -13,7 +13,7 @@
 #include "..\App\audio.h"
 #include "..\GameObject\shadow.h"
 #include "..\GameObject\hpBarS.h"
-#include "..\GameObject\coin.h"
+#include "..\GameObject\feet.h"
 #include "..\GameObject\chest.h"
 #include "..\GameObject\timeFade.h"
 #include "..\GameObject\camera.h"
@@ -38,7 +38,7 @@ Audio* Human::m_SE_Make{};
 #define INITIAL_KNOCK_BACK_TIME 0
 #define INITIAL_STUN_TIME 0
 #define INITIAL_DELETE_INIT false
-#define INITIAL_COIN_DROP 4
+#define INITIAL_FEET_DROP 4
 #define INITIAL_DEATH_STAGING 0.14f
 #define INITIAL_BAR_SCALE D3DXVECTOR3(1.0f, 1.0f, 1.0f)
 #define INITIAL_HP_BAR_POS_Y 1.8f
@@ -95,7 +95,7 @@ void Human::Init()
 	m_StunTime = INITIAL_STUN_TIME;
 	m_DeleteInit = INITIAL_DELETE_INIT;
 
-	m_CoinDrop = INITIAL_COIN_DROP;
+	m_FeetDrop = INITIAL_FEET_DROP;
 	m_BarScale = INITIAL_BAR_SCALE;
 	m_HpBarPosY = INITIAL_HP_BAR_POS_Y;
 	m_Tracking = INITIAL_TRACKING;
@@ -348,11 +348,11 @@ void Human::UpdateDead()
 		m_HpBarS->SetDraw(false);
 		m_DeleteInit = true;
 
-		for (int i = 0; i < m_CoinDrop; i++)
+		for (int i = 0; i < m_FeetDrop; i++)
 		{
-			Coin* coin = scene->AddGameObject<Coin>(1);
-			coin->SetPosition(m_Position);
-			coin->SetDrop();
+			Feet* feet = scene->AddGameObject<Feet>(1);
+			feet->SetPosition(m_Position);
+			feet->SetDrop();
 		}
 	}
 	m_Rotation.z += m_DeathStaging / 2.0f;

@@ -45,7 +45,7 @@ protected:
 
 	//ステータス
 	bool	m_Item				= false;						//アイテム所持判別用
-	int		m_CoinDrop			= 2;							//コインドロップ数
+	int		m_FeetDrop			= 2;							//コインドロップ数
 	int		m_StanGuard			= 1;							//スタンになるまでに必要な攻撃回数
 	int		m_BiteCount			= 1;							//咀嚼回数
 	D3DXVECTOR3 m_BarScale = D3DXVECTOR3(0.7f,0.7f,0.7f);		//HPバーのサイズ

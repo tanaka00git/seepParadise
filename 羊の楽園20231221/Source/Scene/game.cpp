@@ -14,7 +14,7 @@
 #include "..\GameObject\goalScope.h"
 #include "..\GameObject\tree.h"
 #include "..\GameObject\follow.h"
-#include "..\GameObject\coin.h"
+#include "..\GameObject\feet.h"
 #include "..\GameObject\explosion.h"
 #include "..\GameObject\smoke.h"
 #include "..\GameObject\angelRing.h"
@@ -55,7 +55,7 @@
 #define CYLINDER_START_NUM 30
 #define BOX_START_NUM 30
 #define TREE_START_NUM 20
-#define COIN_START_NUM 10
+#define FEET_START_NUM 10
 #define SEED_START_NUM 70
 #define ROCK_START_NUM 10
 #define ENEMY_MAKE_DISTANCE 18.0f	//敵が出現する範囲
@@ -85,7 +85,7 @@ void Game::Init()
 	Shield::Load();
 	FeetEffect::Load();
 	HpBarS::Load();
-	Coin::Load();
+	Feet::Load();
 	ItemSpeed::Load();
 	ItemEye::Load();
 	ItemLife::Load();
@@ -152,7 +152,7 @@ void Game::Init()
 	//木
 	for (int i = 0; i <= TREE_START_NUM; i++) { AddGameObject<Tree>(1)->SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2)); }
 	//コイン
-	for (int i = 0; i <= COIN_START_NUM; i++) { AddGameObject<Coin>(1)->SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2));
+	for (int i = 0; i <= FEET_START_NUM; i++) { AddGameObject<Feet>(1)->SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2));
 	}
 	//草
 	for (int i = 0; i < SEED_START_NUM; i++) {AddGameObject<Seed>(1)->SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2));}
@@ -208,7 +208,7 @@ void Game::Uninit()
 	Shield::Unload();
 	FeetEffect::Unload();
 	HpBarS::Unload();
-	Coin::Unload();
+	Feet::Unload();
 	BreakObject::Unload();
 	Chest::Unload();
 	SheepCage::Unload();
@@ -385,7 +385,7 @@ void Game::TimeEvent_Time2Loop()
 	}
 
 	//コイン
-	for (int i = 0; i <= 5; i++) {AddGameObject<Coin>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2));}
+	for (int i = 0; i <= 5; i++) {AddGameObject<Feet>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2));}
 	
 	//仲間
 	int a = irand(0, 1);

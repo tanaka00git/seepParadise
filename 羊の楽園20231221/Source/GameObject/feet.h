@@ -1,7 +1,7 @@
 #pragma once
 #include "..\GameObject\itemObject.h"
 
-class Coin : public ItemObject
+class Feet : public ItemObject
 {
 private:
 	static class Model* m_Model;

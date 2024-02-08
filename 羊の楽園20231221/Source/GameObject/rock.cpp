@@ -5,7 +5,7 @@
 #include "..\GameObject\rock.h"
 #include "..\GameObject\breakObject.h"
 #include "..\App\audio.h"
-#include "..\GameObject\coin.h"
+#include "..\GameObject\feet.h"
 #include "..\GameObject\itemSpeed.h"
 #include "..\GameObject\itemLife.h"
 #include "..\GameObject\itemEye.h"
@@ -15,7 +15,7 @@
 Model*Rock::m_Model{};
 
 #define DROP_RAIT 12
-#define COIN_DROP 4
+#define FEET_DROP 4
 
 void Rock::Load()
 {
@@ -91,11 +91,11 @@ void Rock::UpdateDead()
 		}
 
 		//コインドロップ
-		for (int i = 0; i <= COIN_DROP; i++)
+		for (int i = 0; i <= FEET_DROP; i++)
 		{
-			Coin* coin = scene->AddGameObject<Coin>(1);
-			coin->SetPosition(m_Position);
-			coin->SetDrop();
+			Feet* feet = scene->AddGameObject<Feet>(1);
+			feet->SetPosition(m_Position);
+			feet->SetDrop();
 		}
 	}
 }

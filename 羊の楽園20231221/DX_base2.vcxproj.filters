@@ -75,7 +75,7 @@
     <ClCompile Include="Source\GameObject\apple.cpp">
       <Filter>ソース ファイル\GameObject\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameObject\coin.cpp">
+    <ClCompile Include="Source\GameObject\feet.cpp">
       <Filter>ソース ファイル\GameObject\Item</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameObject\itemEye.cpp">
@@ -290,7 +290,7 @@
     <ClInclude Include="Source\GameObject\apple.h">
       <Filter>ソース ファイル\GameObject\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameObject\coin.h">
+    <ClInclude Include="Source\GameObject\feet.h">
       <Filter>ソース ファイル\GameObject\Item</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameObject\itemEye.h">

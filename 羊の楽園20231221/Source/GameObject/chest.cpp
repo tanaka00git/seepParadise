@@ -6,7 +6,8 @@
 #include "..\GameObject\player.h"
 #include "..\GameObject\chest.h"
 #include "..\GameObject\breakObject.h"
-#include "..\GameObject\coin.h"
+#include "..\GameObject\feet.h"
+#include "..\GameObject\shine.h"
 #include "..\GameObject\itemSpeed.h"
 #include "..\GameObject\itemLife.h"
 #include "..\GameObject\itemEye.h"
@@ -18,7 +19,7 @@ Model*Chest::m_Model{};
 Audio*Chest::m_SE_Chest{};
 
 #define DROP_RAIT 3
-#define COIN_DROP 9
+#define FEET_DROP 9
 
 void Chest::Load()
 {
@@ -92,12 +93,14 @@ void Chest::UpdateDead()
 		}
 
 		//コインドロップ
-		for (int i = 0; i <= COIN_DROP; i++)
+		for (int i = 0; i <= FEET_DROP; i++)
 		{
-			Coin* coin = scene->AddGameObject<Coin>(1);
-			coin->SetPosition(m_Position);
-			coin->SetDrop();
+			Feet* feet = scene->AddGameObject<Feet>(1);
+			feet->SetPosition(m_Position);
+			feet->SetDrop();
 		}
+		scene->AddGameObject<Shine>(1)->SetPosition(m_Position);//コインエフェクト
+
 	}
 }
 

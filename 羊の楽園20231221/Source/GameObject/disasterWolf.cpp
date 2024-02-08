@@ -127,7 +127,7 @@ void DisasterWolf::SetEnemyData(int data)
 	m_BiteCount = 2;
 	m_FullLife = 80 * data;
 	m_Speed = 0.04f + data * 0.01f;
-	m_CoinDrop = 30 * data;
+	m_FeetDrop = 30 * data;
 	m_StanGuard = 40 * data;
 	m_OriginalScale = D3DXVECTOR3(3.0f * data, 3.0f * data, 3.0f * data);	//キャラのサイズ
 	m_BarScale = D3DXVECTOR3(5.0f, 1.0f, 1.0f);			//HPバーのサイズ

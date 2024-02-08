@@ -40,7 +40,7 @@ private:
 	bool	m_DeleteInit		= false;//デリート時のInit判定
 
 	//ステータス
-	int		m_CoinDrop		= 4;									//コインドロップ数
+	int		m_FeetDrop		= 4;									//コインドロップ数
 	D3DXVECTOR3 m_BarScale	= D3DXVECTOR3(1.0f, 1.0f, 1.0f);		//HPバーのサイズ
 	float m_HpBarPosY		= 1.8f;									//HPバーのY座標
 	float m_Tracking		= 10.0f;								//追尾範囲

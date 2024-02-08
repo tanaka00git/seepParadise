@@ -2,7 +2,7 @@
 #include "..\App\manager.h"
 #include "..\App\renderer.h"
 #include "..\Scene\scene.h"
-#include "..\GameObject\coin.h"
+#include "..\GameObject\feet.h"
 #include "..\GameObject\itemObject.h"
 #include "..\App\audio.h"
 #include "..\GameObject\score.h"
@@ -12,15 +12,15 @@
 #include "..\GameObject\feetEffect.h"
 #include "..\App\model.h"
 
-Model*Coin::m_Model{};
-Audio*Coin::m_SE_Get{};
+Model*Feet::m_Model{};
+Audio*Feet::m_SE_Get{};
 
 #define MAX_CHARGE 1000
 #define SUBTRACTION_CHARGE 30
 #define MIN_CHARGE 180
 #define SCALE 0.5f
 
-void Coin::Load()
+void Feet::Load()
 {
 	m_Model = new Model();
 	m_Model->Load("asset\\model\\feed.obj");
@@ -29,13 +29,13 @@ void Coin::Load()
 
 }
 
-void Coin::Unload()
+void Feet::Unload()
 {
 	m_Model->Unload();
 	delete m_Model;
 }
 
-void Coin::Init()
+void Feet::Init()
 {
 	ItemObject::Init();
 
@@ -43,7 +43,7 @@ void Coin::Init()
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\unlitTexturePS.cso");
 }
 
-void Coin::Draw()
+void Feet::Draw()
 {
 	GameObject::Draw();
 
@@ -62,7 +62,7 @@ void Coin::Draw()
 	m_Model->Draw();
 }
 
-void Coin::MoveGet()
+void Feet::MoveGet()
 {
 	Scene* scene = Manager::GetScene();
 	Score* score = scene->GetGameObject<Score>();

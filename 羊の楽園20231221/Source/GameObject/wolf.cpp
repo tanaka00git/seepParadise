@@ -12,7 +12,7 @@
 #include "..\App\audio.h"
 #include "..\GameObject\shadow.h"
 #include "..\GameObject\hpBarS.h"
-#include "..\GameObject\coin.h"
+#include "..\GameObject\feet.h"
 #include "..\GameObject\apple.h"
 #include "..\GameObject\itemEye.h"
 #include "..\GameObject\itemSpeed.h"
@@ -43,7 +43,7 @@ Audio*Wolf::m_SE_Critical{};
 #define INITIAL_DELETE_INIT false
 
 #define INITIAL_ITEM false
-#define INITIAL_COIN_DROP 2
+#define INITIAL_FEET_DROP 2
 #define INITIAL_STAN_GUARD 1
 #define INITIAL_BITE_COUNT 1
 #define INITIAL_BAR_SCALE D3DXVECTOR3(0.7f, 0.7f, 0.7f)
@@ -106,7 +106,7 @@ void Wolf::Init()
 	m_DeleteInit = INITIAL_DELETE_INIT;
 
 	m_Item = INITIAL_ITEM;
-	m_CoinDrop = INITIAL_COIN_DROP;
+	m_FeetDrop = INITIAL_FEET_DROP;
 	m_StanGuard = INITIAL_STAN_GUARD;
 	m_BiteCount = INITIAL_BITE_COUNT;
 	m_BarScale = INITIAL_BAR_SCALE;
@@ -346,11 +346,11 @@ void Wolf::UpdateDead()
 		m_HpBarS->SetDraw(false);
 		m_DeleteInit = true;
 
-		for (int i = 0; i < m_CoinDrop; i++)
+		for (int i = 0; i < m_FeetDrop; i++)
 		{
-			Coin* coin = scene->AddGameObject<Coin>(1);
-			coin->SetPosition(m_Position);
-			coin->SetDrop();
+			Feet* feet = scene->AddGameObject<Feet>(1);
+			feet->SetPosition(m_Position);
+			feet->SetDrop();
 		}
 
 		//リンゴドロップ
@@ -476,7 +476,7 @@ void Wolf::SetEnemyData(int data)
 
 	//ステータス
 	m_FullLife = 4 * data;
-	m_CoinDrop = data;
+	m_FeetDrop = data;
 	m_StanGuard = m_FullLife / 2;
 	m_OriginalScale = D3DXVECTOR3(0.5f * data, 0.5f * data, 0.5f * data);	//キャラのサイズ
 	m_Speed = 0.03f + (0.0025f * data);

@@ -39,7 +39,6 @@ void BreakObject::Init()
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
 
-	m_Scale.y = 0.01f;
 	m_Color = INITIAL_COLOR;
 	m_TextureEnable = INITIAL_TEXTURE_ENABLE;
 	m_Velocity = INITIAL_VELOCITY;

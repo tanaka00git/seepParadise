@@ -158,7 +158,7 @@
     <ClCompile Include="Source\GameObject\camera.cpp" />
     <ClCompile Include="Source\GameObject\characterObject.cpp" />
     <ClCompile Include="Source\GameObject\chest.cpp" />
-    <ClCompile Include="Source\GameObject\coin.cpp" />
+    <ClCompile Include="Source\GameObject\feet.cpp" />
     <ClCompile Include="Source\GameObject\concentrationLine.cpp" />
     <ClCompile Include="Source\GameObject\cylinder.cpp" />
     <ClCompile Include="Source\GameObject\damageFade.cpp" />
@@ -229,7 +229,7 @@
     <ClInclude Include="Source\GameObject\camera.h" />
     <ClInclude Include="Source\GameObject\characterObject.h" />
     <ClInclude Include="Source\GameObject\chest.h" />
-    <ClInclude Include="Source\GameObject\coin.h" />
+    <ClInclude Include="Source\GameObject\feet.h" />
     <ClInclude Include="Source\GameObject\concentrationLine.h" />
     <ClInclude Include="Source\GameObject\cylinder.h" />
     <ClInclude Include="Source\GameObject\damageFade.h" />
