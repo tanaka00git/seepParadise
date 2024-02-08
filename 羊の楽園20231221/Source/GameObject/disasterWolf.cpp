@@ -49,13 +49,10 @@ void DisasterWolf::Init()
 void DisasterWolf::Update()
 {
 	Wolf::Update();
-	
-	//アタックマーカーの移動
+	m_AttackMarker->SetScale(D3DXVECTOR3(m_Scale.x, m_Scale.y, 60.0f));
 	D3DXVECTOR3 attackMarkerPosition = m_Position;
 	m_AttackMarker->SetPosition(attackMarkerPosition);
 	m_AttackMarker->SetRotation(m_Rotation);
-	m_AttackMarker->SetScale(D3DXVECTOR3(m_Scale.x, m_Scale.y, m_Scale.z * 6));
-	
 }
 
 void DisasterWolf::Draw()
@@ -87,26 +84,24 @@ void DisasterWolf::UpdateTargeting()
 {
 	Wolf::UpdateTargeting();
 
-	//自動消滅しないように適当な値で上書き
-	m_DaathTime = 1000;
-
 	m_SuparChargeCount++;
 	if (m_SuparChargeCount >= 60)
 	{
 		m_SuparChargeCount = 0;
 		m_WolfState = WOLF_STATE::SUPER_CHARGE;
 	}
+	
 }
 
 void DisasterWolf::UpdateSuperCharge()
 {
 	m_AttackMarker->SetDraw(true);
+
 	m_Velocity *= 0;
 	m_SuparChargeCount++;
 	if (m_SuparChargeCount >= 80)
 	{
 		m_AttackMarker->SetDraw(false);
-		m_AttackMarker->SetScale(D3DXVECTOR3(0.0f, 0.0f, 0.0f));
 		m_SE_SuperAttack->Play(1.0f ,false);
 		m_WolfState = WOLF_STATE::SUPER_ATTACK;
 
@@ -131,10 +126,10 @@ void DisasterWolf::SetEnemyData(int data)
 	m_Item = false;
 	m_BiteCount = 2;
 	m_FullLife = 80 * data;
-	m_Speed = 0.04f;
+	m_Speed = 0.04f + data * 0.01f;
 	m_CoinDrop = 30 * data;
 	m_StanGuard = 40 * data;
-	m_OriginalScale = D3DXVECTOR3(6.0f, 6.0f, 6.0f);	//キャラのサイズ
+	m_OriginalScale = D3DXVECTOR3(3.0f * data, 3.0f * data, 3.0f * data);	//キャラのサイズ
 	m_BarScale = D3DXVECTOR3(5.0f, 1.0f, 1.0f);			//HPバーのサイズ
 	m_Tracking = 200.0f;								//追尾範囲
 	m_Life = m_FullLife;

@@ -1,6 +1,8 @@
 #pragma once
 #include "scene.h"
 
+class DisasterWolf;
+
 enum class GAME_STATE
 {
 	NORMAL,
@@ -11,6 +13,8 @@ enum class GAME_STATE
 class Game : public Scene
 {
 private:
+	std::vector<DisasterWolf*> wolves;  // ウルフのリスト
+
 	GAME_STATE m_GameState = GAME_STATE::NORMAL; // ゲームステート
 	class Audio* m_BGM{};
 	class Audio* m_BGM_Night{};
@@ -37,10 +41,10 @@ private:
 	void UpdateFade();
 	void TimeSecondsUpdate();
 	void TimeEvent_Time2Loop();
-	void TimeEvent_Time20();
-	void TimeEvent_Time10or30();
-	void TimeEvent_Time40();
-	void TimeEvent_Day3Loop();
+	void TimeEvent_Time30();
+	void TimeEvent_Time15or45();
+	void TimeEvent_Time60();
+	void DisasterWolfEmitter();
 
 public:
 	void Init() override;

@@ -20,6 +20,7 @@
 #include "..\GameObject\angelRing.h"
 #include "..\GameObject\shine.h"
 #include "..\GameObject\shine2.h"
+#include "..\GameObject\shield.h"
 #include "..\GameObject\cylinder.h"
 #include "..\GameObject\box.h"
 #include "..\GameObject\wolf.h"
@@ -80,6 +81,7 @@ void Game::Init()
 	AngelRing::Load();
 	Shine::Load();
 	Shine2::Load();
+	Shield::Load();
 	HpBarS::Load();
 	Coin::Load();
 	ItemSpeed::Load();
@@ -163,7 +165,6 @@ void Game::Init()
 	AddGameObject<DayBar>(2);
 	m_Fade = AddGameObject<Fade>(3);
 
-
 	m_BGM = AddGameObject<GameObject>(0)->AddComponent<Audio>();
 	m_BGM->Load("asset\\audio\\chiisanaashiato.wav");
 	m_BGM->Play(1.0f,true);
@@ -202,6 +203,7 @@ void Game::Uninit()
 	AngelRing::Unload();
 	Shine::Unload();
 	Shine2::Unload();
+	Shield::Unload();
 	HpBarS::Unload();
 	Coin::Unload();
 	BreakObject::Unload();
@@ -245,6 +247,9 @@ void Game::Update()
 
 void Game::UpdateNormal()
 {
+	Scene* scene = Manager::GetScene();
+	Score* score = scene->GetGameObject<Score>();
+
 	//秒数更新
 	m_GameTime++;
 	if (m_GameTime > 60)
@@ -257,19 +262,19 @@ void Game::UpdateNormal()
 	if (m_GameTime == 0)
 	{
 		//20秒に1回
-		if (m_GameTimeSeconds == 20) { TimeEvent_Time20(); }
-		//40秒に1回
-		if (m_GameTimeSeconds == 40) { TimeEvent_Time40(); }
+		if (m_GameTimeSeconds == 30) { TimeEvent_Time30(); }
+		//60秒に1回
+		if (m_GameTimeSeconds == 60) { TimeEvent_Time60(); }
 		//3秒ごと
 		if (m_GameTimeSeconds % 2 == 0) { TimeEvent_Time2Loop(); }
-		//4日ごと
-		if (m_Day % 3 == 0 && m_GameTimeSeconds == 0) { TimeEvent_Day3Loop(); }
 		//10か30秒に1回
-		if (m_GameTimeSeconds == 10 || m_GameTimeSeconds == 30) { TimeEvent_Time10or30(); }
+		if (m_GameTimeSeconds == 15 || m_GameTimeSeconds == 45) { TimeEvent_Time15or45(); }
 	}
 
+	//災害狼の発生数を調整する処理
+	DisasterWolfEmitter();
+
 	//プレイヤーが食べられたらゲームオーバー
-	Scene* scene = Manager::GetScene();
 	Player* player = scene->GetGameObject<Player>();
 	if (player->GetCharacterState() == CHARACTER_STATE::UNUSED)
 	{
@@ -278,7 +283,6 @@ void Game::UpdateNormal()
 		m_GameState = GAME_STATE::FADE;
 	}
 	//仲間が100匹になったらゲームクリア
-	Score* score = scene->GetGameObject<Score>();
 	if (score->GetFullCount() >= 100) { m_GameState = GAME_STATE::CLEAR; }
 
 	//デバッグモード専用処理
@@ -353,43 +357,23 @@ void Game::TimeEvent_Time2Loop()
 	Score* score = scene->GetGameObject<Score>();
 
 	int count = score->GetCount();
+	int enemyStatusCount = count / 20 + 1;  // 20ごとに1増える
+
 	if (count >= 0)
 	{
 		float rot = frand() * 2 * D3DX_PI;
-		AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z), 2);
-		
+		AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z), enemyStatusCount);
+
 		rot = frand() * 2 * D3DX_PI;
 		AddGameObject<Human>(1)->SetPosition(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z));
 	}
-	if (count >= 5)
-	{
-		float rot = frand() * 2 * D3DX_PI;
-		AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>((cos(rot))) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>((sin(rot))) * ENEMY_MAKE_DISTANCE + PLPos.z), 1);
-	}
 	if (count >= 10)
 	{
-		float rot = frand() * 2 * D3DX_PI;
-		AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z), 2);
-	}
-	if (count >= 15)
-	{
-		float rot = frand() * 2 * D3DX_PI;
-		AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z), 2);
-	}
-	if (count >= 25)
-	{
-		float rot = frand() * 2 * D3DX_PI;
-		AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z), 3);
-	}
-	if (count >= 30)
-	{
-		float rot = frand() * 2 * D3DX_PI;
-		AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z), 4);
-	}
-	if (count >= 35)
-	{
-		float rot = frand() * 2 * D3DX_PI;
-		AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z), 4);
+		for (int i = 1; i <= enemyStatusCount / 2; i++) 
+		{
+			float rot = frand() * 2 * D3DX_PI;
+			AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>((cos(rot))) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>((sin(rot))) * ENEMY_MAKE_DISTANCE + PLPos.z), enemyStatusCount+1);
+		}
 	}
 
 	if (m_Event1)
@@ -398,7 +382,7 @@ void Game::TimeEvent_Time2Loop()
 	}
 
 	//コイン
-	for (int i = 0; i <= 4; i++) {AddGameObject<Coin>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2));}
+	for (int i = 0; i <= 5; i++) {AddGameObject<Coin>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2));}
 	
 	//仲間
 	int a = irand(0, 1);
@@ -419,9 +403,10 @@ void Game::TimeEvent_Time2Loop()
 	//岩
 	a = irand(0, 2);
 	if (1 == a) { AddGameObject<Rock>(1)->SetPosition(D3DXVECTOR3(PLPos.x + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2, 0.0f, PLPos.z + frand() * STAGE_MAKE_PL_XY - STAGE_MAKE_PL_XY / 2));}
+
 }
 
-void Game::TimeEvent_Time20()
+void Game::TimeEvent_Time30()
 {
 	//夜にする
 	m_TimeFade->FadeOut_true();
@@ -437,7 +422,7 @@ void Game::TimeEvent_Time20()
 	score->SetTimeZone(true);
 }
 
-void Game::TimeEvent_Time10or30()
+void Game::TimeEvent_Time15or45()
 {
 	//イベント発生用
 	if (m_NawEvent == 0) 
@@ -462,14 +447,14 @@ void Game::TimeEvent_Time10or30()
 					m_SE_Gong->Play(1.0f, false);
 					m_Event2 = true;
 				}
-				m_NawEvent = 40;//40秒後まで再発生しない
+				m_NawEvent = 60;//40秒後まで再発生しない
 
 			}
 		}
 	}
 }
 
-void Game::TimeEvent_Time40()
+void Game::TimeEvent_Time60()
 {
 	//朝にする
 	m_TimeFade->FadeOut_false();
@@ -490,15 +475,38 @@ void Game::TimeEvent_Time40()
 	score->SetTimeZone(false);
 }
 
-void Game::TimeEvent_Day3Loop()
+void Game::DisasterWolfEmitter()
 {
-	//4日毎のイベント
 	Scene* scene = Manager::GetScene();
-	Player* player = scene->GetGameObject<Player>();
-	D3DXVECTOR3 PLPos = player->GetPosition();
+	Score* score = scene->GetGameObject<Score>();
 
-	AddGameObject<InfoLog>(2)->SetNum(13,3,D3DXVECTOR3(900,480,0));
+	//災害狼の数の増減
+	int count = score->GetCount();
+	int disasterCount = 0;
+	int lowCount = 0;
+	// countで作る数変動
+	if (count >= 15) { disasterCount++; }
+	if (count >= 30) { disasterCount++; }
+	if (count >= 60) { disasterCount++; }
 
-	float rot = frand() * 2 * D3DX_PI;
-	AddGameObject<DisasterWolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z), 5);
+	// 使われている数を判断
+	auto disasterWolfs = scene->GetGameObjects<DisasterWolf>();
+	// 不足している場合、生成
+	while (disasterWolfs.size() < disasterCount)
+	{
+		Player* player = scene->GetGameObject<Player>();
+		D3DXVECTOR3 PLPos = player->GetPosition();
+		float rot = frand() * 2 * D3DX_PI;
+		DisasterWolf* disasterWolf = AddGameObject<DisasterWolf>(1);
+		disasterWolf->SetPosEnemyData(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z), disasterCount);
+		// ウルフのポインタをリストに追加
+		disasterWolfs.push_back(disasterWolf);
+	}
+	// 過剰な場合、削除
+	while (disasterWolfs.size() > disasterCount)
+	{
+		DisasterWolf* wolfToRemove = disasterWolfs.back();
+		wolfToRemove->SetDaathTimeDelete();
+		disasterWolfs.pop_back();
+	}
 }
