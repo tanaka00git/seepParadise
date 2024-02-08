@@ -4,7 +4,6 @@
 #include "..\App\audio.h"
 #include "..\Scene\scene.h"
 #include "..\GameObject\camera.h"
-#include "..\GameObject\score.h"
 #include "..\GameObject\goal.h"
 #include "..\GameObject\goalScope.h"
 #include "..\GameObject\player.h"
@@ -83,13 +82,8 @@ void Goal::Update()
 		Player* player = scene->GetGameObject<Player>();
 		D3DXVECTOR3 PLPos = player->GetPosition();
 
-		//ƒXƒRƒA‚Ì”
-		Score* score = scene->GetGameObject<Score>();
-		int count = score->GetCount();
-		int numFollows = max(count / 2, 10);
-
 		//’‡ŠÔ‚ğ‘‚â‚·
-		for (int i = 1; i <= numFollows; i++)
+		for (int i = 1; i <= 10; i++)
 		{
 			Follow* follow = scene->AddGameObject<Follow>(1);
 			follow->SetPosition(D3DXVECTOR3(PLPos.x, PLPos.y + FOLLOW_MAKE_POSITION_Y, PLPos.z));

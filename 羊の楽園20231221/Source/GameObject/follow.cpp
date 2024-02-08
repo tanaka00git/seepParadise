@@ -42,6 +42,7 @@ bool Follow::m_SE_FollowCheck{};
 #define DELETE_DISTANCE   25.0f //プレイヤーと離れているときに自動消滅する距離
 #define ATTACK_STOP	22			//攻撃停止時間
 #define GRAVITY 0.015f			//重力
+#define FOLLOW_RANGE 12.0f		//仲間でいる範囲
 
 void Follow::Load()
 {
@@ -357,7 +358,7 @@ void Follow::PlayerTracking()
 		m_Velocity.z += (m_Position.z - player->GetPosition().z) * CONTACT_EXTRUSION;
 	}
 	//プレイヤーから離れすぎてたら仲間解除
-	if (length > 8.0f)
+	if (length > 20.0f)
 	{
 		m_AgainFollow = 20;
 		m_SE_Release->Play(1.0f);

@@ -45,7 +45,7 @@ public:
 	void SetCountDay(int countDay) { m_CountDay = countDay; }
 	void SetLifeF(int life,int fullLife) { m_Life = life; m_FullLife = fullLife;}
 	void SetCountCombo(int count)  { m_CountCombo = count; }
-	void SetTimeZone(int timeZone) { m_TimeZone = timeZone; }
+	void SetTimeZone(bool timeZone) { m_TimeZone = timeZone; }
 
 	int  GetCount() { return m_CountSeep; }
 	int  GetFullCount() { return m_FullCount; }

@@ -74,6 +74,8 @@ public:
 	void Update()override;
 	virtual void Draw()override;
 
+	void SetDaathTimeDelete() { m_DaathTime = 0; };
+	void SetWolfState(WOLF_STATE wolfState) { m_WolfState = wolfState; }
 	void SetDamageMove() override;
 	void SetPosEnemyData(D3DXVECTOR3 position, int num);
 	virtual void SetEnemyData(int data);

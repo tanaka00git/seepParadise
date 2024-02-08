@@ -332,7 +332,7 @@ void Game::TimeSecondsUpdate()
 
 	//時間データを渡す
 	DayBar* daybar = scene->GetGameObject<DayBar>();
-	daybar->SetTimeFC(40, m_GameTimeSeconds);
+	daybar->SetTimeFC(60, m_GameTimeSeconds);
 
 	//時限イベント終了
 	m_NawEvent --;
@@ -486,8 +486,8 @@ void Game::DisasterWolfEmitter()
 	int lowCount = 0;
 	// countで作る数変動
 	if (count >= 15) { disasterCount++; }
-	if (count >= 30) { disasterCount++; }
-	if (count >= 60) { disasterCount++; }
+	if (count >= 40) { disasterCount++; }
+	if (count >= 85) { disasterCount++; }
 
 	// 使われている数を判断
 	auto disasterWolfs = scene->GetGameObjects<DisasterWolf>();

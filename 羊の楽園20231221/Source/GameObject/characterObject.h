@@ -48,6 +48,7 @@ public:
 	virtual void SetDamageMove();
 	void SetDrop();
 	void AddLife(int life) { m_Life += life; }
+	void SetCharacterState(CHARACTER_STATE characterState) { m_CharacterState = characterState; }
 
 	//ÉQÉbÉgä÷êî
 	CHARACTER_STATE GetCharacterState() const { return m_CharacterState; }

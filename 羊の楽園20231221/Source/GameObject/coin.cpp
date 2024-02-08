@@ -15,8 +15,8 @@ Model*Coin::m_Model{};
 Audio*Coin::m_SE_Get{};
 
 #define MAX_CHARGE 1000
-#define SUBTRACTION_CHARGE 50
-#define MIN_CHARGE 200
+#define SUBTRACTION_CHARGE 30
+#define MIN_CHARGE 180
 
 void Coin::Load()
 {
