@@ -246,6 +246,9 @@
     <ClCompile Include="Source\GameObject\sheepCage.cpp">
       <Filter>ソース ファイル\GameObject\Break</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameObject\feetEffect.cpp">
+      <Filter>ソース ファイル\GameObject\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App\audio.h">
@@ -454,6 +457,9 @@
     </ClInclude>
     <ClInclude Include="Source\GameObject\sheepCage.h">
       <Filter>ソース ファイル\GameObject\Break</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\feetEffect.h">
+      <Filter>ソース ファイル\GameObject\Effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

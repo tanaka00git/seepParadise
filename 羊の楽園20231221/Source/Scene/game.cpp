@@ -21,6 +21,7 @@
 #include "..\GameObject\shine.h"
 #include "..\GameObject\shine2.h"
 #include "..\GameObject\shield.h"
+#include "..\GameObject\feetEffect.h"
 #include "..\GameObject\cylinder.h"
 #include "..\GameObject\box.h"
 #include "..\GameObject\wolf.h"
@@ -82,6 +83,7 @@ void Game::Init()
 	Shine::Load();
 	Shine2::Load();
 	Shield::Load();
+	FeetEffect::Load();
 	HpBarS::Load();
 	Coin::Load();
 	ItemSpeed::Load();
@@ -204,6 +206,7 @@ void Game::Uninit()
 	Shine::Unload();
 	Shine2::Unload();
 	Shield::Unload();
+	FeetEffect::Unload();
 	HpBarS::Unload();
 	Coin::Unload();
 	BreakObject::Unload();

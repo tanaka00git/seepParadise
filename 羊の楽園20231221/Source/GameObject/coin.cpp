@@ -6,9 +6,10 @@
 #include "..\GameObject\itemObject.h"
 #include "..\App\audio.h"
 #include "..\GameObject\score.h"
+#include "..\GameObject\Shadow.h"
 #include "..\GameObject\player.h"
 #include "..\GameObject\infoLog.h"
-#include "..\GameObject\shine.h"
+#include "..\GameObject\feetEffect.h"
 #include "..\App\model.h"
 
 Model*Coin::m_Model{};
@@ -17,13 +18,14 @@ Audio*Coin::m_SE_Get{};
 #define MAX_CHARGE 1000
 #define SUBTRACTION_CHARGE 30
 #define MIN_CHARGE 180
+#define SCALE 0.5f
 
 void Coin::Load()
 {
 	m_Model = new Model();
-	m_Model->Load("asset\\model\\coin.obj");
+	m_Model->Load("asset\\model\\feed.obj");
 	m_SE_Get = new Audio();
-	m_SE_Get->Load("asset\\audio\\硬貨・渡す02b.wav");
+	m_SE_Get->Load("asset\\audio\\パパッ.wav");
 
 }
 
@@ -31,6 +33,14 @@ void Coin::Unload()
 {
 	m_Model->Unload();
 	delete m_Model;
+}
+
+void Coin::Init()
+{
+	ItemObject::Init();
+
+	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\unlitTextureVS.cso");
+	Renderer::CreatePixelShader(&m_PixelShader, "shader\\unlitTexturePS.cso");
 }
 
 void Coin::Draw()
@@ -43,7 +53,7 @@ void Coin::Draw()
 
 	// マトリクス設定
 	D3DXMATRIX world, scale, rot, trans;
-	D3DXMatrixScaling(&scale, m_Scale.x, m_Scale.y, m_Scale.z);
+	D3DXMatrixScaling(&scale, m_Scale.x * SCALE, m_Scale.y * SCALE, m_Scale.z * SCALE);
 	D3DXMatrixRotationYawPitchRoll(&rot, m_Rotation.y, m_Rotation.x, m_Rotation.z);
 	D3DXMatrixTranslation(&trans, m_Position.x, m_Position.y, m_Position.z);
 	world = scale * rot * trans;
@@ -68,5 +78,5 @@ void Coin::MoveGet()
 
 	m_SE_Get->Play(1.0f);
 
-	scene->AddGameObject<Shine>(1)->SetPosition(m_Position);//コインエフェクト
+	scene->AddGameObject<FeetEffect>(1)->SetPosition(m_Position);//コインエフェクト
 }

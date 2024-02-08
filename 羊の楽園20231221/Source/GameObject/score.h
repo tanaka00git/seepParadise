@@ -30,7 +30,6 @@ public:
 
 	void DrawCountSeep();
 	void DrawCountCoin();
-	void DrawCountDay();
 	void DrawCountCombo();
 	void DrawTimeZone();
 	void DrawLife();

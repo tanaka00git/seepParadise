@@ -80,7 +80,6 @@ void Score::Draw()
 	//それぞれの描画
 	DrawCountSeep();
 	DrawCountCoin();
-	DrawCountDay();
 	DrawCountCombo();
 	DrawTimeZone();
 	DrawLife();
@@ -138,35 +137,6 @@ void Score::DrawCountCoin()
 	}
 }
 
-void Score::DrawCountDay()
-{
-	int countDay = m_CountDay;
-	int cc = 2;
-	if (countDay >= 10)//10日以降に桁が増える
-	{
-		cc = 3;
-	}
-	for (int c = 0; c < cc; c++) 
-	{
-		//頂点座標算出
-		float vx = 870 - c * 40.0f;
-		float vy = 10.0f;
-		float height = 62.0f;
-		float width = 62.0f;
-
-		int number = 0;
-		//桁内の値をずらす
-		if (c == 0) {
-			number = 12;
-		}
-		else {
-			number = countDay % 10;
-			countDay /= 10;
-		}
-		DrawData(vx, vy, width, height, number);
-	}
-}
-
 void Score::DrawCountCombo()
 {
 	int countCombo = m_CountCombo;
@@ -196,10 +166,10 @@ void Score::DrawTimeZone()
 {
 	for (int c = 0; c < 1; c++) {
 		//頂点座標算出
-		float vx = 863 - c * 40.0f;
-		float vy = 75.0f;
-		float height = 45.0f;
-		float width = 45.0f;
+		float vx = 865;
+		float vy = 0.0f;
+		float height = 60.0f;
+		float width = 60.0f;
 		int number = 0;
 		//桁内の値をずらす
 		if (c == 0) {//時間帯

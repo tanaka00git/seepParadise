@@ -13,5 +13,6 @@ private:
 public:
 	static void Load();
 	static void Unload();
+	void Init()override;
 	void Draw()override;
 };

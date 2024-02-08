@@ -166,6 +166,7 @@
     <ClCompile Include="Source\GameObject\disasterWolf.cpp" />
     <ClCompile Include="Source\GameObject\explosion.cpp" />
     <ClCompile Include="Source\GameObject\fade.cpp" />
+    <ClCompile Include="Source\GameObject\feetEffect.cpp" />
     <ClCompile Include="Source\GameObject\fence.cpp" />
     <ClCompile Include="Source\GameObject\field.cpp" />
     <ClCompile Include="Source\GameObject\follow.cpp" />
@@ -236,6 +237,7 @@
     <ClInclude Include="Source\GameObject\disasterWolf.h" />
     <ClInclude Include="Source\GameObject\explosion.h" />
     <ClInclude Include="Source\GameObject\fade.h" />
+    <ClInclude Include="Source\GameObject\feetEffect.h" />
     <ClInclude Include="Source\GameObject\fence.h" />
     <ClInclude Include="Source\GameObject\field.h" />
     <ClInclude Include="Source\GameObject\follow.h" />

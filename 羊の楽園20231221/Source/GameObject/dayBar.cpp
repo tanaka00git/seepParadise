@@ -12,11 +12,11 @@ Sprite*DayBar::m_Sprite2{};
 void DayBar::Load()
 {
 	m_Sprite = new Sprite();
-	m_Sprite->Init(845.0f, 70.0f, 80, 7, "asset\\texture\\fadeOver.png");
+	m_Sprite->Init(855.0f, 60.0f, 80, 7, "asset\\texture\\fadeOver.png");
 	m_Sprite->SetColor(D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f));//黒バー
 
 	m_Sprite2 = new Sprite();
-	m_Sprite2->Init(845.0f, 70.0f, 80, 7, "asset\\texture\\fadeOver.png");
+	m_Sprite2->Init(855.0f, 60.0f, 80, 7, "asset\\texture\\fadeOver.png");
 	m_Sprite2->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));//白バー
 
 }
