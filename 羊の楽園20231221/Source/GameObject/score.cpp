@@ -79,7 +79,7 @@ void Score::Draw()
 
 	//それぞれの描画
 	DrawCountSeep();
-	DrawCountCoin();
+	DrawCountClearSeep();
 	DrawCountCombo();
 	DrawTimeZone();
 	DrawLife();
@@ -91,7 +91,7 @@ void Score::DrawCountSeep()
 	for (int i = 0; i < 4; i++)
 	{
 		//頂点座標算出
-		float vx = 90 - i * 20.0f;
+		float vx = 85 - i * 20.0f;
 		float vy = 30.0f;
 		float height = 32.0f;
 		float width = 32.0f;
@@ -100,7 +100,7 @@ void Score::DrawCountSeep()
 		int number = 0;
 		if (i == 3) {
 			number = 11;
-			vx -= 13;
+			vx -= 8;
 		}
 		else {
 			number = count % 10;
@@ -108,30 +108,27 @@ void Score::DrawCountSeep()
 		}
 		DrawData(vx, vy, width, height, number);
 	}
-
 }
 
-void Score::DrawCountCoin()
+void Score::DrawCountClearSeep()
 {
-	//コイン
-	int countCoin = m_CountCoin;
-	for (int c = 0; c < 4; c++) {
+	int count = m_ClearCount;
+	for (int i = 0; i < 4; i++)
+	{
 		//頂点座標算出
-		float vx = 90 - c * 20.0f;
-		float vy = 70.0f;
-		float height = 32.0f;
-		float width = 32.0f;
+		float vx = 150 - i * 15.0f;
+		float vy = 38.0f;
+		float height = 24.0f;
+		float width = 24.0f;
 
-		int number = 0;
 		//桁内の値をずらす
-		if (c == 3) 
-		{
-			number = 10;
-			vx -= 13;
+		int number = 0;
+		if (i == 3) {
+			number = 21;
 		}
 		else {
-			number = countCoin % 10;
-			countCoin /= 10;
+			number = count % 10;
+			count /= 10;
 		}
 		DrawData(vx, vy, width, height, number);
 	}

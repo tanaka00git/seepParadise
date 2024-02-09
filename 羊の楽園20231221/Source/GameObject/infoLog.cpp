@@ -109,11 +109,6 @@ void InfoLog::SetNum(int num, int moveNum, D3DXVECTOR3 position)
 		m_Sprite->Init(0.0f, 0.0f, 300, 160, "asset\\texture\\timeLog2.png");
 		m_Alpha = 0.0f;
 	}
-	else if (m_LogNum == 3) {//コイン入手
-		m_Sprite = AddComponent<Sprite>();
-		m_Sprite->Init(0.0f, 0.0f, 80, 80, "asset\\texture\\timeLog3.png");
-		m_Alpha = 1.0f;
-	}
 	else if (m_LogNum == 4) {//ダメージ
 		m_Sprite = AddComponent<Sprite>();
 		m_Sprite->Init(0.0f, 0.0f, 80, 80, "asset\\texture\\timeLog4.png");

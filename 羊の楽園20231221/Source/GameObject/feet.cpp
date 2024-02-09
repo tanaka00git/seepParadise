@@ -8,7 +8,6 @@
 #include "..\GameObject\score.h"
 #include "..\GameObject\Shadow.h"
 #include "..\GameObject\player.h"
-#include "..\GameObject\infoLog.h"
 #include "..\GameObject\feetEffect.h"
 #include "..\App\model.h"
 
@@ -67,10 +66,6 @@ void Feet::MoveGet()
 	Scene* scene = Manager::GetScene();
 	Score* score = scene->GetGameObject<Score>();
 
-	InfoLog* infoLog = scene->AddGameObject<InfoLog>(2);
-	infoLog->SetNum(3, 2, D3DXVECTOR3(50.0f, 50.0f, 0.0f));
-	score->AddCountCoin(+1);
-	
 	Player* player = scene->GetGameObject<Player>();
 	int charge = MAX_CHARGE - (score->GetCount() * SUBTRACTION_CHARGE);
 	charge = (charge <= MIN_CHARGE) ? MIN_CHARGE : charge;

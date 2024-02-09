@@ -13,14 +13,14 @@ private:
 	ID3D11InputLayout* m_VertexLayout{};
 
 	int  m_CountSeep  = 0;
-	int  m_FullCount  = 0;
+	int  m_FullCount = 0;
+	int  m_ClearCount = 100;
 	int  m_CountCoin  = 0;
 	int  m_CountDay   = 0;
 	int  m_CountCombo = 0;
 	bool m_TimeZone   = false;
 	int  m_Life       = 0;
 	int  m_FullLife   = 0;
-
 
 public:
 	void Init();
@@ -29,7 +29,7 @@ public:
 	void Draw();
 
 	void DrawCountSeep();
-	void DrawCountCoin();
+	void DrawCountClearSeep();
 	void DrawCountCombo();
 	void DrawTimeZone();
 	void DrawLife();
