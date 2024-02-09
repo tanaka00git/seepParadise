@@ -5,7 +5,7 @@
 
 #define TEXNUM_X 5
 #define TEXNUM_Y 5
-#define PLUS_SCALE_VALUE 5.0f
+#define PLUS_SCALE_VALUE 7.0f
 #define PLUS_SCALE_DOWN_VALUE 0.5f
 
 void Score::Init()
@@ -87,6 +87,9 @@ void Score::Update()
 
 	m_ComboPlusScale -= PLUS_SCALE_DOWN_VALUE;
 	if (m_ComboPlusScale < 0.0f) { m_ComboPlusScale = 0.0f; }
+	m_ComboAlpha -= 0.1f;
+	if (m_ComboAlpha < 0.0f) { m_ComboAlpha = 0.0f; }
+
 
 }
 
@@ -119,10 +122,10 @@ void Score::DrawCountSeep()
 	for (int i = 0; i < 4; i++)
 	{
 		//頂点座標算出
-		float vx = 85 - i * 20.0f;
+		float vx = 90 - i * 23.0f;
 		float vy = 30.0f;
-		float height = 32.0f + m_CountPlusScale - m_CountMinusScale;
-		float width = 32.0f + m_CountPlusScale - m_CountMinusScale;
+		float height = 36.0f + m_CountPlusScale - m_CountMinusScale;
+		float width = 36.0f + m_CountPlusScale - m_CountMinusScale;
 
 		//桁内の値をずらす
 		int number = 0;
@@ -134,7 +137,7 @@ void Score::DrawCountSeep()
 			number = count % 10;
 			count /= 10;
 		}
-		DrawData(vx, vy, width, height, number);
+		DrawData(vx, vy, width, height, number, 1.0f);
 	}
 }
 
@@ -144,8 +147,8 @@ void Score::DrawCountClearSeep()
 	for (int i = 0; i < 4; i++)
 	{
 		//頂点座標算出
-		float vx = 150 - i * 15.0f;
-		float vy = 38.0f;
+		float vx = 158 - i * 14.0f;
+		float vy = 40.0f;
 		float height = 24.0f;
 		float width = 24.0f;
 
@@ -158,7 +161,7 @@ void Score::DrawCountClearSeep()
 			number = count % 10;
 			count /= 10;
 		}
-		DrawData(vx, vy, width, height, number);
+		DrawData(vx, vy, width, height, number, 1.0f);
 	}
 }
 
@@ -182,7 +185,7 @@ void Score::DrawCountCombo()
 				number = countCombo % 10;
 				countCombo /= 10;
 			}
-			DrawData(vx, vy, width, height, number);
+			DrawData(vx, vy, width, height, number, m_ComboAlpha);
 		}
 	}
 }
@@ -205,7 +208,7 @@ void Score::DrawTimeZone()
 				number = 16;
 			}
 		}
-		DrawData(vx, vy, width, height, number);
+		DrawData(vx, vy, width, height, number, 1.0f);
 	}
 }
 
@@ -235,11 +238,11 @@ void Score::DrawLife()
 			number = countLife % 10;
 			countLife /= 10;
 		}
-		DrawData(vx, vy, width, height, number);
+		DrawData(vx, vy, width, height, number, 1.0f);
 	}
 }
 
-void Score::DrawData(float vx, float vy, float width, float height, int num)
+void Score::DrawData(float vx, float vy, float width, float height, int num , float alpha)
 {
 
 	//テクスチャ座標算出//横横	  //縦横
@@ -287,7 +290,7 @@ void Score::DrawData(float vx, float vy, float width, float height, int num)
 	// マテリアル設定
 	MATERIAL material;
 	ZeroMemory(&material, sizeof(material));
-	material.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	material.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, alpha);
 	material.TextureEnable = true;
 	Renderer::SetMaterial(material);
 

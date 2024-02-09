@@ -28,7 +28,8 @@ private:
 	int  m_CountCombo = 0;
 	int  m_OldCombo = 0;
 	float m_ComboPlusScale = 0.0f;
-	
+	float m_ComboAlpha = 0.0f;
+
 	//ŽžŠÔ‘Ñ
 	bool m_TimeZone   = false;
 	
@@ -47,7 +48,7 @@ public:
 	void DrawCountCombo();
 	void DrawTimeZone();
 	void DrawLife();
-	void DrawData(float vx, float vy, float width, float height ,int num);
+	void DrawData(float vx, float vy, float width, float height ,int num, float alpha);
 
 	void AddCount(int countSeep) { m_CountSeep += countSeep;}
 	void SetCount(int countSeep) { m_CountSeep = countSeep;}
@@ -57,7 +58,7 @@ public:
 	void AddCountDay(int countDay) { m_CountDay += countDay; }
 	void SetCountDay(int countDay) { m_CountDay = countDay; }
 	void SetLifeF(int life,int fullLife) { m_Life = life; m_FullLife = fullLife;}
-	void SetCountCombo(int count)  { m_CountCombo = count; }
+	void SetCountCombo(int count) { m_CountCombo = count; m_ComboAlpha = 1.0f; }
 	void SetTimeZone(bool timeZone) { m_TimeZone = timeZone; }
 
 	int  GetCount() { return m_CountSeep; }

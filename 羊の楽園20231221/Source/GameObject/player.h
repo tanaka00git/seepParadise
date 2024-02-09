@@ -33,7 +33,6 @@ private:
 	bool	m_DashInit			= false;	//ダッシュ初回時
 	bool	m_Dash				= false;	//ダッシュ用
 	int		m_Combo				= 0;		//コンボ数
-	int		m_ComboWait			= 0;		//コンボを表示する時間
 
 	float	m_DeathStaging		= 0.14f;	//死亡するまでの時間
 	int		m_AttackStopTime	= 0;		//攻撃停止時間

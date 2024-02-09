@@ -40,7 +40,6 @@ int Player::m_PlClown{};
 #define INITIAL_DASH_INIT false
 #define INITIAL_DASH false
 #define INITIAL_COMBO 0
-#define INITIAL_COMBO_WAIT 0
 #define INITIAL_DEATH_STAGING 0.14f
 #define INITIAL_ATTACK_STOP_TIME 0
 #define INITIAL_CHARGE 0
@@ -115,7 +114,6 @@ void Player::Init()
 	m_DashInit = INITIAL_DASH_INIT;
 	m_Dash = INITIAL_DASH;
 	m_Combo = INITIAL_COMBO;
-	m_ComboWait = INITIAL_COMBO_WAIT;
 	m_DeathStaging = INITIAL_DEATH_STAGING;
 	m_AttackStopTime = INITIAL_ATTACK_STOP_TIME;
 	m_Charge = INITIAL_CHARGE;
@@ -164,11 +162,8 @@ void Player::Update()
 	if (m_Life <= 0) { m_Life = 0; }
 
 	//コンボデータを渡す
-	m_ComboWait--;
-	if (m_ComboWait <= 0) { m_ComboWait = 0; }
 	if (m_PlayerState == PLAYER_STATE::DASH)
 	{
-		m_ComboWait = 30;
 		score->SetCountCombo(m_Combo);
 	}
 	else { m_Combo = 0; }
