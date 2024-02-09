@@ -77,6 +77,17 @@ void Score::Update()
 	if (m_CountPlusScale < 0.0f) { m_CountPlusScale = 0.0f; }
 	if (m_CountMinusScale < 0.0f) { m_CountMinusScale = 0.0f; }
 
+
+	//コンボの増減でスケールが変わる処理
+	if (m_CountCombo != m_OldCombo)
+	{
+		if (m_CountCombo > m_OldCombo) { m_ComboPlusScale = PLUS_SCALE_VALUE; }
+	}
+	m_OldCombo = m_CountCombo;
+
+	m_ComboPlusScale -= PLUS_SCALE_DOWN_VALUE;
+	if (m_ComboPlusScale < 0.0f) { m_ComboPlusScale = 0.0f; }
+
 }
 
 void Score::Draw()
@@ -159,8 +170,8 @@ void Score::DrawCountCombo()
 			//頂点座標算出
 			float vx = 750 - c * 27.0f;
 			float vy = 120.0f;
-			float height = 50.0f;
-			float width = 50.0f;
+			float height = 50.0f + m_ComboPlusScale;
+			float width = 50.0f + m_ComboPlusScale;
 			int number = 0;
 			//桁内の値をずらす
 			if (c == 2) {

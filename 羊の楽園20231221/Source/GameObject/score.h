@@ -12,16 +12,27 @@ private:
 	ID3D11PixelShader* m_PixelShader{};
 	ID3D11InputLayout* m_VertexLayout{};
 
+	//仲間の数
 	int  m_CountSeep = 0;
 	int  m_OldCountSeep  = 0;
 	int  m_FullCount = 0;
 	float m_CountPlusScale = 0.0f;
 	float m_CountMinusScale = 0.0f;
 	int  m_ClearCount = 100;
+
+	//コインと日数
 	int  m_CountCoin  = 0;
 	int  m_CountDay   = 0;
+
+	//コンボ
 	int  m_CountCombo = 0;
+	int  m_OldCombo = 0;
+	float m_ComboPlusScale = 0.0f;
+	
+	//時間帯
 	bool m_TimeZone   = false;
+	
+	//体力
 	int  m_Life       = 0;
 	int  m_FullLife   = 0;
 
