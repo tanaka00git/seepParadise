@@ -5,6 +5,8 @@
 
 #define TEXNUM_X 5
 #define TEXNUM_Y 5
+#define PLUS_SCALE_VALUE 5.0f
+#define PLUS_SCALE_DOWN_VALUE 0.5f
 
 void Score::Init()
 {
@@ -57,9 +59,24 @@ void Score::Update()
 {
 	GameObject::Update();
 
-	if (m_CountSeep > 100) { m_CountSeep = 100; }
+	if (m_CountSeep > 100) { m_CountSeep = m_ClearCount; }
 	if (m_CountCoin > 999) { m_CountCoin = 999; }
 	if (m_FullCount < m_CountSeep) { m_FullCount = m_CountSeep; }
+
+
+	//羊の増減でスコアのスケールが変わる処理
+	if (m_CountSeep != m_OldCountSeep)
+	{
+		if (m_CountSeep > m_OldCountSeep) { m_CountPlusScale = PLUS_SCALE_VALUE; }
+		else { m_CountMinusScale = PLUS_SCALE_VALUE; }
+	}
+	m_OldCountSeep = m_CountSeep;
+
+	m_CountPlusScale -= PLUS_SCALE_DOWN_VALUE;
+	m_CountMinusScale -= PLUS_SCALE_DOWN_VALUE;
+	if (m_CountPlusScale < 0.0f) { m_CountPlusScale = 0.0f; }
+	if (m_CountMinusScale < 0.0f) { m_CountMinusScale = 0.0f; }
+
 }
 
 void Score::Draw()
@@ -93,8 +110,8 @@ void Score::DrawCountSeep()
 		//頂点座標算出
 		float vx = 85 - i * 20.0f;
 		float vy = 30.0f;
-		float height = 32.0f;
-		float width = 32.0f;
+		float height = 32.0f + m_CountPlusScale - m_CountMinusScale;
+		float width = 32.0f + m_CountPlusScale - m_CountMinusScale;
 
 		//桁内の値をずらす
 		int number = 0;

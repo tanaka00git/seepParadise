@@ -12,8 +12,11 @@ private:
 	ID3D11PixelShader* m_PixelShader{};
 	ID3D11InputLayout* m_VertexLayout{};
 
-	int  m_CountSeep  = 0;
+	int  m_CountSeep = 0;
+	int  m_OldCountSeep  = 0;
 	int  m_FullCount = 0;
+	float m_CountPlusScale = 0.0f;
+	float m_CountMinusScale = 0.0f;
 	int  m_ClearCount = 100;
 	int  m_CountCoin  = 0;
 	int  m_CountDay   = 0;
@@ -35,8 +38,8 @@ public:
 	void DrawLife();
 	void DrawData(float vx, float vy, float width, float height ,int num);
 
-	void AddCount(int countSeep) { m_CountSeep += countSeep; }
-	void SetCount(int countaSeep) { m_CountSeep = countaSeep; }
+	void AddCount(int countSeep) { m_CountSeep += countSeep;}
+	void SetCount(int countSeep) { m_CountSeep = countSeep;}
 
 	void AddCountCoin(int countCoin) { m_CountCoin += countCoin; }
 	void SetCountCoin(int countCoin) { m_CountCoin = countCoin; }
