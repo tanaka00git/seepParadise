@@ -62,6 +62,25 @@ void InfoLog::Update()
 			SetDestroy();
 		}
 	}
+
+	else if (m_MoveNum == 4) {
+		if (!m_LogEnd) {
+			m_Alpha += 0.5f;
+			if (m_Alpha >= 1.0f) {
+				m_Alpha = 1.0f;
+				m_DeleteTime++;
+				if (m_DeleteTime > 10) { m_LogEnd = true; }//表示されてる状態の維持
+			}
+		}
+		else if (m_LogEnd) {//終了条件になったら
+			m_Position.y--;
+			m_Alpha -= 0.02f;
+			if (m_Alpha <= 0.0f) {
+				m_Alpha = 0.0f;
+				SetDestroy();
+			}
+		}
+	}
 	m_Sprite->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, m_Alpha));
 	m_Sprite->SetPosition(m_Position);
 }
@@ -154,6 +173,34 @@ void InfoLog::SetNum(int num, int moveNum, D3DXVECTOR3 position)
 	else  if (m_LogNum == 14) {//スタート
 		m_Sprite = AddComponent<Sprite>();
 		m_Sprite->Init(0.0f, 0.0f, 550, 160, "asset\\texture\\startText.png");
+		m_Alpha = 0.0f;
+	}
+	else  if (m_LogNum == 20) {//スタート
+		m_Sprite = AddComponent<Sprite>();
+		m_Sprite->Init(0.0f, 0.0f, 300, 160, "asset\\texture\\startText3.png");
+		m_Alpha = 0.0f;
+
+	}
+	else  if (m_LogNum == 21) {//スタート
+		m_Sprite = AddComponent<Sprite>();
+		m_Sprite->Init(0.0f, 0.0f, 300, 160, "asset\\texture\\startText2.png");
+		m_Alpha = 0.0f;
+
+	}
+	else  if (m_LogNum == 22) {//スタート
+		m_Sprite = AddComponent<Sprite>();
+		m_Sprite->Init(0.0f, 0.0f, 300, 160, "asset\\texture\\startText1.png");
+		m_Alpha = 0.0f;
+
+	}
+	else  if (m_LogNum == 23) {//スタート
+		m_Sprite = AddComponent<Sprite>();
+		m_Sprite->Init(0.0f, 0.0f, 300, 160, "asset\\texture\\startText0.png");
+		m_Alpha = 0.0f;
+	}
+	else  if (m_LogNum == 24) {//エンド
+		m_Sprite = AddComponent<Sprite>();
+		m_Sprite->Init(0.0f, 0.0f, 300, 160, "asset\\texture\\endText.png");
 		m_Alpha = 0.0f;
 	}
 	else if (m_LogNum == 44) {//-100円
