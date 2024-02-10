@@ -100,7 +100,6 @@ void Game::Init()
 	AttackMarker::Load();
 	TimeFade::Load();
 	ConcentrationLine::Load();
-	InfoLog::Load();
 	DayBar::Load();
 
 	//カメラ
@@ -169,10 +168,12 @@ void Game::Init()
 
 	m_BGM = AddGameObject<GameObject>(0)->AddComponent<Audio>();
 	m_BGM->Load("asset\\audio\\chiisanaashiato.wav");
-	m_BGM->Play(1.0f,true);
+	m_BGM->Play(0.0f,true);
 	m_BGM_Night = AddGameObject<GameObject>(0)->AddComponent<Audio>();
 	m_BGM_Night->Load("asset\\audio\\latenightsnow.wav");
 	m_BGM_Night->Play(0.0f, true);
+	m_SE_Whistle = AddGameObject<GameObject>(0)->AddComponent<Audio>();
+	m_SE_Whistle->Load("asset\\audio\\警官のホイッスル1.wav");
 	m_SE_SeepCry = AddGameObject<GameObject>(0)->AddComponent<Audio>();
 	m_SE_SeepCry->Load("asset\\audio\\ヒツジの鳴き声.wav");
 	m_SE_Bell = AddGameObject<GameObject>(0)->AddComponent<Audio>();
@@ -222,7 +223,6 @@ void Game::Uninit()
 	AttackMarker::Unload();
 	TimeFade::Unload();
 	ConcentrationLine::Unload();
-	InfoLog::Unload();
 	DayBar::Unload();
 }
 
@@ -236,6 +236,9 @@ void Game::Update()
 
 	switch (m_GameState)
 	{
+	case GAME_STATE::START:
+		UpdateStart();
+		break;
 	case GAME_STATE::NORMAL:
 		UpdateNormal();
 		break;
@@ -245,6 +248,24 @@ void Game::Update()
 	case GAME_STATE::FADE:
 		UpdateFade();
 		break;
+	}
+}
+
+void Game::UpdateStart()
+{
+	if (!m_InitStart)
+	{
+		m_SE_Bell->Play(1.0f, false);
+		m_InitStart = true;
+		AddGameObject<InfoLog>(2)->SetNum(14, 1, D3DXVECTOR3(220, 0, 0));
+	}
+
+	m_StartTextTime--;
+	if (m_StartTextTime <= 0)
+	{
+		m_SE_Whistle->Play(1.0f, false);
+		m_BGM->Play(1.0f, true);
+		m_GameState = GAME_STATE::NORMAL;
 	}
 }
 

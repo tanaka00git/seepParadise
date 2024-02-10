@@ -3,14 +3,6 @@
 #include "..\GameObject\infoLog.h"
 #include "..\App\sprite.h"
 
-void InfoLog::Load()
-{
-}
-
-void InfoLog::Unload()
-{
-}
-
 void InfoLog::Init()
 {
 	//ここにシェーダーファイルのロードを追加
@@ -158,6 +150,11 @@ void InfoLog::SetNum(int num, int moveNum, D3DXVECTOR3 position)
 		m_Sprite = AddComponent<Sprite>();
 		m_Sprite->Init(0.0f, 0.0f, 300, 60, "asset\\texture\\timeLog13.png");
 		m_Alpha = 1.0f;
+	}
+	else  if (m_LogNum == 14) {//スタート
+		m_Sprite = AddComponent<Sprite>();
+		m_Sprite->Init(0.0f, 0.0f, 550, 160, "asset\\texture\\startText.png");
+		m_Alpha = 0.0f;
 	}
 	else if (m_LogNum == 44) {//-100円
 	m_Sprite = AddComponent<Sprite>();
