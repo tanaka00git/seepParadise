@@ -27,8 +27,8 @@ void ItemObject::Init()
 	m_DeleteInit = INITIAL_DELETE_INIT;
 	m_DropJump = INITIAL_DROP_JUMP;
 
-	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\pixelLightingVS.cso");
-	Renderer::CreatePixelShader(&m_PixelShader, "shader\\pixelLightingPS.cso");
+	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
+	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
 
 	//アタッチ
 	m_Shadow = AddComponent<Shadow>();

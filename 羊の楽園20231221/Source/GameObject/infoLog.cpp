@@ -81,6 +81,25 @@ void InfoLog::Update()
 			}
 		}
 	}
+
+	else if (m_MoveNum == 5) {
+		if (!m_LogEnd) {
+			m_Alpha += 0.5f;
+			if (m_Alpha >= 1.0f) {
+				m_Alpha = 1.0f;
+				m_DeleteTime++;
+				if (m_DeleteTime > 260) { m_LogEnd = true; }//•\¦‚³‚ê‚Ä‚éó‘Ô‚ÌˆÛ
+			}
+		}
+		else if (m_LogEnd) {//I—¹ğŒ‚É‚È‚Á‚½‚ç
+			m_Position.y--;
+			m_Alpha -= 0.02f;
+			if (m_Alpha <= 0.0f) {
+				m_Alpha = 0.0f;
+				SetDestroy();
+			}
+		}
+	}
 	m_Sprite->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, m_Alpha));
 	m_Sprite->SetPosition(m_Position);
 }

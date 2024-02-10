@@ -14,9 +14,9 @@ Model* DisasterWolf::m_ModelClown{};
 Audio* DisasterWolf::m_SE_SuperAttack{};
 
 #define INITIAL_SUPAR_CHARGE_COUNT 0
-#define MEED_SUPAR_CHARGE 80
-#define SUPER_ATTACK_TIME 60
-#define ATTACK_MARKER_SCALE_Z 40.0f
+#define MEED_SUPAR_CHARGE 70
+#define SUPER_ATTACK_TIME 70
+#define ATTACK_MARKER_SCALE_Z 50.0f
 #define INITIAL_DAATH_TIME 3000
 
 void DisasterWolf::Load()

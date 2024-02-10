@@ -14,8 +14,8 @@
 
 Model*Rock::m_Model{};
 
-#define DROP_RAIT 12
-#define FEET_DROP 4
+#define DROP_RAIT 20
+#define FEET_DROP 3
 
 void Rock::Load()
 {

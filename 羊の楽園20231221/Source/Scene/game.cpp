@@ -255,29 +255,29 @@ void Game::UpdateStart()
 	if (!m_InitStart)
 	{
 		m_InitStart = true;
-		AddGameObject<InfoLog>(2)->SetNum(14, 1, D3DXVECTOR3(220, 0, 0));
+		AddGameObject<InfoLog>(2)->SetNum(14, 5, D3DXVECTOR3(220, -30, 0));
 	}
 	m_StartTextTime--;
 
 	if (m_StartTextTime == 150)
 	{
 		m_SE_Bell->Play(1.0f, false);
-		AddGameObject<InfoLog>(2)->SetNum(20, 4, D3DXVECTOR3(340, 0, 0));
+		AddGameObject<InfoLog>(2)->SetNum(20, 4, D3DXVECTOR3(340, 60, 0));
 	}
 	else if (m_StartTextTime == 100)
 	{
 		m_SE_Bell->Play(1.0f, false);
-		AddGameObject<InfoLog>(2)->SetNum(21, 4, D3DXVECTOR3(340, 0, 0));
+		AddGameObject<InfoLog>(2)->SetNum(21, 4, D3DXVECTOR3(340, 60, 0));
 	}
 	else if (m_StartTextTime == 50)
 	{
 		m_SE_Bell->Play(1.0f, false);
-		AddGameObject<InfoLog>(2)->SetNum(22, 4, D3DXVECTOR3(340, 0, 0));
+		AddGameObject<InfoLog>(2)->SetNum(22, 4, D3DXVECTOR3(340, 60, 0));
 	}
 	else if (m_StartTextTime <= 0)
 	{
 		m_SE_Whistle->Play(1.0f, false);
-		AddGameObject<InfoLog>(2)->SetNum(23, 4, D3DXVECTOR3(340, 0, 0));
+		AddGameObject<InfoLog>(2)->SetNum(23, 4, D3DXVECTOR3(340, 60, 0));
 		m_BGM->Play(1.0f, true);
 		m_GameState = GAME_STATE::NORMAL;
 		AddGameObject<InfoLogTutorial>(2);

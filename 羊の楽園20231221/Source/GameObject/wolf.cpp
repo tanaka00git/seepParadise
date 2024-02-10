@@ -52,7 +52,6 @@ Audio*Wolf::m_SE_Critical{};
 #define INITIAL_SCALE_Y 0.01f
 
 #define EATING_TIME 45
-#define DROP_RATE 20
 #define APPLE_RATE 20
 #define KNOCK_BACK_TIME 14
 #define STUN_TIME 240
@@ -359,28 +358,6 @@ void Wolf::UpdateDead()
 			Apple* apple = scene->AddGameObject<Apple>(1);
 			apple->SetPosition(m_Position);
 			apple->SetDrop();
-		}
-
-		//アイテムドロップ
-		int a = irand(0,DROP_RATE-1);
-		if (a == 0) {
-			a = irand(0,2);
-			if (a == 0) {
-				ItemSpeed* itemSpeed = scene->AddGameObject<ItemSpeed>(1);
-				itemSpeed->SetPosition(m_Position);
-				itemSpeed->SetDrop();
-			}
-			else if (a == 1) {
-				ItemLife* itemLife = scene->AddGameObject<ItemLife>(1);
-				itemLife->SetPosition(m_Position);
-				itemLife->SetDrop();
-			}
-			else if (a == 2) {
-				ItemEye* itemEye = scene->AddGameObject<ItemEye>(1);
-				itemEye->SetPosition(m_Position);
-				itemEye->SetDrop();
-
-			}
 		}
 	}
 

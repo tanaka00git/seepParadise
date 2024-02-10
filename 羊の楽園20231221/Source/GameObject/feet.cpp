@@ -14,9 +14,9 @@
 Model*Feet::m_Model{};
 Audio*Feet::m_SE_Get{};
 
-#define MAX_CHARGE 1000
+#define MAX_CHARGE 500
 #define SUBTRACTION_CHARGE 30
-#define MIN_CHARGE 180
+#define MIN_CHARGE 150
 #define SCALE 0.5f
 
 void Feet::Load()
@@ -70,6 +70,7 @@ void Feet::MoveGet()
 	int charge = MAX_CHARGE - (score->GetCount() * SUBTRACTION_CHARGE);
 	charge = (charge <= MIN_CHARGE) ? MIN_CHARGE : charge;
 	player->AddCharge(charge);
+	score->AddCountCoin(1);
 
 	m_SE_Get->Play(1.0f);
 
