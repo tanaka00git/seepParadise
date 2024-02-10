@@ -20,7 +20,7 @@
 #include "..\GameObject\angelRing.h"
 #include "..\GameObject\shine.h"
 #include "..\GameObject\shine2.h"
-#include "..\GameObject\shield.h"
+#include "..\GameObject\goalText.h"
 #include "..\GameObject\feetEffect.h"
 #include "..\GameObject\cylinder.h"
 #include "..\GameObject\box.h"
@@ -82,7 +82,7 @@ void Game::Init()
 	AngelRing::Load();
 	Shine::Load();
 	Shine2::Load();
-	Shield::Load();
+	GoalText::Load();
 	FeetEffect::Load();
 	HpBarS::Load();
 	Feet::Load();
@@ -205,7 +205,7 @@ void Game::Uninit()
 	AngelRing::Unload();
 	Shine::Unload();
 	Shine2::Unload();
-	Shield::Unload();
+	GoalText::Unload();
 	FeetEffect::Unload();
 	HpBarS::Unload();
 	Feet::Unload();

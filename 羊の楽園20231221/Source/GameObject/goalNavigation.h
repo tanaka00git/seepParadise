@@ -9,6 +9,7 @@ private:
 	ID3D11InputLayout* m_VertexLayout{};
 
 	static class Model* m_Model;
+	class GoalText* m_GoalText;
 
 public:
 	static void Load();

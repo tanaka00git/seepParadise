@@ -195,7 +195,7 @@
     <ClCompile Include="Source\GameObject\sheepCage.cpp" />
     <ClCompile Include="Source\GameObject\seed.cpp" />
     <ClCompile Include="Source\GameObject\shadow.cpp" />
-    <ClCompile Include="Source\GameObject\shield.cpp" />
+    <ClCompile Include="Source\GameObject\goalText.cpp" />
     <ClCompile Include="Source\GameObject\shine.cpp" />
     <ClCompile Include="Source\GameObject\shine2.cpp" />
     <ClCompile Include="Source\GameObject\smoke.cpp" />
@@ -266,7 +266,7 @@
     <ClInclude Include="Source\GameObject\seed.h" />
     <ClInclude Include="Source\GameObject\sheepCage.h" />
     <ClInclude Include="Source\GameObject\shadow.h" />
-    <ClInclude Include="Source\GameObject\shield.h" />
+    <ClInclude Include="Source\GameObject\goalText.h" />
     <ClInclude Include="Source\GameObject\shine.h" />
     <ClInclude Include="Source\GameObject\shine2.h" />
     <ClInclude Include="Source\GameObject\smoke.h" />

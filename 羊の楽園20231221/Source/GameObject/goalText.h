@@ -1,7 +1,7 @@
 #pragma once
 #include "..\GameObject\gameObject.h"
 
-class Shield : public GameObject
+class GoalText : public GameObject
 {
 private:
 
@@ -11,11 +11,6 @@ private:
 	ID3D11VertexShader* m_VertexShader{};
 	ID3D11PixelShader* m_PixelShader{};
 	ID3D11InputLayout* m_VertexLayout{};
-
-	//ƒƒ“ƒo•Ï”
-	int m_Count = 0;
-	int m_CountFrameDelay = 0;
-	float m_Alpha = 1.0f;
 
 public:
 	static void Load();

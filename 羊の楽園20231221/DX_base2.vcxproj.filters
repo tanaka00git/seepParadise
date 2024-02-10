@@ -222,9 +222,6 @@
     <ClCompile Include="Source\GameObject\characterObject.cpp">
       <Filter>ソース ファイル\GameObject\Character</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameObject\goalNavigation.cpp">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="Source\GameObject\wolf.cpp">
       <Filter>ソース ファイル\GameObject\Character</Filter>
     </ClCompile>
@@ -240,7 +237,7 @@
     <ClCompile Include="Source\GameObject\attackMarker.cpp">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameObject\shield.cpp">
+    <ClCompile Include="Source\GameObject\goalText.cpp">
       <Filter>ソース ファイル\GameObject\Effect</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameObject\sheepCage.cpp">
@@ -248,6 +245,9 @@
     </ClCompile>
     <ClCompile Include="Source\GameObject\feetEffect.cpp">
       <Filter>ソース ファイル\GameObject\Effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\goalNavigation.cpp">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -434,9 +434,6 @@
     <ClInclude Include="Source\GameObject\player.h">
       <Filter>ソース ファイル\GameObject\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameObject\goalNavigation.h">
-      <Filter>ソース ファイル\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="Source\GameObject\wolf.h">
       <Filter>ソース ファイル\GameObject\Character</Filter>
     </ClInclude>
@@ -452,7 +449,7 @@
     <ClInclude Include="Source\GameObject\attackMarker.h">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameObject\shield.h">
+    <ClInclude Include="Source\GameObject\goalText.h">
       <Filter>ソース ファイル\GameObject\Effect</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameObject\sheepCage.h">
@@ -460,6 +457,9 @@
     </ClInclude>
     <ClInclude Include="Source\GameObject\feetEffect.h">
       <Filter>ソース ファイル\GameObject\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\goalNavigation.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

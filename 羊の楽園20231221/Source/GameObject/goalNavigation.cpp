@@ -4,6 +4,7 @@
 #include "..\App\model.h"
 #include "..\Scene\scene.h"
 #include "..\App\manager.h"
+#include "..\GameObject\goalText.h"
 #include "..\GameObject\camera.h"
 
 #define SCALE_Y 0.2f
@@ -31,7 +32,7 @@ void GoalNavigation::Init()
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
 
 	Scene* scene = Manager::GetScene();
-	//m_Shield = scene->AddGameObject<Shield>(1);
+	m_GoalText = scene->AddGameObject<GoalText>(1);
 }
 
 void GoalNavigation::Uninit()
@@ -50,6 +51,9 @@ void GoalNavigation::Update()
 	GameObject::Update();
 
 	D3DXVECTOR3 shieldPosition = m_Position;
+	shieldPosition.y += 0.4f;
+	m_GoalText->SetPosition(shieldPosition);
+
 }
 
 

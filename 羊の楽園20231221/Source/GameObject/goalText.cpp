@@ -3,21 +3,19 @@
 #include "..\App\renderer.h"
 #include "..\Scene\scene.h"
 #include "..\GameObject\camera.h"
-#include "..\GameObject\shield.h"
+#include "..\GameObject\goalText.h"
 
-ID3D11ShaderResourceView* Shield::m_Texture{};
+ID3D11ShaderResourceView* GoalText::m_Texture{};
 
-#define COUNT_FREAM_DELAY 2
 #define POSITION_Y 0.3f
 #define POSITION_Z 0.0f
-#define SCALE 0.8f
-#define ALPHA 0.01f
+#define SCALE 0.6f
 
-void Shield::Load()
+void GoalText::Load()
 {
 	// テクスチャ読み込み
 	D3DX11CreateShaderResourceViewFromFile(Renderer::GetDevice(),
-		"asset\\texture\\shield.png",
+		"asset\\texture\\goalText.png",
 		NULL,
 		NULL,
 		&m_Texture,
@@ -25,12 +23,12 @@ void Shield::Load()
 	assert(m_Texture);
 }
 
-void Shield::Unload()
+void GoalText::Unload()
 {
 	m_Texture->Release();
 }
 
-void Shield::Init()
+void GoalText::Init()
 {
 
 	VERTEX_3D vertex[4];
@@ -79,7 +77,7 @@ void Shield::Init()
 
 }
 
-void Shield::Uninit()
+void GoalText::Uninit()
 {
 	m_VertexBuffer->Release();
 
@@ -89,61 +87,13 @@ void Shield::Uninit()
 	m_PixelShader->Release();
 }
 
-void Shield::Update()
+void GoalText::Update()
 {
-	m_CountFrameDelay++;
 
-	m_Alpha -= ALPHA;
-	if (m_Alpha <= 0.0f) { SetDestroy(); }
-
-	//何フレームに一回更新する
-	if (m_CountFrameDelay >= COUNT_FREAM_DELAY)
-	{
-		m_Count = m_Count % 16;	//無限ループ
-
-		m_CountFrameDelay = 0;
-	}
 }
 
-void Shield::Draw()
+void GoalText::Draw()
 {
-	//テクスチャ座標算出
-	float x = m_Count % 4 * (1.0f / 4);
-	float y = m_Count / 4 * (1.0f / 4);
-
-	//頂点データ書き換え
-	D3D11_MAPPED_SUBRESOURCE msr;
-	Renderer::GetDeviceContext()->Map(m_VertexBuffer, 0,
-		D3D11_MAP_WRITE_DISCARD, 0, &msr);
-
-	VERTEX_3D* vertex = (VERTEX_3D*)msr.pData;
-
-	//3Dだと左奥から
-	vertex[0].Position = D3DXVECTOR3(-SCALE, SCALE + POSITION_Y, POSITION_Z);
-	vertex[0].Normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
-	vertex[0].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, m_Alpha);
-	vertex[0].TexCoord = D3DXVECTOR2(x, y);
-
-	//右奥
-	vertex[1].Position = D3DXVECTOR3(SCALE, SCALE + POSITION_Y, POSITION_Z);
-	vertex[1].Normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
-	vertex[1].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, m_Alpha);
-	vertex[1].TexCoord = D3DXVECTOR2(x + 0.25f, y);
-
-	//左前
-	vertex[2].Position = D3DXVECTOR3(-SCALE, -SCALE + POSITION_Y, POSITION_Z);
-	vertex[2].Normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
-	vertex[2].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, m_Alpha);
-	vertex[2].TexCoord = D3DXVECTOR2(x, y + 0.25f);
-
-	//右前
-	vertex[3].Position = D3DXVECTOR3(SCALE, -SCALE + POSITION_Y, POSITION_Z);
-	vertex[3].Normal = D3DXVECTOR3(0.0f, 0.0f, -1.0f);
-	vertex[3].Diffuse = D3DXVECTOR4(1.0f, 1.0f, 1.0f, m_Alpha);
-	vertex[3].TexCoord = D3DXVECTOR2(x + 0.25f, y + 0.25f);
-
-	Renderer::GetDeviceContext()->Unmap(m_VertexBuffer, 0);
-
 	//入力レイアウト設定
 	Renderer::GetDeviceContext()->IASetInputLayout(m_VertexLayout);
 
