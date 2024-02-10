@@ -38,6 +38,7 @@ private:
 	int		m_KnockBackTime		= 0;	//ノックバックの時間
 	int		m_StunTime			= 0;	//スタンの時間
 	bool	m_DeleteInit		= false;//デリート時のInit判定
+	int		m_MakingInvalidTime	= 0;	//メイキングできない時間
 
 	//ステータス
 	int		m_FeetDrop		= 4;									//コインドロップ数

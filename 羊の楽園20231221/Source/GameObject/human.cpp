@@ -52,6 +52,7 @@ Audio* Human::m_SE_Make{};
 #define STUN_TIME 60
 #define TARGET_LENGTH 3.0f
 #define GRAVITY 0.015f
+#define SET_MAKING_INVALID_TIME 60
 
 void Human::Load()
 {
@@ -261,6 +262,10 @@ void Human::UpdateTargeting()
 	//でなければプレイヤーの方に向き変更
 	else { m_Rotation.y = atan2f((player->GetPosition().x) - m_Position.x, (player->GetPosition().z) - m_Position.z); }
 
+	//柵を作れない時間を減らす
+	m_MakingInvalidTime--;
+	if (m_MakingInvalidTime) { m_MakingInvalidTime = 0; }
+
 	//移動処理(時間)
 	bool timeFede = timeFade->GetTimeZone();
 	m_Velocity.x = GetForward().x * m_Speed;
@@ -303,6 +308,7 @@ void Human::UpdateMaking()
 		if (m_MakingTime >= MAKING_TIME * MAKING_COUNT)
 		{
 			m_MakingTime = 0;
+			m_MakingInvalidTime = SET_MAKING_INVALID_TIME;
 			m_HumanState = HUMAN_STATE::FREE;
 
 			//柵発生
@@ -499,7 +505,7 @@ void Human::Collision(float& groundHeight)
 						scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
 					}
 					//普通にぶつかった場合
-					else if (m_StunTime <= 0 && m_HumanState != HUMAN_STATE::MAKING)
+					else if (m_StunTime <= 0 && m_MakingInvalidTime <= 0 && m_HumanState != HUMAN_STATE::MAKING)
 					{
 						m_HumanState = HUMAN_STATE::MAKING;
 					}
