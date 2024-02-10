@@ -380,16 +380,19 @@ void Player::TutorialText()
 {
 	Scene* scene = Manager::GetScene();
 	InfoLogTutorial* infoLogTutorial = scene->GetGameObject<InfoLogTutorial>();
-	int n = infoLogTutorial->GetTutorialLog();
-	if (n == 2)
+	if (infoLogTutorial)
 	{
-		if (m_Charge > m_OldCharge) { infoLogTutorial->LogChargeTrue(); }
+		int n = infoLogTutorial->GetTutorialLog();
+		if (n == 2)
+		{
+			if (m_Charge > m_OldCharge) { infoLogTutorial->LogChargeTrue(); }
+		}
+		if (n == 3)
+		{
+			if (m_OldCharge > m_Charge) { infoLogTutorial->LogAttackTrue(); m_TutorialEnd = true; }
+		}
+		m_OldCharge = m_Charge;
 	}
-	if (n == 3)
-	{
-		if (m_OldCharge > m_Charge) { infoLogTutorial->LogAttackTrue(); m_TutorialEnd = true; }
-	}
-	m_OldCharge = m_Charge;
 }
 
 void Player::MouseTargetMove()

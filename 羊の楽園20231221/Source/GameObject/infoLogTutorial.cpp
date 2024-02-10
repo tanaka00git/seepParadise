@@ -17,7 +17,14 @@ void InfoLogTutorial::Init()
 	m_Sprite_Tutorial3->Init(0.0f, 0.0f, 600, 60, "asset\\texture\\tutorialLog3.png");
 	m_Sprite_Check = AddComponent<Sprite>();
 	m_Sprite_Check->Init(0.0f, 0.0f, 600, 60, "asset\\texture\\tutorialLog4.png");
+	m_Alpha = 0.0f;
+	m_Alpha2 = 0.0f;
+	m_Alpha3 = 0.0f;
 	m_Alpha4 = 0.0f;
+	m_Sprite_Tutorial1->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, m_Alpha));
+	m_Sprite_Tutorial2->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, m_Alpha2));
+	m_Sprite_Tutorial3->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, m_Alpha3));
+	m_Sprite_Check->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, m_Alpha4));
 
 	m_Position.x = 180;
 	m_Position.y = 450;
@@ -65,6 +72,7 @@ void InfoLogTutorial::Update()
 		}
 		else
 		{
+			m_Sprite_Check->SetPosition(D3DXVECTOR3(180, 450, 0));
 			m_Alpha4 += 0.3f;
 			m_ControlTime ++;
 			if (m_ControlTime >= 270) { m_Log ++; m_ControlTime = 0; }

@@ -160,7 +160,6 @@ void Game::Init()
 
 	AddGameObject<MouseIcon>(3);
 	m_TimeFade = AddGameObject<TimeFade>(2);
-	AddGameObject<InfoLogTutorial>(2);
 	AddGameObject<HpBar>(2);
 	AddGameObject<Score>(2);
 	AddGameObject<DayBar>(2);
@@ -281,8 +280,8 @@ void Game::UpdateStart()
 		AddGameObject<InfoLog>(2)->SetNum(23, 4, D3DXVECTOR3(340, 0, 0));
 		m_BGM->Play(1.0f, true);
 		m_GameState = GAME_STATE::NORMAL;
+		AddGameObject<InfoLogTutorial>(2);
 	}
-
 }
 
 void Game::UpdateNormal()

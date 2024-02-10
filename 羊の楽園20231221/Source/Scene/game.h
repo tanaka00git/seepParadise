@@ -33,7 +33,7 @@ private:
 	int m_Day				= 0;
 
 	bool m_InitStart		= false;
-	int  m_StartTextTime	= 350;
+	int  m_StartTextTime	= 250;
 	int  m_NawEvent			= 0;
 	bool m_Event1			= false;
 	bool m_Event2			= false;
