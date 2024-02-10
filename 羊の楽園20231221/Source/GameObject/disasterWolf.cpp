@@ -14,6 +14,10 @@ Model* DisasterWolf::m_ModelClown{};
 Audio* DisasterWolf::m_SE_SuperAttack{};
 
 #define INITIAL_SUPAR_CHARGE_COUNT 0
+#define MEED_SUPAR_CHARGE 80
+#define SUPER_ATTACK_TIME 60
+#define ATTACK_MARKER_SCALE_Z 40.0f
+#define INITIAL_DAATH_TIME 3000
 
 void DisasterWolf::Load()
 {
@@ -41,6 +45,8 @@ void DisasterWolf::Init()
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\pixelLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\pixelLightingPS.cso");
 
+	m_DaathTime = INITIAL_DAATH_TIME;
+
 	//アタックマーカーのアタッチ
 	m_AttackMarker = AddComponent<AttackMarker>();
 	m_AttackMarker->SetDraw(false);
@@ -49,7 +55,7 @@ void DisasterWolf::Init()
 void DisasterWolf::Update()
 {
 	Wolf::Update();
-	m_AttackMarker->SetScale(D3DXVECTOR3(m_Scale.x, m_Scale.y, 60.0f));
+	m_AttackMarker->SetScale(D3DXVECTOR3(m_Scale.x, m_Scale.y, ATTACK_MARKER_SCALE_Z));
 	D3DXVECTOR3 attackMarkerPosition = m_Position;
 	m_AttackMarker->SetPosition(attackMarkerPosition);
 	m_AttackMarker->SetRotation(m_Rotation);
@@ -85,7 +91,7 @@ void DisasterWolf::UpdateTargeting()
 	Wolf::UpdateTargeting();
 
 	m_SuparChargeCount++;
-	if (m_SuparChargeCount >= 60)
+	if (m_SuparChargeCount >= MEED_SUPAR_CHARGE)
 	{
 		m_SuparChargeCount = 0;
 		m_WolfState = WOLF_STATE::SUPER_CHARGE;
@@ -99,8 +105,9 @@ void DisasterWolf::UpdateSuperCharge()
 
 	m_Velocity *= 0;
 	m_SuparChargeCount++;
-	if (m_SuparChargeCount >= 80)
+	if (m_SuparChargeCount >= MEED_SUPAR_CHARGE)
 	{
+		m_SuparChargeCount = SUPER_ATTACK_TIME;
 		m_AttackMarker->SetDraw(false);
 		m_SE_SuperAttack->Play(1.0f ,false);
 		m_WolfState = WOLF_STATE::SUPER_ATTACK;
@@ -130,7 +137,8 @@ void DisasterWolf::SetEnemyData(int data)
 	m_FeetDrop = 30 * data;
 	m_StanGuard = 40 * data;
 	m_OriginalScale = D3DXVECTOR3(3.0f * data, 3.0f * data, 3.0f * data);	//キャラのサイズ
-	m_BarScale = D3DXVECTOR3(5.0f, 1.0f, 1.0f);			//HPバーのサイズ
+	m_HpBarPosY = m_OriginalScale.y;
+	m_BarScale = D3DXVECTOR3(8.0f, 1.0f, 1.0f);			//HPバーのサイズ
 	m_Tracking = 200.0f;								//追尾範囲
 	m_Life = m_FullLife;
 }

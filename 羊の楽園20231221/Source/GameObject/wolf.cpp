@@ -485,25 +485,25 @@ void Wolf::SetEnemyData(int data)
 	{
 		m_BiteCount = 5;
 		m_BarScale = D3DXVECTOR3(0.5f, 0.7f, 0.7f);		//HPバーのサイズ
-		m_HpBarPosY = 1.8f;
+		m_HpBarPosY = m_OriginalScale.y;
 	}
 	else if (data == 2)
 	{
 		m_BiteCount = 4;
 		m_BarScale = D3DXVECTOR3(0.7f, 0.7f, 0.7f);	
-		m_HpBarPosY = 1.8f;
+		m_HpBarPosY = m_OriginalScale.y;
 	}
 	else if (data == 3)
 	{
 		m_BiteCount = 3;
 		m_BarScale = D3DXVECTOR3(1.0f, 0.7f, 0.7f);
-		m_HpBarPosY = 2.2f;
+		m_HpBarPosY = m_OriginalScale.y;
 	}
 	else if (data == 4)
 	{
 		m_BiteCount = 3;
 		m_BarScale = D3DXVECTOR3(1.4f, 0.7f, 0.7f);
-		m_HpBarPosY = 2.8f;
+		m_HpBarPosY = m_OriginalScale.y;
 	}
 	m_Life = m_FullLife;
 	

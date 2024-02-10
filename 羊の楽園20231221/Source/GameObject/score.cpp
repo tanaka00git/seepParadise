@@ -5,8 +5,8 @@
 
 #define TEXNUM_X 5
 #define TEXNUM_Y 5
-#define PLUS_SCALE_VALUE 7.0f
-#define PLUS_SCALE_DOWN_VALUE 0.5f
+#define PLUS_SCALE_VALUE 10.0f
+#define PLUS_SCALE_DOWN_VALUE 0.7f
 
 void Score::Init()
 {
