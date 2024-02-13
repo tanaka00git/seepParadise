@@ -47,9 +47,7 @@ void Tree::Init()
 	m_HpBarPosY = INITIAL_HP_BAR_POS_Y;	//HPポジションy
 
 	//リンゴを持ってる確率
-	int randam;
-	randam = irand(1, DROP_RAIT);
-	if (randam == 1) { m_ApplePossession = true; }
+	if (irand(1, DROP_RAIT) == 1) { m_ApplePossession = true; }
 	else{ m_ApplePossession = false; }
 
 	m_Shadow = AddComponent<Shadow>();

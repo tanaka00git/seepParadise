@@ -14,11 +14,10 @@
 
 Model*ResultSheep::m_Model{};
 #define GRAVITY 0.005f
-
 void ResultSheep::Load()
 {
 	m_Model = new Model();
-	m_Model->Load("asset\\model\\seep1.obj");
+	m_Model->Load("asset\\model\\sheep1.obj");
 }
 
 void ResultSheep::Unload()
@@ -30,7 +29,7 @@ void ResultSheep::Unload()
 
 void ResultSheep::Init()
 {
-	m_Rotation.y = frand() * 2 * D3DX_PI;
+	m_Rotation.y = frand() * 2 * D3DX_PI;	//スタート時の向きはランダムに設定
 
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
@@ -43,9 +42,7 @@ void ResultSheep::Uninit()
 	m_VertexLayout->Release();
 	m_VertexShader->Release();
 	m_PixelShader->Release();
-
 }
-
 
 void ResultSheep::Update()
 {
@@ -55,20 +52,21 @@ void ResultSheep::Update()
 	//データ取得
 	auto resultSheeps = scene->GetGameObjects<ResultSheep>();
 
+	//時間経過で向き変更
 	m_OrientationTime += 0.1f;
 	if (m_OrientationTime > m_NextRotTime) 
 	{
 		m_Rotation.y += (0.02f * m_NextRot);
 	}
-		
 	if (m_OrientationTime > m_NextRotTime + 5.0f) {
-		int a = irand(0,2);
-		if (a == 1) {
+		if (irand(1, 2) == 1) {
 			m_NextRot *= -1;
 		}
 		m_NextRotTime = frand()* 30.0f + 10.0f;
 		m_OrientationTime = 0.0f;
 	}
+
+	//移動
 	m_Velocity.x = GetForward().x * 0.003f;
 	m_Velocity.z = GetForward().z * 0.003f;
 

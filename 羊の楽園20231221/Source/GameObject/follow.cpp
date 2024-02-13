@@ -288,8 +288,7 @@ void Follow::OrtOrientationChange()
 	if (m_OrientationTime > m_NextOrientationTime + 50)
 	{
 		//Ÿ‰ñ‚ÌŒü‚«‚ğİ’è
-		int a = rand() * 2;
-		if (a == 1) { m_NextRot *= -1; }
+		if (irand(1, 2) == 1) { m_NextRot *= -1; }
 
 		// Ÿ‚Ì‰ñ“]‚Ü‚Å‚ÌŠÔ‚ğƒ‰ƒ“ƒ_ƒ€‚Éİ’è
 		m_NextOrientationTime = irand(80, 200);

@@ -133,12 +133,12 @@ void Audio::Play(float Volume, bool Loop)
 void Audio::Volume(float Volume)
 {
 	m_CurrentVolume = Volume;
-
 	m_SourceVoice->SetVolume(m_CurrentVolume);
 }
 
 void Audio::FadeUpdate()
 {
+	//Updateで毎フレーム音量を制御する
 	if (m_SourceVoice)
 	{
 		// 現在の音量がフェード先の音量に近づくように調整
@@ -158,6 +158,7 @@ void Audio::FadeUpdate()
 
 void Audio::FadeToVolume(float targetVolume, float fadeSpeed)
 {
+	//フェードの音量とフェード速度を設定
 	m_TargetVolume = targetVolume;
 	m_FadeSpeed = fadeSpeed;
 }

@@ -199,8 +199,7 @@ void Human::UpdateFree()
 	if (m_OrientationTime > m_NextRotTime) { m_Rotation.y += (0.02f * m_NextRot); }
 	if (m_OrientationTime > m_NextRotTime + 5.0f)
 	{
-		int a = irand(0, 2);
-		if (a == 1) {
+		if (irand(1, 2) == 1) {
 			m_NextRot *= -1;
 		}
 		m_NextRotTime = frand() * 30.0f + 10.0f;

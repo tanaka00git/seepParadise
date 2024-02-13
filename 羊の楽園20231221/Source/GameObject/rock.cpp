@@ -63,8 +63,8 @@ void Rock::UpdateDead()
 		m_HpBarS->SetDraw(false);
 
 		//アイテムドロップ
-		int a = irand(1, DROP_RAIT);
-		if (a == 1)
+		int randam = irand(1, DROP_RAIT);
+		if (randam == 1)
 		{
 			//どれかが選出される
 			int b = irand(1, 3);
