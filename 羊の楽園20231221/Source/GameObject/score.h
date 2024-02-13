@@ -13,8 +13,8 @@ private:
 	ID3D11InputLayout* m_VertexLayout{};
 
 	//íáä‘ÇÃêî
-	int  m_CountSeep = 0;
-	int  m_OldCountSeep  = 0;
+	int  m_CountSheep = 0;
+	int  m_OldCountSheep  = 0;
 	int  m_FullCount = 0;
 	float m_CountPlusScale = 0.0f;
 	float m_CountMinusScale = 0.0f;
@@ -43,15 +43,15 @@ public:
 	void Update();
 	void Draw();
 
-	void DrawCountSeep();
-	void DrawCountClearSeep();
+	void DrawCountSheep();
+	void DrawCountClearSheep();
 	void DrawCountCombo();
 	void DrawTimeZone();
 	void DrawLife();
 	void DrawData(float vx, float vy, float width, float height ,int num, float alpha);
 
-	void AddCount(int countSeep) { m_CountSeep += countSeep;}
-	void SetCount(int countSeep) { m_CountSeep = countSeep;}
+	void AddCount(int countSheep) { m_CountSheep += countSheep;}
+	void SetCount(int countSheep) { m_CountSheep = countSheep;}
 
 	void AddCountCoin(int countCoin) { m_CountCoin += countCoin; }
 	void SetCountCoin(int countCoin) { m_CountCoin = countCoin; }
@@ -61,7 +61,7 @@ public:
 	void SetCountCombo(int count) { m_CountCombo = count; m_ComboAlpha = 1.0f; }
 	void SetTimeZone(bool timeZone) { m_TimeZone = timeZone; }
 
-	int  GetCount() { return m_CountSeep; }
+	int  GetCount() { return m_CountSheep; }
 	int  GetFullCount() { return m_FullCount; }
 	int  GetCountCoin() { return m_CountCoin; }
 	int  GetCountDay() { return m_CountDay; }

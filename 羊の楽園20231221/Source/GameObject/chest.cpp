@@ -33,6 +33,7 @@ void Chest::Unload()
 {
 	m_Model->Unload();
 	delete m_Model;
+	m_Model = nullptr;
 }
 
 void Chest::Draw()

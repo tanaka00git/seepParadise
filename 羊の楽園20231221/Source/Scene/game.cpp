@@ -173,8 +173,8 @@ void Game::Init()
 	m_BGM_Night->Play(0.0f, true);
 	m_SE_Whistle = AddGameObject<GameObject>(0)->AddComponent<Audio>();
 	m_SE_Whistle->Load("asset\\audio\\警官のホイッスル1.wav");
-	m_SE_SeepCry = AddGameObject<GameObject>(0)->AddComponent<Audio>();
-	m_SE_SeepCry->Load("asset\\audio\\ヒツジの鳴き声.wav");
+	m_SE_SheepCry = AddGameObject<GameObject>(0)->AddComponent<Audio>();
+	m_SE_SheepCry->Load("asset\\audio\\ヒツジの鳴き声.wav");
 	m_SE_Bell = AddGameObject<GameObject>(0)->AddComponent<Audio>();
 	m_SE_Bell->Load("asset\\audio\\鈴を鳴らす.wav");
 	m_SE_Gong = AddGameObject<GameObject>(0)->AddComponent<Audio>();
@@ -419,7 +419,7 @@ void Game::TimeSecondsUpdate()
 		if (m_Event1 || m_Event2) {
 			m_Event1 = false;
 			m_Event2 = false;
-			m_SE_SeepCry->Play(1.0f, false);
+			m_SE_SheepCry->Play(1.0f, false);
 			AddGameObject<InfoLog>(2)->SetNum(9, 3, D3DXVECTOR3(900, 480, 0));
 		}
 	}
@@ -538,7 +538,7 @@ void Game::TimeEvent_Time60()
 	m_GameTimeSeconds = 0;
 	AddGameObject<InfoLog>(2)->SetNum(1, 1, D3DXVECTOR3(340, 0, 0));
 	AddGameObject<InfoLog>(2)->SetNum(6, 2, D3DXVECTOR3(340, 640, 10));
-	m_SE_SeepCry->Play(1.0f, false);
+	m_SE_SheepCry->Play(1.0f, false);
 	m_SE_Bell->Play(1.0f, false);
 	m_Day ++;
 

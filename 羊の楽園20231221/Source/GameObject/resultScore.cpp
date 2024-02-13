@@ -80,7 +80,7 @@ void ResultScore::Draw()
 	//GameObject::Draw();
 
 	//órêî
-	int count = m_CountSeep;
+	int count = m_CountSheep;
 	
 	for (int i = 0; i < 3; i++) {
 		//í∏ì_ç¿ïWéZèo

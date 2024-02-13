@@ -43,6 +43,6 @@ public:
 	
 	//ÉQÉbÉgä÷êî
 	bool CheckView(D3DXVECTOR3 position, D3DXVECTOR3 scale);
-	D3DXMATRIX	GetViewMatrix() { return m_ViewMatrix; };
-	D3DXMATRIX	GetProjectionMatrix() { return m_ProjectionMatrix; };
+	D3DXMATRIX	GetViewMatrix() const { return m_ViewMatrix; };
+	D3DXMATRIX	GetProjectionMatrix() const { return m_ProjectionMatrix; };
 };

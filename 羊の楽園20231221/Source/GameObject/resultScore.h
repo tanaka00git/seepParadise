@@ -12,7 +12,7 @@ private:
 	ID3D11PixelShader* m_PixelShader{};
 	ID3D11InputLayout* m_VertexLayout{};
 
-	int m_CountSeep{};
+	int m_CountSheep{};
 	int m_CountCoin{};
 	int m_CountDay{};
 	int m_CountCombo{};
@@ -23,8 +23,8 @@ public:
 	void Update();
 	void Draw();
 
-	void AddCount(int countSeep) { m_CountSeep += countSeep; }
-	void SetCount(int countSeep) { m_CountSeep = countSeep; }
+	void AddCount(int countSheep) { m_CountSheep += countSheep; }
+	void SetCount(int countSheep) { m_CountSheep = countSheep; }
 	void AddCountCoin(int countCoin) { m_CountCoin += countCoin; }
 	void SetCountCoin(int countCoin) { m_CountCoin = countCoin; }
 	void AddCountDay(int countDay) { m_CountDay += countDay; }

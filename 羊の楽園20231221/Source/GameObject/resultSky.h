@@ -10,7 +10,7 @@ private:
 
 	D3DXCOLOR	m_Color			= D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);		//”zF
 	float		m_ColorValue	= 0.0f;										//F‚Ì‹­‚³ª
-	float		m_CountSeep		= 0.0f;										//—r‚Ì”
+	float		m_CountLight	= 0.0f;									//–¾‚é‚³
 
 	static class Model* m_Model;
 
@@ -22,5 +22,5 @@ public:
 	void Update();
 	void Draw();
 
-	void SetCount(int countSeep) { m_CountSeep = static_cast<float>(countSeep); }
+	void SetCountLight(int countLight) { m_CountLight = static_cast<float>(countLight); }
 };

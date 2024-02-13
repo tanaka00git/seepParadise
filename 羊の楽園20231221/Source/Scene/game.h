@@ -20,7 +20,7 @@ private:
 	class Audio* m_BGM{};
 	class Audio* m_BGM_Night{};
 	class Audio* m_SE_Whistle{};
-	class Audio* m_SE_SeepCry{};
+	class Audio* m_SE_SheepCry{};
 	class Audio* m_SE_Bell{};
 	class Audio* m_SE_Gong{};
 	class Audio* m_SE_WolfCry{};

@@ -36,7 +36,7 @@ void TitleScore::Init()
 
 	// テクスチャ読み込み
 	D3DX11CreateShaderResourceViewFromFile(Renderer::GetDevice(),
-		"asset\\texture\\seepList.png",
+		"asset\\texture\\sheepList.png",
 		NULL,
 		NULL,
 		&m_Texture2,

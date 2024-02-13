@@ -49,7 +49,7 @@ void ResultSky::Update()
 
 	//–¾‚é‚­‚È‚Á‚Ä‚¢‚­
 	m_ColorValue += COLOR_VALUE_FRAME;
-	if (m_ColorValue >= m_CountSeep / 100.0f) { m_ColorValue = m_CountSeep / 100; }
+	if (m_ColorValue >= m_CountLight / 100.0f) { m_ColorValue = m_CountLight / 100; }
 
 	m_Color = D3DXCOLOR(m_ColorValue, m_ColorValue, m_ColorValue, 1.0f);
 	

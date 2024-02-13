@@ -33,8 +33,11 @@ void SheepCage::Unload()
 {
 	m_ModelCage->Unload();
 	delete m_ModelCage;
+	m_ModelCage = nullptr;
+
 	m_ModelCageSheep->Unload();
 	delete m_ModelCageSheep;
+	m_ModelCageSheep = nullptr;
 }
 
 void SheepCage::Init()

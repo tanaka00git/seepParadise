@@ -3,7 +3,7 @@
 #include "..\App\renderer.h"
 #include "..\Scene\scene.h"
 #include "..\App\input.h"
-#include "..\GameObject\ResultSeep.h"
+#include "..\GameObject\ResultSheep.h"
 #include "..\GameObject\player.h"
 #include "..\GameObject\box.h"
 #include "..\GameObject\cylinder.h"
@@ -12,23 +12,23 @@
 #include "..\GameObject\camera.h"
 #include "..\App\model.h"
 
-Model*ResultSeep::m_Model{};
+Model*ResultSheep::m_Model{};
 #define GRAVITY 0.005f
 
-void ResultSeep::Load()
+void ResultSheep::Load()
 {
 	m_Model = new Model();
-	m_Model->Load("asset\\model\\seep_c.obj");
+	m_Model->Load("asset\\model\\seep1.obj");
 }
 
-void ResultSeep::Unload()
+void ResultSheep::Unload()
 {
 	m_Model->Unload();
 	delete m_Model;
 	m_Model = nullptr;
 }
 
-void ResultSeep::Init()
+void ResultSheep::Init()
 {
 	m_Rotation.y = frand() * 2 * D3DX_PI;
 
@@ -36,7 +36,7 @@ void ResultSeep::Init()
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
 }
 
-void ResultSeep::Uninit()
+void ResultSheep::Uninit()
 {
 	GameObject::Uninit();
 
@@ -47,13 +47,13 @@ void ResultSeep::Uninit()
 }
 
 
-void ResultSeep::Update()
+void ResultSheep::Update()
 {
 	GameObject::Update();
 	Scene* scene = Manager::GetScene();
 
 	//ÉfÅ[É^éÊìæ
-	auto resultSeeps = scene->GetGameObjects<ResultSeep>();
+	auto resultSheeps = scene->GetGameObjects<ResultSheep>();
 
 	m_OrientationTime += 0.1f;
 	if (m_OrientationTime > m_NextRotTime) 
@@ -73,17 +73,17 @@ void ResultSeep::Update()
 	m_Velocity.z = GetForward().z * 0.003f;
 
 	//ñÏó«órÇ∆ÇÃä÷åWê´
-	for (ResultSeep * resultSeep : resultSeeps)
+	for (ResultSheep * resultSheep : resultSheeps)
 	{
-		D3DXVECTOR3 position = resultSeep->GetPosition();
-		D3DXVECTOR3 scale = resultSeep->GetScale();
+		D3DXVECTOR3 position = resultSheep->GetPosition();
+		D3DXVECTOR3 scale = resultSheep->GetScale();
 		D3DXVECTOR3 direction = m_Position - position;
 		float flength = D3DXVec3Length(&direction);
 
 		if (flength < scale.x) 
 		{
-			m_Velocity.x += (m_Position.x - resultSeep->m_Position.x) * 0.02f;	//ëºÇÃórÇ∆ÇÃê⁄êGÇ≈ÉYÉåÇÈ
-			m_Velocity.z += (m_Position.z - resultSeep->m_Position.z) * 0.02f;
+			m_Velocity.x += (m_Position.x - resultSheep->m_Position.x) * 0.02f;	//ëºÇÃórÇ∆ÇÃê⁄êGÇ≈ÉYÉåÇÈ
+			m_Velocity.z += (m_Position.z - resultSheep->m_Position.z) * 0.02f;
 		}
 	}
 	//èdóÕ
@@ -113,7 +113,7 @@ void ResultSeep::Update()
 }
 
 
-void ResultSeep::Draw()
+void ResultSheep::Draw()
 {
 	GameObject::Draw();
 

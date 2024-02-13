@@ -31,8 +31,10 @@ void Tree::Unload()
 {
 	m_Model->Unload();
 	delete m_Model;
+	m_Model = nullptr;
 	m_ModelAppleTree->Unload();
 	delete m_ModelAppleTree;
+	m_Model = nullptr;
 }
 
 void Tree::Init()

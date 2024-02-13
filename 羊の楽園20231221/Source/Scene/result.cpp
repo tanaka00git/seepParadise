@@ -5,7 +5,7 @@
 #include "..\Scene\result.h"
 #include "..\GameObject\camera.h"
 #include "..\GameObject\mouseIcon.h"
-#include "..\GameObject\resultSeep.h"
+#include "..\GameObject\resultSheep.h"
 #include "..\GameObject\resultCoin.h"
 #include "..\GameObject\resultLogo.h"
 #include "..\GameObject\resultScore.h"
@@ -20,7 +20,7 @@ int Result::m_Count{};
 
 void Result::Init()
 {
-	ResultSeep::Load();
+	ResultSheep::Load();
 	ResultCoin::Load();
 	ResultSky::Load();
 
@@ -36,14 +36,14 @@ void Result::Init()
 
 	//‹ó(ƒQ[ƒ€‚Å’‡ŠÔ‚É‚È‚Á‚½”‚¾‚¯–¾‚é‚­‚È‚é)
 	ResultSky* resultSky = AddGameObject<ResultSky>(0);
-	resultSky->SetCount(m_Count);
+	resultSky->SetCountLight(m_Count);
 
 	//—r(ƒQ[ƒ€‚Å’‡ŠÔ‚É‚È‚Á‚½‚¾‚¯‘‚¦‚é)
 	for (int i = 1; i <= m_Count; i++) {
-		ResultSeep*resultSeep = AddGameObject<ResultSeep>(1);
+		ResultSheep*resultSheep = AddGameObject<ResultSheep>(1);
 
-		resultSeep->SetPosition(D3DXVECTOR3(0.0f, 3.0f + i * 10, 0.0f));
-		resultSeep->SetRotation(D3DXVECTOR3(0.0f, frand()* 40.0f, 0.0f));
+		resultSheep->SetPosition(D3DXVECTOR3(0.0f, 3.0f + i * 10, 0.0f));
+		resultSheep->SetRotation(D3DXVECTOR3(0.0f, frand()* 40.0f, 0.0f));
 	}
 	//ƒRƒCƒ“(“üè‚µ‚½‚¾‚¯‘‚¦‚é)
 	for (int i = 1; i <= m_Coin / 10; i++)
@@ -63,7 +63,7 @@ void Result::Init()
 void Result::Uninit()
 {
 	Scene::Uninit();
-	ResultSeep::Unload();
+	ResultSheep::Unload();
 	ResultCoin::Unload();
 	ResultSky::Unload();
 }

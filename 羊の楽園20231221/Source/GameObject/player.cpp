@@ -7,8 +7,6 @@
 #include "..\Scene\game.h"
 #include "..\GameObject\characterObject.h"
 #include "..\GameObject\player.h"
-#include "..\GameObject\chest.h"
-#include "..\GameObject\rock.h"
 #include "..\GameObject\breakObject.h"
 #include "..\GameObject\shadow.h"
 #include "..\GameObject\goal.h"
@@ -63,13 +61,13 @@ int Player::m_PlClown{};
 void Player::Load()
 {
 	m_Model = new Model();
-	if (m_PlColor == 0) { m_Model->Load("asset\\model\\seep_cc7.obj"); }
-	else if (m_PlColor == 1) { m_Model->Load("asset\\model\\seep_cc2.obj"); }
-	else if (m_PlColor == 2) { m_Model->Load("asset\\model\\seep_cc3.obj"); }
-	else if (m_PlColor == 3) { m_Model->Load("asset\\model\\seep_cc4.obj"); }
-	else if (m_PlColor == 4) { m_Model->Load("asset\\model\\seep_cc5.obj"); }
-	else if (m_PlColor == 5) { m_Model->Load("asset\\model\\seep_cc6.obj"); }
-	else {m_Model->Load("asset\\model\\seep_c.obj");}
+	if (m_PlColor == 0) { m_Model->Load("asset\\model\\sheep7.obj"); }
+	else if (m_PlColor == 1) { m_Model->Load("asset\\model\\sheep2.obj"); }
+	else if (m_PlColor == 2) { m_Model->Load("asset\\model\\sheep3.obj"); }
+	else if (m_PlColor == 3) { m_Model->Load("asset\\model\\sheep4.obj"); }
+	else if (m_PlColor == 4) { m_Model->Load("asset\\model\\sheep5.obj"); }
+	else if (m_PlColor == 5) { m_Model->Load("asset\\model\\sheep6.obj"); }
+	else {m_Model->Load("asset\\model\\sheep1.obj");}
 
 	m_ModelClown = new Model();
 	if (m_PlClown == 0) { m_ModelClown->Load("asset\\model\\clown.obj"); }

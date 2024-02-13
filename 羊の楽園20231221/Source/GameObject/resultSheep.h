@@ -1,7 +1,7 @@
 #pragma once
 #include "..\GameObject\gameObject.h"
 
-class ResultSeep : public GameObject
+class ResultSheep : public GameObject
 {
 private:
 

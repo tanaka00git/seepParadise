@@ -1,0 +1,10 @@
+diff a/羊の楽園20231221/Source/GameObject/follow.cpp b/羊の楽園20231221/Source/GameObject/follow.cpp	(rejected hunks)
+@@ -46,7 +46,7 @@
+ void Follow::Load()
+ {
+ 	m_Model = new Model();
+-	m_Model->Load("asset\\model\\seep_c.obj");
++	m_Model->Load("asset\\model\\sheep_c.obj");
+ 	m_SE_Follow = new Audio();
+ 	m_SE_Follow->Load("asset\\audio\\���킢�����˂�E�W�����v03.wav");
+ 	m_SE_Release = new Audio();

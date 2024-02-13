@@ -1,7 +1,7 @@
 #pragma once
 #include "..\GameObject\gameObject.h"
 
-class TitleSeep : public GameObject
+class TitleSheep : public GameObject
 {
 private:
 	ID3D11VertexShader* m_VertexShader{};

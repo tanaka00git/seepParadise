@@ -162,7 +162,7 @@
     <ClCompile Include="Source\GameObject\resultCoin.cpp">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameObject\resultSeep.cpp">
+    <ClCompile Include="Source\GameObject\resultSheep.cpp">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameObject\seed.cpp">
@@ -177,7 +177,7 @@
     <ClCompile Include="Source\GameObject\titleSky.cpp">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameObject\titleSeep.cpp">
+    <ClCompile Include="Source\GameObject\titleSheep.cpp">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClCompile>
     <ClCompile Include="Source\GameObject\shine.cpp">
@@ -380,7 +380,7 @@
     <ClInclude Include="Source\GameObject\resultCoin.h">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameObject\resultSeep.h">
+    <ClInclude Include="Source\GameObject\resultSheep.h">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameObject\seed.h">
@@ -395,7 +395,7 @@
     <ClInclude Include="Source\GameObject\titleSky.h">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClInclude>
-    <ClInclude Include="Source\GameObject\titleSeep.h">
+    <ClInclude Include="Source\GameObject\titleSheep.h">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClInclude>
     <ClInclude Include="Source\GameObject\shine.h">

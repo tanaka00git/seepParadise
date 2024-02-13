@@ -7,8 +7,7 @@
 #include "..\GameObject\score.h"
 #include "..\GameObject\follow.h"
 #include "..\GameObject\player.h"
-#include "..\GameObject\rock.h"
-#include "..\GameObject\chest.h"
+#include "..\GameObject\breakObject.h"
 #include "..\GameObject\shadow.h"
 #include "..\GameObject\camera.h"
 #include "..\GameObject\smoke.h"
@@ -47,7 +46,7 @@ bool Follow::m_SE_FollowCheck{};
 void Follow::Load()
 {
 	m_Model = new Model();
-	m_Model->Load("asset\\model\\seep_c.obj");
+	m_Model->Load("asset\\model\\sheep1.obj");
 	m_SE_Follow = new Audio();
 	m_SE_Follow->Load("asset\\audio\\‚©‚í‚¢‚­’µ‚Ë‚éEƒWƒƒƒ“ƒv03.wav");
 	m_SE_Release = new Audio();

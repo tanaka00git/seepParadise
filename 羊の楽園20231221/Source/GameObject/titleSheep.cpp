@@ -1,24 +1,24 @@
 #include "..\App\main.h"
 #include "..\App\renderer.h"
-#include "..\GameObject\titleSeep.h"
+#include "..\GameObject\titleSheep.h"
 #include "..\App\model.h"
 
-Model* TitleSeep::m_Model{};
+Model* TitleSheep::m_Model{};
 
-void TitleSeep::Load()
+void TitleSheep::Load()
 {
 	m_Model = new Model();
-	m_Model->Load("asset\\model\\seep_a.obj");
+	m_Model->Load("asset\\model\\sheepMini.obj");
 }
 
-void TitleSeep::Unload()
+void TitleSheep::Unload()
 {
 	m_Model->Unload();
 	delete m_Model;
 	m_Model = nullptr;
 }
 
-void TitleSeep::Init()
+void TitleSheep::Init()
 {
 	m_Position.x = (frand() * 20.0f) - 10.0f;
 	m_Position.z = 3.0f;
@@ -28,7 +28,7 @@ void TitleSeep::Init()
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
 }
 
-void TitleSeep::Uninit()
+void TitleSheep::Uninit()
 {
 	m_VertexLayout->Release();
 	m_VertexShader->Release();
@@ -36,7 +36,7 @@ void TitleSeep::Uninit()
 }
 
 
-void TitleSeep::Update()
+void TitleSheep::Update()
 {
 	m_Rotation.y -= 0.05f;
 	m_Position.y -= 0.008f;
@@ -51,7 +51,7 @@ void TitleSeep::Update()
 }
 
 
-void TitleSeep::Draw()
+void TitleSheep::Draw()
 {
 	Renderer::GetDeviceContext()->IASetInputLayout(m_VertexLayout);
 	Renderer::GetDeviceContext()->VSSetShader(m_VertexShader, NULL, 0);

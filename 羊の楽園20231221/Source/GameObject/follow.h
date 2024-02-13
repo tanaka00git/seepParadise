@@ -56,8 +56,8 @@ public:
 	void Update()override;
 	void Draw()override;
 
-	FOLLOW_STATE GetState() { return m_FollowState; }
-	int GetAttackStop() { return m_AttackStopTime; }
+	FOLLOW_STATE GetState() const { return m_FollowState; }
+	int GetAttackStop() const { return m_AttackStopTime; }
 
 	void SetKnockBack();
 	void SetState(FOLLOW_STATE followState) { m_FollowState = followState; }

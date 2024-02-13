@@ -6,7 +6,6 @@
 #include "..\GameObject\disasterWolf.h"
 #include "..\App\model.h"
 #include "..\GameObject\camera.h"
-#include "..\GameObject\timeFade.h"
 #include "..\GameObject\AttackMarker.h"
 #include "..\App\audio.h"
 

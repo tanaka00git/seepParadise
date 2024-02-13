@@ -12,7 +12,7 @@
 #include "..\App\audio.h"
 #include "..\GameObject\camera.h"
 #include "..\GameObject\mouseIcon.h"
-#include "..\GameObject\titleSeep.h"
+#include "..\GameObject\titleSheep.h"
 #include "..\GameObject\titleCoin.h"
 #include "..\GameObject\titleBox.h"
 #include "..\GameObject\titleSky.h"
@@ -46,7 +46,7 @@ void Title::Init()
 	//ƒRƒCƒ“‚ªãŒÀ‚ð’´‚¦‚Ä‚¢‚½‚ç
 	if (m_Coin > 99999) { m_Coin = 99999; }
 	
-	TitleSeep::Load();
+	TitleSheep::Load();
 	TitleBox::Load();
 	TitleSky::Load();
 	TimeFade::Load();
@@ -87,7 +87,7 @@ void Title::Uninit()
 {
 	Scene::Uninit();
 
-	TitleSeep::Unload();
+	TitleSheep::Unload();
 	TitleBox::Unload();
 	TitleSky::Unload();
 	TimeFade::Unload();
@@ -99,11 +99,11 @@ void Title::Update()
 {
 	Scene::Update();
 
-	m_SeepDropTime++;
-	if (m_SeepDropTime > 40)
+	m_SheepDropTime++;
+	if (m_SheepDropTime > 40)
 	{
-		AddGameObject<TitleSeep>(1);
-		m_SeepDropTime = 0;
+		AddGameObject<TitleSheep>(1);
+		m_SheepDropTime = 0;
 	}
 
 	switch (m_TitleState)

@@ -7,17 +7,16 @@
 #include "..\GameObject\human.h"
 #include "..\GameObject\follow.h"
 #include "..\GameObject\player.h"
-#include "..\GameObject\fence.h"
-#include "..\GameObject\rock.h"
+#include "..\GameObject\breakObject.h"
 #include "..\GameObject\explosion.h"
 #include "..\App\audio.h"
 #include "..\GameObject\shadow.h"
 #include "..\GameObject\hpBarS.h"
 #include "..\GameObject\feet.h"
-#include "..\GameObject\chest.h"
 #include "..\GameObject\timeFade.h"
 #include "..\GameObject\camera.h"
 #include "..\App\model.h"
+#include "..\GameObject\fence.h"
 
 Model* Human::m_Model{};
 Audio* Human::m_SE_Kick{};

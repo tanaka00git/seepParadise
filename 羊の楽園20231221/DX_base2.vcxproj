@@ -188,7 +188,7 @@
     <ClCompile Include="Source\GameObject\resultCoin.cpp" />
     <ClCompile Include="Source\GameObject\resultLogo.cpp" />
     <ClCompile Include="Source\GameObject\resultScore.cpp" />
-    <ClCompile Include="Source\GameObject\resultSeep.cpp" />
+    <ClCompile Include="Source\GameObject\resultSheep.cpp" />
     <ClCompile Include="Source\GameObject\resultSky.cpp" />
     <ClCompile Include="Source\GameObject\rock.cpp" />
     <ClCompile Include="Source\GameObject\score.cpp" />
@@ -204,7 +204,7 @@
     <ClCompile Include="Source\GameObject\titleCoin.cpp" />
     <ClCompile Include="Source\GameObject\titleLogo.cpp" />
     <ClCompile Include="Source\GameObject\titleScore.cpp" />
-    <ClCompile Include="Source\GameObject\titleSeep.cpp" />
+    <ClCompile Include="Source\GameObject\titleSheep.cpp" />
     <ClCompile Include="Source\GameObject\titleSky.cpp" />
     <ClCompile Include="Source\GameObject\tree.cpp" />
     <ClCompile Include="Source\GameObject\wolf.cpp" />
@@ -259,7 +259,7 @@
     <ClInclude Include="Source\GameObject\resultCoin.h" />
     <ClInclude Include="Source\GameObject\resultLogo.h" />
     <ClInclude Include="Source\GameObject\resultScore.h" />
-    <ClInclude Include="Source\GameObject\resultSeep.h" />
+    <ClInclude Include="Source\GameObject\resultSheep.h" />
     <ClInclude Include="Source\GameObject\resultSky.h" />
     <ClInclude Include="Source\GameObject\rock.h" />
     <ClInclude Include="Source\GameObject\score.h" />
@@ -275,7 +275,7 @@
     <ClInclude Include="Source\GameObject\titleCoin.h" />
     <ClInclude Include="Source\GameObject\titleLogo.h" />
     <ClInclude Include="Source\GameObject\titleScore.h" />
-    <ClInclude Include="Source\GameObject\titleSeep.h" />
+    <ClInclude Include="Source\GameObject\titleSheep.h" />
     <ClInclude Include="Source\GameObject\titleSky.h" />
     <ClInclude Include="Source\GameObject\tree.h" />
     <ClInclude Include="Source\GameObject\wolf.h" />

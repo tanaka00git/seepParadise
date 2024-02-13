@@ -31,7 +31,7 @@ private:
 	static int  m_PlColor;		//—rƒJƒ‰[
 	static int  m_PlClown;		//—r‘•”õ
 
-	int m_SeepDropTime = 0;
+	int m_SheepDropTime = 0;
 
 	//ŠÖ”
 	void UpdatePressStart();

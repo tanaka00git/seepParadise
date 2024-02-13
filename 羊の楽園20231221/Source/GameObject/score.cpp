@@ -59,18 +59,18 @@ void Score::Update()
 {
 	GameObject::Update();
 
-	if (m_CountSeep > 100) { m_CountSeep = m_ClearCount; }
+	if (m_CountSheep > 100) { m_CountSheep = m_ClearCount; }
 	if (m_CountCoin > 999) { m_CountCoin = 999; }
-	if (m_FullCount < m_CountSeep) { m_FullCount = m_CountSeep; }
+	if (m_FullCount < m_CountSheep) { m_FullCount = m_CountSheep; }
 
 
 	//羊の増減でスコアのスケールが変わる処理
-	if (m_CountSeep != m_OldCountSeep)
+	if (m_CountSheep != m_OldCountSheep)
 	{
-		if (m_CountSeep > m_OldCountSeep) { m_CountPlusScale = PLUS_SCALE_VALUE; }
+		if (m_CountSheep > m_OldCountSheep) { m_CountPlusScale = PLUS_SCALE_VALUE; }
 		else { m_CountMinusScale = PLUS_SCALE_VALUE; }
 	}
-	m_OldCountSeep = m_CountSeep;
+	m_OldCountSheep = m_CountSheep;
 
 	m_CountPlusScale -= PLUS_SCALE_DOWN_VALUE;
 	m_CountMinusScale -= PLUS_SCALE_DOWN_VALUE;
@@ -109,16 +109,16 @@ void Score::Draw()
 	GameObject::Draw();
 
 	//それぞれの描画
-	DrawCountSeep();
-	DrawCountClearSeep();
+	DrawCountSheep();
+	DrawCountClearSheep();
 	DrawCountCombo();
 	DrawTimeZone();
 	DrawLife();
 }
 
-void Score::DrawCountSeep()
+void Score::DrawCountSheep()
 {
-	int count = m_CountSeep;
+	int count = m_CountSheep;
 	for (int i = 0; i < 4; i++)
 	{
 		//頂点座標算出
@@ -141,7 +141,7 @@ void Score::DrawCountSeep()
 	}
 }
 
-void Score::DrawCountClearSeep()
+void Score::DrawCountClearSheep()
 {
 	int count = m_ClearCount;
 	for (int i = 0; i < 4; i++)
