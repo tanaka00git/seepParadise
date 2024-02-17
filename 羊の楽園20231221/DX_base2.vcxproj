@@ -97,6 +97,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>..\App\main.h</PrecompiledHeaderFile>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -177,6 +178,7 @@
     <ClCompile Include="Source\GameObject\hpBar.cpp" />
     <ClCompile Include="Source\GameObject\hpBarS.cpp" />
     <ClCompile Include="Source\GameObject\human.cpp" />
+    <ClCompile Include="Source\GameObject\humanSpring.cpp" />
     <ClCompile Include="Source\GameObject\infoLog.cpp" />
     <ClCompile Include="Source\GameObject\infoLogTutorial.cpp" />
     <ClCompile Include="Source\GameObject\itemEye.cpp" />
@@ -199,6 +201,7 @@
     <ClCompile Include="Source\GameObject\shine.cpp" />
     <ClCompile Include="Source\GameObject\shine2.cpp" />
     <ClCompile Include="Source\GameObject\smoke.cpp" />
+    <ClCompile Include="Source\GameObject\spring.cpp" />
     <ClCompile Include="Source\GameObject\timeFade.cpp" />
     <ClCompile Include="Source\GameObject\titleBox.cpp" />
     <ClCompile Include="Source\GameObject\titleCoin.cpp" />
@@ -248,6 +251,7 @@
     <ClInclude Include="Source\GameObject\hpBar.h" />
     <ClInclude Include="Source\GameObject\hpBarS.h" />
     <ClInclude Include="Source\GameObject\human.h" />
+    <ClInclude Include="Source\GameObject\humanSpring.h" />
     <ClInclude Include="Source\GameObject\InfoLog.h" />
     <ClInclude Include="Source\GameObject\infoLogTutorial.h" />
     <ClInclude Include="Source\GameObject\itemEye.h" />
@@ -270,6 +274,7 @@
     <ClInclude Include="Source\GameObject\shine.h" />
     <ClInclude Include="Source\GameObject\shine2.h" />
     <ClInclude Include="Source\GameObject\smoke.h" />
+    <ClInclude Include="Source\GameObject\spring.h" />
     <ClInclude Include="Source\GameObject\timeFade.h" />
     <ClInclude Include="Source\GameObject\titleBox.h" />
     <ClInclude Include="Source\GameObject\titleCoin.h" />

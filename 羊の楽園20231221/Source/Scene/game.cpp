@@ -10,9 +10,11 @@
 #include "..\GameObject\goalNavigation.h"
 #include "..\GameObject\player.h"
 #include "..\GameObject\human.h"
+#include "..\GameObject\humanSpring.h"
 #include "..\GameObject\goal.h"
 #include "..\GameObject\goalScope.h"
 #include "..\GameObject\tree.h"
+#include "..\GameObject\spring.h"
 #include "..\GameObject\follow.h"
 #include "..\GameObject\feet.h"
 #include "..\GameObject\explosion.h"
@@ -59,7 +61,7 @@
 #define SEED_START_NUM 70
 #define ROCK_START_NUM 10
 #define ENEMY_MAKE_DISTANCE 18.0f	//“G‚ªoŒ»‚·‚é”ÍˆÍ
-#define STAGE_MAKE_XY 110.0f
+#define STAGE_MAKE_XY 100.0f
 #define STAGE_MAKE_PL_XY 35.0f
 
 void Game::Init()
@@ -68,6 +70,7 @@ void Game::Init()
 	Box::Load();
 	Cylinder::Load();
 	Tree::Load();
+	Spring::Load();
 	GoalNavigation::Load();
 	Player::Load();
 	Follow::Load();
@@ -77,6 +80,7 @@ void Game::Init()
 	Wolf::Load();
 	DisasterWolf::Load();
 	Human::Load();
+	HumanSpring::Load();
 	Explosion::Load();
 	Smoke::Load();
 	AngelRing::Load();
@@ -124,22 +128,27 @@ void Game::Init()
 		cylinder->SetScale(D3DXVECTOR3(3.0f, 1.0f, 3.0f));
 		cylinder->SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2));
 	}
+	for (int i = 0; i <= BOX_START_NUM; i++) {
+		Box* box = AddGameObject<Box>(1);
+		box->SetScale(D3DXVECTOR3(3.0f, 1.0f, 3.0f));
+		box->SetPosition(D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2));
+	}
 
-	for (int i = 0; i <= 23; i++) {
+	for (int i = 0; i <= 12; i++) {
 		Box* box1 = AddGameObject<Box>(1);
 		Box* box2 = AddGameObject<Box>(1);
 		Box* box3 = AddGameObject<Box>(1);
 		Box* box4 = AddGameObject<Box>(1);
 
-		box1->SetScale(D3DXVECTOR3(5.0f, 2.5f, 5.0f));
-		box2->SetScale(D3DXVECTOR3(5.0f, 2.5f, 5.0f));
-		box3->SetScale(D3DXVECTOR3(5.0f, 2.5f, 5.0f));
-		box4->SetScale(D3DXVECTOR3(5.0f, 2.5f, 5.0f));
+		box1->SetScale(D3DXVECTOR3(10.0f, 3.5f, 10.0f));
+		box2->SetScale(D3DXVECTOR3(10.0f, 3.5f, 10.0f));
+		box3->SetScale(D3DXVECTOR3(10.0f, 3.5f, 10.0f));
+		box4->SetScale(D3DXVECTOR3(10.0f, 3.5f, 10.0f));
 
-		box1->SetPosition(D3DXVECTOR3(5.0f * i - 60.0f, -1.0f, 60.0f));
-		box2->SetPosition(D3DXVECTOR3(5.0f * i - 60.0f, -1.0f, -60.0f));
-		box3->SetPosition(D3DXVECTOR3(60.0f, -1.0f, 5.0f * i - 60.0f));
-		box4->SetPosition(D3DXVECTOR3(-60.0f, -1.0f, 5.0f * i - 60.0f));
+		box1->SetPosition(D3DXVECTOR3(10.0f * i - 70.0f, -1.0f, 60.0f));
+		box2->SetPosition(D3DXVECTOR3(10.0f * i - 70.0f, -1.0f, -60.0f));
+		box3->SetPosition(D3DXVECTOR3(60.0f, -1.0f, 10.0f * i - 60.0f));
+		box4->SetPosition(D3DXVECTOR3(-60.0f, -1.0f, 10.0f * i - 60.0f));
 	}
 
 
@@ -182,9 +191,11 @@ void Game::Uninit()
 	Apple::Unload();
 	Box::Unload();
 	Cylinder::Unload();
+	Spring::Unload();
 	Tree::Unload();
 	Follow::Unload();
 	Human::Unload();
+	HumanSpring::Unload();
 	Goal::Unload();
 	GoalScope::Unload();
 	GoalNavigation::Unload();
@@ -343,7 +354,7 @@ void Game::UpdateClear()
 		m_SE_Bell->Play(1.0f, false);
 		AddGameObject<InfoLog>(2)->SetNum(22, 4, D3DXVECTOR3(340, 0, 0));
 	}
-	else if (m_ClearTime >= 200)
+	else if (m_ClearTime == 200)
 	{
 		auto wolfs = scene->GetGameObjects<Wolf>();
 		for (Wolf* wolf : wolfs)
@@ -439,6 +450,12 @@ void Game::TimeEvent_Time2Loop()
 			float rot = frand() * 2 * D3DX_PI;
 			AddGameObject<Wolf>(1)->SetPosEnemyData(D3DXVECTOR3(static_cast<float>((cos(rot))) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>((sin(rot))) * ENEMY_MAKE_DISTANCE + PLPos.z), enemyStatusCount+1);
 		}
+	}
+
+	if (irand(1, 3) == 1 && count >= 10)
+	{
+		float rot = frand() * 2 * D3DX_PI;
+		AddGameObject<HumanSpring>(1)->SetPosition(D3DXVECTOR3(static_cast<float>(cos(rot)) * ENEMY_MAKE_DISTANCE + PLPos.x, 0.0f, static_cast<float>(sin(rot)) * ENEMY_MAKE_DISTANCE + PLPos.z));
 	}
 
 	//ƒRƒCƒ“(–ˆ‰ñ5–‡)

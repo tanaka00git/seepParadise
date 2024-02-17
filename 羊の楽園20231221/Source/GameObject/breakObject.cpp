@@ -38,7 +38,8 @@ void BreakObject::Init()
 {
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\vertexLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\vertexLightingPS.cso");
-
+	
+	//初期化
 	m_Color = INITIAL_COLOR;
 	m_TextureEnable = INITIAL_TEXTURE_ENABLE;
 	m_Velocity = INITIAL_VELOCITY;
@@ -49,9 +50,9 @@ void BreakObject::Init()
 	m_FullLife = INITIAL_LIFE;
 	m_Life = INITIAL_LIFE;
 	m_BarScale = INITIAL_BAR_SCALE;
-
 	m_Scale.y = INITIAL_SCALE_Y;
 
+	//アタッチ
 	m_HpBarS = AddComponent<HpBarS>();
 	m_HpBarS->SetLifeDateFC(INITIAL_LIFE, INITIAL_LIFE);
 	m_HpBarS->SetScale(m_BarScale);

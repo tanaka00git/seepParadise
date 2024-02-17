@@ -50,6 +50,7 @@ private:
 	void TimeEvent_Time60();
 	void DisasterWolfEmitter();
 
+
 public:
 	void Init() override;
 	void Uninit() override;

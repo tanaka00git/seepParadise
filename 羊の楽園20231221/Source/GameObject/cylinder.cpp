@@ -58,7 +58,7 @@ void Cylinder::Draw()
 
 	// マトリクス設定
 	D3DXMATRIX world, scale, rot, trans;
-	D3DXMatrixScaling(&scale, m_Scale.x, m_Scale.y, m_Scale.z);
+	D3DXMatrixScaling(&scale, m_Scale.x * 1.2f, m_Scale.y * 0.7f, m_Scale.z * 1.2f);
 	D3DXMatrixRotationYawPitchRoll(&rot, m_Rotation.y, m_Rotation.x, m_Rotation.z);
 	D3DXMatrixTranslation(&trans, m_Position.x, m_Position.y, m_Position.z);
 	world = scale * rot * trans;

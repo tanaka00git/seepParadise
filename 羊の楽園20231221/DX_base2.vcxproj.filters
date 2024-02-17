@@ -249,6 +249,12 @@
     <ClCompile Include="Source\GameObject\goalNavigation.cpp">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
     </ClCompile>
+    <ClCompile Include="Source\GameObject\spring.cpp">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GameObject\humanSpring.cpp">
+      <Filter>ソース ファイル\GameObject\Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\App\audio.h">
@@ -460,6 +466,12 @@
     </ClInclude>
     <ClInclude Include="Source\GameObject\goalNavigation.h">
       <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\spring.h">
+      <Filter>ソース ファイル\GameObject\Normal</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GameObject\humanSpring.h">
+      <Filter>ソース ファイル\GameObject\Character</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

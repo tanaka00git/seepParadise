@@ -310,9 +310,7 @@ void Human::UpdateMaking()
 			m_HumanState = HUMAN_STATE::FREE;
 
 			//ò”­¶
-			Fence* fence = scene->AddGameObject<Fence>(1);
-			fence->SetPosition(objectPosition);
-			fence->SetRotation(m_Rotation);
+			Make(objectPosition);
 		}
 	}
 }
@@ -438,6 +436,16 @@ void Human::Anime()
 		m_AnimePause = !m_AnimePause;
 		m_AnimeTime = 0;
 	}
+}
+
+void Human::Make(D3DXVECTOR3 objectPosition)
+{
+	Scene* scene = Manager::GetScene();
+
+	//ò”­¶
+	Fence* fence = scene->AddGameObject<Fence>(1);
+	fence->SetPosition(objectPosition);
+	fence->SetRotation(m_Rotation);
 }
 
 void Human::SetDamageMove()

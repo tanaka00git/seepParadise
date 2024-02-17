@@ -12,7 +12,7 @@ enum class HUMAN_STATE
 
 class Human : public CharacterObject
 {
-private:
+protected:
 	HUMAN_STATE m_HumanState = HUMAN_STATE::FREE;
 	ID3D11VertexShader* m_VertexShader{};
 	ID3D11PixelShader* m_PixelShader{};
@@ -59,6 +59,7 @@ private:
 	void Escape();
 	void KnockBack();
 	void Anime();
+	virtual void Make(D3DXVECTOR3 objectPosition);
 
 public:
 	static void Load();
@@ -66,7 +67,7 @@ public:
 	void Init()override;
 	void Uninit()override;
 	void Update()override;
-	void Draw()override;
+	virtual void Draw()override;
 
 	void AddLife(int life) { m_Life += life; }
 	void SetDamageMove() override;
