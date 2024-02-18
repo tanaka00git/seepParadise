@@ -109,8 +109,8 @@ void CharacterObject::SetDrop()
 void CharacterObject::SetJump()
 {
 	 m_Velocity.y = 0.3f; 
-	 m_Velocity.x += GetForward().x * 4; 
-	 m_Velocity.z += GetForward().z * 4;
+	 m_Velocity.x += GetForward().x * 20; 
+	 m_Velocity.z += GetForward().z * 20;
 	
 }
 

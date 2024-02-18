@@ -51,7 +51,7 @@ Audio* Human::m_SE_Make{};
 #define STUN_TIME 60
 #define TARGET_LENGTH 3.0f
 #define GRAVITY 0.015f
-#define SET_MAKING_INVALID_TIME 60
+#define SET_MAKING_INVALID_TIME 180	//柵作れない時間
 
 void Human::Load()
 {
@@ -262,7 +262,7 @@ void Human::UpdateTargeting()
 
 	//柵を作れない時間を減らす
 	m_MakingInvalidTime--;
-	if (m_MakingInvalidTime) { m_MakingInvalidTime = 0; }
+	if (m_MakingInvalidTime <= 0) { m_MakingInvalidTime = 0; }
 
 	//移動処理(時間)
 	bool timeFede = timeFade->GetTimeZone();
@@ -510,11 +510,6 @@ void Human::Collision(float& groundHeight)
 						player->AddCombo(1);
 						scene->AddGameObject<Explosion>(1)->SetPosition(m_Position);//爆発エフェクト
 					}
-					//普通にぶつかった場合
-					else if (m_StunTime <= 0 && m_MakingInvalidTime <= 0 && m_HumanState != HUMAN_STATE::MAKING)
-					{
-						m_HumanState = HUMAN_STATE::MAKING;
-					}
 				}
 			}
 
@@ -535,7 +530,7 @@ void Human::Collision(float& groundHeight)
 		}
 
 		//枠内にプレイヤーいて夜じゃなくてメイキングしてなければ
-		if (length < TARGET_LENGTH && m_StunTime <= 0 && m_HumanState != HUMAN_STATE::MAKING && m_HumanState != HUMAN_STATE::NIGHT)
+		if (length < TARGET_LENGTH && m_StunTime <= 0 && m_HumanState != HUMAN_STATE::MAKING && m_HumanState != HUMAN_STATE::NIGHT && m_MakingInvalidTime <= 0)
 		{
 			if (playerObject || (followObject && followObject->GetState() != FOLLOW_STATE::FREE)) { m_HumanState = HUMAN_STATE::MAKING; }
 		}
