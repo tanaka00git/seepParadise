@@ -57,6 +57,7 @@ int Player::m_PlClown{};
 #define WALK_EFFECT_TIME 13
 #define ATTACK_STOP 22
 #define GRAVITY 0.015f
+#define CHARGE_DOWN 7
 
 void Player::Load()
 {
@@ -305,7 +306,7 @@ void Player::UpdateDash()
 	m_Velocity.z = GetForward().z * (m_Speed * 0.02f);
 
 	//チャージ消費
-	m_Charge -= 8;
+	m_Charge -= CHARGE_DOWN;
 
 	//エフェクト
 	WalkEffect();

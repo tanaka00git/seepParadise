@@ -51,6 +51,7 @@ void Spring::Update()
 	else
 	{
 		SmoothAppearance(false);
+		if (m_Scale.x <= 0.0f) { SetDestroy(); }
 	}
 
 	//ƒf[ƒ^Žæ“¾

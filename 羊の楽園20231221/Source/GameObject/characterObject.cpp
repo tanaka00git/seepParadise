@@ -106,6 +106,14 @@ void CharacterObject::SetDrop()
 	m_Velocity.z = GetForward().z * (frand() * 0.08f);
 }
 
+void CharacterObject::SetJump()
+{
+	 m_Velocity.y = 0.3f; 
+	 m_Velocity.x += GetForward().x * 4; 
+	 m_Velocity.z += GetForward().z * 4;
+	
+}
+
 void CharacterObject::Collision(float& groundHeight)
 {
 	Scene* scene = Manager::GetScene();

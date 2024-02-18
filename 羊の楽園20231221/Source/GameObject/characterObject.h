@@ -47,7 +47,7 @@ public:
 	//ÉZÉbÉgä÷êî
 	virtual void SetDamageMove();
 	void SetDrop();
-	void SetJump() { m_Velocity.y = 0.3f;};
+	void SetJump();
 	void AddLife(int life) { m_Life += life; }
 	void SetCharacterState(CHARACTER_STATE characterState) { m_CharacterState = characterState; }
 	void SetDamageFlashTime(int flashTime) { m_DamageFlashTime = flashTime; }
