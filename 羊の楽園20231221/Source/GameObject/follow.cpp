@@ -20,7 +20,7 @@ Audio*Follow::m_SE_Release{};
 bool Follow::m_SE_FollowCheck{};
 
 #define INITIAL_ATTACK_STOP_TIME 0
-#define INITIAL_DAATH_TIME 200
+#define INITIAL_DEATH_TIME 200
 #define INITIAL_ORIENTATION_TIME 0
 #define INITIAL_NEXT_ORIENTATION_TIME 0
 #define INITIAL_NEXT_ROTATION 1
@@ -66,7 +66,7 @@ void Follow::Init()
 
 	m_Scale.y = INITIAL_SCALE_Y;
 	m_AttackStopTime = INITIAL_ATTACK_STOP_TIME;
-	m_DaathTime = INITIAL_DAATH_TIME;
+	m_DaathTime = INITIAL_DEATH_TIME;
 	m_OrientationTime = INITIAL_ORIENTATION_TIME;
 	m_NextOrientationTime = INITIAL_NEXT_ORIENTATION_TIME;
 	m_NextRot = INITIAL_NEXT_ROTATION;
@@ -141,7 +141,6 @@ void Follow::Draw()
 
 	GameObject::Draw();
 
-	Renderer::GetDeviceContext()->IASetInputLayout(m_VertexLayout);
 	Renderer::GetDeviceContext()->VSSetShader(m_VertexShader, NULL, 0);
 	Renderer::GetDeviceContext()->PSSetShader(m_PixelShader, NULL, 0);
 

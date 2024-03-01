@@ -396,6 +396,7 @@ void Player::TutorialText()
 
 void Player::MouseTargetMove()
 {
+	//カメラのビュー行列を取得
 	Scene* scene = Manager::GetScene();
 	Camera* camera = scene->GetGameObject<Camera>();
 	D3DXMATRIX viewMatrix = camera->GetViewMatrix();
@@ -403,7 +404,7 @@ void Player::MouseTargetMove()
 	// マウスの座標を取得
 	POINT mousePos = Input::GetMousePosition();
 
-	// マウス座標を正規化デバイス座標系に変換
+	// マウス座標を正規化デバイス座標系に変換(ウィンドウ位置とサイズを変更してもマウス位置を一定にする)
 	float SCREEN_WIDTH_FLOAT = static_cast<float>(SCREEN_WIDTH);
 	float SCREEN_HEIGHT_FLOAT = static_cast<float>(SCREEN_HEIGHT);
 	float normalizedX = (2.0f * static_cast<float>(mousePos.x)) / SCREEN_WIDTH_FLOAT - 1.0f;

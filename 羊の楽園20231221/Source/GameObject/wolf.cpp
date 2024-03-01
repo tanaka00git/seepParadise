@@ -27,7 +27,7 @@ Audio*Wolf::m_SE_Eat{};
 Audio*Wolf::m_SE_Kick{};
 Audio*Wolf::m_SE_Critical{};
 
-#define INITIAL_DAATH_TIME 1400
+#define INITIAL_DEATH_TIME 1400
 #define INITIAL_ANIME_PAUSE true
 #define INITIAL_ANIME_TIME 0
 #define INITIAL_ANIME_ROTATION_X 0.0f
@@ -89,7 +89,7 @@ void Wolf::Init()
 	m_Scale.y = INITIAL_SCALE_Y;
 	m_Rotation.y = frand() * 2 * D3DX_PI;
 
-	m_DaathTime = INITIAL_DAATH_TIME;
+	m_DaathTime = INITIAL_DEATH_TIME;
 	m_AnimePause = INITIAL_ANIME_PAUSE;
 	m_AnimeTime = INITIAL_ANIME_TIME;
 	m_AnimeRotationX = INITIAL_ANIME_ROTATION_X;

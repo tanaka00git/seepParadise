@@ -130,7 +130,7 @@ void Camera::UpdateTitle()
 void Camera::UpdateGame()
 {
 	//前回座標に値を保持
-	D3DXVECTOR3 OldTarget = m_Target;
+	D3DXVECTOR3 oldTarget = m_Target;
 
 	//情報取得
 	Scene* scene = Manager::GetScene();
@@ -166,10 +166,10 @@ void Camera::UpdateGame()
 		m_Target += D3DXVECTOR3(0.0f, -CAMERA_MOVE_VALUE, CAMERA_MOVE_VALUE);
 	}
 	//前回座標と比較して線形補完
-	D3DXVECTOR3 distance = m_Target - OldTarget;
+	D3DXVECTOR3 distance = m_Target - oldTarget;
 	float speed = CAMERA_SPEED;
 	D3DXVECTOR3 velocity = distance * speed;
-	D3DXVECTOR3 newCameraPosition = OldTarget + velocity;
+	D3DXVECTOR3 newCameraPosition = oldTarget + velocity;
 	m_Target = newCameraPosition;
 
 	//カメラ位置の設定
