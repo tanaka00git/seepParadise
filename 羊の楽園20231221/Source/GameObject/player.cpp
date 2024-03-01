@@ -33,7 +33,7 @@ int Player::m_DebugMode{};
 int Player::m_PlColor{};
 int Player::m_PlClown{};
 
-#define INITIAL_LIFE 3
+#define INITIAL_LIFE 2
 #define INITIAL_INVINCIBLE_TIME 0
 #define INITIAL_DASH_INIT false
 #define INITIAL_DASH false

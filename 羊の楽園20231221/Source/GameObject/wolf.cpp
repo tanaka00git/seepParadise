@@ -51,7 +51,7 @@ Audio*Wolf::m_SE_Critical{};
 #define INITIAL_SCALE_Y 0.01f
 
 #define EATING_TIME 45
-#define APPLE_RATE 20
+#define APPLE_RATE 24
 #define KNOCK_BACK_TIME 14
 #define STUN_TIME 240
 #define GRAVITY 0.015f
@@ -228,7 +228,7 @@ void Wolf::UpdateFree()
 	D3DXVECTOR3 direction = m_Position - player->GetPosition();
 	float plength = D3DXVec3Length(&direction);
 
-	//’Ç”ö”ÍˆÍ‚É“ü‚é‚©–é‚Å‚ ‚ê‚Î
+	//’Ç”ö”ÍˆÍ‚É“ü‚é‚©–é‚©
 	TimeFade* timeFade = scene->GetGameObject<TimeFade>();
 	if (plength < m_Tracking || timeFade->GetTimeZone()) {m_WolfState = WOLF_STATE::TARGETING;}
 }

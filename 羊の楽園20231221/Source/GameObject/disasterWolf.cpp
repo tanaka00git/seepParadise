@@ -13,7 +13,7 @@ Model* DisasterWolf::m_ModelClown{};
 Audio* DisasterWolf::m_SE_SuperAttack{};
 
 #define INITIAL_SUPAR_CHARGE_COUNT 0
-#define MEED_SUPAR_CHARGE 70
+#define MEED_SUPAR_CHARGE 55
 #define SUPER_ATTACK_TIME 70
 #define ATTACK_MARKER_SCALE_Z 50.0f
 #define INITIAL_DEATH_TIME 5000
@@ -40,7 +40,7 @@ void DisasterWolf::Init()
 	//定数で初期化
 	m_SuparChargeCount = INITIAL_SUPAR_CHARGE_COUNT;
 	m_DaathTime = INITIAL_DEATH_TIME;
-
+	m_Position.y += 5.0f;
 	//シェーダー上書き
 	Renderer::CreateVertexShader(&m_VertexShader, &m_VertexLayout, "shader\\pixelLightingVS.cso");
 	Renderer::CreatePixelShader(&m_PixelShader, "shader\\pixelLightingPS.cso");
@@ -131,7 +131,7 @@ void DisasterWolf::SetEnemyData(int data)
 {
 	m_Item = false;
 	m_BiteCount = 2;
-	m_FullLife = 30 * data;
+	m_FullLife = 25 * data;
 	m_Speed = 0.04f + data * 0.01f;
 	m_FeetDrop = 30 * data;
 	m_StanGuard = 40 * data;

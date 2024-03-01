@@ -6,15 +6,11 @@
 #include "..\GameObject\breakObject.h"
 #include "..\App\audio.h"
 #include "..\GameObject\feet.h"
-#include "..\GameObject\itemSpeed.h"
-#include "..\GameObject\itemLife.h"
-#include "..\GameObject\itemEye.h"
 #include "..\GameObject\hpBarS.h"
 #include "..\App\model.h"
 
 Model*Rock::m_Model{};
 
-#define DROP_RAIT 20
 #define FEET_DROP 3
 
 void Rock::Load()
@@ -61,35 +57,6 @@ void Rock::UpdateDead()
 
 		m_DeleteInit = true;
 		m_HpBarS->SetDraw(false);
-
-		//アイテムドロップ
-		int randam = irand(1, DROP_RAIT);
-		if (randam == 1)
-		{
-			//どれかが選出される
-			int b = irand(1, 3);
-			// スピードアップ
-			if (b == 1)
-			{
-				ItemSpeed* itemSpeed = scene->AddGameObject<ItemSpeed>(1);
-				itemSpeed->SetPosition(m_Position);
-				itemSpeed->SetDrop();
-			}
-			// ライフアップ
-			else if (b == 2)
-			{
-				ItemLife* itemLife = scene->AddGameObject<ItemLife>(1);
-				itemLife->SetPosition(m_Position);
-				itemLife->SetDrop();
-			}
-			// 視野アップ
-			else if (b == 3)
-			{
-				ItemEye* itemEye = scene->AddGameObject<ItemEye>(1);
-				itemEye->SetPosition(m_Position);
-				itemEye->SetDrop();
-			}
-		}
 
 		//コインドロップ
 		for (int i = 0; i <= FEET_DROP; i++)

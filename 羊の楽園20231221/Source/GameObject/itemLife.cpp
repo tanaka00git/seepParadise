@@ -61,7 +61,6 @@ void ItemLife::MoveGet()
 	DamageFade* damageFade = scene->AddGameObject<DamageFade>(2);
 	damageFade->SetColor(D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	player->AddFullLife(+1);
-	player->AddLife(+1);
 
 	m_SE_PowerUp->Play(1.0f);
 	m_SE_Get->Play(1.0f);
