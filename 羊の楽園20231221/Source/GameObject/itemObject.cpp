@@ -16,6 +16,7 @@
 #define INITIAL_DROP_JUMP false
 #define INITIAL_SCALE_Y 0.01f
 #define GRAVITY 0.015f
+#define SUCTION 1.5f 
 
 void ItemObject::Init()
 {
@@ -104,6 +105,9 @@ void ItemObject::UpdateMove()
 	D3DXVECTOR3 direction = m_Position - player->GetPosition();
 	D3DXVECTOR3 scale = player->GetScale();
 	float length = D3DXVec3Length(&direction);
+	//‹z‚¢Šñ‚¹
+	if (length < scale.x * SUCTION) { m_Position -= direction * 0.1f; }
+	//Žæ“¾
 	if (length < scale.x)
 	{
 		if (!m_DeleteInit)
@@ -121,6 +125,9 @@ void ItemObject::UpdateMove()
 			D3DXVECTOR3 direction = m_Position - position;
 			float length = D3DXVec3Length(&direction);
 
+			//‹z‚¢Šñ‚¹
+			if (length < scale.x * SUCTION) { m_Position -= direction * 0.1f; }
+			//Žæ“¾
 			if (length < scale.x)
 			{
 				if (!m_DeleteInit)

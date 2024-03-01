@@ -23,7 +23,10 @@ void Input::Update()
 	// マウス位置の取得
 	POINT rawMousePos;
 	GetCursorPos(&rawMousePos);
-	ScreenToClient(GetForegroundWindow(), &rawMousePos);
+
+	// ウィンドウのクライアント座標系に変換
+	HWND gameWindowHandle = FindWindow(NULL, "seepParadise");  // ゲームウィンドウのタイトルに適切なものを指定
+	ScreenToClient(gameWindowHandle, &rawMousePos);
 
 	// マウス位置の更新
 	m_MousePos.x = rawMousePos.x;
