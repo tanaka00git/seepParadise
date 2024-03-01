@@ -6,6 +6,7 @@
 #include "..\GameObject\camera.h"
 #include "..\GameObject\goal.h"
 #include "..\GameObject\goalScope.h"
+#include "..\GameObject\score.h"
 #include "..\GameObject\player.h"
 #include "..\GameObject\follow.h"
 #include "..\App\model.h"
@@ -82,13 +83,20 @@ void Goal::Update()
 		Player* player = scene->GetGameObject<Player>();
 		D3DXVECTOR3 PLPos = player->GetPosition();
 
+
 		//’‡ŠÔ‚ğ‘‚â‚·
-		for (int i = 1; i <= 10; i++)
+		Score* score = scene->GetGameObject<Score>();
+		int count = score->GetCount();
+		int fullCount = score->GetFullCount();
+		int numFollows = max(fullCount / 2, 5);	//Å‘å’l‚Ì”¼•ª‚©5‚Ì‚‚¢•û
+		numFollows = min(numFollows, 15);		//‚½‚¾‚µÅ‘å15‚Ü‚Å
+		for (int i = 1; i <= numFollows; i++)
 		{
 			Follow* follow = scene->AddGameObject<Follow>(1);
 			follow->SetPosition(D3DXVECTOR3(PLPos.x, PLPos.y + FOLLOW_MAKE_POSITION_Y, PLPos.z));
 			follow->SetDrop();
 		}
+	
 
 		//‰æ–Ê‚ğ—h‚ç‚·
 		Camera* camera = scene->GetGameObject<Camera>();
