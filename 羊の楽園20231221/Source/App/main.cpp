@@ -4,6 +4,9 @@
 
 const char* CLASS_NAME = "AppClass";
 const char* WINDOW_NAME = "seepParadise";
+RECT g_WindowRect; // ウィンドウの矩形領域を保存する変数
+bool g_IsMouseCaptured = true; // マウスが制限されているかどうかを示す変数
+
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
@@ -51,30 +54,41 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 	dwCurrentTime = 0;
 
 	MSG msg;
-	while(1)
+	while (1)
 	{
-        if(PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
 		{
-			if(msg.message == WM_QUIT){ break;}
+			if (msg.message == WM_QUIT) { break; }
 			else
 			{
 				TranslateMessage(&msg);
 				DispatchMessage(&msg);
 			}
-        }
+		}
 		else
 		{
 			dwCurrentTime = timeGetTime();
 
-			if((dwCurrentTime - dwExecLastTime) >= (1000 / 60))
+			if ((dwCurrentTime - dwExecLastTime) >= (1000 / 60))
 			{
 				dwExecLastTime = dwCurrentTime;
 
 				Manager::Update();
 				Manager::Draw();
 			}
+
+			// マウス制限の状態によって制限をかけるか解除するかを判断
+			if (g_IsMouseCaptured)
+			{
+				ClipCursor(&g_WindowRect);
+			}
+			else
+			{
+				ClipCursor(nullptr);
+			}
 		}
 	}
+
 
 	timeEndPeriod(1);
 
@@ -93,6 +107,20 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		ShowCursor(FALSE);  // マウスを非表示にする
 		break;
 
+	case WM_SIZE:
+		// ウィンドウのサイズが変更されたときに新しいウィンドウ矩形を取得
+		GetClientRect(hWnd, &g_WindowRect);
+		ClientToScreen(hWnd, (LPPOINT)&g_WindowRect.left);
+		ClientToScreen(hWnd, (LPPOINT)&g_WindowRect.right);
+		break;
+
+	case WM_MOVE:
+		// ウィンドウが移動されたときに新しいウィンドウ矩形を取得
+		GetClientRect(hWnd, &g_WindowRect);
+		ClientToScreen(hWnd, (LPPOINT)&g_WindowRect.left);
+		ClientToScreen(hWnd, (LPPOINT)&g_WindowRect.right);
+		break;
+
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
@@ -105,6 +133,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			break;
 		}
 		break;
+
+	case WM_RBUTTONDOWN:
+		// 右クリックでマウスの制限を解除し、カーソルを表示
+		g_IsMouseCaptured = !g_IsMouseCaptured;
+		if (g_IsMouseCaptured) { ShowCursor(FALSE); }
+		else { ShowCursor(TRUE); }
+		break;
+
 
 	default:
 		break;
