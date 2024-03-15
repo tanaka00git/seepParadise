@@ -19,29 +19,28 @@ Audio*Follow::m_SE_Follow{};
 Audio*Follow::m_SE_Release{};
 bool Follow::m_SE_FollowCheck{};
 
-#define INITIAL_ATTACK_STOP_TIME 0
-#define INITIAL_DEATH_TIME 200
-#define INITIAL_ORIENTATION_TIME 0
-#define INITIAL_NEXT_ORIENTATION_TIME 0
-#define INITIAL_NEXT_ROTATION 1
-#define INITIAL_AGAIN_FOLLOW_TIME 0
-#define INITIAL_ANIME_TIME 0
-#define INITIAL_ANIME_PAUSE true
-#define INITIAL_ANIME_ROTATION_X 0.0f
-#define INITIAL_DEATH_TIME 200
-#define INITIAL_DEATH_STAGING 0.14f
-#define INITIAL_WALK_EFFECT_TIME 0
-#define INITIAL_SCALE_Y 0.01f
+const int INITIAL_ATTACK_STOP_TIME = 0;
+const int INITIAL_DEATH_TIME = 200;
+const int INITIAL_ORIENTATION_TIME = 0;
+const int INITIAL_NEXT_ORIENTATION_TIME = 0;
+const int INITIAL_NEXT_ROTATION = 1;
+const int INITIAL_AGAIN_FOLLOW_TIME = 0;
+const int INITIAL_ANIME_TIME = 0;
+const bool INITIAL_ANIME_PAUSE = true;
+const float INITIAL_ANIME_ROTATION_X = 0.0f;
+const float INITIAL_DEATH_STAGING = 0.14f;
+const int INITIAL_WALK_EFFECT_TIME = 0;
+const float INITIAL_SCALE_Y = 0.01f;
 
-#define WALK_EFFECT_TIME 13		//エフェクトが表示される間隔フレーム
-#define CONTACT_EXTRUSION 0.02f	//他の仲間と接触した際の押し出し係数
-#define MOVE_SPEED_NORMAL 0.01f	//移動速度
-#define MOVE_SPEED_DASH   0.02f //ダッシュ時移動速度
-#define MOVE_MAGNIFY_FREE 6.5f  //自由状態の移動速度の倍率(それ以外の状態ではプレイヤーと同期)
-#define DELETE_DISTANCE   25.0f //プレイヤーと離れているときに自動消滅する距離
-#define ATTACK_STOP	22			//攻撃停止時間
-#define GRAVITY 0.015f			//重力
-#define FOLLOW_RANGE 12.0f		//仲間でいる範囲
+const int WALK_EFFECT_TIME = 13;		// エフェクトが表示される間隔フレーム
+const float CONTACT_EXTRUSION = 0.02f;	// 他の仲間と接触した際の押し出し係数
+const float MOVE_SPEED_NORMAL = 0.01f;	// 移動速度
+const float MOVE_SPEED_DASH = 0.02f;	// ダッシュ時移動速度
+const float MOVE_MAGNIFY_FREE = 6.5f;	// 自由状態の移動速度の倍率(それ以外の状態ではプレイヤーと同期)
+const float DELETE_DISTANCE = 25.0f;	// プレイヤーと離れているときに自動消滅する距離
+const int ATTACK_STOP = 22;				// 攻撃停止時間
+const float GRAVITY = 0.015f;			// 重力
+const float FOLLOW_RANGE = 12.0f;		// 仲間でいる範囲
 
 void Follow::Load()
 {

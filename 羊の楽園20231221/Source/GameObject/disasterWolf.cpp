@@ -12,11 +12,12 @@
 Model* DisasterWolf::m_ModelClown{};
 Audio* DisasterWolf::m_SE_SuperAttack{};
 
-#define INITIAL_SUPAR_CHARGE_COUNT 0
-#define MEED_SUPAR_CHARGE 55
-#define SUPER_ATTACK_TIME 70
-#define ATTACK_MARKER_SCALE_Z 50.0f
-#define INITIAL_DEATH_TIME 5000
+const int INITIAL_SUPAR_CHARGE_COUNT = 0;
+const int MEED_SUPAR_CHARGE = 55;
+const int SUPER_ATTACK_TIME = 70;
+const float ATTACK_MARKER_SCALE_Z = 50.0f;
+const int INITIAL_DEATH_TIME = 5000;
+const int SUPER_ATTACK_SPEED = 6;
 
 void DisasterWolf::Load()
 {
@@ -38,7 +39,7 @@ void DisasterWolf::Init()
 	Wolf::Init();
 
 	//定数で初期化
-	m_SuparChargeCount = INITIAL_SUPAR_CHARGE_COUNT;
+	m_SuperChargeCount = INITIAL_SUPAR_CHARGE_COUNT;
 	m_DaathTime = INITIAL_DEATH_TIME;
 	m_Position.y += 5.0f;
 	//シェーダー上書き
@@ -89,10 +90,10 @@ void DisasterWolf::UpdateTargeting()
 {
 	Wolf::UpdateTargeting();
 
-	m_SuparChargeCount++;
-	if (m_SuparChargeCount >= MEED_SUPAR_CHARGE)
+	m_SuperChargeCount++;
+	if (m_SuperChargeCount >= MEED_SUPAR_CHARGE)
 	{
-		m_SuparChargeCount = 0;
+		m_SuperChargeCount = 0;
 		m_WolfState = WOLF_STATE::SUPER_CHARGE;
 	}
 	
@@ -103,10 +104,10 @@ void DisasterWolf::UpdateSuperCharge()
 	m_AttackMarker->SetDraw(true);
 
 	m_Velocity *= 0;
-	m_SuparChargeCount++;
-	if (m_SuparChargeCount >= MEED_SUPAR_CHARGE)
+	m_SuperChargeCount++;
+	if (m_SuperChargeCount >= MEED_SUPAR_CHARGE)
 	{
-		m_SuparChargeCount = SUPER_ATTACK_TIME;
+		m_SuperChargeCount = SUPER_ATTACK_TIME;
 		m_AttackMarker->SetDraw(false);
 		m_SE_SuperAttack->Play(1.0f ,false);
 		m_WolfState = WOLF_STATE::SUPER_ATTACK;
@@ -116,13 +117,13 @@ void DisasterWolf::UpdateSuperCharge()
 
 void DisasterWolf::UpdateSuperAttack()
 {
-	m_Velocity.x = GetForward().x * (m_Speed) * 6;
-	m_Velocity.z = GetForward().z * (m_Speed) * 6;
+	m_Velocity.x = GetForward().x * (m_Speed * SUPER_ATTACK_SPEED);
+	m_Velocity.z = GetForward().z * (m_Speed * SUPER_ATTACK_SPEED);
 
-	m_SuparChargeCount--;
-	if (m_SuparChargeCount <= 0)
+	m_SuperChargeCount--;
+	if (m_SuperChargeCount <= 0)
 	{
-		m_SuparChargeCount = 0;
+		m_SuperChargeCount = 0;
 		m_WolfState = WOLF_STATE::TARGETING;
 	}
 }

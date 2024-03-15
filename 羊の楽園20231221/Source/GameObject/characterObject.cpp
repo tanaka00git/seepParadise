@@ -6,17 +6,17 @@
 #include "..\GameObject\cylinder.h"
 #include "..\GameObject\box.h"
 
-#define INITIAL_COLOR D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f)
-#define INITIAL_TEXTURE_ENABLE true
-#define INITIAL_VELOCITY D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-#define INITIAL_ORIGINAL_SCALE D3DXVECTOR3(1.0f, 1.0f, 1.0f)
-#define INITIAL_DAMAGE_FLASH_TIME 0
-#define INITIAL_BAR_SCALE D3DXVECTOR3(1.2f, 1.0f, 1.2f)
-#define INITIAL_LIFE 1
-#define INITIAL_SPEED 6.5
+const D3DXCOLOR INITIAL_COLOR = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+const bool INITIAL_TEXTURE_ENABLE = true;
+const D3DXVECTOR3 INITIAL_VELOCITY = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+const D3DXVECTOR3 INITIAL_ORIGINAL_SCALE = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+const int INITIAL_DAMAGE_FLASH_TIME = 0;
+const D3DXVECTOR3 INITIAL_BAR_SCALE = D3DXVECTOR3(1.2f, 1.0f, 1.2f);
+const int INITIAL_LIFE = 1;
+const float INITIAL_SPEED = 6.5f;
 
-#define DROP_JUMP 0.25f			//出現のジャンプの高さ
-#define DAMAGE_FLASH_TIME 6
+const float DROP_JUMP = 0.25f;    // 出現のジャンプの高さ
+const int DAMAGE_FLASH_TIME = 6;
 
 void CharacterObject::Init()
 {

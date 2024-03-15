@@ -7,7 +7,7 @@
 #include "..\App\model.h"
 
 Model*ResultCoin::m_Model{};
-#define GRAVITY 0.005f
+const float GRAVITY = 0.005f;
 
 void ResultCoin::Load()
 {

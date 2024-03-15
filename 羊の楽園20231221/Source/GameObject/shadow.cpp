@@ -4,7 +4,7 @@
 
 ID3D11ShaderResourceView*Shadow::m_Texture{};
 
-#define SCALE 0.7f
+const float SCALE = 0.7f;
 
 void Shadow::Load()
 {

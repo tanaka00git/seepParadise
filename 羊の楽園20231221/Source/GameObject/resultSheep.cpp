@@ -13,7 +13,8 @@
 #include "..\App\model.h"
 
 Model*ResultSheep::m_Model{};
-#define GRAVITY 0.005f
+const float GRAVITY = 0.005f;
+
 void ResultSheep::Load()
 {
 	m_Model = new Model();

@@ -54,15 +54,15 @@
 #include "..\GameObject\daybar.h"
 #include "..\GameObject\InfoLogTutorial.h"
 
-#define CYLINDER_START_NUM 30
-#define BOX_START_NUM 30
-#define TREE_START_NUM 20
-#define FEET_START_NUM 10
-#define SEED_START_NUM 70
-#define ROCK_START_NUM 10
-#define ENEMY_MAKE_DISTANCE 18.0f	//ìGÇ™èoåªÇ∑ÇÈîÕàÕ
-#define STAGE_MAKE_XY 100.0f
-#define STAGE_MAKE_PL_XY 35.0f
+const int CYLINDER_START_NUM = 30;
+const int BOX_START_NUM = 30;
+const int TREE_START_NUM = 20;
+const int FEET_START_NUM = 10;
+const int SEED_START_NUM = 70;
+const int ROCK_START_NUM = 10;
+const float ENEMY_MAKE_DISTANCE = 18.0f;  // ìGÇ™èoåªÇ∑ÇÈîÕàÕ
+const float STAGE_MAKE_XY = 100.0f;
+const float STAGE_MAKE_PL_XY = 35.0f;
 
 void Game::Init()
 {

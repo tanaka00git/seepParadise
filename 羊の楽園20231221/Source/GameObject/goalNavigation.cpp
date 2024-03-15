@@ -7,7 +7,7 @@
 #include "..\GameObject\goalText.h"
 #include "..\GameObject\camera.h"
 
-#define SCALE_Y 0.2f
+const float SCALE_Y = 0.2f;
 
 Model* GoalNavigation::m_Model{};
 

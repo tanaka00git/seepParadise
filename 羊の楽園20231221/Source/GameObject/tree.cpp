@@ -14,10 +14,10 @@
 Model* Tree::m_Model{};
 Model* Tree::m_ModelAppleTree{};
 
-#define DROP_RAIT 4
-#define FEET_DROP 2
-#define INITIAL_LIFE 3
-#define INITIAL_HP_BAR_POS_Y 3.0f
+const int DROP_RAIT = 4;
+const int FEET_DROP = 2;
+const int INITIAL_LIFE = 3;
+const float INITIAL_HP_BAR_POS_Y = 3.0f;
 
 void Tree::Load()
 {

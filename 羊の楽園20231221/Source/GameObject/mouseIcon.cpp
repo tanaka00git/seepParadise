@@ -4,7 +4,7 @@
 #include "..\App\sprite.h"
 #include "..\App\input.h"
 
-#define SCALE 30.0f
+const float SCALE = 30.0f;
 
 void MouseIcon::Init()
 {

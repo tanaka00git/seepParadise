@@ -8,7 +8,7 @@
 
 Model* ResultSky::m_Model{};
 
-#define COLOR_VALUE_FRAME 0.0015f	//1フレームで増える値
+const float COLOR_VALUE_FRAME = 0.0015f;	//1フレームで増える値
 
 void ResultSky::Load()
 {

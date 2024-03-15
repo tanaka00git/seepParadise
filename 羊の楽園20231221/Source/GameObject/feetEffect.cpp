@@ -7,11 +7,11 @@
 
 ID3D11ShaderResourceView* FeetEffect::m_Texture{};
 
-#define COUNT_FREAM_DELAY 2
-#define POSITION_Y 0.8f
-#define POSITION_Z -1.0f
-#define SCALE 0.8f
-#define ALPHA 0.05f
+const int COUNT_FRAME_DELAY = 2;
+const float POSITION_Y = 0.8f;
+const float POSITION_Z = -1.0f;
+const float SCALE = 0.8f;
+const float ALPHA = 0.05f;
 
 void FeetEffect::Load()
 {
@@ -98,7 +98,7 @@ void FeetEffect::Update()
 	if (m_Alpha <= 0.0f) { SetDestroy(); }
 
 	//何フレームに一回更新する
-	if (m_CountFrameDelay >= COUNT_FREAM_DELAY)
+	if (m_CountFrameDelay >= COUNT_FRAME_DELAY)
 	{
 		m_Count++;
 		if (m_Count >= 16) { SetDestroy(); }

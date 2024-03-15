@@ -8,12 +8,12 @@
 #include "..\App\input.h"
 #include "..\GameObject\score.h"
 
-#define CAMERA_POS_Y 8.0f		//カメラ座標Y
-#define CAMERA_POS_Z -6.5f		//カメラ座標Z
-#define CAMERA_MOVE_VALUE 0.2f	//アイテム1個につきカメラの視野広がりする値
-#define CAMERA_MOVE_LIMIT 10.0f	//カメラの視野広がりの上限
-#define CAMERA_SPEED 0.2f		//カメラの速度
-#define SHAKE_SPEED  1.5f		//振動の強さ
+const float CAMERA_POS_Y = 8.0f;		// カメラ座標Y
+const float CAMERA_POS_Z = -6.5f;		// カメラ座標Z
+const float CAMERA_MOVE_VALUE = 0.2f;	// アイテム1個につきカメラの視野広がりする値
+const float CAMERA_MOVE_LIMIT = 10.0f;	// カメラの視野広がりの上限
+const float CAMERA_SPEED = 0.2f;		// カメラの速度
+const float SHAKE_SPEED = 1.5f;			// 振動の強さ
 
 void Camera::Init()
 {

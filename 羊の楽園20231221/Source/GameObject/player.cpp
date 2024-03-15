@@ -33,31 +33,31 @@ int Player::m_DebugMode{};
 int Player::m_PlColor{};
 int Player::m_PlClown{};
 
-#define INITIAL_LIFE 2
-#define INITIAL_INVINCIBLE_TIME 0
-#define INITIAL_DASH_INIT false
-#define INITIAL_DASH false
-#define INITIAL_COMBO 0
-#define INITIAL_DEATH_STAGING 0.14f
-#define INITIAL_ATTACK_STOP_TIME 0
-#define INITIAL_CHARGE 0
-#define INITIAL_OLD_CHARGE 0
-#define INITIAL_FULL_CHARGE 2000
-#define INITIAL_TUTORIAL_END false
-#define INITIAL_DELETE_INIT false
-#define INITIAL_ANIME_PAUSE true
-#define INITIAL_ANIME_TIME 0
-#define INITIAL_ANIME_ROTATION_X 0.0f
-#define INITIAL_WALK_EFFECT_TIME 0
-#define INITIAL_EYE 0
+const int INITIAL_LIFE = 2;
+const int INITIAL_INVINCIBLE_TIME = 0;
+const bool INITIAL_DASH_INIT = false;
+const bool INITIAL_DASH = false;
+const int INITIAL_COMBO = 0;
+const float INITIAL_DEATH_STAGING = 0.14f;
+const int INITIAL_ATTACK_STOP_TIME = 0;
+const int INITIAL_CHARGE = 0;
+const int INITIAL_OLD_CHARGE = 0;
+const int INITIAL_FULL_CHARGE = 2000;
+const bool INITIAL_TUTORIAL_END = false;
+const bool INITIAL_DELETE_INIT = false;
+const bool INITIAL_ANIME_PAUSE = true;
+const int INITIAL_ANIME_TIME = 0;
+const float INITIAL_ANIME_ROTATION_X = 0.0f;
+const int INITIAL_WALK_EFFECT_TIME = 0;
+const int INITIAL_EYE = 0;
 
-#define FULL_LIFE 9
-#define FULL_SPEED 9.5
-#define FULL_EYE 6
-#define WALK_EFFECT_TIME 13
-#define ATTACK_STOP 22
-#define GRAVITY 0.015f
-#define CHARGE_DOWN 7
+const int FULL_LIFE = 9;
+const float FULL_SPEED = 9.5f;
+const int FULL_EYE = 6;
+const int WALK_EFFECT_TIME = 13;
+const int ATTACK_STOP = 22;
+const float GRAVITY = 0.015f;
+const int CHARGE_DOWN = 7;
 
 void Player::Load()
 {

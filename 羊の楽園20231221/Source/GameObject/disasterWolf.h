@@ -8,7 +8,7 @@ private:
 	static class Audio* m_SE_SuperAttack;
 	class AttackMarker* m_AttackMarker{};
 
-	int	  m_SuparChargeCount = 0;
+	int	  m_SuperChargeCount = 0;
 
 	//ŠÖ”
 	void UpdateTargeting() override;

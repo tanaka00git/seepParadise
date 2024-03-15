@@ -6,8 +6,8 @@
 #include "..\App\sprite.h"
 #include "..\GameObject\player.h"
 
-#define GREEN_LIFE_SPEED 0.2f
-#define RED_LIFE_SPEED   0.1f
+const float GREEN_LIFE_SPEED = 0.2f;
+const float RED_LIFE_SPEED = 0.1f; 
 
 void HpBar::Init()
 {

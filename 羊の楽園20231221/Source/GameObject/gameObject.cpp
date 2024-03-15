@@ -2,9 +2,9 @@
 #include "..\GameObject\gameObject.h"
 
 //íËêî
-#define INITIAL_POSITION D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-#define INITIAL_ROTATION D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-#define INITIAL_SCALE D3DXVECTOR3(1.0f, 1.0f, 1.0f)
+const D3DXVECTOR3 INITIAL_POSITION = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+const D3DXVECTOR3 INITIAL_ROTATION = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+const D3DXVECTOR3 INITIAL_SCALE = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
 
 void GameObject::Init()
 {

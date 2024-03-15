@@ -13,11 +13,11 @@ Model* SheepCage::m_ModelCage{};
 Model* SheepCage::m_ModelCageSheep{};
 Audio* SheepCage::m_SE_Chest{};
 
-#define SHEEP_ROTATION_Y 0.01f
-#define SHEEP_DROP 3
+const float SHEEP_ROTATION_Y = 0.01f;
+const int SHEEP_DROP = 3;
 
-#define INITIAL_SHEEP_ROTATION_Y 0.0f
-#define INITIAL_HP_BAR_POS_Y 2.3f
+const float INITIAL_SHEEP_ROTATION_Y = 0.0f;
+const float INITIAL_HP_BAR_POS_Y = 2.3f;
 
 void SheepCage::Load()
 {

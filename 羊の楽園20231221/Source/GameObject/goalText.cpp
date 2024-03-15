@@ -7,9 +7,9 @@
 
 ID3D11ShaderResourceView* GoalText::m_Texture{};
 
-#define POSITION_Y 0.3f
-#define POSITION_Z 0.0f
-#define SCALE 0.6f
+const float POSITION_Y = 0.3f;
+const float POSITION_Z = 0.0f;
+const float SCALE = 0.6f;
 
 void GoalText::Load()
 {

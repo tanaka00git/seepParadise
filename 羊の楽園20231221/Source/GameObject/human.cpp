@@ -23,35 +23,35 @@ Audio* Human::m_SE_Kick{};
 Audio* Human::m_SE_Critical{};
 Audio* Human::m_SE_Make{};
 
-#define INITIAL_LIFE 4
-#define INITIAL_SPEED 0.08f
-#define INITIAL_SCALE_Y 0.01f
-#define INITIAL_DEATH_TIME 1400
-#define INITIAL_ANIME_PAUSE true
-#define INITIAL_ANIME_TIME 0
-#define INITIAL_ANIME_ROTATION_X 0.0f
-#define INITIAL_ORIENTATION_TIME 0.0f
-#define INITIAL_NEXT_ROT_TIME 0.0f
-#define INITIAL_NEXT_ROTATION 1
-#define INITIAL_MAKING_TIME 0
-#define INITIAL_KNOCK_BACK_TIME 0
-#define INITIAL_STUN_TIME 0
-#define INITIAL_DELETE_INIT false
-#define INITIAL_FEET_DROP 4
-#define INITIAL_DEATH_STAGING 0.14f
-#define INITIAL_BAR_SCALE D3DXVECTOR3(1.0f, 1.0f, 1.0f)
-#define INITIAL_HP_BAR_POS_Y 1.8f
-#define INITIAL_TRACKING 10.0f
+const int INITIAL_LIFE = 4;
+const float INITIAL_SPEED = 0.08f;
+const float INITIAL_SCALE_Y = 0.01f;
+const int INITIAL_DEATH_TIME = 1400;
+const bool INITIAL_ANIME_PAUSE = true;
+const int INITIAL_ANIME_TIME = 0;
+const float INITIAL_ANIME_ROTATION_X = 0.0f;
+const float INITIAL_ORIENTATION_TIME = 0.0f;
+const float INITIAL_NEXT_ROT_TIME = 0.0f;
+const int INITIAL_NEXT_ROTATION = 1;
+const int INITIAL_MAKING_TIME = 0;
+const int INITIAL_KNOCK_BACK_TIME = 0;
+const int INITIAL_STUN_TIME = 0;
+const bool INITIAL_DELETE_INIT = false;
+const int INITIAL_FEET_DROP = 4;
+const float INITIAL_DEATH_STAGING = 0.14f;
+const D3DXVECTOR3 INITIAL_BAR_SCALE = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+const float INITIAL_HP_BAR_POS_Y = 1.8f;
+const float INITIAL_TRACKING = 10.0f;
 
-#define MAKING_TIME 30
-#define MAKING_COUNT 4
-#define DROP_RATE 20
-#define APPLE_RATE 20
-#define KNOCK_BACK_TIME 14
-#define STUN_TIME 60
-#define TARGET_LENGTH 3.0f
-#define GRAVITY 0.015f
-#define SET_MAKING_INVALID_TIME 180	//òì‚ê‚È‚¢ŠÔ
+const int MAKING_TIME = 30;
+const int MAKING_COUNT = 4;
+const int DROP_RATE = 20;
+const int APPLE_RATE = 20;
+const int KNOCK_BACK_TIME = 14;
+const int STUN_TIME = 60;
+const float TARGET_LENGTH = 3.0f;
+const float GRAVITY = 0.015f;
+const int SET_MAKING_INVALID_TIME = 180; // òì‚ê‚È‚¢ŠÔ
 
 void Human::Load()
 {
@@ -82,7 +82,7 @@ void Human::Init()
 	m_Scale.y = INITIAL_SCALE_Y;
 	m_Rotation.y = frand() * 2 * D3DX_PI;
 
-	m_DaathTime = INITIAL_DEATH_TIME;
+	m_DeathTime = INITIAL_DEATH_TIME;
 	m_AnimePause = INITIAL_ANIME_PAUSE;
 	m_AnimeTime = INITIAL_ANIME_TIME;
 	m_AnimeRotationX = INITIAL_ANIME_ROTATION_X;
@@ -123,8 +123,8 @@ void Human::Update()
 	m_HpBarS->SetLifeDateFC(m_FullLife, m_Life);
 
 	//©“®íœ‚Ü‚Å
-	m_DaathTime--;
-	if (m_DaathTime <= 0) { UpdateDelete(); }
+	m_DeathTime--;
+	if (m_DeathTime <= 0) { UpdateDelete(); }
 	else
 	{
 		SmoothAppearance(true);

@@ -4,14 +4,13 @@
 
 const char* CLASS_NAME = "AppClass";
 const char* WINDOW_NAME = "seepParadise";
-RECT g_WindowRect; // ウィンドウの矩形領域を保存する変数
-bool g_IsMouseCaptured = true; // マウスが制限されているかどうかを示す変数
+RECT g_WindowRect;				//ウィンドウの矩形領域を保存する変数
+bool g_IsMouseCaptured = true;	//マウスが制限されているかどうかを示す変数
 
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
 HWND g_Window;
-
 HWND GetWindow(){ return g_Window; }
 
 int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)

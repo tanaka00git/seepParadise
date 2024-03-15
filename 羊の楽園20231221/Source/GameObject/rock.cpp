@@ -11,7 +11,7 @@
 
 Model*Rock::m_Model{};
 
-#define FEET_DROP 3
+const int FEET_DROP = 3;
 
 void Rock::Load()
 {

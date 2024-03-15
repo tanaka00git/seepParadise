@@ -3,9 +3,8 @@
 #include "..\App\sprite.h"
 #include "..\GameObject\titleScore.h"
 
-
-#define TEXNUM_X 5
-#define TEXNUM_Y 5
+const int TEXNUM_X = 5;
+const int TEXNUM_Y = 5;
 
 void TitleScore::Init()
 {

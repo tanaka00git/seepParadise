@@ -18,8 +18,8 @@
 Model*Chest::m_Model{};
 Audio*Chest::m_SE_Chest{};
 
-#define DROP_RAIT 3
-#define FEET_DROP 9
+const int DROP_RATE = 3;
+const int FEET_DROP = 9;
 
 void Chest::Load()
 {
@@ -69,7 +69,7 @@ void Chest::UpdateDead()
 		m_SE_Chest->Play(1.0f);
 
 		//アイテムドロップ
-		if (irand(1, DROP_RAIT) == 1)
+		if (irand(1, DROP_RATE) == 1)
 		{	
 			//どれかが選出される
 			int random = irand(1, 3);

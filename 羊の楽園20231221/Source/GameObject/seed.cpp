@@ -8,7 +8,7 @@
 
 Model*Seed::m_Model{};
 
-#define ORIGINAL_SCALSE D3DXVECTOR3(2.0f, 2.0f, 2.0f)
+const D3DXVECTOR3 ORIGINAL_SCALSE = D3DXVECTOR3(2.0f, 2.0f, 2.0f);
 
 void Seed::Load()
 {

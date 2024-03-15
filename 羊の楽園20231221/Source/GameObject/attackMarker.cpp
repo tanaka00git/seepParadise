@@ -4,7 +4,7 @@
 
 ID3D11ShaderResourceView* AttackMarker::m_Texture{};
 
-#define SCALE 0.7f
+const float SCALE = 0.7f;
 
 void AttackMarker::Load()
 {

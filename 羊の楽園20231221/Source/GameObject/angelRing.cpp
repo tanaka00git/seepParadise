@@ -7,12 +7,12 @@
 
 ID3D11ShaderResourceView* AngelRing::m_Texture{};
 
-#define COUNT_FREAM_DELAY 2
-#define POSITION_Y 0.3f
-#define POSITION_Z 0.0f
-#define SCALE 0.8f
-#define VELOCITY_Y 0.05f
-#define ALPHA 0.01f
+const int COUNT_FRAME_DELAY = 2;
+const float POSITION_Y = 0.3f;
+const float POSITION_Z = 0.0f;
+const float SCALE = 0.8f;
+const float VELOCITY_Y = 0.05f;
+const float ALPHA = 0.01f;
 
 void AngelRing::Load()
 {
@@ -99,7 +99,7 @@ void AngelRing::Update()
 	if (m_Alpha <= 0.0f) { SetDestroy(); }
 
 	//何フレームに一回更新する
-	if (m_CountFrameDelay >= COUNT_FREAM_DELAY)
+	if (m_CountFrameDelay >= COUNT_FRAME_DELAY)
 	{
 		m_Count = m_Count % 16;	//無限ループ
 

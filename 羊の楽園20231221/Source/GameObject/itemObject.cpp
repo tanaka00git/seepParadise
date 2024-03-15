@@ -9,14 +9,14 @@
 #include "..\Scene\scene.h"
 #include "..\GameObject\camera.h"
 
-#define INITIAL_VELOCITY D3DXVECTOR3(0.0f, 0.0f, 0.0f)
-#define INITIAL_ORIGINAL_SCALE D3DXVECTOR3(1.0f, 1.0f, 1.0f)
-#define INITIAL_DEATH_TIME 500
-#define INITIAL_DELETE_INIT false
-#define INITIAL_DROP_JUMP false
-#define INITIAL_SCALE_Y 0.01f
-#define GRAVITY 0.015f
-#define SUCTION 1.5f 
+const D3DXVECTOR3 INITIAL_VELOCITY = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+const D3DXVECTOR3 INITIAL_ORIGINAL_SCALE = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+const int INITIAL_DEATH_TIME = 500;
+const bool INITIAL_DELETE_INIT = false;
+const bool INITIAL_DROP_JUMP = false;
+const float INITIAL_SCALE_Y = 0.01f;
+const float GRAVITY = 0.015f;
+const float SUCTION = 1.5f;
 
 void ItemObject::Init()
 {

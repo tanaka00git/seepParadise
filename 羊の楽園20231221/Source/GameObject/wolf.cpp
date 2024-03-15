@@ -27,34 +27,34 @@ Audio*Wolf::m_SE_Eat{};
 Audio*Wolf::m_SE_Kick{};
 Audio*Wolf::m_SE_Critical{};
 
-#define INITIAL_DEATH_TIME 1400
-#define INITIAL_ANIME_PAUSE true
-#define INITIAL_ANIME_TIME 0
-#define INITIAL_ANIME_ROTATION_X 0.0f
-#define INITIAL_ORIENTATION_TIME 0.0f
-#define INITIAL_NEXT_ROT_TIME 0.0f
-#define INITIAL_NEXT_ROTATION 1
-#define INITIAL_EAT_STOP 0
-#define INITIAL_DEATH_STAGING 0.14f
-#define INITIAL_KNOCK_BACK_TIME 0
-#define INITIAL_STUN_TIME 0
-#define INITIAL_STAN_GUARD_COUNT 0
-#define INITIAL_DELETE_INIT false
+const int INITIAL_DEATH_TIME = 1400;
+const bool INITIAL_ANIME_PAUSE = true;
+const int INITIAL_ANIME_TIME = 0;
+const float INITIAL_ANIME_ROTATION_X = 0.0f;
+const float INITIAL_ORIENTATION_TIME = 0.0f;
+const float INITIAL_NEXT_ROT_TIME = 0.0f;
+const int INITIAL_NEXT_ROTATION = 1;
+const int INITIAL_EAT_STOP = 0;
+const float INITIAL_DEATH_STAGING = 0.14f;
+const int INITIAL_KNOCK_BACK_TIME = 0;
+const int INITIAL_STUN_TIME = 0;
+const int INITIAL_STAN_GUARD_COUNT = 0;
+const bool INITIAL_DELETE_INIT = false;
 
-#define INITIAL_ITEM false
-#define INITIAL_FEET_DROP 2
-#define INITIAL_STAN_GUARD 1
-#define INITIAL_BITE_COUNT 1
-#define INITIAL_BAR_SCALE D3DXVECTOR3(0.7f, 0.7f, 0.7f)
-#define INITIAL_HP_BAR_POS_Y 1.8f
-#define INITIAL_TRACKING 5.0f
-#define INITIAL_SCALE_Y 0.01f
+const bool INITIAL_ITEM = false;
+const int INITIAL_FEET_DROP = 2;
+const int INITIAL_STAN_GUARD = 1;
+const int INITIAL_BITE_COUNT = 1;
+const D3DXVECTOR3 INITIAL_BAR_SCALE = D3DXVECTOR3(0.7f, 0.7f, 0.7f);
+const float INITIAL_HP_BAR_POS_Y = 1.8f;
+const float INITIAL_TRACKING = 5.0f;
+const float INITIAL_SCALE_Y = 0.01f;
 
-#define EATING_TIME 45
-#define APPLE_RATE 24
-#define KNOCK_BACK_TIME 14
-#define STUN_TIME 240
-#define GRAVITY 0.015f
+const int EATING_TIME = 45;
+const int APPLE_RATE = 24;
+const int KNOCK_BACK_TIME = 14;
+const int STUN_TIME = 240;
+const float GRAVITY = 0.015f;
 
 void Wolf::Load()
 {

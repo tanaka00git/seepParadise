@@ -10,8 +10,8 @@
 
 Model* Fence::m_Model{};
 
-#define ORIGINAL_SCALE_X 4.0f
-#define INITIAL_LIFE 16
+const float ORIGINAL_SCALE_X = 4.0f;
+const int INITIAL_LIFE = 16;
 
 void Fence::Load()
 {

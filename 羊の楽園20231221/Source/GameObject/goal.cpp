@@ -16,12 +16,13 @@ using std::max;
 Model* Goal::m_Model{};
 Audio* Goal::m_SE_Goal{};
 
-#define SCOPE_SIZE 10.0f
-#define ROTATION_SPEED 0.1f
-#define STAGE_MAKE_XY 100.0f
-#define FOLLOW_MAKE_POSITION_Y 1.1f
-#define MAKE_MINMUM_DISTANCE 30.0f	//生成されるプレイヤーとゴールの距離の最低距離
-#define MAKE_MAX_DISTANCE 50.0f		//生成されるプレイヤーとゴールの距離の最大距離
+//定数
+const float SCOPE_SIZE = 10.0f;
+const float ROTATION_SPEED = 0.1f;
+const float STAGE_MAKE_XY = 100.0f;
+const float FOLLOW_MAKE_POSITION_Y = 1.1f;
+const float MAKE_MINIMUM_DISTANCE = 30.0f;	// 生成されるプレイヤーとゴールの距離の最低距離
+const float MAKE_MAX_DISTANCE = 50.0f;		// 生成されるプレイヤーとゴールの距離の最大距離
 
 void Goal::Load()
 {
@@ -189,7 +190,7 @@ void Goal::SetNextGoal()
 		newGoalPosition = D3DXVECTOR3(frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2, 0.0f, frand() * STAGE_MAKE_XY - STAGE_MAKE_XY / 2);
 		direction = newGoalPosition - position;  // プレイヤーから新しいゴールへのベクトルを計算
 		length = D3DXVec3Length(&direction);
-	} while (length < MAKE_MINMUM_DISTANCE && length > MAKE_MAX_DISTANCE);  // 最低距離離れるまで再試行
+	} while (length < MAKE_MINIMUM_DISTANCE && length > MAKE_MAX_DISTANCE);  // 最低距離離れるまで再試行
 
 
 	SetPosition(newGoalPosition);

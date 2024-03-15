@@ -14,10 +14,10 @@
 Model*Feet::m_Model{};
 Audio*Feet::m_SE_Get{};
 
-#define MAX_CHARGE 500
-#define SUBTRACTION_CHARGE 30
-#define MIN_CHARGE 150
-#define SCALE 0.5f
+const int MAX_CHARGE = 500;
+const int SUBTRACTION_CHARGE = 30;
+const int MIN_CHARGE = 150;
+const float SCALE = 0.5f;
 
 void Feet::Load()
 {

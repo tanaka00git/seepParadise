@@ -3,10 +3,10 @@
 #include "..\GameObject\score.h"
 #include "..\App\sprite.h"
 
-#define TEXNUM_X 5
-#define TEXNUM_Y 5
-#define PLUS_SCALE_VALUE 10.0f
-#define PLUS_SCALE_DOWN_VALUE 0.7f
+const int TEXNUM_X = 5;
+const int TEXNUM_Y = 5;
+const float PLUS_SCALE_VALUE = 10.0f;
+const float PLUS_SCALE_DOWN_VALUE = 0.7f;
 
 void Score::Init()
 {

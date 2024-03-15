@@ -27,9 +27,9 @@ int Title::m_Coin{};
 int Title::m_PlColor{};
 int Title::m_PlClown{};
 
-#define INIT_PLAYER_COLOR 6
-#define INIT_PLAYER_CROWN 6
-#define INIT_COIN 200
+const int INIT_PLAYER_COLOR = 6;
+const int INIT_PLAYER_CROWN = 6;
+const int INIT_COIN = 200;
 
 void Title::Init()
 {

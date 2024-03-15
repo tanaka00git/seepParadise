@@ -26,7 +26,7 @@ protected:
 	//メンバ変数
 	D3DXVECTOR3 m_PLForward{};			//プレイヤーの向き
 
-	int     m_DaathTime			= 1400;	//自動消滅
+	int     m_DeathTime			= 1400;	//自動消滅
 	bool	m_AnimePause		= true;
 	int		m_AnimeTime			= 0;
 	float	m_AnimeRotationX	= 0.0f;	//アニメの表示の傾き(実際の向きとは違う)

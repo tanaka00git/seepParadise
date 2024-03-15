@@ -3,8 +3,8 @@
 #include "..\GameObject\resultScore.h"
 #include "..\App\sprite.h"
 
-#define TEXNUM_X 5
-#define TEXNUM_Y 5
+const int TEXNUM_X = 5;
+const int TEXNUM_Y = 5;
 
 void ResultScore::Init()
 {

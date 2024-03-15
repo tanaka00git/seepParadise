@@ -3,7 +3,7 @@
 #include "..\GameObject\resultLogo.h"
 #include "..\App\sprite.h"
 
-#define ALPHA_VALUE 0.03f
+const float ALPHA_VALUE = 0.03f;
 
 void ResultLogo::Init()
 {

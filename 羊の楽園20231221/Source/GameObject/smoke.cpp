@@ -6,10 +6,11 @@
 #include "..\GameObject\smoke.h"
 
 ID3D11ShaderResourceView*Smoke::m_Texture{};
-#define COUNT_FREAM_DELAY 2
-#define POSITION_Y 0.3f
-#define POSITION_Z 0.0f
-#define SCALE 1.0f
+
+const int COUNT_FRAME_DELAY = 2;
+const float POSITION_Y = 0.3f;
+const float POSITION_Z = 0.0f;
+const float SCALE = 1.0f;
 
 void Smoke::Load()
 {
@@ -90,7 +91,7 @@ void Smoke::Update()
 	m_CountFrameDelay++;
 
 	//何フレームに一回更新する
-	if (m_CountFrameDelay >= COUNT_FREAM_DELAY)
+	if (m_CountFrameDelay >= COUNT_FRAME_DELAY)
 	{
 		m_Count++;
 		m_CountFrameDelay = 0;

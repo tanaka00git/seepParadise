@@ -7,10 +7,10 @@
 
 ID3D11ShaderResourceView*Explosion::m_Texture{};
 
-#define COUNT_FREAM_DELAY 2
-#define POSITION_Y 0.3f
-#define POSITION_Z -0.8f
-#define SCALE 1.2f
+const int COUNT_FRAME_DELAY = 2;
+const float POSITION_Y = 0.3f;
+const float POSITION_Z = -0.8f;
+const float SCALE = 1.2f;
 
 void Explosion::Load()
 {
@@ -94,7 +94,7 @@ void Explosion::Update()
 
 
 	//何フレームに一回更新する
-	if (m_CountFrameDelay >= COUNT_FREAM_DELAY)
+	if (m_CountFrameDelay >= COUNT_FRAME_DELAY)
 	{
 		m_Count++;
 		//m_Count = m_Count % 16;　//無限ループさせたいときに便利

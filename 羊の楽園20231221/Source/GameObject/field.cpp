@@ -2,8 +2,8 @@
 #include "..\App\renderer.h"
 #include "..\GameObject\field.h"
 
-#define WIDTH 120.0f
-#define DEQTH 120.0f
+const float WIDTH = 120.0f;
+const float DEQTH = 120.0f;
 
 void Field::Init()
 {

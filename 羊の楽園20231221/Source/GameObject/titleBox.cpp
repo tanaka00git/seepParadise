@@ -5,10 +5,10 @@
 
 Model*TitleBox::m_Model{};
 
-#define INIT_ROTATION_Y -2.3f
-#define INIT_POSITION_Y 1.0f
-#define SCALE 0.8f
-#define ROTATION_Y_SPEED -0.004f
+const float INIT_ROTATION_Y = -2.3f;
+const float INIT_POSITION_Y = 1.0f;
+const float SCALE = 0.8f;
+const float ROTATION_Y_SPEED = -0.004f;
 
 void TitleBox::Load()
 {

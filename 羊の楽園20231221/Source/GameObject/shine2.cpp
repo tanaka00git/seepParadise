@@ -6,10 +6,11 @@
 #include "..\GameObject\shine2.h"
 
 ID3D11ShaderResourceView* Shine2::m_Texture{};
-#define COUNT_FREAM_DELAY 2
-#define POSITION_Y 0.6f
-#define POSITION_Z -1.2f
-#define SCALE 1.0f
+
+const int COUNT_FRAME_DELAY = 2;
+const float POSITION_Y = 0.6f;
+const float POSITION_Z = -1.2f;
+const float SCALE = 1.0f;
 
 void Shine2::Load()
 {
@@ -90,7 +91,7 @@ void Shine2::Update()
 	m_CountFrameDelay++;
 
 	//何フレームに一回更新する
-	if (m_CountFrameDelay >= COUNT_FREAM_DELAY)
+	if (m_CountFrameDelay >= COUNT_FRAME_DELAY)
 	{
 		m_Count++;
 		m_CountFrameDelay = 0;
